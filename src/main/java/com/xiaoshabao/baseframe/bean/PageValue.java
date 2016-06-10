@@ -14,15 +14,15 @@ public class PageValue<T> {
 	/**
 	 * 总计条数
 	 */
-	private Integer totalrowcount;
+	private Long totalRows;
 	/**
 	 * 总计页数
 	 */
-	private Integer pagecount;
+	private Integer pages;
 	/**
 	 * 每页大小
 	 */
-	private Integer pagesize;
+	private Integer pageSize;
 
 	public List<T> getModels() {
 		return models;
@@ -32,28 +32,27 @@ public class PageValue<T> {
 		this.models = models;
 	}
 
-	public Integer getTotalrowcount() {
-		return totalrowcount;
+	public Long getTotalRows() {
+		return totalRows;
 	}
 
-	public void setTotalrowcount(Integer totalrowcount) {
-		this.totalrowcount = totalrowcount;
+	public void setTotalRows(Long totalRows) {
+		this.totalRows = totalRows;
 	}
 
-	public Integer getPagecount() {
-		return pagecount;
+	public Integer getPages() {
+		return pages;
 	}
 
-	public void setPagecount(Integer pagecount) {
-		this.pagecount = pagecount;
+	public void setPages(Integer pages) {
+		this.pages = pages;
 	}
 
-	public Integer getPagesize() {
-		return pagesize;
+	public Integer getPageSize() {
+		return pageSize;
 	}
 
-	public void setPagesize(Integer pagesize) {
-		this.pagesize = pagesize;
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
-
 }

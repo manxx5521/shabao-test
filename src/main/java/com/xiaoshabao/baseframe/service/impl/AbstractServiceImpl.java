@@ -7,10 +7,11 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xiaoshabao.baseframe.bean.PageValue;
 import com.xiaoshabao.baseframe.bean.PagingPrams;
 import com.xiaoshabao.baseframe.dao.BaseDao;
-import com.xiaoshabao.baseframe.exception.DaoException;
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.AbstractService;
 
@@ -23,93 +24,78 @@ import com.xiaoshabao.baseframe.service.AbstractService;
  * </p>
  */
 public abstract class AbstractServiceImpl implements AbstractService {
-	public AbstractServiceImpl() {
-		// 统一添加日志
-		logger = LoggerFactory.getLogger(getClass());
-	}
-
 	protected Logger logger;
 
 	@Resource(name = "mybatisBaseDao")
 	protected BaseDao baseDao;
 
-	/**
-	 * 通过这个方法把分页查询dao实例
-	 */
-	@Override
-	public <T, P extends PagingPrams> PageValue<T> pagingQuery(Class<T> clasz,
-			P pageParams) {
-		PageValue<T> pageValue = new PageValue<T>();
-		List<T> models = this.baseDao.pagingqueryData(clasz, pageParams);
-		pageValue.setModels(models);
-		Integer rowcount = this.baseDao.queryRowCount(clasz, pageParams);
-		pageValue.setTotalrowcount(rowcount);
-		// 计算页数
-		Integer pageCount = rowcount / pageParams.getPagesize();
-		if (rowcount % pageParams.getPagesize() > 0) {
-			pageCount = pageCount + 1;
-		}
-		pageValue.setPagesize(pageParams.getPagesize());
-		pageValue.setPagecount(pageCount);
-		return pageValue;
+	public AbstractServiceImpl() {
+		// 统一添加日志
+		logger = LoggerFactory.getLogger(getClass());
 	}
 
 	@Override
-	public <T> void update(Class<T> clasz, T t, Object p)
-			throws ServiceException {
-		try {
-			this.baseDao.update(clasz, p);
-		} catch (Exception ex) {
-			throw new ServiceException(ex.getMessage());
-		}
-
+	public <T> int insert(Class<T> clasz, T t) throws ServiceException {
+		return this.baseDao.insert(clasz, t);
 	}
 
 	@Override
-	public <T> void insert(Class<T> clasz, T t) throws ServiceException {
-		try {
-			this.baseDao.insert(clasz, t);
-		} catch (Exception ex) {
+	public <T> int delete(Class<T> clasz, T t) {
+		return this.baseDao.delete(clasz, t);
+	}
 
-		}
+	@Override
+	public <T> int update(Class<T> clasz, T t, Object p) {
+		return this.baseDao.update(clasz, p);
 	}
 
 	@Override
 	public <T> boolean exists(Class<T> clasz, T t) throws ServiceException {
-		try {
-			return this.baseDao.exists(clasz, t);
-		} catch (Exception ex) {
-
-		}
-		return false;
+		return this.baseDao.exists(clasz, t);
 	}
 
 	@Override
-	public <T, P extends PagingPrams> List<T> queryModels(Class<T> clasz, P p)
-			throws ServiceException {
-		return this.baseDao.pagingqueryData(clasz, p);
-	}
-
-	@Override
-	public <T> List<T> getData(Class<T> clasz, Object params)
-			throws DaoException {
+	public <T> List<T> getData(Class<T> clasz, Object params) {
 		return this.baseDao.getData(clasz, params);
 	}
 
 	@Override
-	public <T> List<T> getData(String sqlid, Object param) throws DaoException {
+	public <T> List<T> getData(String sqlid, Object param) {
 		return this.baseDao.getData(sqlid, param);
 	}
 
 	@Override
-	public <T> T getDataSingle(String sqlid, Object param) throws DaoException {
+	public <T> T getDataSingle(String sqlid, Object param) {
 		return this.baseDao.getDataSingle(sqlid, param);
 	}
 
 	@Override
-	public <T> T getDataSingle(Class<T> clazz, Object param)
-			throws DaoException {
-		// TODO Auto-generated method stub
+	public <T> T getDataSingle(Class<T> clazz, Object param) {
 		return this.baseDao.getDataSingle(clazz, param);
 	}
+
+	// 通过这个方法把分页查询DAO实例
+	@Override
+	public <T, P extends PagingPrams> PageValue<T> getDataPaging(
+			Class<T> clasz, P pageParams) {
+		PageValue<T> pageValue = new PageValue<T>();
+
+		PageHelper.startPage(1, 10);
+		List<T> models = this.baseDao.getDataPaging(clasz, pageParams);
+		pageValue.setModels(models);
+		// 用PageInfo对结果进行包装
+		PageInfo<T> page = new PageInfo<T>(models);
+		pageValue.setTotalRows(page.getTotal());
+		// 计算页数
+		pageValue.setPages(page.getPages());
+		pageValue.setPageSize(page.getPageSize());
+		return pageValue;
+	}
+
+	@Override
+	public <T, P extends PagingPrams> List<T> getPagingModels(Class<T> clasz,
+			P p) {
+		return this.baseDao.getDataPaging(clasz, p);
+	}
+
 }

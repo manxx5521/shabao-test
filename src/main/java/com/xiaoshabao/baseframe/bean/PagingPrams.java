@@ -10,26 +10,22 @@ public class PagingPrams {
 	/**
 	 * 页面索引
 	 */
-	private Integer pageindex;
+	private int index;
 	/**
 	 * 每页大小
 	 */
-	private Integer pagesize;
-
-	public Integer getPageindex() {
-		return pageindex;
+	private int size;
+	
+	public int getIndex() {
+		return index;
 	}
-
-	public void setPageindex(Integer pageindex) {
-		this.pageindex = pageindex;
+	public void setIndex(int index) {
+		this.index = index;
 	}
-
-	public Integer getPagesize() {
-		return pagesize;
+	public int getSize() {
+		return size;
 	}
-
-	public void setPagesize(Integer pagesize) {
-		this.pagesize = pagesize;
+	public void setSize(int size) {
+		this.size = size;
 	}
-
 }
