@@ -8,9 +8,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.xiaoshabao.baseframe.bean.MybatisValue;
 import com.xiaoshabao.baseframe.bean.PagingPrams;
 import com.xiaoshabao.baseframe.dao.BaseDao;
+import com.xiaoshabao.baseframe.enums.DaoEnum;
 
 /**
  * 通用的数据库操作组件
@@ -21,6 +21,7 @@ import com.xiaoshabao.baseframe.dao.BaseDao;
 
 @Repository("mybatisBaseDao")
 public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao {
+
 	/**
 	 * 目标对象类名称
 	 */
@@ -35,30 +36,26 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	@Override
 	public <T> int insert(Class<T> clazz, T t) {
 		return this.getSqlSession().insert(
-				clazz.getSimpleName().toLowerCase()
-						+ MybatisValue.IBATIS_INSERT, t);
+				DaoEnum.INSERT.getDescribe() + clazz.getSimpleName(), t);
 	}
 
 	@Override
 	public <T> int delete(Class<T> clazz, T t) {
 		return this.getSqlSession().delete(
-				clazz.getSimpleName().toLowerCase()
-						+ MybatisValue.IBATIS_DELETE, t);
+				DaoEnum.DELETE.getVlaue() + clazz.getSimpleName(), t);
 	}
 
 	@Override
 	public <T> int update(Class<T> clazz, Object p) {
 		return this.getSqlSession().update(
-				clazz.getSimpleName().toLowerCase()
-						+ MybatisValue.IBATIS_UPDATE, p);
+				DaoEnum.UPDATE.getVlaue() + clazz.getSimpleName(), p);
 
 	}
 
 	@Override
 	public <T> boolean exists(Class<T> clazz, T t) {
 		List<T> result = this.getSqlSession().<T> selectList(
-				clazz.getSimpleName().toLowerCase()
-						+ MybatisValue.IBATIS_EXISTS, t);
+				DaoEnum.EXISTS.getVlaue() + clazz.getSimpleName(), t);
 		if (result == null || result.isEmpty()) {
 			return false;
 		} else {
@@ -69,8 +66,7 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	@Override
 	public <T> List<T> getData(Class<T> clazz, Object param) {
 		return getSqlSession().selectList(
-				clazz.getSimpleName().toLowerCase()
-						+ MybatisValue.IBATIS_GETDATA, param);
+				DaoEnum.GETDATA + clazz.getSimpleName(), param);
 	}
 
 	@Override
@@ -79,24 +75,21 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	}
 
 	@Override
-	public <T> T getDataSingle(String sqlid, Object param) {
-		return this.getSqlSession().selectOne(sqlid, param);
+	public <T> T getDataSingle(Class<T> clazz, Object param) {
+		return this.getSqlSession().selectOne(
+				DaoEnum.GETONE + clazz.getSimpleName(), param);
 	}
 
 	@Override
-	public <T> T getDataSingle(Class<T> clazz, Object param) {
-		List<T> list = getSqlSession().selectList(
-				clazz.getSimpleName().toLowerCase()
-						+ MybatisValue.IBATIS_GETONE, param);
-		return list.isEmpty() ? null : list.get(0);
+	public <T> T getDataSingle(String sqlid, Object param) {
+		return this.getSqlSession().selectOne(sqlid, param);
 	}
 
 	@Override
 	public <T, P extends PagingPrams> List<T> getDataPaging(Class<T> clazz,
 			P pageParams) {
 		return this.getSqlSession().<T> selectList(
-				clazz.getSimpleName().toLowerCase()
-						+ MybatisValue.IBATIS_PAGESQLID, pageParams);
+				DaoEnum.PAGINGQUERY + clazz.getSimpleName(), pageParams);
 	}
 
 }
