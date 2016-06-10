@@ -25,6 +25,13 @@ public class ResourceTag extends TagSupport {
 					switch (value) {
 					case "bootstrap":
 						sb.append("<link href=\"" + contextPath + "/resources/plugins/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\" />");
+						sb.append("<link href=\"" + contextPath + "/resources/plugins/bootstrap/css/font-awesome.min.css\" rel=\"stylesheet\" />");
+						sb.append("<link href=\"" + contextPath + "/resources/plugins/bootstrap/css/animate.min.css\" rel=\"stylesheet\" />");
+						break;
+					//系统模块基本
+					case "system":
+						sb.append("<link href=\"" + contextPath + "/resources/system/css/style.min.css\" rel=\"stylesheet\" />");
+						sb.append("<link href=\"" + contextPath + "/resources/system/img/favicon.ico\" rel=\"shortcut icon\" />");
 						break;
 					default:
 						break;
@@ -54,6 +61,11 @@ public class ResourceTag extends TagSupport {
 						break;
 					case "bootstrap":
 						sb.append("<script src=\"" + contextPath + "/resources/plugins/bootstrap/js/bootstrap.min.js\"></script>");
+						sb.append("<script src=\"" + contextPath + "/resources/plugins/bootbox/bootbox.js\"></script>");
+						break;
+					//系统模块基础类
+					case "system":
+						sb.append("<script src=\"" + contextPath + "/resources/plugins/bootbox/bootbox.js\"></script>");
 						break;
 					default:
 						break;

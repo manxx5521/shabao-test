@@ -10,6 +10,7 @@
 	<!-- 版本 -->
 	<properties>
 		<spring.version>4.2.6.RELEASE</spring.version>
+		<shiro.version>1.2.4</shiro.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
@@ -73,7 +74,7 @@
 			<!-- mybatis核心 -->
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.4.0</version>
+			<version>3.3.0</version>
 		</dependency>
 		<dependency>
 			<!-- mybatis和spring整合依赖 -->
@@ -150,6 +151,23 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.7.4</version>
 		</dependency>
+		<!-- shiro安全框架 begin -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<!-- shiro安全框架 end -->
 
 		<!-- commons 功能包 begin -->
 		<dependency>

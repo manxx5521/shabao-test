@@ -55,7 +55,7 @@
 	<script src="${ctx}/resources/plugins/jquery/jquery.cookie.min.js"></script>
 	<script src="${ctx}/resources/plugins/jquery/jquery.countdown.min.js"></script>
 	<!-- 当前页关联JS -->
-	<script src="${ctx}/resources/js/seckill/seckill.js"></script>
+	<script src="${ctx}/resources/shabaotest/seckill/seckill.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			//传递参数

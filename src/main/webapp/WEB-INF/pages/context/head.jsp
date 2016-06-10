@@ -4,6 +4,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="cs" uri="/custom-tags"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
+<script src="${ctx}/config/jsconfig"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
