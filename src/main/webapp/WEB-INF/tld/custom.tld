@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+<taglib version="2.3" 
+	xmlns="http://javasuncom/xml/ns/j2ee" 
+	xmlns:xsi="http://wwwworg/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://javasuncom/xml/ns/j2ee 
+	http://javasuncom/xml/ns/j2ee/web-jsptaglibrary_2_xsd" >
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>2.3</jsp-version>
+	<short-name>自定义标签cs</short-name>
+	<uri>/custom-tags</uri>
+	<tag>
+		<name>resource</name>
+		<tag-class>com.xiaoshabao.webframe.tag.ResourceTag</tag-class>
+		<display-name>菜单加载组件</display-name>
+		<attribute>
+			<name>type</name>
+			<type>String</type>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<type>String</type>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

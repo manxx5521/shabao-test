@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!--配置数据库相关参数-->
+	<!--定义c3p0数据源-->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/shabaotest" />
+		<property name="user" value="root" />
+		<property name="password" value="19911105man" />
+		<!--连接池 初始连接数-->
+		<property name="initialPoolSize" value="5" />
+		<!--连接池 最小连接数-->
+		<property name="minPoolSize" value="10" />
+		<!--连接池 最大连接数-->
+		<property name="maxPoolSize" value="30" />
+		<property name="maxIdleTime" value="600" />
+		<property name="acquireIncrement" value="5" />
+		<!--等待连接的最大时间-->
+		<property name="checkoutTimeout" value="60000" />
+		<!--当连接失败时的重试次数-->
+		<property name="acquireRetryAttempts" value="60000" />
+	</bean>
+	
+	<!--sqlSessionFactory配置-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--注入数据源-->
+		<property name="dataSource" ref="dataSource" />
+		<!--mybatis全局配置-->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<!--扫描entity和dto 使用别名，在sql配置中使用别名替代 包名+别名。此处已经在mybatis的配置文件中配置了
+		<property name="typeAliasesPackage" value="com.xiaoshabao.shabaowebtest.entity;com.xiaoshabao.shabaowebtest.dto" />
+		-->
+		<!-- 自动扫描mapping目录，省去mybits的Configuration.XML手工配置 -->
+		<property name="mapperLocations" value="classpath:sqlmaps/**/*SQL.xml" />
+	</bean>
+	
+	<!--配置扫描DAO接口包，动态实现DAO接口，注入到spring中-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!--注入sqlSessionFactory-->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<!--给出需要扫描DAO接口包-->
+		<property name="basePackage" value="com.xiaoshabao.*.dao" />
+	</bean>
+	<!-- 事务配置 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!--配置声明式的事务，默认使用注解方式管理-->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>
