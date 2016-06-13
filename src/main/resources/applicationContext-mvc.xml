@@ -13,8 +13,25 @@
 	<!--扫描controller包下所有使用注解的类型-->
 	<context:component-scan base-package="com.xiaoshabao.*.controller" />
 	<!--开启SpringMVC注解模式，可以使用Controller注解联系页面，
-		支持数据绑定、数据格式化、JSON转换-->
-	<mvc:annotation-driven/>
+		支持数据绑定、数据格式化、JSON转换
+		<mvc:annotation-driven /> 
+		-->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	<bean id="mappingJacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
 	<!--静态资源处理，加入对 JS 等处理，允许使用/映射-->
 	<mvc:default-servlet-handler/>
 	

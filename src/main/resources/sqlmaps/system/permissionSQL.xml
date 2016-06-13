@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="permissionsql">
+	<select id="getshiropermission" resultType="java.lang.String"
+	parameterType="java.lang.String">
+	select p.PERMISSION_CODE from td_m_user a,td_sm_user_role b,td_sm_role_permission t,td_m_permission p where
+		a.user_id=b.user_id
+		and b.ROLE_ID=t.ROLE_ID
+		and t.PERMISSION_ID=p.PERMISSION_ID
+		and a.login_name=#{LoginName}
+	</select>
+</mapper>

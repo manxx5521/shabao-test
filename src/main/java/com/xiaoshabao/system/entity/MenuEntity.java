@@ -7,15 +7,15 @@ public class MenuEntity {
 	/**
 	 * id标识
 	 */
-	private String menu_id;
+	private String menuId;
 	/**
 	 * 分组id，100为admin左侧菜单
 	 */
-	private Integer group_id;
+	private Integer groupId;
 	/**
 	 * 标题，显示名
 	 */
-	private String menu_title;
+	private String menuTitle;
 	
 	/**
 	 * 是否是菜单按钮 1是
@@ -30,11 +30,11 @@ public class MenuEntity {
 	/**
 	 * 描述信息
 	 */
-	private String menu_des;
+	private String menuDes;
 	/**
 	 * 父级id标识
 	 */
-	private String parent_menu_id;
+	private String parentMenuId;
 	/**
 	 * 是否使用：1、使用，0、不使用
 	 */
@@ -46,7 +46,7 @@ public class MenuEntity {
 	/**
 	 * 对应权限id表示
 	 */
-	private Integer permission_id;
+	private Integer permissionId;
 	/**
 	 * URL
 	 */
@@ -54,67 +54,25 @@ public class MenuEntity {
 	/**
 	 * 菜单当前等级排序
 	 */
-	private Integer order_no;
-	public String getMenu_id() {
-		return menu_id;
-	}
-	public void setMenu_id(String menu_id) {
-		this.menu_id = menu_id;
-	}
-	public String getMenu_title() {
-		return menu_title;
-	}
-	public void setMenu_title(String menu_title) {
-		this.menu_title = menu_title;
-	}
-	public String getMenu_des() {
-		return menu_des;
-	}
-	public void setMenu_des(String menu_des) {
-		this.menu_des = menu_des;
-	}
-	public String getParent_menu_id() {
-		return parent_menu_id;
-	}
-	public void setParent_menu_id(String parent_menu_id) {
-		this.parent_menu_id = parent_menu_id;
-	}
-	public Integer getForuse() {
-		return foruse;
-	}
-	public void setForuse(Integer foruse) {
-		this.foruse = foruse;
-	}
-	public Integer getLevel() {
-		return level;
-	}
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
+	private Integer orderNo;
 	
-	public Integer getPermission_id() {
-		return permission_id;
+	public String getMenuId() {
+		return menuId;
 	}
-	public void setPermission_id(Integer permission_id) {
-		this.permission_id = permission_id;
+	public void setMenuId(String menuId) {
+		this.menuId = menuId;
 	}
-	public String getUrl() {
-		return url;
+	public Integer getGroupId() {
+		return groupId;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
 	}
-	public Integer getOrder_no() {
-		return order_no;
+	public String getMenuTitle() {
+		return menuTitle;
 	}
-	public void setOrder_no(Integer order_no) {
-		this.order_no = order_no;
-	}
-	public Integer getGroup_id() {
-		return group_id;
-	}
-	public void setGroup_id(Integer group_id) {
-		this.group_id = group_id;
+	public void setMenuTitle(String menuTitle) {
+		this.menuTitle = menuTitle;
 	}
 	public Integer getIsmenu() {
 		return ismenu;
@@ -128,5 +86,46 @@ public class MenuEntity {
 	public void setIoc(String ioc) {
 		this.ioc = ioc;
 	}
-	
+	public String getMenuDes() {
+		return menuDes;
+	}
+	public void setMenuDes(String menuDes) {
+		this.menuDes = menuDes;
+	}
+	public String getParentMenuId() {
+		return parentMenuId;
+	}
+	public void setParentMenuId(String parentMenuId) {
+		this.parentMenuId = parentMenuId;
+	}
+	public Integer getForuse() {
+		return foruse;
+	}
+	public void setForuse(Integer foruse) {
+		this.foruse = foruse;
+	}
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+	public Integer getPermissionId() {
+		return permissionId;
+	}
+	public void setPermissionId(Integer permissionId) {
+		this.permissionId = permissionId;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public Integer getOrderNo() {
+		return orderNo;
+	}
+	public void setOrderNo(Integer orderNo) {
+		this.orderNo = orderNo;
+	}
 }

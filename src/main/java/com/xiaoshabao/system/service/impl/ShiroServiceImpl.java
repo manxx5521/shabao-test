@@ -17,10 +17,9 @@ public class ShiroServiceImpl extends AbstractServiceImpl implements ShiroServic
 	@Override
 	public UserEntity getByUserName(String LoginName) {
 		UserEntity user = new UserEntity();
-		user.setLogin_name(LoginName);
+		user.setLoginName(LoginName);
 		try {
-			List<UserEntity> list = this.baseDao
-					.getData(UserEntity.class, user);
+			List<UserEntity> list = this.getData(UserEntity.class, user);
 			if (list.isEmpty())
 				throw new DaoException("用户名为空");
 			return list.get(0);
@@ -34,7 +33,7 @@ public class ShiroServiceImpl extends AbstractServiceImpl implements ShiroServic
 	@Override
 	public Set<String> getRoles(String LoginName) {
 		try {
-			List<String> list = this.baseDao.getData("getshirorole", LoginName);
+			List<String> list = this.getData("getshirorole", LoginName);
 			Set<String> set = new HashSet<String>();
 			set.addAll(list);
 			return set;
@@ -48,7 +47,7 @@ public class ShiroServiceImpl extends AbstractServiceImpl implements ShiroServic
 	@Override
 	public Set<String> getPermissions(String LoginName) {
 		try {
-			List<String> list = this.baseDao.getData("getshiropermission", LoginName);
+			List<String> list = this.getData("getshiropermission", LoginName);
 			Set<String> set = new HashSet<String>();
 			set.addAll(list);
 			return set;

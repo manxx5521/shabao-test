@@ -9,75 +9,75 @@ public class UserEntity {
 	/**
 	 * 用户id
 	 */
-	private Integer user_id;
+	private Integer userId;
 	/**
 	 * 登录名
 	 */
-	private String login_name;
+	private String loginName;
 	/**
 	 * 用户名，昵称
 	 */
-	private String user_name;
+	private String userName;
 	/**
 	 * 密码
 	 */
-	private String user_password;
+	private String userPassword;
 	/**
 	 * 登录状态：1可登录，0不可登录
 	 */
-	private Integer login_state;
+	private Integer loginState;
 
 	/**
 	 * 资料修改时时间
 	 */
-	private Date update_time;
+	private Date updateTime;
 
-	public Integer getUser_id() {
-		return user_id;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
-	public String getLogin_name() {
-		return login_name;
+	public String getLoginName() {
+		return loginName;
 	}
 
-	public void setLogin_name(String login_name) {
-		this.login_name = login_name;
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getUser_password() {
-		return user_password;
+	public String getUserPassword() {
+		return userPassword;
 	}
 
-	public void setUser_password(String user_password) {
-		this.user_password = user_password;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 
-	public Integer getLogin_state() {
-		return login_state;
+	public Integer getLoginState() {
+		return loginState;
 	}
 
-	public void setLogin_state(Integer login_state) {
-		this.login_state = login_state;
+	public void setLoginState(Integer loginState) {
+		this.loginState = loginState;
 	}
 
-	public Date getUpdate_time() {
-		return update_time;
+	public Date getUpdateTime() {
+		return updateTime;
 	}
 
-	public void setUpdate_time(Date update_time) {
-		this.update_time = update_time;
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 }

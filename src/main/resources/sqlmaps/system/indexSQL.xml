@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="indexsql">
+	<!-- 获得菜单 -->
+	<select id="getMenuEntity" resultType="com.xiaoshabao.system.entity.MenuEntity"
+		parameterType="java.util.Map">
+		select a.menu_id,a.menu_title,a.ismenu,a.ioc,a.url,a.parent_menu_id,a.level from td_m_menu a
+		<where>
+			<if test="groupId != null and groupId !=''">
+				and a.group_id=#{groupId}
+			</if>
+		</where>
+		ORDER BY
+		a.level,a.order_no
+	</select>
+</mapper>

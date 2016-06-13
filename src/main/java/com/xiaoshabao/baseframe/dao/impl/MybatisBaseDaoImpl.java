@@ -36,7 +36,7 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	@Override
 	public <T> int insert(Class<T> clazz, T t) {
 		return this.getSqlSession().insert(
-				DaoEnum.INSERT.getDescribe() + clazz.getSimpleName(), t);
+				DaoEnum.INSERT.getVlaue() + clazz.getSimpleName(), t);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	@Override
 	public <T> List<T> getData(Class<T> clazz, Object param) {
 		return getSqlSession().selectList(
-				DaoEnum.GETDATA + clazz.getSimpleName(), param);
+				DaoEnum.GETDATA.getVlaue() + clazz.getSimpleName(), param);
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	@Override
 	public <T> T getDataSingle(Class<T> clazz, Object param) {
 		return this.getSqlSession().selectOne(
-				DaoEnum.GETONE + clazz.getSimpleName(), param);
+				DaoEnum.GETONE.getVlaue() + clazz.getSimpleName(), param);
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	public <T, P extends PagingPrams> List<T> getDataPaging(Class<T> clazz,
 			P pageParams) {
 		return this.getSqlSession().<T> selectList(
-				DaoEnum.PAGINGQUERY + clazz.getSimpleName(), pageParams);
+				DaoEnum.PAGINGQUERY.getVlaue() + clazz.getSimpleName(), pageParams);
 	}
 
 }

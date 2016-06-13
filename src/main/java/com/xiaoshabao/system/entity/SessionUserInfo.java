@@ -1,7 +1,4 @@
 package com.xiaoshabao.system.entity;
-
-import org.springframework.stereotype.Component;
-
 /**
  * 存放个人信息sessionBean
  */

@@ -47,12 +47,12 @@ public class MyRealm extends AuthorizingRealm {
 		UserEntity user = shiroService.getByUserName(userName);
 		if (user != null) {
 			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(
-					user.getLogin_name(), user.getUser_password(), "xx");
+					user.getLoginName(), user.getUserPassword(), "xx");
 			// 当验证都通过后，把用户信息放在session里
 			Session session = SecurityUtils.getSubject().getSession();
 			SessionUserInfo userSession=new SessionUserInfo();
-			userSession.setUser_id(user.getUser_id());
-			userSession.setUser_name(user.getUser_name());
+			userSession.setUser_id(user.getUserId());
+			userSession.setUser_name(user.getUserName());
 			session.setAttribute("userSession", userSession);
 			return authcInfo;
 		} else {

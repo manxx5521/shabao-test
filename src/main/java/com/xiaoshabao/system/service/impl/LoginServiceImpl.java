@@ -34,8 +34,8 @@ public class LoginServiceImpl extends AbstractServiceImpl implements LoginServic
 		}
 		UserEntity user = list.get(0);
 		SessionUserInfo sessionUserInfo=new SessionUserInfo();
-		sessionUserInfo.setUser_id(user.getUser_id());
-		sessionUserInfo.setUser_name(user.getUser_name());
+		sessionUserInfo.setUser_id(user.getUserId());
+		sessionUserInfo.setUser_name(user.getUserName());
 		return sessionUserInfo;
 	}
 

@@ -36,7 +36,7 @@ public class IndexController extends AbstractController{
 	@RequestMapping(value = "/admin/index1", method = { RequestMethod.GET })
 	public ModelAndView adminIndex(ModelMap model) throws DaoException {
 //		Integer user_id=SessionManager.getInstance().getSeesionInfo().getUser_id();
-		return new ModelAndView("/admin/index/index1", model);
+		return new ModelAndView("/system/index1", model);
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public class IndexController extends AbstractController{
 		List<MenuEntity> menuList=indexService.getMenuList(user_id);
 		model.put("menuList", JSON.toJSONString(menuList));
 		
-		return new ModelAndView("/admin/index/main", model);
+		return new ModelAndView("/system/main", model);
 	}
 
 	

@@ -8,7 +8,6 @@ $(document).ready(function(){
 				url : "loginIN.html",
 				data : fromdata,
 				dataType : "json",
-				async: true,
 				success : function(data) {
 					debugger;
 					if (data.success) {
