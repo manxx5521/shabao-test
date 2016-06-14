@@ -127,6 +127,7 @@
 											<div style="width: 22%;" class="progress-bar"></div>
 										</div>
 									</li>
+								</ul>
 							</div>
 						</div>
 					</div>
@@ -455,10 +456,13 @@
 	<cs:resource type="js" value="jquery,bootstrap,system" />
 	<script src="${ctx}/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
 	<!-- 图标插件 -->
-    <script src="${ctx}/resources/plugins/flot/jquery.flot.js"></script>
+    <script src="${ctx}/resources/plugins/flot/jquery.flot.0.7.js"></script>
+   <%--  <script src="${ctx}/resources/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="${ctx}/resources/plugins/flot/jquery.flot.spline.min.js"></script>
+    <script src="${ctx}/resources/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="${ctx}/resources/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="${ctx}/resources/plugins/flot/jquery.flot.symbol.js"></script> --%>
     <script src="${ctx}/resources/plugins/peity/jquery.peity.min.js"></script>
-    
-    
      
      <!-- 饼状图插件 -->
     <script src="${ctx}/resources/plugins/easypiechart/jquery.easypiechart.min.js"></script>
@@ -631,26 +635,6 @@
 			"IN" : 200,
 			"GB" : 120,
 		};
-		$("#world-map").vectorMap({
-			map : "world_mill_en",
-			backgroundColor : "transparent",
-			regionStyle : {
-				initial : {
-					fill : "#e4e4e4",
-					"fill-opacity" : 0.9,
-					stroke : "none",
-					"stroke-width" : 0,
-					"stroke-opacity" : 0
-				}
-			},
-			series : {
-				regions : [ {
-					values : mapData,
-					scale : [ "#1ab394", "#22d6b1" ],
-					normalizeFunction : "polynomial"
-				} ]
-			},
-		})
     });				
     
     

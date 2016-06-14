@@ -594,7 +594,6 @@
 		</div>
 	</div>
 	<cs:resource type="js" value="jquery,bootstrap,system" />
-	<%-- <script src="${ctx}/resources/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script> --%>
 	<!-- 手风琴菜单 -->
 	<script src="${ctx}/resources/plugins/metisMenu/metisMenu.min.js"></script>
 	<!-- 滚动条 -->
