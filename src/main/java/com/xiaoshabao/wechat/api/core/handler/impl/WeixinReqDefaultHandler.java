@@ -20,8 +20,7 @@ import com.xiaoshabao.wechat.api.core.req.WeixinReqParam;
  */
 public class WeixinReqDefaultHandler implements WeiXinReqHandler {
 
-	private static Logger logger = Logger
-			.getLogger(WeixinReqDefaultHandler.class);
+	private static Logger logger = Logger.getLogger(WeixinReqDefaultHandler.class);
 	
 	/**
 	 * 默认的请求方法，使用HTTPS方式

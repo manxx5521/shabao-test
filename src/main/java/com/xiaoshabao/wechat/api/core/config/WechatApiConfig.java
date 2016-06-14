@@ -10,12 +10,12 @@ public class WechatApiConfig {
 	/**
 	 * 默认解析的handler
 	 */
-	public final static String DEFAULT_HANDLER = "com.xiaoshabao.framework.wechat.api.core.handler.impl.WeixinReqDefaultHandler";
+	public final static String DEFAULT_HANDLER = "com.xiaoshabao.wechat.api.core.handler.impl.WeixinReqDefaultHandler";
 	
 	/**
 	 *	handler的路径名用来拼接全路径名
 	 */
-	public final static String HANDLER_PATH = "com.xiaoshabao.framework.wechat.api.core.handler.impl.";
+	public final static String HANDLER_PATH = "com.xiaoshabao.wechat.api.core.handler.impl.";
 	
 	/**
 	 *	handler的路径名用来拼接全路径名

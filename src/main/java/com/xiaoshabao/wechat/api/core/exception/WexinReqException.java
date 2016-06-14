@@ -6,7 +6,7 @@ package com.xiaoshabao.wechat.api.core.exception;
  * 微信异常信息类，抛出请求微信API时的异常信息
  * </p>
  */
-public class WexinReqException extends Exception {
+public class WexinReqException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
