@@ -25,5 +25,7 @@
         <!-- 配置类的包，别名就是类名，不区分大小写 -->
         <package name="com.xiaoshabao.shabaowebtest.entity" />
         <package name="com.xiaoshabao.shabaowebtest.dto"/>
+        <package name="com.xiaoshabao.webframe.entity" />
+        <package name="com.xiaoshabao.webframe.dto"/>
     </typeAliases>
 </configuration> 

@@ -33,6 +33,9 @@ public class ResourceTag extends TagSupport {
 						sb.append("<link href=\"" + contextPath + "/resources/system/css/style.min.css\" rel=\"stylesheet\" />");
 						sb.append("<link href=\"" + contextPath + "/resources/system/img/favicon.ico\" rel=\"shortcut icon\" />");
 						break;
+					case "jstree":
+						sb.append("<link href=\"" + contextPath + "/resources/plugins/jstree/default/style.min.css\" rel=\"stylesheet\" />");
+						break;
 					default:
 						break;
 					}
@@ -66,6 +69,15 @@ public class ResourceTag extends TagSupport {
 					//系统模块基础类
 					case "system":
 						sb.append("<script src=\"" + contextPath + "/resources/plugins/bootbox/bootbox.js\"></script>");
+						sb.append("<script src=\"" + contextPath + "/resources/system/js/content.min.js\"></script>");
+						break;
+						//系统模块基础类
+					case "jstree":
+						sb.append("<script src=\"" + contextPath + "/resources/plugins/jstree/jstree.min.js\"></script>");
+						break;
+					case "validate":
+						sb.append("<script src=\"" + contextPath + "/resources/plugins/jquery-validation/jquery.validate.min.js\"></script>");
+						sb.append("<script src=\"" + contextPath + "/resources/plugins/jquery-validation/localization/messages_zh.min.js\"></script>");
 						break;
 					default:
 						break;

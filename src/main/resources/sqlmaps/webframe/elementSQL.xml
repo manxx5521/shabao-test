@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframe.dao.ElementDao">
+	<select id="getElementById" resultType="ElementEntity" parameterType="Integer">
+		select element_id,element_name,element_type,element_describe,version,param 
+		from td_ui_element
+		where element_id=#{elementId}
+	</select>
+</mapper>

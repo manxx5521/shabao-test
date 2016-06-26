@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.github.abel533.sql.SqlMapper;
 import com.xiaoshabao.baseframe.bean.PagingPrams;
 import com.xiaoshabao.baseframe.dao.BaseDao;
 import com.xiaoshabao.baseframe.enums.DaoEnum;
@@ -90,6 +91,11 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 			P pageParams) {
 		return this.getSqlSession().<T> selectList(
 				DaoEnum.PAGINGQUERY.getVlaue() + clazz.getSimpleName(), pageParams);
+	}
+
+	@Override
+	public SqlMapper getSqlMapper() {
+		return new SqlMapper(this.getSqlSession());
 	}
 
 }

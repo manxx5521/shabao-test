@@ -2,6 +2,7 @@ package com.xiaoshabao.baseframe.dao;
 
 import java.util.List;
 
+import com.github.abel533.sql.SqlMapper;
 import com.xiaoshabao.baseframe.bean.PagingPrams;
 
 /**
@@ -60,5 +61,8 @@ public interface BaseDao {
 	 */
 	public <T, P extends PagingPrams> List<T> getDataPaging(Class<T> clasz,
 			P pageValue);
-
+	/**
+	 * 获得SqlMapper
+	 */
+	public SqlMapper getSqlMapper();
 }

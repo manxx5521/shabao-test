@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.system.dao.DepartDao">
+	<select id="getDepartById" resultType="com.xiaoshabao.system.entity.DepartEntity" parameterType="String">
+		select depart_id,depart_name,depart_type,depart_frame,parent_depart_id,depart_level,childNum,used,order_no 
+		from td_m_depart 
+		where depart_id=#{departId}
+	</select>
+	<update id="editDepart">
+		update td_m_depart 
+		<set>
+			<if test="departName !=null and departName !='' ">
+			depart_name=#{departName},
+			</if>
+			<if test="departType !=null and departType !='' ">
+			depart_type=#{departType},
+			</if>
+			<if test="departFrame !=null and departFrame !='' ">
+			depart_frame=#{departFrame},
+			</if>
+			<if test="parentDepartId !=null and parentDepartId !='' ">
+			parent_depart_id=#{parentDepartId},
+			</if>
+			<if test="departLevel !=null and departLevel !='' ">
+			depart_level=#{departLevel},
+			</if>
+			<if test="childNum !=null and childNum !='' ">
+			childNum=#{childNum},
+			</if>
+			<if test="used !=null and used !='' ">
+			used=#{used},
+			</if>
+			<if test="orderNo !=null and orderNo !='' ">
+			order_no=#{orderNo},
+			</if>
+		</set>
+		where depart_id=#{departId}
+	</update>
+</mapper>

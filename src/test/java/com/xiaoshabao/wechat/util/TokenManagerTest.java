@@ -10,8 +10,8 @@ import util.SpringTest;
 
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.wechat.bean.TokenType;
+import com.xiaoshabao.wechat.component.TokenManager;
 import com.xiaoshabao.wechat.entity.AccessToken;
-import com.xiaoshabao.wechat.util.TokenManager;
 
 public class TokenManagerTest extends SpringTest {
 	@Resource

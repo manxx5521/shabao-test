@@ -1,4 +1,4 @@
-package com.xiaoshabao.wechat.util;
+package com.xiaoshabao.wechat.component;
 
 import java.sql.Timestamp;
 import java.util.Date;
