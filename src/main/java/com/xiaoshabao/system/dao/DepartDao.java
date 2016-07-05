@@ -18,19 +18,12 @@ public interface DepartDao {
 	 * @param depart
 	 * @return
 	 */
-	public int editDepart(DepartEntity depart);
+	public int updateDepart(DepartEntity depart);
 	/**
-	 * 添加统计部门
+	 * 添加部门
 	 * @param depart
 	 * @return
 	 */
-	public int addSameDepart(DepartEntity depart);
-	
-	/**
-	 * 添加下级部门
-	 * @param depart
-	 * @return
-	 */
-	public int addLowerDepart(DepartEntity depart);
+	public int addDepart(DepartEntity depart);
 
 }

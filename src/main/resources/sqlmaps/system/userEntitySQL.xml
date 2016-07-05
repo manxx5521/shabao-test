@@ -8,8 +8,8 @@
 			<if test="loginName != null and loginName !=''">
 				and a.login_name=#{loginName}
 			</if>
-			<if test="userPassword != null and userPassword !=''">
-				and a.user_password=#{userPassword}
+			<if test="password != null and password !=''">
+				and a.password=#{password}
 			</if>
 		</where>
 	</select>

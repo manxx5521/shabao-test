@@ -35,6 +35,7 @@ public class ResourceTag extends TagSupport {
 						break;
 					case "jstree":
 						sb.append("<link href=\"" + contextPath + "/resources/plugins/jstree/default/style.min.css\" rel=\"stylesheet\" />");
+						sb.append(" <style> .jstree-open>.jstree-anchor>.fa-folder:before{content:\"\f07c\"}.jstree-default .jstree-icon.none{width:0}</style>");
 						break;
 					default:
 						break;
@@ -62,6 +63,9 @@ public class ResourceTag extends TagSupport {
 					case "jquery":
 						sb.append("<script src=\"" + contextPath + "/resources/plugins/jquery/jquery-1.12.4.min.js\"></script>");
 						break;
+					case "jqueryui":
+						sb.append("<script src=\"" + contextPath + "/resources/plugins/jquery-ui/jquery-ui.min.js\"></script>");
+						break;
 					case "bootstrap":
 						sb.append("<script src=\"" + contextPath + "/resources/plugins/bootstrap/js/bootstrap.min.js\"></script>");
 						sb.append("<script src=\"" + contextPath + "/resources/plugins/bootbox/bootbox.js\"></script>");
@@ -69,6 +73,7 @@ public class ResourceTag extends TagSupport {
 					//系统模块基础类
 					case "system":
 						sb.append("<script src=\"" + contextPath + "/resources/plugins/bootbox/bootbox.js\"></script>");
+						sb.append("<script src=\"" + contextPath + "/resources/component/csbox.js\"></script>");
 						sb.append("<script src=\"" + contextPath + "/resources/system/js/content.min.js\"></script>");
 						break;
 						//系统模块基础类
@@ -78,6 +83,10 @@ public class ResourceTag extends TagSupport {
 					case "validate":
 						sb.append("<script src=\"" + contextPath + "/resources/plugins/jquery-validation/jquery.validate.min.js\"></script>");
 						sb.append("<script src=\"" + contextPath + "/resources/plugins/jquery-validation/localization/messages_zh.min.js\"></script>");
+						break;
+					//动态表单tree
+					case "dtree":
+						sb.append("<script src=\"" + contextPath + "/resources/component/jquery.tree.js\"></script>");
 						break;
 					default:
 						break;

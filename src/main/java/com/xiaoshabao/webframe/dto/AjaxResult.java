@@ -60,6 +60,16 @@ public class AjaxResult {
 		this.success = success;
 		this.message = message;
 	}
+	/**
+	 * 返回信息的构造方法
+	 * @param success
+	 * @param message
+	 */
+	public AjaxResult(boolean success, String message,Object data) {
+		this.success = success;
+		this.message = message;
+		this.data = data;
+	}
 	
 	/**
 	 * 返回错误信息的构造方法

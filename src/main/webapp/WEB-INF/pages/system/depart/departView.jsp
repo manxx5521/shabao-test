@@ -7,17 +7,7 @@
 <title>沙包娱乐 - 登录</title>
 <cs:resource type="css" value="jquery,bootstrap,system,jstree" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="keywords" content="沙包娱乐后台管理系统">
-<meta name="description" content="沙包娱乐后台管理系统是一个微信后台管理系统">
-<style>
-.jstree-open>.jstree-anchor>.fa-folder:before {
-	content: "\f07c"
-}
 
-.jstree-default .jstree-icon.none {
-	width: 0
-}
-</style>
 </head>
 <body class="gray-bg">
 	<div class="wrapper wrapper-content  animated fadeInRight">
@@ -120,78 +110,33 @@
 	<cs:resource type="js" value="jquery,bootstrap,system,jstree,validate" />
 	<script>
 		$(document).ready(function() {
-			//加载部门数数据
-			$.ajax({
-				type : "POST",
-				url : "${ctx}/tree/100000/list",
-				dataType : "json",
-				success : function(data) {
-					if (data.success) {
-						$("#using_json").jstree({
-							"core" : {
-								"check_callback" : true,
-								"data" : data.data
-							},
-						"plugins" : [ "types", "dnd" ],
-						"types" : {
-							"default" : {
-								"icon" : "fa fa-folder"
-							},
-							"html" : {
-								"icon" : "fa fa-file-code-o"
-							},
-							"svg" : {
-								"icon" : "fa fa-file-picture-o"
-							},
-							"css" : {
-								"icon" : "fa fa-file-code-o"
-							},
-							"img" : {
-								"icon" : "fa fa-file-image-o"
-							},
-							"js" : {
-								"icon" : "fa fa-file-text-o"
-							}
-						},
-						}).on('changed.jstree', function (e, data) {
-						    var i, j, r;
-						    for(i = 0, j = data.selected.length; i < j; i++) {
-						      r=data.instance.get_node(data.selected[i]).id;
-						    }
-						    getDepartInfo(r);
-						 });
-					} else {
-						if (data.message != null && data.message != "") {
-							alert(data.message);
-						} else {
-							alert('保存数据失败！');
-						}
-					}
-				},
-				error : function(info) {
-					alert(info.responseText);
-					alert(info);
-				}
-			});
-			
+			getTree();
 			//给部门按钮添加点击事件
 			$('#editbtn').click(function(){
 				$('#operation').val('editDepart');
-				switchbth();
-				$('#departName').removeAttr('readonly');
-				$('#departType').removeAttr('readonly');
-				$('#parentDepartId').removeAttr('readonly');
-				$('#departLevel').removeAttr('readonly');
-				$('#childNum').removeAttr('readonly');
-				$('#orderNo').removeAttr('readonly');
+				switchbth('none');
 			});
 			$('#addSamebtn').click(function(){
 				$('#addSamebtn').val('addSameDepart');
-				switchbth();
+				formclear();
+				switchbth('none');
 			});
 			$('#addLowerbtn').click(function(){
-				$('#addLowerbtn').val('addLowerDepart');
-				switchbth();
+				$('#operation').val('addLowerDepart');
+				var departId=$('#departId').val();
+				var level=$('#departLevel').val();
+				formclear();
+				switchbth('none');
+				$('#departId').val(departId);
+				$('#parentDepartId').val(departId);
+				$('#parentDepartId').attr('readonly','readonly');
+				$('#childNum').val('0').attr('readonly','readonly');
+				$('#departLevel').val(level+1).attr('readonly','readonly');
+			});
+			//给部门按钮添加点击事件
+			$('#delbtn').click(function(){
+				getDepartInfo($('#departId').val());
+				switchbth('true');
 			});
 			
 			//添加验证
@@ -231,6 +176,63 @@
 			});
 		});
 		
+		function getTree(){
+			//加载部门数数据
+			$.ajax({
+				type : "POST",
+				url : "${ctx}/tree/100000/list",
+				dataType : "json",
+				success : function(data) {
+					if (data.success) {
+						$("#using_json").jstree({
+							"core" : {
+								"check_callback" : true,
+								"data" : data.data
+							},
+						"plugins" : [ "types", "dnd" ],
+						"types" : {
+							"default" : {
+								"icon" : "fa fa-folder"
+							},
+							"html" : {
+								"icon" : "fa fa-file-code-o"
+							},
+							"svg" : {
+								"icon" : "fa fa-file-picture-o"
+							},
+							"css" : {
+								"icon" : "fa fa-file-code-o"
+							},
+							"img" : {
+								"icon" : "fa fa-file-image-o"
+							},
+							"js" : {
+								"icon" : "fa fa-file-text-o"
+							}
+						},
+						}).on('changed.jstree', function (e, data) {
+						    var i, j, r;
+						    for(i = 0, j = data.selected.length; i < j; i++) {
+						      r=data.instance.get_node(data.selected[i]).id;
+						    }
+						    getDepartInfo(r);
+						    switchbth('true');
+						 });
+					} else {
+						if (data.message != null && data.message != "") {
+							alert(data.message);
+						} else {
+							alert('保存数据失败！');
+						}
+					}
+				},
+				error : function(info) {
+					alert(info.responseText);
+					alert(info);
+				}
+			});
+		}
+		
 		function getDepartInfo(depart_id){
 			$.ajax({
 				type : "POST",
@@ -260,26 +262,22 @@
 				}
 			});
 		}
-		function switchbth(){
-			var state=$('#savebtn').css('display');
+		
+		function switchbth(state){
 			if(state=='none'){
 				$('#editbtn').css('display','none');
 				$('#addSamebtn').css('display','none');
 				$('#addLowerbtn').css('display','none');
 				$('#savebtn').css('display','inline');
 				$('#delbtn').css('display','inline');
+				switchReadonly(true);
 			}else{
 				$('#editbtn').css('display','inline')
 				$('#addSamebtn').css('display','inline')
 				$('#addLowerbtn').css('display','inline')
 				$('#savebtn').css('display','none')
 				$('#delbtn').css('display','none')
-				$('#departName').css('readonly');
-				$('#departType').css('readonly');
-				$('#parentDepartId').css('readonly');
-				$('#departLevel').css('readonly');
-				$('#childNum').css('readonly');
-				$('#orderNo').css('readonly');
+				switchReadonly(false);
 			}
 		}
 		
@@ -294,8 +292,16 @@
 				url : '${ctx}/admin/depart/'+$('#departId').val()+'/'+operation,
 				data : formdata,
 				dataType : 'json',
-				success : function(data) {
-					switchbth();
+				success : function(result) {
+					if(result.success){
+						switchbth('true');
+						bootbox.alert(result.message);
+						getDepartInfo(result.data);
+					}else{
+						
+					}
+					
+					
 				},
 				error : function(info) {
 					alert(info.responseText);
@@ -304,6 +310,39 @@
 			});
 			
 		});
+		
+		//切换readonly属性
+		function switchReadonly(){
+			var b=$('#departName').attr('readonly');
+			switchReadonly(b)
+			
+		}
+		function switchReadonly(b){
+			if(b){
+				$('#departName').removeAttr('readonly');
+				$('#departType').removeAttr('readonly');
+				$('#parentDepartId').removeAttr('readonly');
+				$('#departLevel').removeAttr('readonly');
+				$('#childNum').removeAttr('readonly');
+				$('#orderNo').removeAttr('readonly');
+			}else{
+				$('#departName').attr('readonly','readonly');
+				$('#departType').attr('readonly','readonly');
+				$('#parentDepartId').attr('readonly','readonly');
+				$('#departLevel').attr('readonly','readonly');
+				$('#childNum').attr('readonly','readonly');
+				$('#orderNo').attr('readonly','readonly');
+			}
+		}
+		function formclear(){
+			$('#departId').val('');
+			$('#departName').val('');
+			$('#departType').val('');
+			$('#parentDepartId').val('');
+			$('#departLevel').val('');
+			$('#childNum').val('');
+			$('#orderNo').val('');
+		}
 		
 	</script>
 </body>

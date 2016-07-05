@@ -22,12 +22,12 @@ public interface DepartService extends AbstractService {
 	 * @param depart
 	 * @return
 	 */
-	public void addSameDepart(DepartEntity depart);
+	public DepartEntity addSameDepart(DepartEntity depart);
 	/**
 	 * 添加下级部门
 	 * @param depart
 	 * @return
 	 */
-	public void addLowerDepart(DepartEntity depart);
+	public DepartEntity addLowerDepart(DepartEntity depart);
 
 }

@@ -7,7 +7,7 @@
 		from td_m_depart 
 		where depart_id=#{departId}
 	</select>
-	<update id="editDepart">
+	<update id="updateDepart">
 		update td_m_depart 
 		<set>
 			<if test="departName !=null and departName !='' ">
@@ -37,4 +37,10 @@
 		</set>
 		where depart_id=#{departId}
 	</update>
+	<insert id="addDepart">
+  	insert into td_m_depart (depart_id,depart_name,depart_type,depart_frame,parent_depart_id,depart_level,childNum,used,order_no)
+  	values (#{departId,jdbcType=VARCHAR}, #{departName,jdbcType=VARCHAR}, #{departType,jdbcType=NUMERIC},
+  	#{departFrame,jdbcType=VARCHAR},#{parentDepartId,jdbcType=VARCHAR},#{departLevel,jdbcType=NUMERIC},
+  	#{childNum,jdbcType=NUMERIC},#{used,jdbcType=NUMERIC},#{orderNo,jdbcType=NUMERIC})
+	</insert>
 </mapper>

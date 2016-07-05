@@ -1,6 +1,7 @@
 package com.xiaoshabao.system.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -48,7 +49,7 @@ public class DepartController {
 	public AjaxResult editDepart(@PathVariable("departId")String departId,DepartEntity depart){
 		try {
 			departService.editDepart(depart);
-			return new AjaxResult(true,"部门更新成功");
+			return new AjaxResult(true,"部门更新成功",departId);
 		} catch (ServiceException se) {
 			return new AjaxResult(false,se.getMessage());
 		}
@@ -72,6 +73,11 @@ public class DepartController {
 	@ResponseBody
 	@RequestMapping("{departId}/addLowerDepart")
 	public AjaxResult addLowerDepart(@PathVariable("departId")String departId,DepartEntity depart){
-		return departService.getDepartInfo(departId);
+		try {
+			DepartEntity result=departService.addLowerDepart(depart);
+			return new AjaxResult(true,"下级部门添加成功",result.getDepartId());
+		} catch (ServiceException se) {
+			return new AjaxResult(false,se.getMessage());
+		}
 	}
 }

@@ -6,8 +6,6 @@
 <%@include file="../context/head.jsp"%>
 <title>沙包娱乐 - 登录</title>
 <cs:resource type="css" value="jquery,bootstrap,system" />
-<meta name="keywords" content="沙包娱乐后台管理系统">
-<meta name="description" content="沙包娱乐后台管理系统是一个微信后台管理系统">
 <!--[if lt IE 8]>
     <meta http-equiv="refresh" content="0;ie.html" />
 <![endif]-->

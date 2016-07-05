@@ -21,7 +21,7 @@ public class UserEntity {
 	/**
 	 * 密码
 	 */
-	private String userPassword;
+	private String password;
 	/**
 	 * 登录状态：1可登录，0不可登录
 	 */
@@ -56,14 +56,6 @@ public class UserEntity {
 		this.userName = userName;
 	}
 
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-
 	public Integer getLoginState() {
 		return loginState;
 	}
@@ -80,4 +72,11 @@ public class UserEntity {
 		this.updateTime = updateTime;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }
