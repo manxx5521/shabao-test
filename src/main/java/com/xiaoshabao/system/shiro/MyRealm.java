@@ -18,6 +18,7 @@ import com.xiaoshabao.system.entity.SessionUserInfo;
 import com.xiaoshabao.system.entity.UserEntity;
 import com.xiaoshabao.system.service.ShiroService;
 
+
 public class MyRealm extends AuthorizingRealm {
 
 	@Resource(name = "shiroService")
@@ -50,7 +51,7 @@ public class MyRealm extends AuthorizingRealm {
 					user.getLoginName(), user.getPassword(), "xx");
 			// 当验证都通过后，把用户信息放在session里
 			Session session = SecurityUtils.getSubject().getSession();
-			SessionUserInfo userSession=new SessionUserInfo();
+			SessionUserInfo userSession = new SessionUserInfo();
 			userSession.setUser_id(user.getUserId());
 			userSession.setUser_name(user.getUserName());
 			session.setAttribute("userSession", userSession);
