@@ -4,7 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.xiaoshabao.wechat.bean.TokenType;
+import com.xiaoshabao.wechat.enums.TokenType;
+
 
 public class TokenTypeTest {
 	

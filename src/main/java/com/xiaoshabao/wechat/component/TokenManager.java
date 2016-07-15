@@ -16,8 +16,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.baseframe.dao.BaseDao;
 import com.xiaoshabao.baseframe.exception.DaoException;
 import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.wechat.bean.TokenType;
 import com.xiaoshabao.wechat.entity.AccessToken;
+import com.xiaoshabao.wechat.enums.TokenType;
 import com.xiaoshabao.wechat.http.HttpClientManager;
 
 /**
@@ -36,7 +36,7 @@ public class TokenManager {
 	public static Map<Integer, AccessToken> accessTokens = new HashMap<Integer, AccessToken>();
 
 	/**
-	 * 获取token
+	 * 获取token,获取所有token信息
 	 * <p>
 	 * 对外接口，可用来加锁
 	 * </p>
@@ -70,7 +70,13 @@ public class TokenManager {
 		}
 		return token;
 	}
-
+	/**
+	 * 获取jstoken
+	 */
+	public String getJSToken(Integer accountId)throws ServiceException {
+		AccessToken token = getAccessToken(accountId, TokenType.JSTOKEN);
+		return token.getJsaccess_token();
+	}
 	/**
 	 * 获取access_token
 	 * 

@@ -2,7 +2,7 @@ package com.xiaoshabao.wechat.entity;
 
 import java.sql.Timestamp;
 
-import com.xiaoshabao.wechat.bean.TokenType;
+import com.xiaoshabao.wechat.enums.TokenType;
 
 /**
  * 微信帐号表对应wx_accout表信息

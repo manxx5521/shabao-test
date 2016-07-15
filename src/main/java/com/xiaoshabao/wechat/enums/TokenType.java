@@ -1,4 +1,4 @@
-package com.xiaoshabao.wechat.bean;
+package com.xiaoshabao.wechat.enums;
 
 /**
  * Token类型信息

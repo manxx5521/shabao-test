@@ -1,4 +1,4 @@
-package com.xiaoshabao.baseframe.util;
+package com.xiaoshabao.webframe.component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,7 +19,6 @@ public class ContextHolderUtils {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
 				.getRequestAttributes()).getRequest();
 		return request;
-
 	}
 
 	/**
@@ -30,5 +29,7 @@ public class ContextHolderUtils {
 	public static HttpSession getSession() {
 		HttpSession session = getRequest().getSession();
 		return session;
+
 	}
+
 }

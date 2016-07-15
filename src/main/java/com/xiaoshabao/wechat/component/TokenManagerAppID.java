@@ -15,8 +15,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.baseframe.dao.BaseDao;
 import com.xiaoshabao.baseframe.exception.DaoException;
 import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.wechat.bean.TokenType;
 import com.xiaoshabao.wechat.entity.AccessToken;
+import com.xiaoshabao.wechat.enums.TokenType;
 import com.xiaoshabao.wechat.http.HttpClientManager;
 
 /**
