@@ -37,6 +37,9 @@ public class ResourceTag extends TagSupport {
 						sb.append("<link href=\"" + contextPath + "/resources/plugins/jstree/default/style.min.css\" rel=\"stylesheet\" />");
 						sb.append(" <style> .jstree-open>.jstree-anchor>.fa-folder:before{content:\"\f07c\"}.jstree-default .jstree-icon.none{width:0}</style>");
 						break;
+					case "swiper":
+						sb.append("<link href=\"" + contextPath + "/resources/plugins/swiper/swiper.min.css\" rel=\"stylesheet\" />");
+						break;
 					default:
 						break;
 					}
@@ -87,6 +90,18 @@ public class ResourceTag extends TagSupport {
 					//动态表单tree
 					case "dtree":
 						sb.append("<script src=\"" + contextPath + "/resources/component/jquery.tree.js\"></script>");
+						break;
+					//灯箱插件
+					case "colorbox":
+						sb.append("<script src=\"" + contextPath + "/resources/plugins/colorbox/jquery.colorbox-min.js\"></script>");
+						break;
+					//瀑布流插件
+					case "masonry":
+						sb.append("<script src=\"" + contextPath + "/resources/plugins/masonry/jquery.masonry.min.js\"></script>");
+						break;
+						//瀑布流插件
+					case "swiper":
+						sb.append("<script src=\"" + contextPath + "/resources/plugins/swiper/swiper.jquery.min.js\"></script>");
 						break;
 					default:
 						break;

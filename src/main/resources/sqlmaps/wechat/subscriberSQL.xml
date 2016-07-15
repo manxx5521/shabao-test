@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.wechat.dao.SubscriberWxDao">
+	<select id="getSubscriberById" resultType="com.xiaoshabao.wechat.entity.SubscriberWxEntity">
+		select * from wx_subscriber where account_id=#{accountId} and openid=#{openid}
+	</select>
+	<insert id="insert">
+		<!--ignore 表示主键冲突时，不报错返回结果为0-->
+		insert ignore into wx_subscriber(id,type,account_id,openid,update_time)
+		values(null,#{type,jdbcType=NUMERIC},#{accountId,jdbcType=NUMERIC},#{openid,jdbcType=VARCHAR},SYSDATE())
+	</insert>
+	<update id="update">
+		update wx_subscriber 
+		<set>
+			update_time=SYSDATE(),
+			<if test="type !=null and type !='' ">
+			type=#{type},
+			</if>
+			<if test="openid !=null and openid !='' ">
+			openid=#{openid},
+			</if>
+		</set>
+		where account_id=#{accountId}
+	</update>
+</mapper>

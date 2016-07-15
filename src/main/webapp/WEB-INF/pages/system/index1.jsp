@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@include file="../context/head.jsp"%>
+<%@include file="./common.jsp"%>
 <title>沙包娱乐 - 登录</title>
 <cs:resource type="css" value="jquery,bootstrap,system" />
 <!--[if lt IE 8]>

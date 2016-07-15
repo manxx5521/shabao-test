@@ -7,14 +7,20 @@ var dtree = $.widget("ui.dtree",{
 		element_id:'',	
 		name:'treevalue',//树的名字唯一标识
 		showpop:true,
-		title:'请选择' //弹出树选择的标题
+		title:'请选择', //弹出树选择的标题
+		class:"col-sm-9",
 	},
 	
 	_create : function() {
-		var h_element=$('<input type="hidden" id="'+this.options.name+'_val" name="'+this.options.name+'"/>');
+		var element_name=this.options.name;
+		this.element.addClass('row');
+		var h_element=this.element;
+		h_element.append($('<input type="hidden" id="'+this.options.name+'_val" name="'+this.options.name+'"/>'));
 		if(this.options.showpop){
-			var find=$('<i class="glyphicon glyphicon-search" id="'+this.options.name+'+find"></i>');
-			h_element.append($('<input type="text" id="'+this.options.name+'_text"/>').append(find));
+			var find=$('<span class="glyphicon glyphicon-search col-sm-1" id="'+this.options.name+'_find"></span>');
+			var input_div=$('<div class="col-sm-11"></div>')
+			input_div.append($('<input type="text" id="'+this.options.name+'_text"/>').addClass('form-control'))
+			h_element.append(input_div).append(find);
 		}
 		var tree=$('<div id="'+this.options.name+'_tree"></div>')
 		
@@ -41,17 +47,19 @@ var dtree = $.widget("ui.dtree",{
 			pop_element.append(pop_document.append(pop_content));
 			h_element.append(pop_element);
 			this.element.append(h_element);
+			$this=this;
 			//查询按钮点击
 			$('#'+this.options.name+'_find').click(function(){
-				$('#'+this.options.name+'_hval').val('');
-				$('#'+this.options.name+'_htext').val('');
-				var model=$('#'+this.options.name+'_pop');
+				$('#'+element_name+'_hval').val('');
+				$('#'+element_name+'_htext').val('');
+				var model=$('#'+element_name+'_pop');
 				model.modal({
+					
 					show:true,//显示弹出层
 					//backdrop:'static',//禁止位置关闭
-					keyboard:false //关闭键盘时间
+					keyboard:false //关闭键盘事件
 				});
-				showtree();
+				$this.showtree();
 			});
 			
 		}else{
@@ -75,7 +83,7 @@ var dtree = $.widget("ui.dtree",{
 		//加载部门数数据
 		$.ajax({
 			type : 'POST',
-			url : '${ctx}/tree/'+element_id+'/list',
+			url : window.webroot+'/tree/'+element_id+'/list',
 			dataType : 'json',
 			context:this.options,
 			success : function(data) {

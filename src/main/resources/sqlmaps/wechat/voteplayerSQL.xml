@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.wechat.dao.VotePlayerDao">
+	<select id="getPlayerList" resultType="com.xiaoshabao.wechat.entity.VotePlayerEntity">
+		select a.player_id,a.vote_id,player_name,a.player_num,a.des,a.image,a.vote_num,a.update_time 
+		from wx_vote_player a
+		where a.vote_id=#{voteId} ORDER BY a.player_num
+	</select>
+	<select id="getPlayerDetail" resultType="com.xiaoshabao.wechat.dto.VoteDetailResult">
+		select a.player_id,a.player_num,a.player_name,a.des,a.image
+			,a.vote_num,a.vote_id,a.update_time
+			,b.account_id 'vote.account_id'
+			,b.rules 'vote.rules'
+			,b.posters 'vote.posters'
+			,b.start_time 'vote.start_time'
+			,b.end_time 'vote.end_time'
+			,b.vote_name 'vote.vote_name'
+			,b.template 'vote.template'
+		from wx_vote_player a
+		inner join wx_vote b on a.vote_id=b.vote_id
+		where a.player_id=#{playerId}
+	</select>
+	<!-- 投票排行 -->
+	<select id="getVoteRanking" resultType="com.xiaoshabao.wechat.entity.VotePlayerEntity">
+		select a.player_id,a.vote_id,player_name,a.player_num,a.des,a.image,a.vote_num,a.update_time 
+		from wx_vote_player a
+		where a.vote_id=#{voteId}
+		ORDER BY a.vote_num desc LIMIT #{type}
+	</select>
+</mapper>
