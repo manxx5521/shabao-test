@@ -5,7 +5,7 @@ import com.xiaoshabao.wechat.api.core.req.WeixinReqParam;
 
 
 @ReqType("access_token")
-public class AccessToken extends WeixinReqParam{
+public class AccessTokenReq extends WeixinReqParam{
 
 	/**
 	 * 获取access_token填写client_credential

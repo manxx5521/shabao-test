@@ -12,8 +12,7 @@ import com.xiaoshabao.wechat.api.wxbase.TokenAPI;
  */
 public class TokenAPITest{
 	
-	public final static String accessToken="ONUzmFiS-gLMTOA-1boQmOuMhBLEu84_t_au7nN0xcf8ClOkEsl30yrFXg2cyxSZHPp2Hsms0N7FFwiCL5E4FRoJSccpsgDFT0qoDKm2hzkCGLhAAAKOT";
-
+	public final static String accessToken="dLiP_fmDaiwN6xhYooz9ds4v1x7u3gCJbzRB7YrebS4DXeURbxoshhBP7i6CvfMMuTQ4I35fCeIchBd-niDJiBYnDf5jsHFii65tM1GsQXjYR-dU9yvNEL6emKUVE7uxHAYfAIACVT";
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -28,6 +27,16 @@ public class TokenAPITest{
 			String s = TokenAPI.getAccessToken("wx07e34f9575809866","d8c5dae813951b0c31599c1a8aebf410"); //自己
 			System.out.println(s);
 			//i4NLqMizqTXaDLmD6m397hj1XTQfRFcRASb3HMi8TbLTvBS9wuKKvFf1fXWUB9mMjfw3fJNPwqoHIFTY3NVmDAgRJCz8Kx1tFEOxGmv3ydSkdCXCDZDZIdP695nUw0-bCHKiAHAWBE
+		} catch (WexinReqException e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+	}
+	@Test
+	public void testGetjsToken() throws Exception {
+		try {
+			String s = TokenAPI.getJSTokenAll(accessToken).getToken(); 
+			System.out.println(s);
 		} catch (WexinReqException e) {
 			e.printStackTrace();
 			throw new Exception();

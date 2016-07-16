@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.wechat.dao.AccessTokenDao">
+	<select id="getTokenById" resultType="com.xiaoshabao.wechat.entity.AccessToken">
+		SELECT A.ACCOUNT_ID,A.APPID,A.APPSECRET,A.ID,A.ACCESS_TOKEN,A.EXPIRES_IN,A.UPDATE_TIME,
+			A.JSACCESS_TOKEN,A.JSEXPIRES_IN,A.JSUPDATE_TIME FROM WX_ACCOUNT A
+		WHERE A.ACCOUNT_ID=#{accountId}
+	</select>
+	
+	<update id="updateToken" parameterType="com.xiaoshabao.wechat.entity.AccessToken">
+		UPDATE WX_ACCOUNT A
+		<set>
+			<if test="accessToken !=null and accessToken !='' ">
+				A.ACCESS_TOKEN =#{accessToken},
+			</if>
+			<if test="expiresIn !=null and expiresIn !='' ">
+				A.EXPIRES_IN =#{expiresIn},
+			</if>
+			<if test="updateTime !=null and updateTime !='' ">
+				A.UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="jsaccessToken !=null and jsaccessToken !='' ">
+				A.JSACCESS_TOKEN = #{jsaccessToken},
+			</if>
+			<if test="jsexpiresIn !=null and jsexpiresIn !='' ">
+				A.JSEXPIRES_IN = #{jsexpiresIn},
+			</if>
+			<if test="jsupdateTime !=null and jsupdateTime !='' ">
+				A.JSUPDATE_TIME = #{jsupdateTime,jdbcType=TIMESTAMP}
+			</if>
+		</set>
+		WHERE A.ACCOUNT_ID=#{accountId}
+	</update>
+	<!-- 分批次更新 -->
+	<update id="updateAccessToken" parameterType="com.xiaoshabao.wechat.entity.AccessToken">
+		UPDATE WX_ACCOUNT SET 
+			ACCESS_TOKEN =#{accessToken},
+			EXPIRES_IN =#{expiresIn},
+			UPDATE_TIME =#{updateTime,jdbcType=TIMESTAMP}
+		WHERE ACCOUNT_ID=#{accountId}
+	</update>
+	<update id="updateJSToken" parameterType="com.xiaoshabao.wechat.entity.AccessToken">
+		UPDATE WX_ACCOUNT SET 
+			JSACCESS_TOKEN = #{jsaccessToken},
+			JSEXPIRES_IN = #{jsexpiresIn},
+			JSUPDATE_TIME = #{jsupdateTime,jdbcType=TIMESTAMP}
+		WHERE ACCOUNT_ID=#{accountId}
+	</update>
+</mapper>

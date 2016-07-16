@@ -9,7 +9,8 @@
 <weixin-req>
 	<!-- 获取凭证 -->
 	<req key="access_token" dataType="String" url="https://api.weixin.qq.com/cgi-bin/token?1=1"></req>
-	<req key="getcallbackip" url="https://api.weixin.qq.com/cgi-bin/getcallbackip?1=1"></req>
+	<req key="jstoken" dataType="String" url="https://api.weixin.qq.com/cgi-bin/ticket/getticket?1=1"></req>
+	<req key="getcallbackip" des="服务器地址" url="https://api.weixin.qq.com/cgi-bin/getcallbackip?1=1"></req>
 	<!-- 素材接口 -->
 	<req key="uploadTempMedia" des="上传临时" mappingHandler="WeixinReqUploadHandler" url="https://file.api.weixin.qq.com/cgi-bin/media/upload?1=1"></req>
 	<req key="downTempMedia" des="下载临时" method="get" mappingHandler="WeixinReqDownHandler" url="https://file.api.weixin.qq.com/cgi-bin/media/get?1=1"></req>

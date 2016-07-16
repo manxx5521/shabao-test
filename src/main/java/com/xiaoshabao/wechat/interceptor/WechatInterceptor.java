@@ -16,7 +16,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.xiaoshabao.wechat.component.TokenManager;
 import com.xiaoshabao.wechat.component.WechatConfig;
 import com.xiaoshabao.wechat.entity.AccessToken;
-import com.xiaoshabao.wechat.enums.TokenType;
 import com.xiaoshabao.wechat.util.WeixinUtil;
 
 public class WechatInterceptor extends HandlerInterceptorAdapter {
@@ -65,11 +64,10 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 				}
 				logger.info(accountId + "进行数据签名" + "签名url为：" + url);
 				Integer account = Integer.valueOf(accountId);
-				AccessToken jstoken = tokenManager.getToken(account,
-						TokenType.JSTOKEN);
-				if (StringUtils.isNotEmpty(jstoken.getJsaccess_token())) {
+				AccessToken jstoken = tokenManager.getJSToken(account);
+				if (StringUtils.isNotEmpty(jstoken.getJsaccessToken())) {
 					Map<String, String> jsParams = WeixinUtil.getjsSignStr(
-							jstoken.getAppid(), jstoken.getJsaccess_token(),
+							jstoken.getAppid(), jstoken.getJsaccessToken(),
 							url);
 					request.setAttribute("domain", domain);
 					request.setAttribute("jsParams", jsParams);
@@ -77,8 +75,8 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.error("微信js签名时出现错误");
+			e.printStackTrace();
 		}
 	}
 }

@@ -43,5 +43,11 @@
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="3"></property>
 	</bean>
-	
+	<!-- 拦截器配置-->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/wechat/**/*"/>
+			<bean class="com.xiaoshabao.wechat.interceptor.WechatInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>
