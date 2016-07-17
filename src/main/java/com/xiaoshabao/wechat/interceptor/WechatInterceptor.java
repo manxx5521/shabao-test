@@ -46,9 +46,8 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 
 	// 后置拦截器
 	@Override
-	public void postHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
+	public void postHandle(HttpServletRequest request,HttpServletResponse response, 
+			Object handler,ModelAndView modelAndView) throws Exception {
 		HttpSession session = request.getSession();
 		String accountId = (String) session.getAttribute("accountId");
 		try {
@@ -59,20 +58,16 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 				if (param == null) {
 					url = request.getRequestURL().toString();
 				} else {
-					url = request.getRequestURL().toString() + "?"
-							+ request.getQueryString();
+					url = request.getRequestURL().toString() + "?"+ request.getQueryString();
 				}
 				logger.info(accountId + "进行数据签名" + "签名url为：" + url);
 				Integer account = Integer.valueOf(accountId);
 				AccessToken jstoken = tokenManager.getJSToken(account);
 				if (StringUtils.isNotEmpty(jstoken.getJsaccessToken())) {
-					Map<String, String> jsParams = WeixinUtil.getjsSignStr(
-							jstoken.getAppid(), jstoken.getJsaccessToken(),
-							url);
+					Map<String, String> jsParams = WeixinUtil.getjsSignStr(jstoken.getAppid(), jstoken.getJsaccessToken(),url);
 					request.setAttribute("domain", domain);
 					request.setAttribute("jsParams", jsParams);
 				}
-
 			}
 		} catch (Exception e) {
 			logger.error("微信js签名时出现错误");

@@ -15,7 +15,7 @@ public class SystemConfig extends SysConfig{
 	/**
 	 * 后台管理最上级菜单
 	 */
-	@Value("${parent_menu_admin}")
+	@Value("${system.parent_menu_admin}")
 	private String parent_menu_admin;
 	
 	/**

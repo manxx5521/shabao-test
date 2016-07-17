@@ -6,6 +6,10 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context.xsd">
+        
+    <!-- 加载配置文件便于系统使用 -多个可用逗号分割-->
+	<context:property-placeholder location="classpath*:/config.properties"
+		ignore-resource-not-found="true" ignore-unresolvable="true" />
 	<!--配置service相关配置-->
 	<!--扫描service包下所有使用注解的类型-->
 	<context:component-scan base-package="com.xiaoshabao.*.service" />

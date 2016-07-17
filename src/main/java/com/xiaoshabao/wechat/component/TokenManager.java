@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class TokenManager {
 	public static Map<Integer, AccessToken> accessTokens = new HashMap<Integer, AccessToken>();
 	@Autowired
 	private AccessTokenDao tokenDao;
+	@Resource(name="wechatConfig")
+	private WechatConfig wechatConfig;
 	/** 延迟时间 **/
 	private int time;
 
@@ -38,6 +42,9 @@ public class TokenManager {
 	public AccessToken getToken(Integer accountId) {
 		AccessToken accessToken=null;
 		try {
+			if(wechatConfig.getTokenType()==2){
+				return getRealToken(accountId);
+			}
 			accessToken =this.getAccessToken(accountId);
 			AccessToken jsToken=this.getJSToken(accountId, accessToken);
 			accessToken.setJsupdateTime(jsToken.getJsupdateTime());
@@ -59,6 +66,9 @@ public class TokenManager {
 	public AccessToken getAccessToken(Integer accountId) {
 		AccessToken accessToken=null;
 		try {
+			if(wechatConfig.getTokenType()==2){
+				return getRealToken(accountId);
+			}
 			//现有
 			accessToken =this.getMemoryToken(accountId);
 			accessToken=this.getAccessToken(accountId,accessToken);
@@ -99,6 +109,9 @@ public class TokenManager {
 	public AccessToken getJSToken(Integer accountId){
 		AccessToken accessToken=null;
 		try {
+			if(wechatConfig.getTokenType()==2){
+				return getRealToken(accountId);
+			}
 			accessToken =this.getMemoryToken(accountId);
 			accessToken=this.getJSToken(accountId,accessToken);
 		} catch (Exception e) {
@@ -139,8 +152,6 @@ public class TokenManager {
 	 * <br>
 	 * 如果没有会获取数据库的token放到内存中
 	 * @param accountId
-	 * @return
-	 * @throws ServiceException
 	 */
 	private AccessToken getMemoryToken(Integer accountId){
 		logger.debug(accountId+"开始获取Token");

@@ -2,8 +2,6 @@ package com.xiaoshabao.wechat.service;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.xiaoshabao.baseframe.service.AbstractService;
 import com.xiaoshabao.wechat.util.aes.AesException;
 
