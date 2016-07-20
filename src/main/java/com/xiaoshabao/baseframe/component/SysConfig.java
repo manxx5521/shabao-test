@@ -1,5 +1,6 @@
 package com.xiaoshabao.baseframe.component;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,4 +10,12 @@ import org.springframework.stereotype.Component;
 @Component("sysConfig")
 public class SysConfig {
 	
+	/**资源加载方式*/
+	@Value("${resourceType}")
+	private String resourceType;
+	
+	/**资源加载方式*/
+	public String getResourceType() {
+		return resourceType;
+	}
 }
