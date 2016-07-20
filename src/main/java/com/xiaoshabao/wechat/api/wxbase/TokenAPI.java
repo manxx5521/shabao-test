@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
 import com.xiaoshabao.wechat.api.core.util.WeiXinReqService;
 import com.xiaoshabao.wechat.api.wxbase.model.AccessTokenReq;
-import com.xiaoshabao.wechat.api.wxbase.model.JSToken;
+import com.xiaoshabao.wechat.api.wxbase.model.JSTokenReq;
 import com.xiaoshabao.wechat.api.wxbase.result.TokenResult;
 /**
  * 微信--token信息
@@ -55,7 +55,7 @@ public class TokenAPI {
 	 * @throws WexinReqException
 	 */
 	public static TokenResult getJSTokenAll(String accessToken) throws WexinReqException{
-		JSToken jstoken = new JSToken();
+		JSTokenReq jstoken = new JSTokenReq();
 		jstoken.setAccess_token(accessToken);
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(jstoken);
 		// 正常返回

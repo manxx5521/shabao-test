@@ -5,7 +5,7 @@ import com.xiaoshabao.wechat.api.core.req.WeixinReqParam;
 
 
 @ReqType("jstoken")
-public class JSToken extends WeixinReqParam{
+public class JSTokenReq extends WeixinReqParam{
 
 	private String access_token;
 	private String type="jsapi";

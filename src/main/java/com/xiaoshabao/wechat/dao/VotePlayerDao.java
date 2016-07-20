@@ -31,4 +31,16 @@ public interface VotePlayerDao {
 	 * @param voteId
 	 */
 	public List<VotePlayerEntity> getVoteRanking(@Param("voteId")Integer voteId,@Param("type")Integer type);
+	/**
+	 * 添加选手
+	 * @param player
+	 * @return
+	 */
+	public int insertPlayer(VotePlayerEntity player);
+	/**
+	 * 获得选手
+	 * @param player
+	 * @return
+	 */
+	public VotePlayerEntity getPlayer(Integer playerId);
 }

@@ -1,8 +1,10 @@
 package com.xiaoshabao.wechat.service;
 
 import com.xiaoshabao.baseframe.service.AbstractService;
+import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.VoteDetailResult;
 import com.xiaoshabao.wechat.dto.VoteListResult;
+import com.xiaoshabao.wechat.entity.VotePlayerEntity;
 
 public interface VoteService extends AbstractService{
 	
@@ -31,5 +33,11 @@ public interface VoteService extends AbstractService{
 	 * @param voteId
 	 */
 	public  VoteListResult getVoteRanking(Integer voteId,Integer type);
+	/**
+	 * 添加选手报名信息
+	 * @param player
+	 * @return
+	 */
+	public AjaxResult addVotePlayer(VotePlayerEntity player,String[] imgs);
 	
 }

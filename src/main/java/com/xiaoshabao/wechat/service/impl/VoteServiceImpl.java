@@ -6,9 +6,11 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dao.VoteDao;
 import com.xiaoshabao.wechat.dao.VoteImageDao;
 import com.xiaoshabao.wechat.dao.VotePlayerDao;
@@ -93,6 +95,31 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 		}
 		result.setList(playerDao.getVoteRanking(voteId, type));
 		return result;
+	}
+	
+	//添加选手报名信息
+	@Override
+	@Transactional
+	public AjaxResult addVotePlayer(VotePlayerEntity player,String[] imgs) {
+		if(imgs.length<1){
+			return new AjaxResult("请至少上传一张照片");
+		}
+		int i=playerDao.insertPlayer(player);
+		if(i<1){
+			throw new ServiceException("选手信息未能正常提交");
+		}
+		VoteImageEntity voteImage=new VoteImageEntity();
+		for(String image:imgs){
+			voteImage.setPlayerId(player.getPlayerId());
+			voteImage.setType("1");
+			voteImage.setVoteId(player.getVoteId());
+			voteImage.setImage(image);
+			int j=imageDao.insertImage(voteImage);
+			if(j<1){
+				throw new ServiceException("选手图片未能正常提交");
+			}
+		}
+		return new AjaxResult(true,"添加成功");
 	}
 
 }

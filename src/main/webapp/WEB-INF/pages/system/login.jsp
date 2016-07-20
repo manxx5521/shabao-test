@@ -6,7 +6,7 @@
 <%@include file="../context/head.jsp"%>
 <%@include file="./common.jsp"%>
 <title>沙包娱乐 - 登录</title>
-<cs:resource type="css" value="jquery,bootstrap,system" />
+<cs:resource type="css" value="jquery,bootstrap,system,bootbox" />
 <link href="${ctx}/resources/system/login/login.min.css" rel="stylesheet">
 <!--[if lt IE 8]>
     <meta http-equiv="refresh" content="0;ie.html" />
@@ -55,7 +55,7 @@
 			</div>
 		</div>
 	</div>
-	<cs:resource type="js" value="jquery,bootstrap,system" />
+	<cs:resource type="js" value="jquery,bootstrap,system,bootbox" />
 	<script src="${ctx}/resources/system/login/login.js"></script>
 </body>
 </html>

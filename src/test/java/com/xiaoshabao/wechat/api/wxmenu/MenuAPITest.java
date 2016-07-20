@@ -33,14 +33,14 @@ public class MenuAPITest {
 	public void testCreateMenu() throws Exception {
 		try {
 			CommonButton btn1 = new CommonButton();
-			btn1.setName("登录");
+			btn1.setName("投票测试2");
 			btn1.setType(MenuType.VIEW);
-			btn1.setUrl("http://www.soso.com/");
+			btn1.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fshabao.tunnel.qydev.com%2Fshabao-test%2Fwechat%2Fvote%2F10000001%2Flist&response_type=code&scope=snsapi_base&state=21#wechat_redirect");
 			
 			CommonButton btn21=new CommonButton();
-			btn21.setName("测试二级标题");
-			btn21.setType(MenuType.CLICK);
-			btn21.setKey("menutitle21");
+			btn21.setName("投票测试2");
+			btn21.setType(MenuType.VIEW);
+			btn21.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fshabao.tunnel.qydev.com%2Fshabao-test%2Fwechat%2Fvote%2F10000001%2Flist%3FaccountId%3D1000001&response_type=code&scope=snsapi_base&state=21#wechat_redirect");
 			CommonButton btn22=new CommonButton();
 			btn22.setName("测试二级标题");
 			btn22.setType(MenuType.CLICK);

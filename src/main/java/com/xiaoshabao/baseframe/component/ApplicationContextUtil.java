@@ -1,4 +1,4 @@
-package com.xiaoshabao.baseframe.util;
+package com.xiaoshabao.baseframe.component;
 
 import java.util.Locale;
 

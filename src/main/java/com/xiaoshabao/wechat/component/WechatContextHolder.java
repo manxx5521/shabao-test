@@ -27,9 +27,9 @@ public class WechatContextHolder extends ContextHolderUtils{
 	 * 获得wecahtSession
 	 * @return
 	 */
-	public static String getWxAccountId(){
+	public static Integer getWxAccountId(){
 		HttpSession session = getRequest().getSession();
-		return (String) session.getAttribute("accountId");
+		return (Integer) session.getAttribute("accountId");
 	}
 	
 }

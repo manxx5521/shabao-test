@@ -6,4 +6,8 @@
 		from wx_vote_image
 		where player_id=#{playerId}
 	</select>
+	<insert id="insertImage">
+	INSERT into wx_vote_image(vote_id,type,player_id,image)
+	VALUES(#{voteId,jdbcType=NUMERIC},#{type,jdbcType=VARCHAR},#{playerId,jdbcType=NUMERIC},#{image,jdbcType=VARCHAR})
+	</insert>
 </mapper>

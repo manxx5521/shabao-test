@@ -8,16 +8,17 @@ import org.springframework.stereotype.Component;
  */
 @Component("wechatConfig")
 public class WechatConfig{
-	/**
-	 * 网址
-	 */
+	/**网址*/
 	@Value("${wechat.domain}")
 	private String domain;
-	/**
-	 * 获得token方式
-	 */
+	
+	/**获得token方式*/
 	@Value("${wechat.tokenType}")
 	private int tokenType;
+	
+	/**微信自动登录方式*/
+	@Value("${wechat.loginType}")
+	private String loginType;
 
 	public String getDomain() {
 		return domain;
@@ -27,4 +28,7 @@ public class WechatConfig{
 		return tokenType;
 	}
 
+	public String getLoginType() {
+		return loginType;
+	}
 }

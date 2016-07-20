@@ -27,4 +27,16 @@
 		where a.vote_id=#{voteId}
 		ORDER BY a.vote_num desc LIMIT #{type}
 	</select>
+	
+	<insert id="insertPlayer" useGeneratedKeys="true" keyProperty="playerId">
+  	INSERT INTO WX_VOTE_PLAYER(VOTE_ID,PLAYER_NAME,DES,PLAYER_NUM,IMAGE,VOTE_NUM,UPDATE_TIME)
+	VALUES(#{voteId,jdbcType=NUMERIC},#{playerName,jdbcType=VARCHAR},#{des,jdbcType=VARCHAR},
+	#{playerNum,jdbcType=NUMERIC},#{image,jdbcType=VARCHAR},#{voteNum,jdbcType=NUMERIC},#{updateTime,jdbcType=TIME})
+	</insert>
+	<select id="getPlayer" resultType="com.xiaoshabao.wechat.entity.VotePlayerEntity">
+		select a.player_id,a.player_num,a.player_name,a.des,a.image,
+			a.vote_num,a.vote_id,a.update_time
+		from wx_vote_player a
+		where a.player_id=#{playerId}
+	</select>
 </mapper>

@@ -6,7 +6,7 @@
 <%@include file="../../context/head.jsp"%>
 <%@include file="../common.jsp"%>
 <title>沙包娱乐 - 登录</title>
-<cs:resource type="css" value="jquery,bootstrap,system,jstree" />
+<cs:resource type="css" value="jquery,bootstrap,system,jstree,bootbox" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 
 </head>

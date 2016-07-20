@@ -8,11 +8,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.xiaoshabao.baseframe.util.UUIDGenerator;
+import com.xiaoshabao.wechat.entity.AccessToken;
 /**
  * 微信工具类
  */
 public class WeixinUtil {
 	private static Logger logger = LoggerFactory.getLogger(WeixinUtil.class);
+	/**
+	 * token静态类，使用内存缓存
+	 */
+	public static Map<Integer, AccessToken> accessTokens = new HashMap<Integer, AccessToken>();
 	
 	/**
 	 * 给url js-sdk签名

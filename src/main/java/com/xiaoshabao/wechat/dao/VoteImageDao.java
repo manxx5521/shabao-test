@@ -15,5 +15,10 @@ public interface VoteImageDao {
 	 * @return
 	 */
 	public List<VoteImageEntity> getImageList(Integer playerId);
-	
+	/**
+	 * 添加图片
+	 * @param voteImage
+	 * @return
+	 */
+	public int insertImage(VoteImageEntity voteImage);
 }
