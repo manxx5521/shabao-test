@@ -47,6 +47,8 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/wechat/**/*"/>
+			<mvc:exclude-mapping path="/wechat/file/**/*"/>
+			<mvc:exclude-mapping path="/wechat/service/**/*"/>
 			<bean class="com.xiaoshabao.wechat.interceptor.WechatInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
