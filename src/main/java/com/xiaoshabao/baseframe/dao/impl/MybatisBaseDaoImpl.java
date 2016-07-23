@@ -9,17 +9,15 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.github.abel533.sql.SqlMapper;
-import com.xiaoshabao.baseframe.bean.PagingPrams;
+import com.xiaoshabao.baseframe.bean.PagingParams;
 import com.xiaoshabao.baseframe.dao.BaseDao;
 import com.xiaoshabao.baseframe.enums.DaoEnum;
 
 /**
  * 通用的数据库操作组件
- * 
  * @param <T>
  * @param <P>
  */
-
 @Repository("mybatisBaseDao")
 public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao {
 
@@ -87,8 +85,7 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	}
 
 	@Override
-	public <T, P extends PagingPrams> List<T> getDataPaging(Class<T> clazz,
-			P pageParams) {
+	public <T, P extends PagingParams> List<T> getDataPaging(Class<T> clazz,P pageParams) {
 		return this.getSqlSession().<T> selectList(
 				DaoEnum.PAGINGQUERY.getVlaue() + clazz.getSimpleName(), pageParams);
 	}

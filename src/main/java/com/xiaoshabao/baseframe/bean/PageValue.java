@@ -10,49 +10,61 @@ public class PageValue<T> {
 	/**
 	 * 内容
 	 */
-	private List<T> models;
+	private List<T> list;
 	/**
 	 * 总计条数
 	 */
-	private Long totalRows;
+	private Long rows;
 	/**
 	 * 总计页数
 	 */
-	private Integer pages;
+	private int pages;
 	/**
 	 * 每页大小
 	 */
-	private Integer pageSize;
+	private int size;
+	/**
+	 * 页面索引
+	 */
+	private int index;
 
-	public List<T> getModels() {
-		return models;
+	public List<T> getList() {
+		return list;
 	}
 
-	public void setModels(List<T> models) {
-		this.models = models;
+	public void setList(List<T> list) {
+		this.list = list;
 	}
 
-	public Long getTotalRows() {
-		return totalRows;
+	public Long getRows() {
+		return rows;
 	}
 
-	public void setTotalRows(Long totalRows) {
-		this.totalRows = totalRows;
+	public void setRows(Long rows) {
+		this.rows = rows;
 	}
 
-	public Integer getPages() {
+	public int getPages() {
 		return pages;
 	}
 
-	public void setPages(Integer pages) {
+	public void setPages(int pages) {
 		this.pages = pages;
 	}
 
-	public Integer getPageSize() {
-		return pageSize;
+	public int getSize() {
+		return size;
 	}
 
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 }

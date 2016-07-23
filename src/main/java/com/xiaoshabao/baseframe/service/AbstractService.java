@@ -3,7 +3,7 @@ package com.xiaoshabao.baseframe.service;
 import java.util.List;
 
 import com.xiaoshabao.baseframe.bean.PageValue;
-import com.xiaoshabao.baseframe.bean.PagingPrams;
+import com.xiaoshabao.baseframe.bean.PagingParams;
 
 /**
  * 基本sevice
@@ -53,13 +53,11 @@ public interface AbstractService {
 	/**
 	 * 分页方法
 	 */
-	public <T, P extends PagingPrams> PageValue<T> getDataPaging(
-			Class<T> clasz, P pagingPrams);
+	public <T, P extends PagingParams> PageValue<T> getDataPaging(Class<T> clasz, P pagingPrams);
 
 	/**
 	 * 查询
 	 */
-	public <T, P extends PagingPrams> List<T> getPagingModels(Class<T> clasz,
-			P p);
+	public <T, P extends PagingParams> List<T> getPagingModels(Class<T> clasz,P p);
 
 }

@@ -10,7 +10,7 @@ public enum DaoEnum {
 	EXISTS("exists","存在"),
 	GETDATA("get","获得所有数据"),
 	GETONE("one","获得单挑数据"),
-	PAGINGQUERY("pagingQuery","获得分页数据");
+	PAGINGQUERY("getPaging","获得分页数据");
 	
 	/**
 	 * 值

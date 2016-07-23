@@ -10,9 +10,8 @@ import org.slf4j.LoggerFactory;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiaoshabao.baseframe.bean.PageValue;
-import com.xiaoshabao.baseframe.bean.PagingPrams;
+import com.xiaoshabao.baseframe.bean.PagingParams;
 import com.xiaoshabao.baseframe.dao.BaseDao;
-import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.AbstractService;
 
 /**
@@ -35,7 +34,7 @@ public abstract class AbstractServiceImpl implements AbstractService {
 	}
 
 	@Override
-	public <T> int insert(Class<T> clasz, T t) throws ServiceException {
+	public <T> int insert(Class<T> clasz, T t){
 		return this.baseDao.insert(clasz, t);
 	}
 
@@ -50,7 +49,7 @@ public abstract class AbstractServiceImpl implements AbstractService {
 	}
 
 	@Override
-	public <T> boolean exists(Class<T> clasz, T t) throws ServiceException {
+	public <T> boolean exists(Class<T> clasz, T t){
 		return this.baseDao.exists(clasz, t);
 	}
 
@@ -76,25 +75,23 @@ public abstract class AbstractServiceImpl implements AbstractService {
 
 	// 通过这个方法把分页查询DAO实例
 	@Override
-	public <T, P extends PagingPrams> PageValue<T> getDataPaging(
-			Class<T> clasz, P pageParams) {
+	public <T, P extends PagingParams> PageValue<T> getDataPaging(Class<T> clasz, P pageParams) {
 		PageValue<T> pageValue = new PageValue<T>();
-
-		PageHelper.startPage(1, 10);
-		List<T> models = this.baseDao.getDataPaging(clasz, pageParams);
-		pageValue.setModels(models);
+		PageHelper.startPage(pageParams.getIndex(),pageParams.getSize());
+		List<T> list = this.baseDao.getDataPaging(clasz, pageParams);
+		pageValue.setList(list);
 		// 用PageInfo对结果进行包装
-		PageInfo<T> page = new PageInfo<T>(models);
-		pageValue.setTotalRows(page.getTotal());
+		PageInfo<T> page = new PageInfo<T>(list);
+		pageValue.setRows(page.getTotal());
 		// 计算页数
 		pageValue.setPages(page.getPages());
-		pageValue.setPageSize(page.getPageSize());
+		pageValue.setSize(page.getPageSize());
+		pageValue.setIndex(pageParams.getIndex());
 		return pageValue;
 	}
 
 	@Override
-	public <T, P extends PagingPrams> List<T> getPagingModels(Class<T> clasz,
-			P p) {
+	public <T, P extends PagingParams> List<T> getPagingModels(Class<T> clasz,P p) {
 		return this.baseDao.getDataPaging(clasz, p);
 	}
 

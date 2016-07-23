@@ -6,15 +6,15 @@ package com.xiaoshabao.baseframe.bean;
  * 如果想要传入其他参数，需要继承次类
  * </p>
  */
-public class PagingPrams {
+public class PagingParams {
 	/**
 	 * 页面索引
 	 */
-	private int index;
+	private int index=1;
 	/**
 	 * 每页大小
 	 */
-	private int size;
+	private int size=10;
 	
 	public int getIndex() {
 		return index;
