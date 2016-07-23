@@ -22,5 +22,20 @@ public class AuthAPI {
 		// 正常返回
 		return JSONObject.toJavaObject(result, AuthBaseInfo.class);
 	}
+	
+	/**
+	 * 获得基本信息-JSON形式
+	 * @param appid
+	 * @param secret
+	 * @param code 网页获得的code
+	 * @return
+	 */
+	public static JSONObject getBaseInfoforJson(String appid, String secret, String code){
+		AuthBaseReq req=new AuthBaseReq();
+		String result=WeiXinReqService.getInstance().doWeinxinReq(req);
+		JSONObject josn = JSONObject.parseObject(result);
+		// 正常返回
+		return josn;
+	}
 
 }
