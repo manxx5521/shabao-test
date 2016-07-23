@@ -127,7 +127,7 @@ public class MediaAPITest {
 	@Test
 	public void testDownloadNews() throws Exception {
 		try {
-			NewsResult bean=MediaAPI.downloadNews(accessToken, "ZN4l8BsTy1QPTKABBI2PzeJrPPPNrLByUEHnSyvMhEs");
+			NewsResult bean=MediaAPI.downloadNews(accessToken, "QPreUSwRXnLnMqsVubaUJsKbPnWQrI3mt7KLolAsfPM");
 			System.out.println("图文消息:"+JSON.toJSONString(bean));
 		} catch (WexinReqException e) {
 			e.printStackTrace();
