@@ -36,6 +36,9 @@
 	<css key="system"> <![CDATA[  <link href="${ctx}/resources/system/img/favicon.ico" rel="shortcut icon" />]]></css>
 	<js key="system" src="${ctx}/resources/component/csbox.js" />
 	<js key="system" src="${ctx}/resources/system/js/content.min.js" />
+	<!-- 微信相关 -->
+	<css key="weui" src="${ctx}/resources/plugins/weui/weui.min.css" />
+	
 
 </resource>
 </root>

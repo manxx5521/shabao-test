@@ -2,12 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.wechat.dao.VotePlayerDao">
 	<select id="getPlayerList" resultType="com.xiaoshabao.wechat.entity.VotePlayerEntity">
-		select a.player_id,a.vote_id,player_name,a.player_num,a.des,a.image,a.vote_num,a.update_time 
+		select a.player_id,a.vote_id,player_name,phone,a.player_num,a.des,a.image,a.vote_num,a.update_time 
 		from wx_vote_player a
-		where a.vote_id=#{voteId} ORDER BY a.player_num
+		where a.vote_id=#{voteId} and status='1' ORDER BY a.player_num
 	</select>
+	
+	<select id="getPagingVotePlayerEntity" resultType="com.xiaoshabao.wechat.entity.VotePlayerEntity"
+		parameterType="com.xiaoshabao.wechat.dto.VoteParams" >
+		select a.player_id,a.vote_id,player_name,phone,a.player_num,a.des,a.image,a.vote_num,a.update_time 
+		from wx_vote_player a
+		where a.vote_id=#{voteId} and status='1' 
+		<if test="keyword !=null and keyword !='' ">
+			and ( a.player_num LIKE "%"#{keyword}"%" OR A.player_name LIKE "%"#{keyword}"%" )
+		</if>
+		ORDER BY a.player_num
+	</select>
+	
 	<select id="getPlayerDetail" resultType="com.xiaoshabao.wechat.dto.VoteDetailResult">
-		select a.player_id,a.player_num,a.player_name,a.des,a.image
+		select a.player_id,a.player_num,a.player_name,a.phone,a.des,a.image
 			,a.vote_num,a.vote_id,a.update_time
 			,b.account_id 'vote.account_id'
 			,b.rules 'vote.rules'
@@ -22,21 +34,27 @@
 	</select>
 	<!-- 投票排行 -->
 	<select id="getVoteRanking" resultType="com.xiaoshabao.wechat.entity.VotePlayerEntity">
-		select a.player_id,a.vote_id,player_name,a.player_num,a.des,a.image,a.vote_num,a.update_time 
+		select a.player_id,a.vote_id,player_name,a.phone,a.player_num,a.des,a.image,a.vote_num,a.update_time 
 		from wx_vote_player a
 		where a.vote_id=#{voteId}
 		ORDER BY a.vote_num desc LIMIT #{type}
 	</select>
 	
 	<insert id="insertPlayer" useGeneratedKeys="true" keyProperty="playerId">
-  	INSERT INTO WX_VOTE_PLAYER(VOTE_ID,PLAYER_NAME,DES,PLAYER_NUM,IMAGE,VOTE_NUM,UPDATE_TIME)
-	VALUES(#{voteId,jdbcType=NUMERIC},#{playerName,jdbcType=VARCHAR},#{des,jdbcType=VARCHAR},
-	#{playerNum,jdbcType=NUMERIC},#{image,jdbcType=VARCHAR},#{voteNum,jdbcType=NUMERIC},#{updateTime,jdbcType=TIME})
+  	INSERT INTO WX_VOTE_PLAYER(PLAYER_ID,VOTE_ID,STATUS,PLAYER_NAME,PHONE,DES,PLAYER_NUM,IMAGE,VOTE_NUM,UPDATE_TIME)
+	VALUES(NULL,#{voteId,jdbcType=NUMERIC},#{playerName,jdbcType=VARCHAR},#{status,jdbcType=NUMERIC},#{phone,jdbcType=VARCHAR},#{des,jdbcType=VARCHAR},
+	#{playerNum,jdbcType=NUMERIC},#{image,jdbcType=VARCHAR},#{voteNum,jdbcType=NUMERIC},SYSDATE())
 	</insert>
 	<select id="getPlayer" resultType="com.xiaoshabao.wechat.entity.VotePlayerEntity">
-		select a.player_id,a.player_num,a.player_name,a.des,a.image,
+		select a.player_id,a.player_num,a.phone,a.player_name,a.des,a.image,
 			a.vote_num,a.vote_id,a.update_time
 		from wx_vote_player a
 		where a.player_id=#{playerId}
 	</select>
+	<select id="getMaxPlayerNum" resultType="java.lang.Integer">
+		select max(player_num) max from wx_vote_player where vote_id=#{voteId}
+	</select>
+	<update id="addPlayerVote">
+		UPDATE WX_VOTE_PLAYER SET VOTE_NUM=VOTE_NUM+1 WHERE VOTE_ID=#{voteId}
+	</update>
 </mapper>

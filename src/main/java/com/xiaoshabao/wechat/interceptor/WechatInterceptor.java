@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.wechat.api.wxbase.AuthAPI;
-import com.xiaoshabao.wechat.api.wxbase.result.AuthBaseInfo;
 import com.xiaoshabao.wechat.component.TokenManager;
 import com.xiaoshabao.wechat.component.WechatConfig;
 import com.xiaoshabao.wechat.entity.AccessToken;
@@ -33,31 +33,50 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		HttpSession session = request.getSession();
-		String account = (String) session.getAttribute("accountId");
-		String openid = (String) session.getAttribute("openid");
-		String accountId = request.getParameter("accountId");
-		String code = request.getParameter("code");
-		// 进行微信帐号缓存
-		if (account == null) {
-			if (StringUtils.isNotEmpty(accountId)) {
-				session.setAttribute("accountId", accountId);
-			}
-		}
-		//进行用户登录
-		if(StringUtils.isEmpty(openid)){
-			if (StringUtils.isNotEmpty(code)) {
-				String loginType=wechatConfig.getLoginType();
-				if(loginType.equals("code")){
-					openid=code;
+		try {
+			HttpSession session = request.getSession();
+			String account = (String) session.getAttribute("accountId");
+			String openid = (String) session.getAttribute("openid");
+			
+			// 进行微信帐号缓存
+			if (account == null) {
+				String accountId = request.getParameter("accountId");
+				if (StringUtils.isNotEmpty(accountId)) {
+					session.setAttribute("accountId", accountId);
+					account=accountId;
+				}else{
+					//oauth2.0接口带的参数
+					String state=request.getParameter("state");
+					if(StringUtils.isNotEmpty(state)){
+						session.setAttribute("accountId", state);
+						account=state;
+					}
 				}
-				if(loginType.equals("openid")){
+			}
+			//进行用户登录
+			if(StringUtils.isEmpty(openid)){
+				String code = request.getParameter("code");
+				if (StringUtils.isNotEmpty(code)) {
+					String loginType=wechatConfig.getLoginType();
 					AccessToken token=tokenManager.getAccessToken(Integer.valueOf(account));
-					AuthBaseInfo result=AuthAPI.getBaseInfo(token.getAppid(), token.getAppsecret(), code);
-					openid=result.getOpenid();
+					JSONObject result=AuthAPI.getBaseInfoforJson(token.getAppid(), token.getAppsecret(), code);
+					String resultCode=result.getString("errcode");
+					if(resultCode.equals("0")){
+						openid=result.getString("openid");
+						session.setAttribute("openid",openid);
+					}else{
+						if(loginType.equals("code")){
+							openid=code;
+							session.setAttribute("openid",openid);
+						}else{
+							logger.error("自动登陆错误,未正常获得openid。\n"+result.toString());
+						}
+					}
 				}
-				session.setAttribute("openid",openid);
 			}
+		} catch (Exception e) {
+			logger.error("自动登陆异常结束");
+			e.printStackTrace();
 		}
 		return true;
 	}

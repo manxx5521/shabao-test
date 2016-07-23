@@ -13,9 +13,17 @@ public class VotePlayerEntity {
 	 */
 	private Integer voteId;
 	/**
+	 * 状态1已审核0初始
+	 */
+	private Integer status;
+	/**
 	 * 选手名字
 	 */
 	private String playerName;
+	/**
+	 * 联系方式
+	 */
+	private String phone;
 	/**
 	 * 描述
 	 */
@@ -84,5 +92,17 @@ public class VotePlayerEntity {
 	}
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }

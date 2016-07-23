@@ -11,7 +11,7 @@ import com.xiaoshabao.baseframe.exception.ServiceException;
  */
 public class WechatUrlUtil {
 	private final static String BASEURL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=";
-	private final static String PARAMS="&response_type=code&scope=snsapi_base&state=21#wechat_redirect";
+	private final static String PARAMS="&response_type=code&scope=snsapi_base&state=100001#wechat_redirect";
 	
 	/**
 	 * 获得auth2.0授权的URL
@@ -35,7 +35,7 @@ public class WechatUrlUtil {
 	
 	@Test
 	public void test(){
-		String s=getAuthURL_base("http://shabao.tunnel.qydev.com","/shabao-test/wechat/vote/10000001/list?accountId=1000001");
+		String s=getAuthURL_base("http://shabao.tunnel.qydev.com","/shabao-test/wechat/vote/10000001/list");
 		System.out.println(s);
 	}
 }

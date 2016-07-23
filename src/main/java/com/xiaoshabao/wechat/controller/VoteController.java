@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xiaoshabao.baseframe.bean.PageValue;
 import com.xiaoshabao.baseframe.controller.AbstractController;
 import com.xiaoshabao.baseframe.exception.DaoException;
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.VoteDetailResult;
 import com.xiaoshabao.wechat.dto.VoteListResult;
+import com.xiaoshabao.wechat.dto.VoteParams;
 import com.xiaoshabao.wechat.entity.VotePlayerEntity;
 import com.xiaoshabao.wechat.service.VoteService;
 
@@ -46,10 +48,28 @@ public class VoteController extends AbstractController{
 	 * @throws ServiceException 
 	 */
 	@RequestMapping(value="/wechat/vote/{voteId}/list")
-	public ModelAndView getVoteList (ModelMap model,@PathVariable("voteId")Integer voteId){
-		VoteListResult data=voteService.getVoteList(voteId);
+	public ModelAndView getVoteList (ModelMap model,@PathVariable("voteId")Integer voteId,String code,VoteParams params){
+		VoteListResult data=voteService.getVoteListResult(voteId,code,params);
 		model.put("data", data);
+		model.put("params", params);
 		return new ModelAndView ("/wechat/vote/"+data.getTemplate()+"/voteList");
+	}
+	
+	/**
+	 * 投票列表下一页<br>
+	 */
+	@ResponseBody
+	@RequestMapping(value="/wechat/vote/{voteId}/listPage")
+	public AjaxResult getVoteListPage (ModelMap model,@PathVariable("voteId")Integer voteId,VoteParams params){
+		try {
+			params.setVoteId(voteId);
+			PageValue<VotePlayerEntity> page=this.voteService.getDataPaging(VotePlayerEntity.class, params);
+			return new AjaxResult(true,page);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new AjaxResult(false,"数量获取异常");
+		}
+		
 	}
 	
 	/**
@@ -82,27 +102,40 @@ public class VoteController extends AbstractController{
 	 */
 	@RequestMapping(value="/wechat/vote/{voteId}/participate")
 	public ModelAndView getVoteParticipate (ModelMap model,@PathVariable("voteId")Integer voteId){
-		VoteListResult data=voteService.getVoteList(voteId);
+		VoteListResult data=voteService.getVoteListResult(voteId);
 		model.put("data", data);
 		return new ModelAndView ("/wechat/vote/"+data.getTemplate()+"/participate");
 	}
+	
 	/**
 	 * 报名参与界面
 	 */
 	@ResponseBody
 	@RequestMapping(value="/wechat/vote/{voteId}/playeradd")
 	public AjaxResult addVotePlayer (ModelMap model,@PathVariable("voteId")Integer voteId,VotePlayerEntity player,String[] imgs){
-		AjaxResult result=null;
 		try {
-			result = voteService.addVotePlayer(player,imgs);
+			player.setVoteId(voteId);
+			return voteService.addVotePlayer(player,imgs);
 		}catch (ServiceException e) {
-			result.setMessage(e.getMessage());
-			result.setSuccess(false);
+			return new AjaxResult(e.getMessage());
 		} catch (Exception e) {
-			result.setMessage("系统添加异常");
-			result.setSuccess(false);
 			e.printStackTrace();
+			return new AjaxResult("系统异常");
 		}
-		return result;
+	}
+	
+	/**
+	 * 投票列表下一页<br>
+	 */
+	@ResponseBody
+	@RequestMapping(value="/wechat/vote/{voteId}/addVoteNum")
+	public AjaxResult addVoteNum (ModelMap model,@PathVariable("voteId")Integer voteId,Integer playerId){
+		try {
+			return new AjaxResult(true,null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new AjaxResult(false,"投票时，系统错误，请重试");
+		}
+		
 	}
 }

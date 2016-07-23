@@ -43,4 +43,16 @@ public interface VotePlayerDao {
 	 * @return
 	 */
 	public VotePlayerEntity getPlayer(Integer playerId);
+	/**
+	 * 获得最大选手编码
+	 * @param voteId
+	 * @return
+	 */
+	public int getMaxPlayerNum(Integer voteId);
+	/**
+	 * 给选手添加一票
+	 * @param playerId
+	 * @return
+	 */
+	public int addPlayerVote(Integer playerId);
 }

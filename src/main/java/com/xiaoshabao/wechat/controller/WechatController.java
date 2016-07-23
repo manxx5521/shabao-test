@@ -46,7 +46,7 @@ public class WechatController {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/wechat/{uid}/dispatch", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
+	@RequestMapping(value = "/wechat/service/{uid}/dispatch", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
 	public void doGet(HttpServletResponse response,@PathVariable("uid") Integer uid,
 			String signature,String msg_signature, @RequestParam String echostr,
 			@RequestParam String timestamp, @RequestParam String nonce){
@@ -72,48 +72,20 @@ public class WechatController {
 	 * @throws IOException
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/wechat/{uid}/dispatch", method = RequestMethod.POST, produces = "application/xml; charset=utf-8")
+	@RequestMapping(value = "/wechat/service/{uid}/dispatch", method = RequestMethod.POST, produces = "application/xml; charset=utf-8")
 	public void wechatPost(HttpServletResponse response,
 			HttpServletRequest request,@PathVariable("uid") Integer uid,String nonce) throws IOException, Exception {
 		// 将请求、响应的编码均设置为UTF-8（防止中文乱码）
 		// request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		logger.info("开始调用微信服务 ！");
+		logger.info("开始响应微信服务 ！");
 		// 返回值
 		String respMessage = null;
 		// xml请求解析
 		Map<String, String> requestMap = MessageUtil.parseXml(request);
 		respMessage = wechatService.coreService(uid,requestMap,nonce);
-		/*
-		// 发送方帐号（open_id）
-		String fromUserName = requestMap.get("FromUserName");
-		// 公众帐号
-		String toUserName = requestMap.get("ToUserName");
-		// 消息类型
-		String msgType = requestMap.get("MsgType");
-
-		// 文本消息
-		if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
-			respMessage = wechatService.textService(fromUserName, toUserName,
-					requestMap.get("Content"));
-		}
-		// 事件推送
-		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
-			String event = requestMap.get("Event");
-			// 如果是点击自定义菜单
-			if (event.equals(MessageUtil.EVENT_TYPE_CLICK)) {
-				respMessage = wechatService.eventService(fromUserName,
-						toUserName, event, requestMap.get("EventKey"));
-			} else {
-				respMessage = wechatService.eventService(fromUserName,
-						toUserName, event, null);
-			}
-		} else {
-			respMessage = wechatService
-					.defaultService(fromUserName, toUserName);
-		}
-		*/
-		logger.info("微信服务返回内容:" + respMessage);
+		
+		logger.info("结束响应微信服务返回内容:" + respMessage);
 		PrintWriter out = response.getWriter();
 		out.print(respMessage);
 		out.close();

@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * 关注取消实体类
  */
-public class SubscriberWxEntity {
+public class SubscriberEntity {
 	/**
 	 * id
 	 */
@@ -27,10 +27,10 @@ public class SubscriberWxEntity {
 	 */
 	private Date updateTime;
 
-	public SubscriberWxEntity() {
+	public SubscriberEntity() {
 	}
 
-	public SubscriberWxEntity(Integer accountId,String openid, Integer type) {
+	public SubscriberEntity(Integer accountId,String openid, Integer type) {
 		this.accountId=accountId;
 		this.openid = openid;
 		this.type = type;

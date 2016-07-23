@@ -14,6 +14,7 @@
 <%@include file="../../../context/head.jsp"%>
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/touch.css">
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/colorbox.css">
+<link rel="stylesheet" type="text/css" href="${ctx}/resources/wechat/vote/blue/daohang.css" />
 <cs:resource type="all" value="jquery,colorbox,masonry" />
 <script src="${ctx}/resources/wechat/vote/blue/app.js" type="text/javascript"></script>
 <style>
@@ -35,27 +36,6 @@
 }
 </style>
 <!--微信分享-->
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script>
-	wx.config({
-		debug : false,
-		appId : 'wxf022fc156026a511',
-		timestamp : 1456839962,
-		nonceStr : 'O2ciojBfI3KwBtKk',
-		signature : '2cabe0a811a8d58284f7ae62aa2060ae50cd3e33',
-		jsApiList : [ 'checkJsApi', 'onMenuShareTimeline',
-				'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo',
-				'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem',
-				'showAllNonBaseMenuItem', 'translateVoice', 'startRecord',
-				'stopRecord', 'onRecordEnd', 'playVoice', 'pauseVoice',
-				'stopVoice', 'uploadVoice', 'downloadVoice', 'chooseImage',
-				'previewImage', 'uploadImage', 'downloadImage',
-				'getNetworkType', 'openLocation', 'getLocation',
-				'hideOptionMenu', 'showOptionMenu', 'closeWindow',
-				'scanQRCode', 'chooseWXPay', 'openProductSpecificView',
-				'addCard', 'chooseCard', 'openCard' ]
-	});
-</script>
 <script type="text/javascript">
 	wx.ready(function() {
 		var shareData = {
@@ -172,7 +152,6 @@
 			<div class="share_words"></div>
 		</div>
 	</section>
-	<link rel="stylesheet" type="text/css" href="${ctx}/resources/wechat/vote/blue/daohang.css" />
 	  <div class="bot_main">
 		<ul>
 			<li class="ico_3"><a
@@ -227,7 +206,7 @@
 			});
 		}
 	</script>
-	<style type="text/css">
+<style type="text/css">
 #cover {
 	display: none;
 	position: absolute;

@@ -9,10 +9,11 @@
 <meta content="telephone=no" name="format-detection">
 <title>${data.voteName}</title>
 <%@include file="../../../context/head.jsp"%>
+<%@include file="../../common.jsp"%>
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/touch.css">
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/colorbox.css">
-<cs:resource type="all" value="jquery,colorbox,masonry" />
-<script src="${ctx}/resources/wechat/vote/blue/app.js" type="text/javascript"></script>
+<cs:resource type="all" value="jquery,colorbox,masonry,weui" />
+<%-- <script src="${ctx}/resources/wechat/vote/blue/app.js" type="text/javascript"></script> --%>
 <style>
 .slider {
 	display: none;
@@ -32,27 +33,6 @@
 }
 </style>
 <!--微信分享-->
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script>
-	wx.config({
-		debug : false,
-		appId : 'wxf022fc156026a511',
-		timestamp : 1456562189,
-		nonceStr : 'TtSAjLwmzRKIkmRi',
-		signature : '554bdae72373f9a65c314eff91bd47c8266a245b',
-		jsApiList : [ 'checkJsApi', 'onMenuShareTimeline',
-				'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo',
-				'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem',
-				'showAllNonBaseMenuItem', 'translateVoice', 'startRecord',
-				'stopRecord', 'onRecordEnd', 'playVoice', 'pauseVoice',
-				'stopVoice', 'uploadVoice', 'downloadVoice', 'chooseImage',
-				'previewImage', 'uploadImage', 'downloadImage',
-				'getNetworkType', 'openLocation', 'getLocation',
-				'hideOptionMenu', 'showOptionMenu', 'closeWindow',
-				'scanQRCode', 'chooseWXPay', 'openProductSpecificView',
-				'addCard', 'chooseCard', 'openCard' ]
-	});
-</script>
 <script type="text/javascript">
 	wx.ready(function() {
 		var shareData = {
@@ -74,106 +54,6 @@
 <!--END 微信分享-->
 </head>
 <body>
-<!--
-	<input style="display: none" type="text" id="audiofile" size="80"
-		value="http://vote.lanrenmb.com/Member//Public/upload/5/1/b/1/5625fbba9f371.mp3">
-	<div class="music" id="music" ontouchstart="musicControls();">
-		<audio id="audio" loop="loop"
-			style="display: none; width: 0; height: 0;" oncanplay="canplay();"></audio>
-	</div>
-	<script>
-		var audio = document.getElementById("audio");
-		var music = document.getElementById("music");
-		music.played = 0;
-		function musicControls() {
-			audio.src = document.getElementById('audiofile').value;
-			if (music.played == 0) {
-				audio.play();
-				music.className = music.className.replace(" musicstop", "");
-				music.className = music.className + " musicplay";
-				music.played = undefined;
-
-			} else {
-				audio.pause();
-				music.className = music.className.replace(" musicplay", "");
-				music.className = music.className + " musicstop";
-				music.played = 0;
-
-			}
-		}
-		function canplay() {
-			music.className = music.className + " musicplay";
-		}
-	</script>
-	<style>
-.music {
-	background: url("${ctx}/resources/wechat/vote/blue/images/music.png")
-		no-repeat scroll 0 0 transparent;
-	background-size: 34px;
-	top: 20px;
-	height: 34px;
-	position: fixed;
-	right: 20px;
-	width: 34px;
-	z-index: 999;
-}
-
-.musicplay {
-	-webkit-animation: musicplay 1.2s linear 0s infinite;
-	animation: musicplay 1.2s linear infinite;
-}
-
-.musicstop {
-	-webkit-animation: musicstop 1.2s linear 0s infinite;
-	animation: musicstop 1.2s linear infinite;
-}
-
-@
-keyframes musicplay { 
-	0%{
-		-webkit-transform: rotateZ(0deg);
-		transform: rotateZ(0deg);
-	}
-	100%{
-		-webkit-transform:rotateZ(-360deg);
-		transform:rotateZ(-360deg);
-	}
-}
-@
--webkit-keyframes musicplay { 
-	0%{
-		-webkit-transform: rotateZ(0deg);
-		transform: rotateZ(0deg);
-	}
-	100%{
-		-webkit-transform:rotateZ(-360deg);
-		transform:rotateZ(-360deg);
-	}
-}
-@
-keyframes musicstop { 
-	0%{
-		-webkit-transform: rotateZ(0deg);
-		transform: rotateZ(0deg);
-	}
-	100%{
-		-webkit-transform:rotateZ(0deg);
-		transform:rotateZ(0deg);
-	}
-}
-@
--webkit-keyframes musicstop { 
-	0%{
-		-webkit-transform: rotateZ(0deg);
-		transform: rotateZ(0deg);
-	}
-	00%{
-		-webkit-transform:rotateZ(0deg);
-		transform:rotateZ(0deg);
-	}
-}
-</style>
--->
 	<header>
 		<div class="m_head clearfix">
 			<div class="slider">
@@ -184,32 +64,28 @@ keyframes musicstop {
 			</div>
 			<div class="num_box">
 				<div style="text-align: center;"></div>
-				<a href="./voteBuleBaoMing.html?vote_id=${data.voteId}"
+				<a href="${ctx}/wechat/vote/${voteId}/participate"
 					class="join_us">我要报名</a>
 				<ul class="num_box_ul">
-					<li><span class="text">已报名</span><span>${data.userNum}</span></li>
-					<li><span class="text">投票人次</span><span>${data.voteNum}</span></li>
-					<li><span class="text">访问量</span><span>${data.accessNum}</span></li>
+					<li><span class="text">已报名</span><span>${data.count.userNum}</span></li>
+					<li><span class="text">投票人次</span><span>${data.count.voteNum}</span></li>
+					<li><span class="text">访问量</span><span>${data.count.visitNum}</span></li>
 				</ul>
 				<img src="${ctx}/resources/wechat/vote/blue/images/mw_004.jpg" />
 			</div>
 			<div class="search">
-				<form action="/Home/index.php/Index/content.html" id="search_form"
-					method="get">
-					<input type="hidden" name="id" value="217021" /><input
-						type="hidden" name="subscribe" value="0" />
+					<form id="search_form" method="get">
+					<input type="hidden" name="openid" id="openid" value="${openid}" />
+					<input type="hidden" name="voteId" id="voteId" value="${voteId}" />
 					<div class="search_con">
 						<div class="btn">
-							<input type="submit" name="seachid" id="searchBtn" value="搜索">
+							<input type="button" name="seachid" id="searchBtn" value="搜索">
 						</div>
 						<div class="text_box">
-							<input type="search" id="searchText" value="" name="keyword"
-								placeholder="搜名字或编号" autocomplete="off">
+							<input type="text" id="keyword" value="${params.keyword}" name="keyword" placeholder="搜名字或编号">
 						</div>
 					</div>
-					<input type="hidden" name="__hash__"
-						value="205bf56a6945b657a558479b6fa6396a_0c17000f1552d2f0b50b27f1909def0b" />
-				</form>
+					</form>
 			</div>
 		</div>
 	</header>
@@ -225,7 +101,7 @@ keyframes musicstop {
 		<div id="pageCon" class="match_page masonry"
 			style="padding-bottom: 50px">
 			<ul class="list_box masonry clearfix" style="position: relative;">
-				<c:forEach var="r" items="${data.list}" varStatus="idx">
+				<c:forEach var="r" items="${data.page.list}" varStatus="idx">
 				<li class="picCon">
 					<div>
 						<i class="number">${r.playerNum}号</i>
@@ -236,14 +112,14 @@ keyframes musicstop {
 							<p>
 								${r.playerName}<br />${r.voteNum}票
 							</p>
-							<a href="javascript:void(0);" class="vote" onclick="loaddzp()">投票</a>
+							<a href="javascript:void(0);" class="vote" onclick="voteOne(${r.playerNum})">投票</a>
 						</div>
 					</div>
 				</li>
 				</c:forEach>
 			</ul>
 		</div>
-		<style>
+<style>
 .pagination {
 	color: #72c0e6;
 	font-size: 16px;
@@ -255,10 +131,7 @@ keyframes musicstop {
 }
 </style>
 		<div class="pagination pagination-centered">
-			17 条记录 1/2 页 <a
-				href='/Home/index.php/Index/index/id/217021.html?&pageNum=2'>下一页</a>
-			&nbsp;<span class='current'>1</span>&nbsp;<a
-				href='/Home/index.php/Index/index/id/217021.html?&pageNum=2'>&nbsp;2&nbsp;</a>
+			 <a href='#' id="upPage" >上一页</a>&nbsp;<span class='current'>${data.page.index}</span>&nbsp;<a href='#' id="nextPage">下一页</a>
 		</div>
 	</section>
 	<img class="bg"
@@ -272,40 +145,40 @@ keyframes musicstop {
 				</p>
 			</div>
 			<div style="text-align: center;">
-				<a href="http://www.lanrenmb.com"
+				<a href="#"
 					style="color: #5e5e5e; font-size: 1.2em;">技术支持</a>
 			</div>
 		</div>
 		<div style="height: 60px; width: 100%; display: block;"></div>
 	</section>
-	<section>
-		<div class="pop" id="guanzhu" style="display: none">
-			<div class="mengceng"></div>
-			<div class="pop_up">
-				<span class="closed close_pop_up">&nbsp;</span>
-				<p class="tit_p">如何参与活动</p>
-				<p class="tit_txt">添加我们后,回复【蓝色】参与活动</p>
-				<a
-					href="http://mp.weixin.qq.com/s?__biz=MjM5NjA0MTI0OQ==&mid=200068987&idx=1&sn=1de5daeaae94c66a3c46a13e20e8011e#rd"
-					class="gz_btn">详细了解参与方法</a>
+	<!-- 微信弹窗 begin-->
+	<div class="weui_dialog_confirm" style="display: none;">
+		<div class="weui_mask"></div>
+		<div class="weui_dialog">
+			<div class="weui_dialog_hd">
+				<strong class="weui_dialog_title">提示</strong>
+			</div>
+			<div class="weui_dialog_bd">您当前未关注，无法进行投票。请先关注后再投票，点击详情按钮查看关注方法。</div>
+			<div class="weui_dialog_ft">
+				<a href="#" class="weui_btn_dialog default" onclick="$('.weui_dialog_confirm').hide()">取消</a> 
+				<a href="${data.loginUrl}" class="weui_btn_dialog primary">详情</a>
 			</div>
 		</div>
-		<div class="pop" id="voted" style="display: none;">
-			<div class="mengceng"></div>
-		</div>
-		<div class="pop" id="voting" style="display: none;">
-			<div class="mengceng"></div>
-			<div class="pop_up">
-				<span class="closed close_pop_up">&nbsp;</span>
-				<p class="tit_p" id="voting_title"></p>
-				<p class="tit_txt" id="voting_content"></p>
+	</div>
+	<div class="weui_dialog_alert" style="display: none;">
+		<div class="weui_mask"></div>
+		<div class="weui_dialog">
+			<div class="weui_dialog_hd">
+				<strong class="weui_dialog_title">提示</strong>
+			</div>
+			<div class="weui_dialog_bd">弹窗内容，告知当前页面信息等</div>
+			<div class="weui_dialog_ft">
+				<a href="#" class="weui_btn_dialog primary">确定</a>
 			</div>
 		</div>
-		<div class="share_overmask" style="display: none;">
-			<div class="share_arrow"></div>
-			<div class="share_words"></div>
-		</div>
-	</section>
+	</div>
+	<!-- 微信弹窗 end-->
+
 	<link rel="stylesheet" type="text/css" href="${ctx}/resources/wechat/vote/blue/daohang.css" />
 	  <div class="bot_main">
 		<ul>
@@ -329,15 +202,134 @@ keyframes musicstop {
 		</ul>
 	</div>
 	<script src="${ctx}/resources/wechat/vote/blue/yxMobileSlider.js" type="text/javascript"></script>
+	<!-- 
 	<script type="text/javascript">
+	//获取列表
+	var params={index:0,size:30};
+	$('#nextPage').click(function(){
+		++params.index;
+		params.keyword=$('#keyword').val();
+		$.ajax({
+			  type: 'POST',
+			  url: window.webroot+'/wechat/vote/'+$('#voteId').val()+'/listPage',
+			  data: params,
+			  dataType:"json",
+			  success: function(result){
+				 if(result.success){
+					 ajaxList(result.data.list);
+					 if(result.data.pages<=params.index){
+						 $('#nextPage').hide();
+					 }
+				 }
+			 }
+		});
+	});
+	function ajaxList(list){
+		var i=0;
+		for(var i;i<list.length;i++){
+			var player=list[i];
+			var li=$('<li class="picCon"></li>');
+			var div=$('<div></div>');
+			var i_num=$('<i class="number"></i>').html(player.playerNum+'号');
+			var img=$('<img/>').attr("src",window.webroot+'/resources/wechat/upload/'+player.image);
+			var a1=$('<a class="img"></a>').attr("href",window.webroot+'/wechat/vote/'+player.playerId+'/detail').append(img);
+			var p=$('<p></p>').html(player.playerName+'<br/>'+player.voteNum+'票');
+			var a2=$('<a href="javascript:void(0);" class="vote" onclick="loaddzp()">投票</a>')
+			div.append(i_num).append(a1).append($('<div="clearfix"></div>').append(p).append(a2));
+			$('.list_box').append(li.append(div));
+		}
+	}
+	
+	$(document).ready(function() {
+		$('#nextPage').click();
+	});
+	</script>
+	 -->
+<script type="text/javascript">
+	var vote={
+		index:'${data.page.index}',
+		pages:'${data.page.pages}',
+		openid:'${openid}',
+		url:'${data.loginUrl}',
+		startTime:'${data.startTime}',
+		endTime:'${data.endTime}',
+		voteId:'${voteId}',
+		listUrl:window.webroot+'/wechat/vote/${voteId}/list'
+	};
+	$(document).ready(function() {
+		var index =${data.page.index};
+		var pages=${data.page.pages};
+		var keyword=$('#keyword').val();
+		 var url= window.webroot+'/wechat/vote/'+$('#voteId').val()+'/list?keyword='+keyword+'&index=';
+		if(index==1){
+			$('#upPage').hide();
+		}else{
+			$('#upPage').attr("href",url+(index-1));
+		}
+		if(index==pages){
+			$('#nextPage').hide();
+		}else{
+			$('#nextPage').attr("href",url+(index+1));
+		}
+		$('#searchBtn').click(function(){
+			window.location.href = window.webroot+'/wechat/vote/'+$('#voteId').val()+'/list?keyword='+$('#keyword').val();
+		});
+	});
+	//弹窗设置
+	$('.weui_btn_dialog').click(function(){
+		$('.weui_dialog_alert').hide();
+	});
+	//投票设置
+	function voteOne(num){
+		if(num*1==0){
+			$('.weui_dialog_bd').html('未正确获得选号')
+			$('.weui_dialog_alert').show();
+			return false;
+		}
+		var i=vote.openid
+		if(vote.openid==""){
+			$('.weui_dialog_confirm').show();
+			return false;
+		}
+		var now = new Date();
+		//var start=vote.startTime;
+		//var end=vote.endTime;
+		var start=new Date(vote.startTime);
+		var end=new Date(vote.endTime);
+		if(now<start){
+			$('.weui_dialog_bd').html('当前投票还未开始')
+			$('.weui_dialog_alert').show();
+			return false;
+		}
+		if(now>end){
+			$('.weui_dialog_bd').html('当前投票已经结束')
+			$('.weui_dialog_alert').show();
+			return false;
+		}
+		$.ajax({
+			  type: 'POST',
+			  url: window.webroot+'/wechat/vote/'+vote.voteId+'/addVoteNum',
+			  data: {playerId:num},
+			  dataType:"json",
+			  success: function(result){
+				$('.weui_dialog_bd').html(result.message)
+				$('.weui_dialog_alert').show();
+				if(result.success){
+					$('.weui_btn_dialog').click(function() {
+						 window.location.href = vote.listUrl;
+					});
+				}
+			 }
+		});
+	}
+	
+	
+	
+	
 		$(".slider").yxMobileSlider({
 			during : 5000,
 			height : 300
 		});
-
-		function loaddzp() {
-			$("#guanzhu").show();
-		}
 
 		$(function() {
 			$("#paihang").click(function() {
@@ -355,21 +347,9 @@ keyframes musicstop {
 		container.imagesLoaded(function() {
 			container.masonry({
 				itemSelector : '.picCon'
-
 			});
 
 		});
-
-		function showVerify(vid, id) {
-			$.colorbox({
-				top : "10px",
-				innerWidth : 220,
-				innerHeight : 220,
-				iframe : true,
-				href : "/Home/index.php?m=Public&a=lanren_verify&mid=62&vid="
-						+ vid + "&id=" + id
-			});
-		}
 	</script>
 	<style type="text/css">
 #cover {

@@ -16,9 +16,9 @@ import com.xiaoshabao.wechat.bean.message.Article;
 import com.xiaoshabao.wechat.bean.message.NewsMessage;
 import com.xiaoshabao.wechat.bean.message.TextMessage;
 import com.xiaoshabao.wechat.dao.AccountWxDao;
-import com.xiaoshabao.wechat.dao.SubscriberWxDao;
+import com.xiaoshabao.wechat.dao.SubscriberDao;
 import com.xiaoshabao.wechat.entity.AccountEntity;
-import com.xiaoshabao.wechat.entity.SubscriberWxEntity;
+import com.xiaoshabao.wechat.entity.SubscriberEntity;
 import com.xiaoshabao.wechat.service.WechatService;
 import com.xiaoshabao.wechat.util.MessageUtil;
 import com.xiaoshabao.wechat.util.aes.AesException;
@@ -30,7 +30,7 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 	@Autowired
 	private AccountWxDao accountDao;
 	@Autowired
-	private SubscriberWxDao subscriberDao;
+	private SubscriberDao subscriberDao;
 	/**
 	 * 请求的系统帐号id
 	 */
@@ -109,7 +109,6 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 		} else {
 			result = this.defaultService(fromUserName, toUserName);
 		}
-		logger.info("相应微信返回：" + result);
 		if (StringUtils.isNotEmpty(account.getEncodingAESKey())) {
 			try {
 				WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(
@@ -169,9 +168,9 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 			// 关注
 			if (event.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
 				respContent = "谢谢您的关注！";
-				List<SubscriberWxEntity> list = subscriberDao.getSubscriberById(
+				List<SubscriberEntity> list = subscriberDao.getSubscriberById(
 						this.accountId, fromUserName);
-				SubscriberWxEntity bean = new SubscriberWxEntity(
+				SubscriberEntity bean = new SubscriberEntity(
 						this.accountId, fromUserName, 1);
 				int i = 0;
 				if(list.isEmpty()||list.size()<1){
@@ -186,7 +185,7 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 			// 取消订阅
 			else if (event.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
 				// 取消订阅后用户再收不到公众号发送的消息，因此不需要回复消息
-				SubscriberWxEntity bean = new SubscriberWxEntity(
+				SubscriberEntity bean = new SubscriberEntity(
 						this.accountId, "", 2);
 				int i = subscriberDao.update(bean);
 				if (i < 1) {
@@ -248,7 +247,7 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 		textMessage.setCreateTime(new Date().getTime());
 		textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 		textMessage.setFuncFlag(0);
-		if (content.isEmpty()) {
+		if (StringUtils.isEmpty(content)) {
 			content = "正在学习，无法回复你您！";
 		}
 		textMessage.setContent(content);

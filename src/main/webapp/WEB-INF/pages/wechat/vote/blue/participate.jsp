@@ -14,21 +14,21 @@
 <%@include file="../../common.jsp"%>
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/touch.css">
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/colorbox.css">
-<cs:resource type="all" value="jquery,colorbox,masonry,swiper" />
-<link rel="stylesheet" href="${ctx}/resources/plugins/weui/weui.min.css">
+<cs:resource type="all" value="jquery,colorbox,masonry,swiper,weui" />
 <!--微信分享-->
 <script type="text/javascript">
 	wx.ready(function() {
 		var shareData = {
 			title : '${data.voteName}',
 			desc : '${data.des}',
-			link : 'http://tp.lanrenmb.com/Home/index.php/Index/index/id/217021.html',
+			link : 'http://tp.lanrenmb.com/Home/].php/Index/index/id/217021.html',
 			imgUrl : 'http://tp.lanrenmb.com/Member/Public/upload/2/3/5/f/5625fc25f2823.png'
 		};
 		wx.onMenuShareAppMessage(shareData);
 		wx.onMenuShareTimeline(shareData);
 		wx.onMenuShareQQ(shareData);
 		wx.onMenuShareWeibo(shareData);
+		//alert('加载微信js api成功');
 	});
 	wx.error(function(res) {
 		//alert(res.errMsg);
@@ -99,7 +99,6 @@
 	width: 100%
 }
 </style>
-</style>
 </head>
 <body>
 	<header>
@@ -138,8 +137,8 @@
 					<label class="weui_label">姓名</label>
 				</div>
 				<div class="weui_cell_bd weui_cell_primary">
-					<input class="weui_input" type="number" pattern="[0-9]*"
-						placeholder="请输入姓名" />
+					<input class="weui_input" type="text" name="playerName" id="playerName"
+						placeholder="请输入姓名" min="2"/>
 				</div>
 			</div>
 			<div class="weui_cell">
@@ -147,7 +146,7 @@
 					<label class="weui_label">联系方式</label>
 				</div>
 				<div class="weui_cell_bd weui_cell_primary">
-					<input class="weui_input" type="number" pattern="[0-9]*"
+					<input class="weui_input" type="number" name="phone" id="phone"
 						placeholder="请输入联系方式" />
 				</div>
 			</div>
@@ -171,12 +170,13 @@
 								<li class="weui_uploader_file" id="img5"
 									style="display:none;background-image: url(http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/)"></li>
 							</ul>
-							<input type="hidden" name="imgs" id="input_img1" />
+							<input type="hidden" name="imgs" id="input_img1" value="1"/>
 							<input type="hidden" name="imgs" id="input_img2" />
 							<input type="hidden" name="imgs" id="input_img3" />
 							<input type="hidden" name="imgs" id="input_img4" />
 							<input type="hidden" name="imgs" id="input_img5" />
 							<input type="hidden" name="voteId" id="voteId" value="${data.voteId}" />
+							<input type="hidden" name="img_num" id="img_num" value="1" />
 							<div class="weui_uploader_input_wrp" >
 								<input class="weui_uploader_input" type="button" id="filebtn"/>
 							</div>
@@ -187,7 +187,7 @@
 			<div class="weui_cells_title">文本域</div>
 			<div class="weui_cell">
 				<div class="weui_cell_bd weui_cell_primary">
-					<textarea class="weui_textarea" placeholder="请输入个人宣言" rows="3"></textarea>
+					<textarea name="des" id="des" class="weui_textarea" placeholder="请输入个人宣言" rows="3"></textarea>
 					<div class="weui_textarea_counter">
 						<span>0</span>/200
 					</div>
@@ -212,6 +212,18 @@
 		</div>
 	</section>
 	<div id="console"></div>
+   	<div class="weui_dialog_alert" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd">
+          <strong class="weui_dialog_title">提示</strong>
+      </div>
+        <div class="weui_dialog_bd">提示</div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
 		//打开相机 
 	var seeImg=function(img){
@@ -241,28 +253,36 @@
 	var ajaxUtil=function(serverId,img){
 		$.ajax({
 			  type: 'POST',
-			  url: '${domain}/wehcat/file/'+serverId+'/get',
+			  url: '${ctx}/wechat/file/'+serverId+'/get',
 			  data: {path:'vote'},
 			  dataType:"json",
 			  success: function(result){
 				 if(result.success){
-					 var path='${domain}/resources/wechat/upload/vote/'+result.filename;
-					 $('#'+img).show();
+					 var path='${ctx}/resources/wechat/upload/vote/'+result.data;
+					 var img_num=$('#img_num').val();
+					 if(img_num==5){
+						 $('.weui_uploader_input_wrp').hide();
+					 }
 					 $('#'+img).css('background-image','url('+path+')');
-					 $('#input_'+img).val(data.filename);
-					 $('#weui_cell_ft').html(img_num+'/5')
-					 img_num++;
+					 $('#'+img).show();
+					 $('#input_'+img).val(result.data);
+					 $('.weui_cell_ft').html(img_num+'/5');
+					 $('#img_num').val(++img_num);
 				 }
 			 }
 		});
 	}
-	var img_num=1;
 	$('#filebtn').click(function() {
-		alert(1)
+		var img_num=$('#img_num').val();
 		seeImg('img'+img_num);
 	});
 	
 	$('#showTooltips').click(function() {
+		$('#showTooltips').attr("disabled","disabled");
+		if(!ch_input()){
+			$('#showTooltips').removeAttr("disabled");
+			return false;
+		}
 		var formdata = $("#form1").serialize();
 		$.ajax({
 			type : 'POST',
@@ -271,9 +291,17 @@
 			dataType : 'json',
 			success : function(result) {
 				if(result.success){
+					$('.weui_dialog_bd').html('报名成功！')
+					$('.weui_dialog_alert').show();
+					//$('#weui_btn_dialog').off("click");
+					$('.weui_btn_dialog').click(function() {
+						 window.location.href = window.webroot+'/wechat/vote/'+$('#voteId').val()+'/list';
+					});
 					
 				}else{
-					
+					$('.weui_dialog_bd').html(result.message)
+					$('.weui_dialog_alert').show();
+					$('#showTooltips').removeAttr("disabled");
 				}
 			},
 			error : function(info) {
@@ -282,6 +310,37 @@
 			}
 		});
 	});
+	$('.weui_btn_dialog').click(function(){
+		$('.weui_dialog_alert').hide();
+	});
+	function ch_input(){
+		var name=$('#playerName').val();
+		if(name==null||name==""){
+			$('.weui_dialog_bd').html('姓名不能为空')
+			$('.weui_dialog_alert').show();
+			return false;
+		}
+		var phone=$('#phone').val().length;
+		if(phone!=11){
+			$('.weui_dialog_bd').html('请填写正确手机号')
+			$('.weui_dialog_alert').show();
+			return false;
+		}
+		$('#input_img1').val()
+		$('#input_img2').val()
+		if($('#input_img1').val()==""){
+			$('.weui_dialog_bd').html('至少要上传一张图片')
+			$('.weui_dialog_alert').show();
+			return false;
+		}
+		var des=$('#des').val();
+		if(des==""){
+			$('.weui_dialog_bd').html('个人宣言用于展示，不能为空。')
+			$('.weui_dialog_alert').show();
+			return false;
+		}
+		return true;
+	}
 </script>
 </body>
 </html>

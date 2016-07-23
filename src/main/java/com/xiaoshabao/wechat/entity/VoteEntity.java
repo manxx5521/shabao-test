@@ -15,6 +15,10 @@ public class VoteEntity {
 	 */
 	private Integer accountId;
 	/**
+	 * 是否需要审核1需要
+	 */
+	private Integer audit;
+	/**
 	 * 投票活动名字
 	 */
 	private String voteName;
@@ -42,6 +46,10 @@ public class VoteEntity {
 	 * 结束时间
 	 */
 	private Date endTime;
+	/**
+	 * 未关注挑战url
+	 */
+	private String loginUrl;
 	/**
 	 * 创建帐号
 	 */
@@ -116,5 +124,17 @@ public class VoteEntity {
 	}
 	public void setRules(String rules) {
 		this.rules = rules;
+	}
+	public Integer getAudit() {
+		return audit;
+	}
+	public void setAudit(Integer audit) {
+		this.audit = audit;
+	}
+	public String getLoginUrl() {
+		return loginUrl;
+	}
+	public void setLoginUrl(String loginUrl) {
+		this.loginUrl = loginUrl;
 	}
 }

@@ -3,10 +3,21 @@
 <mapper namespace="com.xiaoshabao.wechat.dao.VoteDao">
 	<select id="getVoteListResult" resultType="com.xiaoshabao.wechat.dto.VoteListResult">
 		select a.vote_id,a.account_id,a.vote_name,a.template,a.des,
-		a.posters,a.rules,a.start_time,a.end_time,a.create_staff,a.create_time
-		from wx_vote a,wx_vote_count b
+		a.posters,a.rules,a.start_time,a.end_time,a.create_staff,
+		a.create_time,login_url,
+		b.vote_id 'count.vote_Id',
+		b.user_Num 'count.user_Num',
+		b.vote_Num 'count.vote_Num',
+		b.visit_Num 'count.visit_Num'
+		from wx_vote a
+		inner join wx_vote_count b on a.vote_id=b.vote_id
 		WHERE 1=1 
-		and a.vote_id=b.vote_id
 		and a.vote_id=#{voteId}
+	</select>
+	<select id="getVote" resultType="com.xiaoshabao.wechat.entity.VoteEntity">
+		SELECT VOTE_ID,ACCOUNT_ID,VOTE_NAME,TEMPLATE,DES,AUDIT,
+		POSTERS,RULES,START_TIME,END_TIME,LOGIN_URL,CREATE_STAFF,CREATE_TIME
+		FROM WX_VOTE
+		WHERE VOTE_ID=#{voteId}
 	</select>
 </mapper>
