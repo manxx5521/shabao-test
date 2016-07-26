@@ -40,7 +40,7 @@
 			title : '${data.vote.voteName}',
 			desc : '${data.des}',
 			link : '${url}',
-			imgUrl : 'http://demo4.cn.aijia798.com/Home//Public/upload/3/c/0/9/559a9f4e41523.jpg'
+			imgUrl : '${data.image}'
 		};
 		wx.onMenuShareAppMessage(shareData);
 		wx.onMenuShareTimeline(shareData);
