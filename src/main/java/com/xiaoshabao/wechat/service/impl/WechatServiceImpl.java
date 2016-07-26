@@ -186,7 +186,7 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 			else if (event.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
 				// 取消订阅后用户再收不到公众号发送的消息，因此不需要回复消息
 				SubscriberEntity bean = new SubscriberEntity(
-						this.accountId, "", 2);
+						this.accountId, fromUserName, 2);
 				int i = subscriberDao.update(bean);
 				if (i < 1) {
 					logger.error("用户" + fromUserName + "取消关注时未能正常更新数据");

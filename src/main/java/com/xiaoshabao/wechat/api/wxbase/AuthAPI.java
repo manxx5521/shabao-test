@@ -17,7 +17,7 @@ public class AuthAPI {
 	 * @return
 	 */
 	public static AuthBaseInfo getBaseInfo(String appid, String secret, String code){
-		AuthBaseReq req=new AuthBaseReq();
+		AuthBaseReq req=new AuthBaseReq(appid,secret,code);
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(req);
 		// 正常返回
 		return JSONObject.toJavaObject(result, AuthBaseInfo.class);
@@ -31,7 +31,7 @@ public class AuthAPI {
 	 * @return
 	 */
 	public static JSONObject getBaseInfoforJson(String appid, String secret, String code){
-		AuthBaseReq req=new AuthBaseReq();
+		AuthBaseReq req=new AuthBaseReq(appid,secret,code);
 		String result=WeiXinReqService.getInstance().doWeinxinReq(req);
 		JSONObject josn = JSONObject.parseObject(result);
 		// 正常返回

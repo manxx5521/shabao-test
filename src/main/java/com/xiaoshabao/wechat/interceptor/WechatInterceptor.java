@@ -34,6 +34,7 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		try {
+			request.setCharacterEncoding("UTF-8");
 			HttpSession session = request.getSession();
 			String account = (String) session.getAttribute("accountId");
 			String openid = (String) session.getAttribute("openid");
@@ -60,17 +61,17 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 					String loginType=wechatConfig.getLoginType();
 					AccessToken token=tokenManager.getAccessToken(Integer.valueOf(account));
 					JSONObject result=AuthAPI.getBaseInfoforJson(token.getAppid(), token.getAppsecret(), code);
-					String resultCode=result.getString("errcode");
-					if(resultCode.equals("0")){
-						openid=result.getString("openid");
-						session.setAttribute("openid",openid);
-					}else{
+					String resultCode=result.getString("openid");
+					if(StringUtils.isEmpty(resultCode)){
 						if(loginType.equals("code")){
 							openid=code;
 							session.setAttribute("openid",openid);
 						}else{
 							logger.error("自动登陆错误,未正常获得openid。\n"+result.toString());
 						}
+					}else{
+						openid=result.getString("openid");
+						session.setAttribute("openid",openid);
 					}
 				}
 			}

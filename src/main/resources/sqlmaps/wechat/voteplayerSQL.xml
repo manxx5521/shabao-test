@@ -27,7 +27,8 @@
 			,b.start_time 'vote.start_time'
 			,b.end_time 'vote.end_time'
 			,b.vote_name 'vote.vote_name'
-			,b.template 'vote.template'
+			,b.template 'vote.template',
+			b.login_url 'vote.login_url'
 		from wx_vote_player a
 		inner join wx_vote b on a.vote_id=b.vote_id
 		where a.player_id=#{playerId}
@@ -36,7 +37,7 @@
 	<select id="getVoteRanking" resultType="com.xiaoshabao.wechat.entity.VotePlayerEntity">
 		select a.player_id,a.vote_id,player_name,a.phone,a.player_num,a.des,a.image,a.vote_num,a.update_time 
 		from wx_vote_player a
-		where a.vote_id=#{voteId}
+		where a.vote_id=#{voteId} and status='1' 
 		ORDER BY a.vote_num desc LIMIT #{type}
 	</select>
 	
@@ -55,6 +56,6 @@
 		select max(player_num) max from wx_vote_player where vote_id=#{voteId}
 	</select>
 	<update id="addPlayerVote">
-		UPDATE WX_VOTE_PLAYER SET VOTE_NUM=VOTE_NUM+1 WHERE VOTE_ID=#{voteId}
+		UPDATE WX_VOTE_PLAYER SET VOTE_NUM=VOTE_NUM+1 WHERE player_id=#{playerId}
 	</update>
 </mapper>

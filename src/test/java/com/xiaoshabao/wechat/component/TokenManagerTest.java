@@ -14,7 +14,7 @@ import com.xiaoshabao.wechat.entity.AccessToken;
 public class TokenManagerTest extends SpringTest{
 	@Resource(name="tokenManager")
 	TokenManager tokenManager;
-	private Integer accountId=100001;
+	private Integer accountId=100002;
 	@Test
 	public void testGetToken() {
 		try {

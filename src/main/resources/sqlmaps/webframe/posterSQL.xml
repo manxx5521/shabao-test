@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframe.dao.PosterDao">
+	<select id="getPoster" resultType="PosterDto" parameterType="com.xiaoshabao.webframe.entity.PosterEntity">
+		SELECT IMAGE,TITILE
+		FROM TD_S_POSTER
+		<where>
+			<if test="accountType !=null and accountType !='' ">
+				AND ACCOUNT_TYPE=#{accountType}
+			</if>
+			<if test="accountId !=null and accountId !='' ">
+				AND ACCOUNT_ID=#{accountId}
+			</if>
+			<if test="type !=null and type !='' ">
+				AND TYPE=#{type}
+			</if>
+			<if test="typeId !=null and typeId !='' ">
+				AND TYPE_ID=#{typeId}
+			</if>
+		</where>
+		ORDER BY ORDERNO
+	</select>
+</mapper>

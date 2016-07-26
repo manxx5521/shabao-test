@@ -9,11 +9,10 @@
 <meta content="telephone=no" name="format-detection">
 <title>${data.voteName}</title>
 <%@include file="../../../context/head.jsp"%>
-<%@include file="../../common.jsp"%>
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/touch.css">
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/colorbox.css">
 <cs:resource type="all" value="jquery,colorbox,masonry,weui" />
-<%-- <script src="${ctx}/resources/wechat/vote/blue/app.js" type="text/javascript"></script> --%>
+<%@include file="../../common.jsp"%>
 <style>
 .slider {
 	display: none;
@@ -38,7 +37,7 @@
 		var shareData = {
 			title : '${data.voteName}',
 			desc : '${data.des}',
-			link : 'http://tp.lanrenmb.com/Home/index.php/Index/index/id/217021.html',
+			link : '${url}',
 			imgUrl : 'http://tp.lanrenmb.com/Member//Public/upload/2/3/5/f/5625fc25f2823.png'
 		};
 		wx.onMenuShareAppMessage(shareData);
@@ -57,8 +56,8 @@
 	<header>
 		<div class="m_head clearfix">
 			<div class="slider">
-				<ul><c:forEach var="r" items="${data.imgList}" varStatus="idx">
-					<li><a href="#"><img src="${ctx}/resources/wechat/upload/${r}" /></a></li>
+				<ul><c:forEach var="r" items="${data.poster}" varStatus="idx">
+					<li><a href="#"><img src="${ctx}/resources/wechat/upload/${r.image}" /></a></li>
 					</c:forEach>
 				</ul>
 			</div>
@@ -112,7 +111,7 @@
 							<p>
 								${r.playerName}<br />${r.voteNum}票
 							</p>
-							<a href="javascript:void(0);" class="vote" onclick="voteOne(${r.playerNum})">投票</a>
+							<a href="javascript:void(0);" class="vote" onclick="voteOne(${r.playerId})">投票</a>
 						</div>
 					</div>
 				</li>
@@ -202,49 +201,6 @@
 		</ul>
 	</div>
 	<script src="${ctx}/resources/wechat/vote/blue/yxMobileSlider.js" type="text/javascript"></script>
-	<!-- 
-	<script type="text/javascript">
-	//获取列表
-	var params={index:0,size:30};
-	$('#nextPage').click(function(){
-		++params.index;
-		params.keyword=$('#keyword').val();
-		$.ajax({
-			  type: 'POST',
-			  url: window.webroot+'/wechat/vote/'+$('#voteId').val()+'/listPage',
-			  data: params,
-			  dataType:"json",
-			  success: function(result){
-				 if(result.success){
-					 ajaxList(result.data.list);
-					 if(result.data.pages<=params.index){
-						 $('#nextPage').hide();
-					 }
-				 }
-			 }
-		});
-	});
-	function ajaxList(list){
-		var i=0;
-		for(var i;i<list.length;i++){
-			var player=list[i];
-			var li=$('<li class="picCon"></li>');
-			var div=$('<div></div>');
-			var i_num=$('<i class="number"></i>').html(player.playerNum+'号');
-			var img=$('<img/>').attr("src",window.webroot+'/resources/wechat/upload/'+player.image);
-			var a1=$('<a class="img"></a>').attr("href",window.webroot+'/wechat/vote/'+player.playerId+'/detail').append(img);
-			var p=$('<p></p>').html(player.playerName+'<br/>'+player.voteNum+'票');
-			var a2=$('<a href="javascript:void(0);" class="vote" onclick="loaddzp()">投票</a>')
-			div.append(i_num).append(a1).append($('<div="clearfix"></div>').append(p).append(a2));
-			$('.list_box').append(li.append(div));
-		}
-	}
-	
-	$(document).ready(function() {
-		$('#nextPage').click();
-	});
-	</script>
-	 -->
 <script type="text/javascript">
 	var vote={
 		index:'${data.page.index}',
@@ -322,9 +278,6 @@
 			 }
 		});
 	}
-	
-	
-	
 	
 		$(".slider").yxMobileSlider({
 			during : 5000,

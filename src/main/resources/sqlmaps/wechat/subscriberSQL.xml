@@ -19,10 +19,8 @@
 			<if test="type !=null and type !='' ">
 			type=#{type},
 			</if>
-			<if test="openid !=null and openid !='' ">
-			openid=#{openid},
-			</if>
 		</set>
 		where account_id=#{accountId}
+			and	openid=#{openid}
 	</update>
 </mapper>

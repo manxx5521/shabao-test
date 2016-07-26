@@ -4,9 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta
-	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-	name="viewport">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 <!-- Mobile Devices Support @begin -->
 <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
 <meta content="no-cache" http-equiv="pragma">
@@ -23,7 +21,7 @@
 <cs:resource type="all" value="swiper" />
 </head>
 <body style="padding: 0">
-	<h5 style="padding: 0 10px;">${data.voteName} 排行榜/当前总票数:${data.voteNum}</h5>
+	<h5 style="padding: 0 10px;">${data.voteName} 排行榜/当前总票数:${data.count.voteNum}</h5>
 	<table class="table table-bordered">
 		<thead>
 			<tr>

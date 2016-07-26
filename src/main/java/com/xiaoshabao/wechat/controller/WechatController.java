@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.xiaoshabao.wechat.service.WechatService;
 import com.xiaoshabao.wechat.util.MessageUtil;
@@ -48,8 +47,7 @@ public class WechatController {
 	 */
 	@RequestMapping(value = "/wechat/service/{uid}/dispatch", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
 	public void doGet(HttpServletResponse response,@PathVariable("uid") Integer uid,
-			String signature,String msg_signature, @RequestParam String echostr,
-			@RequestParam String timestamp, @RequestParam String nonce){
+			String signature,String msg_signature, String echostr, String timestamp, String nonce){
 		// 初次生成的token
 		logger.info("来自微信的接入 singnature:" + signature + "---echostr:" + echostr
 				+ "----timestamp:" + timestamp + "---nonce:" + nonce);

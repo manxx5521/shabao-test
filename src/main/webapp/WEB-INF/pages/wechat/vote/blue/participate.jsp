@@ -11,17 +11,17 @@
 <title>我要报名</title>
 <meta name="description" content="我要报名">
 <%@include file="../../../context/head.jsp"%>
-<%@include file="../../common.jsp"%>
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/touch.css">
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/colorbox.css">
 <cs:resource type="all" value="jquery,colorbox,masonry,swiper,weui" />
+<%@include file="../../common.jsp"%>
 <!--微信分享-->
 <script type="text/javascript">
 	wx.ready(function() {
 		var shareData = {
 			title : '${data.voteName}',
 			desc : '${data.des}',
-			link : 'http://tp.lanrenmb.com/Home/].php/Index/index/id/217021.html',
+			link : '${url}',
 			imgUrl : 'http://tp.lanrenmb.com/Member/Public/upload/2/3/5/f/5625fc25f2823.png'
 		};
 		wx.onMenuShareAppMessage(shareData);
@@ -108,10 +108,10 @@
 				<!--headpic-->
 				<div class="swiper-container" style="display: block;">
 					<div class="swiper-wrapper">
-						<c:forEach var="r" items="${data.imgList}" varStatus="idx">
+						<c:forEach var="r" items="${data.poster}" varStatus="idx">
 							<div class="swiper-slide">
 								<a href="#"><img class="imgplay"
-									src="${ctx}/resources/wechat/upload/${r}" /></a>
+									src="${ctx}/resources/wechat/upload/${r.image}" /></a>
 							</div>
 						</c:forEach>
 					</div>

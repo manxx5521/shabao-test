@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.wechat.dao.VoteSuccessDao">
+	<insert id="insertVoteSuccess">
+  	INSERT INTO WX_VOTE_SUCCESS(id,vote_id,openid,update_time)
+	VALUES(NULL,#{voteId,jdbcType=NUMERIC},#{openid,jdbcType=VARCHAR},SYSDATE())
+	</insert>
+	<select id="getVoteSuccess" resultType="com.xiaoshabao.wechat.entity.VoteSuccessEntity">
+		SELECT ID,VOTE_ID,OPENID,UPDATE_TIME FROM WX_VOTE_SUCCESS A WHERE VOTE_ID=#{voteId} AND openid=#{openid}
+	</select>
+</mapper>

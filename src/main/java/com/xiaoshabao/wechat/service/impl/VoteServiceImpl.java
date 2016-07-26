@@ -1,8 +1,9 @@
 package com.xiaoshabao.wechat.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.xiaoshabao.baseframe.bean.PageValue;
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.webframe.component.PosterComponent;
 import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.component.WechatContextHolder;
 import com.xiaoshabao.wechat.dao.SubscriberDao;
@@ -19,6 +21,7 @@ import com.xiaoshabao.wechat.dao.VoteCountDao;
 import com.xiaoshabao.wechat.dao.VoteDao;
 import com.xiaoshabao.wechat.dao.VoteImageDao;
 import com.xiaoshabao.wechat.dao.VotePlayerDao;
+import com.xiaoshabao.wechat.dao.VoteSuccessDao;
 import com.xiaoshabao.wechat.dto.VoteDetailResult;
 import com.xiaoshabao.wechat.dto.VoteListResult;
 import com.xiaoshabao.wechat.dto.VoteParams;
@@ -26,6 +29,7 @@ import com.xiaoshabao.wechat.entity.SubscriberEntity;
 import com.xiaoshabao.wechat.entity.VoteEntity;
 import com.xiaoshabao.wechat.entity.VoteImageEntity;
 import com.xiaoshabao.wechat.entity.VotePlayerEntity;
+import com.xiaoshabao.wechat.entity.VoteSuccessEntity;
 import com.xiaoshabao.wechat.service.VoteService;
 /**
  * 投票
@@ -42,6 +46,10 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 	private VoteCountDao countDao;
 	@Autowired
 	private SubscriberDao subscriberDao;
+	@Resource(name="poster")
+	private PosterComponent posterComponent;
+	@Autowired
+	private VoteSuccessDao voteSuccess;
 	
 	//获得投票列表详情
 	@Override
@@ -61,7 +69,7 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 		params.setSize(2);
 		PageValue<VotePlayerEntity> page=this.getDataPaging(VotePlayerEntity.class, params);
 		result.setPage(page);
-		result.setImgList(this.getPosterList(result.getPosters()));
+		result.setPoster(posterComponent.getWchatVotePoset(voteId));
 		return result;
 	}
 
@@ -73,7 +81,7 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 			throw new ServiceException("当前投票活动不存在");
 		}
 		// 验证创建session
-		result.setImgList(this.getPosterList(result.getPosters()));
+		result.setPoster(posterComponent.getWchatVotePoset(voteId));
 		return result;
 	}
 	//选手详情界面
@@ -87,25 +95,11 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 		//WechatContextHolder.createSession(result.getVote().getAccountId());
 		List<VoteImageEntity> list=imageDao.getImageList(playerId);
 		result.setImgList(list);
-		result.setPosters(this.getPosterList(result.getVote().getPosters()));
+		result.setPosters(posterComponent.getWchatVotePoset(result.getVoteId()));
 		return result;
 	}
 	
-	/**
-	 * 将字符串海报解析为列表
-	 * @param posters
-	 * @return
-	 */
-	private List<String> getPosterList(String posters){
-		List<String> posterList=new ArrayList<String>();
-		if(StringUtils.isNotEmpty(posters)){
-			String[] poster=posters.split(";");
-			for (String b:poster){
-				posterList.add(b);
-			}
-		}
-		return posterList;
-	}
+	
 	//报名参加活动
 	@Override
 	public VoteListResult getVoteParticipate(Integer voteId) {
@@ -115,7 +109,7 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 		}
 		//验证创建session
 	//	WechatContextHolder.createSession(result.getAccountId());
-		result.setImgList(this.getPosterList(result.getPosters()));
+		result.setPoster(posterComponent.getWchatVotePoset(voteId));
 		return result;
 	}
 	
@@ -195,7 +189,7 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 		if(StringUtils.isEmpty(openid)){
 			return new AjaxResult("请关注后，再投票");
 		}
-		List<SubscriberEntity> list=subscriberDao.getSubscriberById(openid);
+		List<SubscriberEntity> list=subscriberDao.getSubscriberById(null,openid);
 		if(list.isEmpty()){
 			return new AjaxResult("当前登录的帐号错误，请重新打开公众号或者重新关注后重试");
 		}
@@ -207,6 +201,11 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 		if(now.after(vote.getEndTime())){
 			return new AjaxResult("投票活动已经结合了");
 		}
+		VoteSuccessEntity successEntity=voteSuccess.getVoteSuccess(voteId, openid);
+		if(successEntity!=null){
+			return new AjaxResult("您已经投过票了请勿重复投票");
+		}
+		
 		int i =playerDao.addPlayerVote(playerId);
 		if(i<1){
 			throw new ServiceException("选手票数未能正常更新");
@@ -214,6 +213,10 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 		i=countDao.addVoteNum(voteId);
 		if(i<1){
 			throw new ServiceException("总票数未能正常更新");
+		}
+		i=voteSuccess.insertVoteSuccess(voteId,openid);
+		if(i<1){
+			throw new ServiceException("成功记录未能正常更新");
 		}
 		return new AjaxResult(true,"投票成功");
 	}

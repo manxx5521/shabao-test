@@ -2,13 +2,15 @@ package com.xiaoshabao.wechat.dto;
 
 import java.util.List;
 
+import com.xiaoshabao.webframe.dto.PosterDto;
 import com.xiaoshabao.wechat.entity.VoteEntity;
 import com.xiaoshabao.wechat.entity.VoteImageEntity;
 import com.xiaoshabao.wechat.entity.VotePlayerEntity;
+
 /**
  * 投票选手详情
  */
-public class VoteDetailResult extends VotePlayerEntity{
+public class VoteDetailResult extends VotePlayerEntity {
 	/**
 	 * 投票内容
 	 */
@@ -20,7 +22,7 @@ public class VoteDetailResult extends VotePlayerEntity{
 	/**
 	 * 海报
 	 */
-	private List<String> posters;
+	private List<PosterDto> posters;
 
 	public VoteEntity getVote() {
 		return vote;
@@ -30,11 +32,11 @@ public class VoteDetailResult extends VotePlayerEntity{
 		this.vote = vote;
 	}
 
-	public List<String> getPosters() {
+	public List<PosterDto> getPosters() {
 		return posters;
 	}
 
-	public void setPosters(List<String> posters) {
+	public void setPosters(List<PosterDto> posters) {
 		this.posters = posters;
 	}
 

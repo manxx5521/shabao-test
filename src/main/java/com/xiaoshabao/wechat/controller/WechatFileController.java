@@ -43,8 +43,13 @@ public class WechatFileController extends AbstractController{
 			if(StringUtils.isNotEmpty(path)){
 				realPath+=path;
 			}
+			
 			String fileName=MediaAPI.downTempMedia(accessTonken, fileid, realPath).getFileName();
-			return new AjaxResult(true,fileName,fileName);
+			String resultFile=fileName;
+			if(StringUtils.isNotEmpty(path)){
+				resultFile=path+"/"+fileName;
+			}
+			return new AjaxResult(true,fileName,resultFile);
 		} catch (Exception ex) {
 			return new AjaxResult(true,"图片下载失败");
 		}

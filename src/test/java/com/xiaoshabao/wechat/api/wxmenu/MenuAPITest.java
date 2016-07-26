@@ -35,7 +35,7 @@ public class MenuAPITest {
 			CommonButton btn1 = new CommonButton();
 			btn1.setName("投票测试3");
 			btn1.setType(MenuType.VIEW);
-			btn1.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fshabao.tunnel.qydev.com%2Fshabao-test%2Fwechat%2Fvote%2F10000001%2Flist&response_type=code&scope=snsapi_base&state=100001#wechat_redirect");
+			btn1.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fshabao.tunnel.qydev.com%2Fshabao-test%2Fwechat%2Fvote%2F10000002%2Flist&response_type=code&scope=snsapi_base&state=100002#wechat_redirect");
 			
 			CommonButton btn21=new CommonButton();
 			btn21.setName("投票测试2");

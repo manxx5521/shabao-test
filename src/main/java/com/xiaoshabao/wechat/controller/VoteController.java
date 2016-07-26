@@ -125,13 +125,13 @@ public class VoteController extends AbstractController{
 	}
 	
 	/**
-	 * 投票列表下一页<br>
+	 * 投票<br>
 	 */
 	@ResponseBody
 	@RequestMapping(value="/wechat/vote/{voteId}/addVoteNum")
 	public AjaxResult addVoteNum (ModelMap model,@PathVariable("voteId")Integer voteId,Integer playerId){
 		try {
-			return new AjaxResult(true,null);
+			return voteService.addVoteNum(voteId, playerId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new AjaxResult(false,"投票时，系统错误，请重试");

@@ -3,6 +3,7 @@ package com.xiaoshabao.wechat.dto;
 import java.util.List;
 
 import com.xiaoshabao.baseframe.bean.PageValue;
+import com.xiaoshabao.webframe.dto.PosterDto;
 import com.xiaoshabao.wechat.entity.VoteCountEntity;
 import com.xiaoshabao.wechat.entity.VoteEntity;
 import com.xiaoshabao.wechat.entity.VotePlayerEntity;
@@ -25,10 +26,8 @@ public class VoteListResult extends VoteEntity{
 	 * 分页信息
 	 */
 	private PageValue<VotePlayerEntity> page;
-	/**
-	 * 海报
-	 */
-	private List<String> imgList;
+	
+	private List<PosterDto> poster;
 	
 	public List<VotePlayerEntity> getList() {
 		return list;
@@ -37,12 +36,7 @@ public class VoteListResult extends VoteEntity{
 	public void setList(List<VotePlayerEntity> list) {
 		this.list = list;
 	}
-	public List<String> getImgList() {
-		return imgList;
-	}
-	public void setImgList(List<String> imgList) {
-		this.imgList = imgList;
-	}
+	
 	public VoteCountEntity getCount() {
 		return count;
 	}
@@ -57,4 +51,13 @@ public class VoteListResult extends VoteEntity{
 	public void setPage(PageValue<VotePlayerEntity> page) {
 		this.page = page;
 	}
+
+	public List<PosterDto> getPoster() {
+		return poster;
+	}
+
+	public void setPoster(List<PosterDto> poster) {
+		this.poster = poster;
+	}
+	
 }

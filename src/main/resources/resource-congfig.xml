@@ -31,6 +31,7 @@
 	<js key="swiper" des="弹窗" src="${ctx}/resources/plugins/swiper/swiper.jquery.min.js" />
 	<js key="colorbox" des="灯箱" src="${ctx}/resources/plugins/jstree/jstree.min.js" />
 	<js key="masonry" des="瀑布流" src="${ctx}/resources/plugins/masonry/jquery.masonry.min.js" />
+	<js key="leanModal" des="手机弹窗" src="${ctx}/resources/plugins/leanModal/jquery.leanModal.min.js" />
 	<!-- system系统相关 -->
 	<css key="system" src="${ctx}/resources/system/css/style.min.css" />
 	<css key="system"> <![CDATA[  <link href="${ctx}/resources/system/img/favicon.ico" rel="shortcut icon" />]]></css>
