@@ -3,7 +3,7 @@
 <mapper namespace="com.xiaoshabao.wechat.dao.VoteDao">
 	<select id="getVoteListResult" resultType="com.xiaoshabao.wechat.dto.VoteListResult">
 		select a.vote_id,a.account_id,a.vote_name,a.template,a.des,
-		a.posters,a.rules,a.start_time,a.end_time,a.create_staff,
+		a.rules,a.start_time,a.end_time,a.create_staff,
 		a.create_time,login_url,
 		b.vote_id 'count.vote_Id',
 		b.user_Num 'count.user_Num',
@@ -16,7 +16,7 @@
 	</select>
 	<select id="getVote" resultType="com.xiaoshabao.wechat.entity.VoteEntity">
 		SELECT VOTE_ID,ACCOUNT_ID,VOTE_NAME,TEMPLATE,DES,AUDIT,
-		POSTERS,RULES,START_TIME,END_TIME,LOGIN_URL,CREATE_STAFF,CREATE_TIME
+		RULES,START_TIME,END_TIME,LOGIN_URL,CREATE_STAFF,CREATE_TIME
 		FROM WX_VOTE
 		WHERE VOTE_ID=#{voteId}
 	</select>

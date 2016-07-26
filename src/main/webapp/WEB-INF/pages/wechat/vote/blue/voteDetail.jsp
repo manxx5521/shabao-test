@@ -64,7 +64,7 @@
 			</div>
 			<div class="search">
 					<form id="search_form" method="get">
-					<input type="hidden" name="openid" id="openid" value="${openid}" />
+					<input type="hidden" name="openid" id="openid" value="${wechat.openid}" />
 					<input type="hidden" name="voteId" id="voteId" value="${voteId}" />
 					<div class="search_con">
 						<div class="btn">
@@ -167,7 +167,7 @@
 	<script src="${ctx}/resources/wechat/vote/blue/yxMobileSlider.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	var vote={
-			openid:'${openid}',
+			openid:'${wechat.openid}',
 			url:'${data.vote.loginUrl}',
 			startTime:'${data.vote.startTime}',
 			endTime:'${data.vote.endTime}',

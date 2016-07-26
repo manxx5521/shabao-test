@@ -66,7 +66,7 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 		//WechatContextHolder.createSession(result.getAccountId());
 		//List<VotePlayerEntity> list = playerDao.getPlayerList(voteId);
 		//result.setList(list);
-		params.setSize(2);
+		params.setSize(20);
 		PageValue<VotePlayerEntity> page=this.getDataPaging(VotePlayerEntity.class, params);
 		result.setPage(page);
 		result.setPoster(posterComponent.getWchatVotePoset(voteId));
@@ -185,7 +185,7 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 	@Override
 	@Transactional
 	public AjaxResult addVoteNum(Integer voteId, Integer playerId) {
-		String openid=(String) WechatContextHolder.getSession().getAttribute("openid");
+		String openid=WechatContextHolder.getOpenid();
 		if(StringUtils.isEmpty(openid)){
 			return new AjaxResult("请关注后，再投票");
 		}

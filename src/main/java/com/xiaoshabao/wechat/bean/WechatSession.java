@@ -8,6 +8,8 @@ public class WechatSession {
 	 */
 	private Integer accountId;
 	
+	private String openid;
+	
 	public WechatSession(){
 		
 	}
@@ -26,5 +28,10 @@ public class WechatSession {
 	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
 	}
-	
+	public String getOpenid() {
+		return openid;
+	}
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
 }

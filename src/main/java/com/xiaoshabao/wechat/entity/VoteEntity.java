@@ -27,10 +27,6 @@ public class VoteEntity {
 	 */
 	private String template;
 	/**
-	 * 海报多张以;分隔
-	 */
-	private String posters;
-	/**
 	 * 规则描述
 	 */
 	private String rules;
@@ -112,12 +108,6 @@ public class VoteEntity {
 	}
 	public void setTemplate(String template) {
 		this.template = template;
-	}
-	public String getPosters() {
-		return posters;
-	}
-	public void setPosters(String posters) {
-		this.posters = posters;
 	}
 	public String getRules() {
 		return rules;

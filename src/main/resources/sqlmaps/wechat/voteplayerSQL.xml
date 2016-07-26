@@ -23,7 +23,6 @@
 			,a.vote_num,a.vote_id,a.update_time
 			,b.account_id 'vote.account_id'
 			,b.rules 'vote.rules'
-			,b.posters 'vote.posters'
 			,b.start_time 'vote.start_time'
 			,b.end_time 'vote.end_time'
 			,b.vote_name 'vote.vote_name'

@@ -74,7 +74,7 @@
 			</div>
 			<div class="search">
 					<form id="search_form" method="get">
-					<input type="hidden" name="openid" id="openid" value="${openid}" />
+					<input type="hidden" name="openid" id="openid" value="${wechat.openid}" />
 					<input type="hidden" name="voteId" id="voteId" value="${voteId}" />
 					<div class="search_con">
 						<div class="btn">
@@ -205,7 +205,7 @@
 	var vote={
 		index:'${data.page.index}',
 		pages:'${data.page.pages}',
-		openid:'${openid}',
+		openid:'${wechat.openid}',
 		url:'${data.loginUrl}',
 		startTime:'${data.startTime}',
 		endTime:'${data.endTime}',

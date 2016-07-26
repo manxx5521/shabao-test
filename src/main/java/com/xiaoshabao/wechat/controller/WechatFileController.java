@@ -37,7 +37,7 @@ public class WechatFileController extends AbstractController{
 		if(!realPath.endsWith(separator)){
 			realPath=realPath+separator;
 		}
-		Integer accountId=WechatContextHolder.getWxAccountId();
+		Integer accountId=WechatContextHolder.getAccountId();
 		try {
 			String accessTonken=tokenManager.getAccessToken(accountId).getAccessToken();
 			if(StringUtils.isNotEmpty(path)){
