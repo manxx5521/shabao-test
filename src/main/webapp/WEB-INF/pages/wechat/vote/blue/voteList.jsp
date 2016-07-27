@@ -11,7 +11,7 @@
 <%@include file="../../../context/head.jsp"%>
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/touch.css">
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/colorbox.css">
-<cs:resource type="all" value="jquery,colorbox,masonry,weui" />
+<cs:resource type="all" value="jquery,colorbox,masonry,weui,jweixin" />
 <%@include file="../../common.jsp"%>
 <style>
 .slider {
@@ -91,10 +91,9 @@
 	<section class="content" id="get_info" data-rid="503" data-sort=""
 		data-kw="" data-page="">
 		<div class="text_a clearfix" id="sort">
-			<a href="/Home/index.php/Index/index/id/217021/_order/addtime.html"
-				class="active">最新参赛</a><a
-				href="/Home/index.php/Index/index/id/217021/_order/ticket.html">投票排行</a><a
-				href="/Home/index.php/Index/index/id/217021/_order/ticket/listRows/300.html">TOP300</a>
+			<a href="${ctx}/wechat/vote/${voteId}/list?order=number" id="sort1">选号</a>
+			<a href="${ctx}/wechat/vote/${voteId}/list?order=new" id="sort2">最新参赛</a>
+			<a href="${ctx}/wechat/vote/${voteId}/list?order=top" id="sort3">投票排行</a>
 		</div>
 		<div class="blank20"></div>
 		<div id="pageCon" class="match_page masonry"
@@ -210,13 +209,14 @@
 		startTime:'${data.startTime}',
 		endTime:'${data.endTime}',
 		voteId:'${voteId}',
+		order:'${params.order}',
 		listUrl:window.webroot+'/wechat/vote/${voteId}/list'
 	};
 	$(document).ready(function() {
 		var index =${data.page.index};
 		var pages=${data.page.pages};
 		var keyword=$('#keyword').val();
-		 var url= window.webroot+'/wechat/vote/'+$('#voteId').val()+'/list?keyword='+keyword+'&index=';
+		 var url= window.webroot+'/wechat/vote/'+$('#voteId').val()+'/list?keyword='+keyword+'&order='+vote.order+'&index=';
 		if(index==1){
 			$('#upPage').hide();
 		}else{
@@ -230,6 +230,13 @@
 		$('#searchBtn').click(function(){
 			window.location.href = window.webroot+'/wechat/vote/'+$('#voteId').val()+'/list?keyword='+$('#keyword').val();
 		});
+		if(vote.order=='new'){
+			$('#sort2').addClass('active');
+		}else if(vote.order=='top'){
+			$('#sort3').addClass('active');
+		}else{
+			$('#sort1').addClass('active');
+		}
 	});
 	//弹窗设置
 	$('.weui_btn_dialog').click(function(){

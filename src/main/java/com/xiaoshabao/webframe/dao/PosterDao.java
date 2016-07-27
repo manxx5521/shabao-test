@@ -2,8 +2,9 @@ package com.xiaoshabao.webframe.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.xiaoshabao.webframe.dto.PosterDto;
-import com.xiaoshabao.webframe.entity.PosterEntity;
 
 /**
  * 海报数据操作
@@ -14,5 +15,5 @@ public interface PosterDao {
 	 * @param poster
 	 * @return
 	 */
-	public List<PosterDto> getPoster(PosterEntity poster);
+	public List<PosterDto> getPoster(@Param("type") String type,@Param("typeId")String typeId);
 }

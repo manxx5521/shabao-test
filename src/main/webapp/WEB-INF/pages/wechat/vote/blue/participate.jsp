@@ -13,7 +13,7 @@
 <%@include file="../../../context/head.jsp"%>
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/touch.css">
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/colorbox.css">
-<cs:resource type="all" value="jquery,colorbox,masonry,swiper,weui" />
+<cs:resource type="all" value="jquery,colorbox,masonry,swiper,weui,jweixin" />
 <%@include file="../../common.jsp"%>
 <!--微信分享-->
 <script type="text/javascript">

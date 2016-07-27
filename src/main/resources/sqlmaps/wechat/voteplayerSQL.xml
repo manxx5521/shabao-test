@@ -6,7 +6,7 @@
 		from wx_vote_player a
 		where a.vote_id=#{voteId} and status='1' ORDER BY a.player_num
 	</select>
-	
+	<!--分页获得选手信息-->
 	<select id="getPagingVotePlayerEntity" resultType="com.xiaoshabao.wechat.entity.VotePlayerEntity"
 		parameterType="com.xiaoshabao.wechat.dto.VoteParams" >
 		select a.player_id,a.vote_id,player_name,phone,a.player_num,a.des,a.image,a.vote_num,a.update_time 
@@ -15,7 +15,16 @@
 		<if test="keyword !=null and keyword !='' ">
 			and ( a.player_num LIKE "%"#{keyword}"%" OR A.player_name LIKE "%"#{keyword}"%" )
 		</if>
-		ORDER BY a.player_num
+		<if test="order ==null or order=='number' ">
+			ORDER BY a.player_num
+		</if>
+		<if test="order=='new' ">
+			ORDER BY a.player_num desc
+		</if>
+		<if test="order=='top' ">
+			ORDER BY a.vote_num desc
+		</if>
+		
 	</select>
 	
 	<select id="getPlayerDetail" resultType="com.xiaoshabao.wechat.dto.VoteDetailResult">

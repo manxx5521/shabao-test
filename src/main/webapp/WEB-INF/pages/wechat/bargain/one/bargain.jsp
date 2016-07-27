@@ -12,8 +12,8 @@
 <meta name="applicable-device" content="mobile">
 <title>英语课程月卡</title>
 <%@include file="../../../context/head.jsp"%>
+<cs:resource type="all" value="jquery,swiper,leanModal,jweixin" />
 <%@include file="../../common.jsp"%>
-<cs:resource type="all" value="jquery,swiper,leanModal" />
 <link href="${ctx}/resources/wechat/bargain/one/base.css" rel="stylesheet">
 <link href="${ctx}/resources/wechat/bargain/one/index.css" rel="stylesheet">
 <link href="${ctx}/resources/wechat/bargain/one/media.css" rel="stylesheet">
@@ -193,8 +193,7 @@ $(document).ready(function(){
 		</div>
 		<div class="operation clearfix">
 			<div class="operation_info">
-				<a
-					href="http://315750.wap.weixinyunduan.com/wx/pub/yunduanwx/index.php?g=Wap&m=Bargain&a=new_index&token=315750&id=1370&code=122333#memberNoticeBox"
+				<a href="http://315750.wap.weixinyunduan.com/wx/pub/yunduanwx/index.php?g=Wap&m=Bargain&a=new_index&token=315750&id=1370&code=122333#memberNoticeBox"
 					id="modaltrigger_notice" style="color: #fff"><button>点击参与</button></a>
 			</div>
 		</div>
@@ -404,7 +403,7 @@ $(document).ready(function(){
 							</p></li>
 						<li class=" clearfix"><i>21</i>
 							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/portrait(1).jpg">
+								<img src="${ctx}/resources/wechat/bargain/one/portrait.jpg">
 							</div>
 							<h2>吴国良</h2>
 							<p>
@@ -863,30 +862,7 @@ window.shareData = {
 	"tContent": "特价课程，我要买买买"
 };
 </script>
-	<script type="text/javascript" src="${ctx}/resources/wechat/bargain/one/jweixin-1.0.0.js"></script>
-	<script type="text/javascript">
-		wx.config({
-		  debug: false,
-		  appId: 	'wxbbe3543c661f396a',
-		  timestamp: 1469288552,
-		  nonceStr: '915516',
-		  signature: 'd2dfdaa222dfd5494ade78ec0d14b3eca1af9e3f',
-		  jsApiList: [
-	    	'checkJsApi',
-		    'onMenuShareTimeline',
-		    'onMenuShareAppMessage',
-		    'onMenuShareQQ',
-		    'onMenuShareWeibo',
-			'openLocation',
-			'getLocation',
-			'addCard',
-			'chooseCard',
-			'openCard',
-			'hideMenuItems',
-			'previewImage'
-		  ]
-		});
-	</script>
+		
 	<script type="text/javascript">
 	wx.ready(function () {
 	  // 1 判断当前版本是否支持指定 JS 接口，支持批量判断

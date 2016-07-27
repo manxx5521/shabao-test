@@ -12,6 +12,10 @@ public class VoteParams extends PagingParams {
 	 * 搜索关键字
 	 */
 	private String keyword;
+	/**
+	 * 排序
+	 */
+	private String order;
 	
 	public String getKeyword() {
 		return keyword;
@@ -29,4 +33,11 @@ public class VoteParams extends PagingParams {
 		this.voteId = voteId;
 	}
 
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
+	}
 }

@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/touch.css">
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/colorbox.css">
 <link rel="stylesheet" type="text/css" href="${ctx}/resources/wechat/vote/blue/daohang.css" />
-<cs:resource type="all" value="jquery,colorbox,masonry,weui" />
+<cs:resource type="all" value="jquery,colorbox,masonry,weui,jweixin" />
 <%@include file="../../common.jsp"%>
 <style>
 .slider {
