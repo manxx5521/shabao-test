@@ -1,4 +1,5 @@
 package com.xiaoshabao.webframe.dto;
+
 /**
  * 海报
  */
@@ -7,6 +8,8 @@ public class PosterDto {
 	private String image;
 	/** 可能存在的标题 */
 	private String title;
+	/** 可能存在的按钮 */
+	private String button;
 
 	public String getImage() {
 		return image;
@@ -24,4 +27,11 @@ public class PosterDto {
 		this.title = title;
 	}
 
+	public String getButton() {
+		return button;
+	}
+
+	public void setButton(String button) {
+		this.button = button;
+	}
 }

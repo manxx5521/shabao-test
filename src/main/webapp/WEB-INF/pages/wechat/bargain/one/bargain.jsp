@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="applicable-device" content="mobile">
-<title>英语课程月卡</title>
+<title>${data.bargainName}</title>
 <%@include file="../../../context/head.jsp"%>
 <cs:resource type="all" value="jquery,swiper,leanModal,jweixin" />
 <%@include file="../../common.jsp"%>
@@ -23,28 +23,6 @@
 	
 	<link rel="stylesheet" type="text/css" href="${ctx}/resources/wechat/bargain/one/fans.css">
 	<link href="${ctx}/resources/wechat/bargain/one/index(1).css" type="text/css" rel="stylesheet">
-	<%-- 
-	<div class="zhezhao" style="display: block; position: fixed;"></div>
-	<article class="peplo_content clearfix">
-	<div class="peplo_content_left">
-		<img src="${ctx}/resources/wechat/bargain/one/us.png">
-	</div>
-	<div style="float: left; line-height: 36px;">
-		<a href="http://315750.wap.weixinyunduan.com/wx/pub/yunduanwx/index.php?g=Wap&m=Index&a=memberLogin&token=315750" data-ajax="false"
-			style="color: #FFF; font-weight: normal; text-decoration: none;">您好，需要您先填写个人信息才能参加活动。</a>
-	</div>
-	<div class="peplo_content_right" style="background: url(/tpl/static/Plugin/gb.png); background-size: 15px 15px;">
-	</div>
-	</article>
-	<script>
-	$(function(){
-	    $(".peplo_content_right").click(function() {
-			$(".peplo_content,.zhezhao").fadeOut(1000);
-		})
-	})
-	</script>
-	 --%>
-	
 	<script type="text/javascript" src="${ctx}/resources/wechat/bargain/one/topNotice.js"></script>
 	<link rel="stylesheet" type="text/css" href="${ctx}/resources/wechat/bargain/one/leanModal.css">
 	<div id="memberNoticeBox"
@@ -117,10 +95,10 @@
 	<!-- -->
 	<header class="clearfix">
 	<div class="header_left">
-		已有<span>95</span>人参与砍价
+		已有<span>${data.userNum}</span>人参与砍价
 	</div>
 	<div class="header_right">
-		销量:<span>1</span>
+		销量:<span>${data.saleNum}</span>
 	</div>
 	</header>
 	<div class="banner"
@@ -128,35 +106,24 @@
 		<div class="swiper-container s1 swiper-container-horizontal">
 			<div class="swiper-wrapper"
 				style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
-				<div class="swiper-slide swiper-slide-active" style="width: 1325px;">
+				<c:forEach var="r" items="${data.posters}" varStatus="idx">
+				<div class="swiper-slide swiper-slide-active" style="width: 1325px;height:217px;">
 					<div class="banner_img">
-						<img src="${ctx}/resources/wechat/upload/bargain/thumb_572b0ec4a9be1.jpg">
+						<img src="${ctx}/resources/upload/poster/${r.image}">
 					</div>
 					<div class="banner_txt clearfix">
 						<div style="clear: both"></div>
 						<p>
-							<span>小朋友们开心学习</span>
-							<button>商品详情</button>
+							<span>${r.title}</span>
+							<button>${r.button}</button>
 						</p>
 					</div>
 				</div>
-				<div class="swiper-slide swiper-slide-next" style="width: 1325px;">
-					<div class="banner_img">
-						<img src="${ctx}/resources/wechat/upload/bargain/thumb_5710843bb70f9.jpg">
-					</div>
-					<div class="banner_txt clearfix">
-						<div style="clear: both"></div>
-						<p>
-							<span>亦学亦玩，结交伙伴</span>
-							<button>商品详情</button>
-						</p>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 			<div class="swiper-pagination p1 swiper-pagination-clickable">
-				<span
-					class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span
-					class="swiper-pagination-bullet"></span>
+				<span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span>
+				<span class="swiper-pagination-bullet"></span>
 			</div>
 		</div>
 	</div>
@@ -173,22 +140,29 @@ $(document).ready(function(){
 	<div class="content">
 		<div class="bargain clearfix">
 			<div class="bargain_img">
-				<img src="${ctx}/resources/wechat/bargain/one/portrait.jpg">
+				<img src="${ctx}/resources/wechat/upload/bargain/${data.info.portrait}">
 			</div>
 			<div class="bargain_content">
-				<h1>匿名</h1>
+				<h1>${data.info.nickname}</h1>
 				<p>
-					现价：￥<span class="nowprice">18</span>
+					现价：￥<span class="nowprice"><c:if test="${!empty data.info.joinUser.price}">${data.info.joinUser.price}</c:if>
+					<c:if test="${empty data.info.joinUser.price}">${data.totalPrice}</c:if>
+						</span>
 				</p>
 				<p>
-					<b>原价：￥18</b>
+					<b>原价：￥${data.totalPrice}</b>
 				</p>
 				<p>
-					<b>底价：￥1</b>
+					<b>底价：￥${data.mimPrice}</b>
 				</p>
 			</div>
 			<div class="bargain_info">
+				<c:if test="${data.info.joinUser.bargainNum<1}">
 				<i class="myrank">未参与</i><i class="helpcount">0人帮砍</i>
+				</c:if>
+				<c:if test="${data.info.joinUser.bargainNum>0}">
+				<i class="myrank">已参与</i><i class="helpcount">${data.bargainNum}人帮砍</i>
+				</c:if>
 			</div>
 		</div>
 		<div class="operation clearfix">
@@ -213,550 +187,43 @@ $(document).ready(function(){
 		<ul class="acticity_list">
 			<ul>
 				<li style="padding: 10px">
-					<p>每位好友可以帮你砍一刀，越砍越便宜哦！</p>
-					<p>
-						<span style="background-color: #FFE500;">砍到心仪价格后，到店支付该金额即可买入。</span>
-					</p>
-					<p>
-						<span>地址：幸福大街****号</span>
-					</p>
-					<p>
-						<span>电话：0571-66668888</span>
-					</p>
-					<p>
-						<span style="background-color: #FFE500;"><img
-							src="${ctx}/resources/wechat/bargain/one/572b0f3280f73.jpg" alt=""><br> </span>
-					</p>
-					<p>
-						<img src="${ctx}/resources/wechat/bargain/one/572b0f08aa87b.jpg" alt="">
-					</p>
-					<p>
-						<img src="${ctx}/resources/wechat/bargain/one/572b0f16db39f.jpg" alt="">
-					</p>
+					<p><c:out value="${data.rules}" escapeXml="false" /></p>
 				</li>
-				<li style="display: none;">
+				<li class="bargain_list" style="display: none;">
 					<ul class="friends">
+						<c:forEach var="r" items="${data.users}" varStatus="idx">
+						<li class="clearfix">
+							<div class="head_img">
+								<img src="${ctx}/resources/wechat/upload/bargain/${r.user.portrait}">
+							</div>
+							<h2>${r.user.nickname}</h2>
+							<p>
+								砍掉:<span>￥${r.bargainPrice}</span>
+							</p>
+						</li>
+					</c:forEach>
 					</ul>
 				</li>
 				<li class="bargain_list" style="display: none;">
 					<ul>
-						<li class=" clearfix"><i>1</i>
+					<c:forEach var="r" items="${data.rankingList}" varStatus="idx">
+						<li class=" clearfix"><i>${idx.index+1}</i>
 							<div class="head_img">
-								<img src="${ctx}/resources/wechat/upload/user/0">
+								<img src="${ctx}/resources/wechat/upload/bargain/${r.user.portrait}">
 							</div>
-							<h2>A0洪帮主【好活动</h2>
+							<h2>${r.user.nickname}</h2>
 							<p>
-								已砍至:<span>￥1</span>
+								已砍至:<span>￥${r.price}</span>
 							</p>
 						</li>
-						<li class=" clearfix"><i>2</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(1)">
-							</div>
-							<h2>邵纪华</h2>
-							<p>
-								已砍至:<span>￥1</span>
-							</p></li>
-						<li class=" clearfix"><i>3</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(2)">
-							</div>
-							<h2>断肠人在天涯</h2>
-							<p>
-								已砍至:<span>￥8.02</span>
-							</p></li>
-						<li class=" clearfix"><i>4</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(3)">
-							</div>
-							<h2>A00女王驾到（婚</h2>
-							<p>
-								已砍至:<span>￥8.31</span>
-							</p></li>
-						<li class=" clearfix"><i>5</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(4)">
-							</div>
-							<h2>徐轩昂</h2>
-							<p>
-								已砍至:<span>￥8.35</span>
-							</p></li>
-						<li class=" clearfix"><i>6</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(5)">
-							</div>
-							<h2>东霞</h2>
-							<p>
-								已砍至:<span>￥8.44</span>
-							</p></li>
-						<li class=" clearfix"><i>7</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(6)">
-							</div>
-							<h2>Ao快乐魔方&amp;小蝌</h2>
-							<p>
-								已砍至:<span>￥8.57</span>
-							</p></li>
-						<li class=" clearfix"><i>8</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(7)">
-							</div>
-							<h2>爱♥教育魔方</h2>
-							<p>
-								已砍至:<span>￥8.63</span>
-							</p></li>
-						<li class=" clearfix"><i>9</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(8)">
-							</div>
-							<h2>活着回家</h2>
-							<p>
-								已砍至:<span>￥8.63</span>
-							</p></li>
-						<li class=" clearfix"><i>10</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(9)">
-							</div>
-							<h2>管玉江</h2>
-							<p>
-								已砍至:<span>￥8.69</span>
-							</p></li>
-						<li class=" clearfix"><i>11</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(10)">
-							</div>
-							<h2>轩韵</h2>
-							<p>
-								已砍至:<span>￥8.86</span>
-							</p></li>
-						<li class=" clearfix"><i>12</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(11)">
-							</div>
-							<h2>远英教育管老师</h2>
-							<p>
-								已砍至:<span>￥8.96</span>
-							</p></li>
-						<li class=" clearfix"><i>13</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(12)">
-							</div>
-							<h2>匿名</h2>
-							<p>
-								已砍至:<span>￥9.1</span>
-							</p></li>
-						<li class=" clearfix"><i>14</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(13)">
-							</div>
-							<h2>人生常青</h2>
-							<p>
-								已砍至:<span>￥9.18</span>
-							</p></li>
-						<li class=" clearfix"><i>15</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(14)">
-							</div>
-							<h2>夕阳</h2>
-							<p>
-								已砍至:<span>￥9.19</span>
-							</p></li>
-						<li class=" clearfix"><i>16</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(15)">
-							</div>
-							<h2>share</h2>
-							<p>
-								已砍至:<span>￥9.19</span>
-							</p></li>
-						<li class=" clearfix"><i>17</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(16)">
-							</div>
-							<h2>Joker</h2>
-							<p>
-								已砍至:<span>￥9.37</span>
-							</p></li>
-						<li class=" clearfix"><i>18</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(17)">
-							</div>
-							<h2>shen</h2>
-							<p>
-								已砍至:<span>￥9.52</span>
-							</p></li>
-						<li class=" clearfix"><i>19</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(18)">
-							</div>
-							<h2>张春娥</h2>
-							<p>
-								已砍至:<span>￥9.56</span>
-							</p></li>
-						<li class=" clearfix"><i>20</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(19)">
-							</div>
-							<h2>数学老师</h2>
-							<p>
-								已砍至:<span>￥9.67</span>
-							</p></li>
-						<li class=" clearfix"><i>21</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/portrait.jpg">
-							</div>
-							<h2>吴国良</h2>
-							<p>
-								已砍至:<span>￥9.8</span>
-							</p></li>
-						<li class=" clearfix"><i>22</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(20)">
-							</div>
-							<h2>好心凉 心飞扬</h2>
-							<p>
-								已砍至:<span>￥10</span>
-							</p></li>
-						<li class=" clearfix"><i>23</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(21)">
-							</div>
-							<h2>丽缘居木业</h2>
-							<p>
-								已砍至:<span>￥10.07</span>
-							</p></li>
-						<li class=" clearfix"><i>24</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(22)">
-							</div>
-							<h2>蓝鲸</h2>
-							<p>
-								已砍至:<span>￥10.08</span>
-							</p></li>
-						<li class=" clearfix"><i>25</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(23)">
-							</div>
-							<h2>ZHANGYUYI</h2>
-							<p>
-								已砍至:<span>￥10.08</span>
-							</p></li>
-						<li class=" clearfix"><i>26</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(24)">
-							</div>
-							<h2>英伦外语(凤凰城+</h2>
-							<p>
-								已砍至:<span>￥10.13</span>
-							</p></li>
-						<li class=" clearfix"><i>27</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(25)">
-							</div>
-							<h2>彩虹的约定</h2>
-							<p>
-								已砍至:<span>￥10.35</span>
-							</p></li>
-						<li class=" clearfix"><i>28</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(26)">
-							</div>
-							<h2>俊子西</h2>
-							<p>
-								已砍至:<span>￥10.39</span>
-							</p></li>
-						<li class=" clearfix"><i>29</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(27)">
-							</div>
-							<h2>陈伟-扎西茨林-C</h2>
-							<p>
-								已砍至:<span>￥10.39</span>
-							</p></li>
-						<li class=" clearfix"><i>30</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(28)">
-							</div>
-							<h2>天样高</h2>
-							<p>
-								已砍至:<span>￥10.4</span>
-							</p></li>
-						<li class=" clearfix"><i>31</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(29)">
-							</div>
-							<h2>白海平</h2>
-							<p>
-								已砍至:<span>￥10.48</span>
-							</p></li>
-						<li class=" clearfix"><i>32</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(30)">
-							</div>
-							<h2>Sunny莹</h2>
-							<p>
-								已砍至:<span>￥10.55</span>
-							</p></li>
-						<li class=" clearfix"><i>33</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(31)">
-							</div>
-							<h2>¥¥¥</h2>
-							<p>
-								已砍至:<span>￥10.68</span>
-							</p></li>
-						<li class=" clearfix"><i>34</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(32)">
-							</div>
-							<h2>杜子悦vita</h2>
-							<p>
-								已砍至:<span>￥10.7</span>
-							</p></li>
-						<li class=" clearfix"><i>35</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(33)">
-							</div>
-							<h2>匿名</h2>
-							<p>
-								已砍至:<span>￥10.74</span>
-							</p></li>
-						<li class=" clearfix"><i>36</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(34)">
-							</div>
-							<h2>小新星国际教育昌黎</h2>
-							<p>
-								已砍至:<span>￥10.76</span>
-							</p></li>
-						<li class=" clearfix"><i>37</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(35)">
-							</div>
-							<h2>趴猫</h2>
-							<p>
-								已砍至:<span>￥10.77</span>
-							</p></li>
-						<li class=" clearfix"><i>38</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(36)">
-							</div>
-							<h2>高秀英</h2>
-							<p>
-								已砍至:<span>￥10.77</span>
-							</p></li>
-						<li class=" clearfix"><i>39</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(37)">
-							</div>
-							<h2>暖阳</h2>
-							<p>
-								已砍至:<span>￥10.82</span>
-							</p></li>
-						<li class=" clearfix"><i>40</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(38)">
-							</div>
-							<h2>深山老雕</h2>
-							<p>
-								已砍至:<span>￥10.82</span>
-							</p></li>
-						<li class=" clearfix"><i>41</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(39)">
-							</div>
-							<h2>好人一生平安</h2>
-							<p>
-								已砍至:<span>￥11.05</span>
-							</p></li>
-						<li class=" clearfix"><i>42</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(40)">
-							</div>
-							<h2>真实的我</h2>
-							<p>
-								已砍至:<span>￥11.29</span>
-							</p></li>
-						<li class=" clearfix"><i>43</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(41)">
-							</div>
-							<h2>开心快乐</h2>
-							<p>
-								已砍至:<span>￥11.36</span>
-							</p></li>
-						<li class=" clearfix"><i>44</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(42)">
-							</div>
-							<h2>吴建&amp;纽斯达足球学</h2>
-							<p>
-								已砍至:<span>￥11.4</span>
-							</p></li>
-						<li class=" clearfix"><i>45</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(43)">
-							</div>
-							<h2>妙彩书画 亮亮老</h2>
-							<p>
-								已砍至:<span>￥11.42</span>
-							</p></li>
-						<li class=" clearfix"><i>46</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(44)">
-							</div>
-							<h2>优学派 ～～淑珊老</h2>
-							<p>
-								已砍至:<span>￥11.52</span>
-							</p></li>
-						<li class=" clearfix"><i>47</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(45)">
-							</div>
-							<h2>黄亚然</h2>
-							<p>
-								已砍至:<span>￥11.54</span>
-							</p></li>
-						<li class=" clearfix"><i>48</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(46)">
-							</div>
-							<h2>伯乐</h2>
-							<p>
-								已砍至:<span>￥11.59</span>
-							</p></li>
-						<li class=" clearfix"><i>49</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(47)">
-							</div>
-							<h2>平安幸福</h2>
-							<p>
-								已砍至:<span>￥11.88</span>
-							</p></li>
-						<li class=" clearfix"><i>50</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(48)">
-							</div>
-							<h2>✿boyaೄ</h2>
-							<p>
-								已砍至:<span>￥12</span>
-							</p></li>
-						<li class=" clearfix"><i>51</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(49)">
-							</div>
-							<h2>惜缘</h2>
-							<p>
-								已砍至:<span>￥12.31</span>
-							</p></li>
-						<li class=" clearfix"><i>52</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(50)">
-							</div>
-							<h2>阿(⊙o⊙)橋</h2>
-							<p>
-								已砍至:<span>￥12.32</span>
-							</p></li>
-						<li class=" clearfix"><i>53</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(51)">
-							</div>
-							<h2>水浒</h2>
-							<p>
-								已砍至:<span>￥12.36</span>
-							</p></li>
-						<li class=" clearfix"><i>54</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(52)">
-							</div>
-							<h2>《懷 t 舊》</h2>
-							<p>
-								已砍至:<span>￥12.36</span>
-							</p></li>
-						<li class=" clearfix"><i>55</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(53)">
-							</div>
-							<h2>达州市七彩艺术学校</h2>
-							<p>
-								已砍至:<span>￥12.5</span>
-							</p></li>
-						<li class=" clearfix"><i>56</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(54)">
-							</div>
-							<h2>周燕</h2>
-							<p>
-								已砍至:<span>￥12.53</span>
-							</p></li>
-						<li class=" clearfix"><i>57</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(55)">
-							</div>
-							<h2>HTL全球沙发大师</h2>
-							<p>
-								已砍至:<span>￥12.55</span>
-							</p></li>
-						<li class=" clearfix"><i>58</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(56)">
-							</div>
-							<h2>茜茜她爸</h2>
-							<p>
-								已砍至:<span>￥12.61</span>
-							</p></li>
-						<li class=" clearfix"><i>59</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(57)">
-							</div>
-							<h2>王mon</h2>
-							<p>
-								已砍至:<span>￥12.71</span>
-							</p></li>
-						<li class=" clearfix"><i>60</i>
-							<div class="head_img">
-								<img src="${ctx}/resources/wechat/bargain/one/0(58)">
-							</div>
-							<h2>洪淑伟【移曼】</h2>
-							<p>
-								已砍至:<span>￥12.93</span>
-							</p></li>
+					</c:forEach>
 					</ul>
 				</li>
 			</ul>
 		</ul>
-		<script src="${ctx}/resources/wechat/bargain/one/weixinyunduan.html" type="text/javascript"></script>
-		<div class="mfooter" id="wxgjfooter"
-			style="text-align: center; width: 100%; height: 20px; line-height: 20px; margin-top: 10px;">
-			<span class="sp2"><a
-				href="http://wx35279.vshangtong.com/wxapi.php?ac=cate105&tid=23632"
-				style="color: #5e5e5e; font-size: 12px;">好活动策划制作 /
-					电话&amp;微信13291806632</a></span>
+		<div class="mfooter" id="wxgjfooter" style="text-align: center; width: 100%; height: 20px; line-height: 20px; margin-top: 10px;">
+			<span class="sp2"><a href="#" style="color: #5e5e5e; font-size: 12px;">技术支持</a></span>
 		</div>
-
-
-		<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?6c1de06baaf5e88bda60d4c9acaa816b";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-		<div style="width: 0px; height: 0px; overflow: hidden;">
-			<script language="javascript" type="text/javascript"
-				src="${ctx}/resources/wechat/bargain/one/18925490.js"></script>
-			<a href="http://www.51.la/?18925490" target="_blank"
-				title="51.La 网站流量统计系统"><img alt="51.La 网站流量统计系统"
-				src="${ctx}/resources/wechat/bargain/one/icon_1.gif" style="border: none"></a>
-
-		</div>
-
-		<br>
-		<br>
-		<br>
 	</div>
 	<script>
 $(document).ready(function(){

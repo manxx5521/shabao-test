@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.wechat.dao.BargainJoinDao">
+	<select id="getBargainJoin" resultType="com.xiaoshabao.wechat.dto.BargainJoinResult">
+	SELECT
+		IFNULL(a.nickname, '匿名') 'nickname',
+		IFNULL(a.portrait, 'portrait.jpg') 'portrait',
+		b.bargain_id 'joinUser.bargain_id',
+		b.bargain_num 'joinUser.bargain_num',
+		b.bargain_price 'joinUser.bargain_price',
+		b.join_id 'joinUser.join_id',
+		b.openid 'joinUser.openid',
+		b.price 'joinUser.price',
+		b.status 'joinUser.status',
+		b.update_time 'joinUser.update_time',
+		IF (b.openid is NULL,0,1) STATUS
+	FROM
+		wx_subscriber a
+	LEFT JOIN (select * from wx_bargain_join t where t.bargain_id=#{bargainId} and  t.openid=#{openid}) b 
+		ON a.openid = b.openid
+	WHERE
+		a.openid=#{openid}
+	</select>
+	<select id="getBargainRanking" resultType="com.xiaoshabao.wechat.dto.BargainRankingDto">
+	SELECT
+		a.bargain_id,
+		a.bargain_num,
+		a.bargain_price,
+		a.join_id,
+		a.openid,
+		a.price,
+		a.STATUS,
+		a.update_time,
+		IFNULL(b.nickname, '匿名') 'user.nickname',
+		IFNULL(b.portrait, 'portrait.jpg') 'user.portrait'
+	FROM wx_bargain_join a
+	LEFT JOIN wx_subscriber b ON a.openid = b.openid
+	WHERE
+		a.bargain_id=#{bargainId}
+	order by a.bargain_price
+	limit 20
+	</select>
+</mapper>

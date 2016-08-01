@@ -10,21 +10,21 @@ public class BargainEntity {
 	private Integer bargainId;
 	/** 帐号 */
 	private Integer accountId;
+	/** 使用模版 ***/
+	private String template;
 	/** 砍价名字 */
-	private String name;
+	private String bargainName;
+	/** 规则 */
+	private String rules;
 	/** 总价 */
 	private Integer totalPrice;
 	/** 砍到的最小价钱 */
 	private Integer mimPrice;
-	/** 单词砍掉最大金额 */
+	/** 单次砍掉最大金额 */
 	private Integer onePrice;
 	/** 砍价的最大次数 **/
-	private Integer naxNumber;
-	/** 当前商品价格 */
-	private Integer price;
-	/** 一共砍掉的价钱 */
-	private Integer bargainPrice;
-	/** 砍价的次数 */
+	private Integer naxBargainNum;
+	/** 活动砍价的次数 */
 	private Integer bargainNum;
 	/** 销量 */
 	private Integer saleNum;
@@ -53,12 +53,12 @@ public class BargainEntity {
 		this.accountId = accountId;
 	}
 
-	public String getName() {
-		return name;
+	public String getBargainName() {
+		return bargainName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setBargainName(String bargainName) {
+		this.bargainName = bargainName;
 	}
 
 	public Integer getTotalPrice() {
@@ -83,22 +83,6 @@ public class BargainEntity {
 
 	public void setOnePrice(Integer onePrice) {
 		this.onePrice = onePrice;
-	}
-
-	public Integer getPrice() {
-		return price;
-	}
-
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
-
-	public Integer getBargainPrice() {
-		return bargainPrice;
-	}
-
-	public void setBargainPrice(Integer bargainPrice) {
-		this.bargainPrice = bargainPrice;
 	}
 
 	public Integer getSaleNum() {
@@ -157,12 +141,28 @@ public class BargainEntity {
 		this.bargainNum = bargainNum;
 	}
 
-	public Integer getNaxNumber() {
-		return naxNumber;
+	public Integer getNaxBargainNum() {
+		return naxBargainNum;
 	}
 
-	public void setNaxNumber(Integer naxNumber) {
-		this.naxNumber = naxNumber;
+	public void setNaxBargainNum(Integer naxBargainNum) {
+		this.naxBargainNum = naxBargainNum;
+	}
+
+	public String getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(String template) {
+		this.template = template;
+	}
+
+	public String getRules() {
+		return rules;
+	}
+
+	public void setRules(String rules) {
+		this.rules = rules;
 	}
 
 }

@@ -19,7 +19,7 @@ import com.xiaoshabao.wechat.api.wxbase.AuthAPI;
 import com.xiaoshabao.wechat.bean.WechatSession;
 import com.xiaoshabao.wechat.component.TokenManager;
 import com.xiaoshabao.wechat.component.WechatConfig;
-import com.xiaoshabao.wechat.component.WechatContextHolder;
+import com.xiaoshabao.wechat.component.ContextHolderWechat;
 import com.xiaoshabao.wechat.entity.AccessToken;
 import com.xiaoshabao.wechat.util.WeixinUtil;
 /**
@@ -40,7 +40,7 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 			HttpSession session = request.getSession();
 			Integer account=null;
 			String openid=null;
-			Object obj=session.getAttribute(WechatContextHolder.WECHAT_SESSION);
+			Object obj=session.getAttribute(ContextHolderWechat.WECHAT_SESSION);
 			//oauth2.0接口带的参数
 			String state=request.getParameter("state");
 			if(StringUtils.isEmpty(state)){
@@ -82,7 +82,7 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 				WechatSession userSession=new WechatSession();
 				userSession.setAccountId(account);
 				userSession.setOpenid(openid);
-				session.setAttribute(WechatContextHolder.WECHAT_SESSION, userSession);
+				session.setAttribute(ContextHolderWechat.WECHAT_SESSION, userSession);
 			}
 		} catch (Exception e) {
 			logger.error("自动登陆异常结束");

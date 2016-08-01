@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.xiaoshabao.webframe.dao.PosterDao;
 import com.xiaoshabao.webframe.dto.PosterDto;
-import com.xiaoshabao.wechat.enums.WechatPoster;
 
 @Component("poster")
 public class PosterComponent {
@@ -19,13 +18,7 @@ public class PosterComponent {
 	 * @param voteId
 	 * @return
 	 */
-	public List<PosterDto> getWchatPoset(WechatPoster type,String typeId){
-		return posterDao.getPoster(type.getValue(),typeId);
-	}
-	/**
-	 * 获得微信投票海报
-	 */
-	public List<PosterDto> getWchatVotePoset(Integer voteId){
-		return  getWchatPoset(WechatPoster.VOTE, voteId.toString());
+	public List<PosterDto> getPoster(String type,String typeId){
+		return posterDao.getPoster(type,typeId);
 	}
 }

@@ -15,7 +15,7 @@ import com.xiaoshabao.webframe.component.ContextHolderUtils;
 import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.api.wxmedia.MediaAPI;
 import com.xiaoshabao.wechat.component.TokenManager;
-import com.xiaoshabao.wechat.component.WechatContextHolder;
+import com.xiaoshabao.wechat.component.ContextHolderWechat;
 
 @Controller
 @RequestMapping("/wechat")
@@ -37,7 +37,7 @@ public class WechatFileController extends AbstractController{
 		if(!realPath.endsWith(separator)){
 			realPath=realPath+separator;
 		}
-		Integer accountId=WechatContextHolder.getAccountId();
+		Integer accountId=ContextHolderWechat.getAccountId();
 		try {
 			String accessTonken=tokenManager.getAccessToken(accountId).getAccessToken();
 			if(StringUtils.isNotEmpty(path)){

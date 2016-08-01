@@ -57,7 +57,7 @@
 		<div class="m_head clearfix">
 			<div class="slider">
 				<ul><c:forEach var="r" items="${data.poster}" varStatus="idx">
-					<li><a href="#"><img src="${ctx}/resources/wechat/upload/${r.image}" /></a></li>
+					<li><a href="#"><img src="${ctx}/resources/upload/poster/${r.image}" /></a></li>
 					</c:forEach>
 				</ul>
 			</div>

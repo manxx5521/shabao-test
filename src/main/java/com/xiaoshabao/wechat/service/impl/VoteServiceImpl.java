@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.xiaoshabao.baseframe.bean.PageValue;
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
-import com.xiaoshabao.webframe.component.PosterComponent;
 import com.xiaoshabao.webframe.dto.AjaxResult;
-import com.xiaoshabao.wechat.component.WechatContextHolder;
+import com.xiaoshabao.wechat.component.PosterWechatComponent;
+import com.xiaoshabao.wechat.component.ContextHolderWechat;
 import com.xiaoshabao.wechat.dao.SubscriberDao;
 import com.xiaoshabao.wechat.dao.VoteCountDao;
 import com.xiaoshabao.wechat.dao.VoteDao;
@@ -46,8 +46,8 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 	private VoteCountDao countDao;
 	@Autowired
 	private SubscriberDao subscriberDao;
-	@Resource(name="poster")
-	private PosterComponent posterComponent;
+	@Resource(name="wechatPoster")
+	private PosterWechatComponent posterComponent;
 	@Autowired
 	private VoteSuccessDao voteSuccess;
 	
@@ -185,11 +185,11 @@ public class VoteServiceImpl extends AbstractServiceImpl implements VoteService 
 	@Override
 	@Transactional
 	public AjaxResult addVoteNum(Integer voteId, Integer playerId) {
-		String openid=WechatContextHolder.getOpenid();
+		String openid=ContextHolderWechat.getOpenid();
 		if(StringUtils.isEmpty(openid)){
 			return new AjaxResult("请关注后，再投票");
 		}
-		List<SubscriberEntity> list=subscriberDao.getSubscriberById(null,openid);
+		List<SubscriberEntity> list=subscriberDao.getSubscriber(null,openid);
 		if(list.isEmpty()){
 			return new AjaxResult("当前登录的帐号错误，请重新打开公众号或者重新关注后重试");
 		}

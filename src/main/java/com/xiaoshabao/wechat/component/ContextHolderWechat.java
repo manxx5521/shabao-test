@@ -7,7 +7,7 @@ import com.xiaoshabao.wechat.bean.WechatSession;
 /**
  * 获取上下问工具类
  */
-public class WechatContextHolder extends ContextHolderUtils{
+public class ContextHolderWechat extends ContextHolderUtils{
 	/**微信获得session标识*/
 	public final static String WECHAT_SESSION="wechat";
 	/**

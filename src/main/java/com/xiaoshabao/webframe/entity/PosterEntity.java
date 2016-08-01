@@ -14,6 +14,8 @@ public class PosterEntity {
 	private String image;
 	/** 可能存在的标题 */
 	private String title;
+	/** 可能存在的按钮 */
+	private String button;
 	/** 排序 */
 	private Integer orderNo;
 
@@ -71,6 +73,14 @@ public class PosterEntity {
 
 	public void setOrderNo(Integer orderNo) {
 		this.orderNo = orderNo;
+	}
+
+	public String getButton() {
+		return button;
+	}
+
+	public void setButton(String button) {
+		this.button = button;
 	}
 
 }

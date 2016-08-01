@@ -111,7 +111,7 @@
 						<c:forEach var="r" items="${data.poster}" varStatus="idx">
 							<div class="swiper-slide">
 								<a href="#"><img class="imgplay"
-									src="${ctx}/resources/wechat/upload/${r.image}" /></a>
+									src="${ctx}/resources/upload/poster/${r.image}" /></a>
 							</div>
 						</c:forEach>
 					</div>

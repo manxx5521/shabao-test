@@ -7,10 +7,10 @@ import java.util.Date;
  */
 public class BargainSuccess {
 	private Integer id;
-	private Integer bargainId;
+	private Integer joinId;
 	private String openid;
-	/** 自己砍价为1，别人帮忙为2 */
-	private String type;
+	/** 当前商品价格 ，类型为1时表示当前砍价的价钱，2时表示当次砍到的价钱 */
+	private Integer price;
 	/** 本次砍掉价钱 */
 	private Integer bargainPrice;
 	private Date createTime;
@@ -23,28 +23,12 @@ public class BargainSuccess {
 		this.id = id;
 	}
 
-	public Integer getBargainId() {
-		return bargainId;
-	}
-
-	public void setBargainId(Integer bargainId) {
-		this.bargainId = bargainId;
-	}
-
 	public String getOpenid() {
 		return openid;
 	}
 
 	public void setOpenid(String openid) {
 		this.openid = openid;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public Integer getBargainPrice() {
@@ -62,4 +46,21 @@ public class BargainSuccess {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
+	public Integer getPrice() {
+		return price;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+
+	public Integer getJoinId() {
+		return joinId;
+	}
+
+	public void setJoinId(Integer joinId) {
+		this.joinId = joinId;
+	}
+
 }

@@ -168,7 +168,7 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 			// 关注
 			if (event.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
 				respContent = "谢谢您的关注！";
-				List<SubscriberEntity> list = subscriberDao.getSubscriberById(
+				List<SubscriberEntity> list = subscriberDao.getSubscriber(
 						this.accountId, fromUserName);
 				SubscriberEntity bean = new SubscriberEntity(
 						this.accountId, fromUserName, 1);

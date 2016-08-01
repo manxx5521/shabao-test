@@ -16,7 +16,15 @@ public interface SubscriberDao {
 	 * @param openid
 	 * @return
 	 */
-	public List<SubscriberEntity> getSubscriberById(@Param("accountId")Integer accountId,@Param("openid") String openid);
+	public List<SubscriberEntity> getSubscriber(@Param("accountId")Integer accountId,@Param("openid") String openid);
+	
+	/**
+	 * 获得订阅信息
+	 * @param accountId
+	 * @param openid
+	 * @return
+	 */
+	public SubscriberEntity getSubscriberById(@Param("openid") String openid);
 	
 	/**
 	 * 插入记录

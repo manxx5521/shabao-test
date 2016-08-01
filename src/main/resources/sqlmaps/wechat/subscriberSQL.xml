@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.wechat.dao.SubscriberDao">
-	<select id="getSubscriberById" resultType="com.xiaoshabao.wechat.entity.SubscriberEntity">
-		select id,type,account_id,openid,update_time from wx_subscriber where openid=#{openid}
+	<select id="getSubscriber" resultType="com.xiaoshabao.wechat.entity.SubscriberEntity">
+		SELECT ID,TYPE,ACCOUNT_ID,OPENID,SEX,CITY,NICKNAME,PORTRAIT,UPDATE_TIME FROM WX_SUBSCRIBER WHERE OPENID=#{openid}
 		<if test="accountId !=null and accountId !='' ">
-			and account_id=#{accountId}
+			AND ACCOUNT_ID=#{accountId}
 		</if>
+	</select>
+	<select id="getSubscriberById" resultType="com.xiaoshabao.wechat.entity.SubscriberEntity">
+		select id,type,account_id,openid,sex,city,IFNULL(nickname,'匿名') nickname,IFNULL(portrait,'portrait.jpg') portrait,update_time 
+		from wx_subscriber where openid=#{openid}
 	</select>
 	<insert id="insert">
 		<!--ignore 表示主键冲突时，不报错返回结果为0-->
