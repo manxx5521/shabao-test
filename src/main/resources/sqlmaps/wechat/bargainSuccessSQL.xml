@@ -11,4 +11,15 @@
 		where a.join_id=#{joinId}
 		order by a.create_time
 	</select>
+	<select id="getBargainSuccessById" resultType="com.xiaoshabao.wechat.entity.BargainSuccessEntity">
+		select id,join_id,openid,price,bargain_price,create_time
+		from wx_bargain_success 
+		where join_id=#{joinId}
+			and openid=#{openid}
+	</select>
+	<insert id="insertBargainSuccess">
+  	INSERT INTO wx_bargain_success(id,join_id,openid,price,bargain_price,create_time)
+	VALUES(NULL,#{joinId,jdbcType=NUMERIC},#{openid,jdbcType=VARCHAR},
+	#{price,jdbcType=NUMERIC},#{bargainPrice,jdbcType=NUMERIC},SYSDATE())
+	</insert>
 </mapper>

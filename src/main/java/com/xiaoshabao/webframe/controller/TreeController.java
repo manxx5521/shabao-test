@@ -25,7 +25,7 @@ public class TreeController extends AbstractController{
 	public AjaxResult getList(@PathVariable("elementId") Integer elementId){
 		try {
 			List<JSTreeNode> list= treeService.getJSTreeList(elementId);
-			return new AjaxResult(list);
+			return new AjaxResult(true,list);
 		} catch (ServiceException se) {
 			return new AjaxResult(false,se.getMessage());
 		}

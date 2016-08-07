@@ -1,5 +1,6 @@
 package com.xiaoshabao.webframe.dto;
 
+import com.xiaoshabao.baseframe.enums.ErrorInterface;
 import com.xiaoshabao.webframe.enums.AJAXResultEnum;
 
 /**
@@ -30,6 +31,15 @@ public class AjaxResult {
 	public AjaxResult( String message) {
 		this.success = false;
 		this.message = message;
+	}
+	/**
+	 * 一般返回成功信息构造
+	 * @param success
+	 * @param data
+	 */
+	public AjaxResult( ErrorInterface error) {
+		this.success = false;
+		this.message = error.getMessage();
 	}
 	/**
 	 * 一般返回成功信息构造

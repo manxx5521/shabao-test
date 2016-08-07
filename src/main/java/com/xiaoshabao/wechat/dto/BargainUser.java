@@ -1,13 +1,13 @@
 package com.xiaoshabao.wechat.dto;
 
-import com.xiaoshabao.wechat.entity.BargainSuccess;
+import com.xiaoshabao.wechat.entity.BargainSuccessEntity;
 import com.xiaoshabao.wechat.entity.SubscriberEntity;
 
 
 /**
  * 砍价信息返回
  */
-public class BargainUser extends BargainSuccess {
+public class BargainUser extends BargainSuccessEntity {
 	private SubscriberEntity user;
 
 	public SubscriberEntity getUser() {

@@ -12,19 +12,17 @@
 <meta name="applicable-device" content="mobile">
 <title>${data.bargainName}</title>
 <%@include file="../../../context/head.jsp"%>
-<cs:resource type="all" value="jquery,swiper,leanModal,jweixin" />
+<cs:resource type="all" value="jquery,swiper,leanModal,jweixin,weui" />
 <%@include file="../../common.jsp"%>
 <link href="${ctx}/resources/wechat/bargain/one/base.css" rel="stylesheet">
 <link href="${ctx}/resources/wechat/bargain/one/index.css" rel="stylesheet">
 <link href="${ctx}/resources/wechat/bargain/one/media.css" rel="stylesheet">
-<script src="${ctx}/resources/wechat/bargain/one/hm.js"></script>
+<link rel="stylesheet" type="text/css" href="${ctx}/resources/wechat/bargain/one/fans.css">
+<link href="${ctx}/resources/wechat/bargain/one/index(1).css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/resources/wechat/bargain/one/topNotice.js"></script>
+<link rel="stylesheet" type="text/css" href="${ctx}/resources/wechat/bargain/one/leanModal.css">
 </head>
 <body>
-	
-	<link rel="stylesheet" type="text/css" href="${ctx}/resources/wechat/bargain/one/fans.css">
-	<link href="${ctx}/resources/wechat/bargain/one/index(1).css" type="text/css" rel="stylesheet">
-	<script type="text/javascript" src="${ctx}/resources/wechat/bargain/one/topNotice.js"></script>
-	<link rel="stylesheet" type="text/css" href="${ctx}/resources/wechat/bargain/one/leanModal.css">
 	<div id="memberNoticeBox"
 		style="display: none; position: fixed; opacity: 1; z-index: 11000; left: 50%; margin-left: -170px; top: 110px;">
 		<h1>提醒</h1>
@@ -45,10 +43,9 @@
 		});
 	});
 	</script>
-	<!-- - -->
 	<div class="layer "></div>
 	<div class="moeny center">
-		<audio id="player" src="/yunduanwx/tpl/static/bargain/new/123.wav">
+		<audio id="player" src="${ctx}/resources/wechat/bargain/one/123.wav">
 		</audio>
 		<div class="moeny_img ">
 			<img src="${ctx}/resources/wechat/bargain/one/money_13_13_10.png">
@@ -56,9 +53,9 @@
 		<div class="close"></div>
 		<div class="moeny_content  ">
 			<p>
-				哇哦，在您休息片刻之际，已有<span></span>位亲友帮您砍掉
+				哇哦，在您休息片刻之际，已有<span id="moeny_num"></span>位亲友帮您砍掉
 			</p>
-			<span>￥</span>
+			<span id="moeny_price">￥</span>
 			<h3>你是不是很开森啊</h3>
 			<div class="moeny_left"></div>
 			<div class="moeny_right"></div>
@@ -74,8 +71,7 @@
 		</div>
 	</div>
 	<div class="bargain_layer center">
-		<audio id="player_audio"
-			src="/yunduanwx/tpl/static/bargain/new/jishui.wav"> </audio>
+		<audio id="player_audio" src="${ctx}/resources/wechat/bargain/one/jishui.wav"> </audio>
 		<div class="bargain_ball_img">
 			<img src="${ctx}/resources/wechat/bargain/one/knife_02.png">
 		</div>
@@ -161,13 +157,13 @@ $(document).ready(function(){
 				<i class="myrank">未参与</i><i class="helpcount">0人帮砍</i>
 				</c:if>
 				<c:if test="${data.info.joinUser.bargainNum>0}">
-				<i class="myrank">已参与</i><i class="helpcount">${data.bargainNum}人帮砍</i>
+				<i class="myrank">已参与</i><i class="helpcount">${data.info.joinUser.bargainNum}人帮砍</i>
 				</c:if>
 			</div>
 		</div>
 		<div class="operation clearfix">
 			<div class="operation_info">
-				<a href="http://315750.wap.weixinyunduan.com/wx/pub/yunduanwx/index.php?g=Wap&m=Bargain&a=new_index&token=315750&id=1370&code=122333#memberNoticeBox"
+				<a href=""
 					id="modaltrigger_notice" style="color: #fff"><button>点击参与</button></a>
 			</div>
 		</div>
@@ -181,7 +177,7 @@ $(document).ready(function(){
 			<ul class="clearfix">
 				<li class="curn">活动规则</li>
 				<li>亲友出刀</li>
-				<li>砍价TOP10000</li>
+				<li>砍价TOP20</li>
 			</ul>
 		</div>
 		<ul class="acticity_list">
@@ -225,7 +221,26 @@ $(document).ready(function(){
 			<span class="sp2"><a href="#" style="color: #5e5e5e; font-size: 12px;">技术支持</a></span>
 		</div>
 	</div>
+	<!-- 微信弹窗 begin-->
+	<div class="weui_dialog_alert" style="display: none;">
+		<div class="weui_mask"></div>
+		<div class="weui_dialog">
+			<div class="weui_dialog_hd">
+				<strong class="weui_dialog_title">提示</strong>
+			</div>
+			<div class="weui_dialog_bd">弹窗内容，告知当前页面信息等</div>
+			<div class="weui_dialog_ft">
+				<a href="#" class="weui_btn_dialog primary">确定</a>
+			</div>
+		</div>
+	</div>
+	<!-- 微信弹窗 end-->
 	<script>
+	var bargain={
+		openid:'${wechat.openid}',
+		bargainId:'${data.bargainId}',
+		joinId:'${joinId}'
+	}
 $(document).ready(function(){
 	tab(".activity_title li", ".acticity_list > ul > li", "curn");
 	$(".close,.layer").click(function() {
@@ -236,7 +251,49 @@ $(document).ready(function(){
 			"overflow": "auto"
 		});
 	});
+	
+	$('#modaltrigger_notice').click(function(){
+		if(bargain.openid==''){
+			$('.weui_dialog_bd').html('请先关注再参加活动！')
+			$('.weui_dialog_alert').show();
+			return false;
+		}
+		var url=window.webroot+'/wechat/bargain/';
+		if(bargain.joinId==''){
+			url+=bargain.bargainId+'/exeBargain';
+		}else{
+			url+=bargain.joinId+'/exeShareBargain';
+		}
+		$.ajax({
+			  type: 'POST',
+			  url: url,
+			  data: {},
+			  dataType:"json",
+			  success: function(result){
+				  if(result.success){
+					  if(result.message=='true'){
+						  $('.bargain_banner > span').html('￥'+result.data.bargainPrice);
+						  notwinning();
+					  }else{
+						  $('#moeny_num').html(result.data.bargainNum);
+						  $('#moeny_price').html('￥'+result.data.bargainPrice+'元');
+						  winning();
+					  }
+				  }else{
+					  $('.weui_dialog_bd').html(result.message)
+						$('.weui_dialog_alert').show(); 
+				  }
+			 }
 		});
+		
+	});
+});
+	
+	//弹窗设置
+	$('.weui_btn_dialog').click(function(){
+		$('.weui_dialog_alert').hide();
+	});
+	
 function share(){
 	$('.share_bg').show();
 	$('.share_bg').click(function(){
@@ -244,12 +301,6 @@ function share(){
 			$(this).css('display','none');
 		}
 	});
-}
-function fistblood(){
-	window.location.href="/wx/pub/yunduanwx/index.php?g=Wap&m=Bargain&a=new_fistblood&token=315750&id=1370";
-}
-function kandao(){
-	window.location.href='/wx/pub/yunduanwx/index.php?g=Wap&m=Bargain&a=new_kandao&token=315750&id=1370';
 }
 function tab(a, b, c) { //a 是点击的目标,,b 是所要切换的目标,c 是点击目标的当前样式
     var len = $(a);
@@ -314,125 +365,31 @@ function notwinning() {
 				"height": "auto",
 				"overflow": "auto"
 			});
+			 window.location.reload();
 		}, 6500);
 	}
 	autioPlay(document.getElementById('player_audio'), $('.player_audio'));
 }
 </script>
-	<script type="text/javascript">
-window.shareData = {  
-	"moduleName":"疯狂砍价",
-	"moduleID":"1370",
-	"imgUrl": "http://www.weixinyunduan.com/yunduanwx/newuploads/3/315750/0/7/0/e/thumb_572b0ec4a9be1.jpg",
-		"sendFriendLink": "http://315750.wap.weixinyunduan.com/wx/pub/yunduanwx/index.php?g=Wap&m=Bargain&a=new_index&token=315750&id=1370",
-		"tTitle": "课程月卡1元购！砍价疯狂进行时~",
-	"tContent": "特价课程，我要买买买"
-};
-</script>
-		
-	<script type="text/javascript">
-	wx.ready(function () {
-	  // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
-	  /*document.querySelector('#checkJsApi').onclick = function () {
-	    wx.checkJsApi({
-	      jsApiList: [
-	        'getNetworkType',
-	        'previewImage'
-	      ],
-	      success: function (res) {
-	        //alert(JSON.stringify(res));
-	      }
-	    });
-	  };*/
-	  // 2. 分享接口
-	  // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
-	    wx.onMenuShareAppMessage({
-			title: window.shareData.tTitle,
-			desc: window.shareData.tContent,
-			link: window.shareData.sendFriendLink,
-			imgUrl: window.shareData.imgUrl,
-		    type: '', // 分享类型,music、video或link，不填默认为link
-		    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-		    success: function () { 
-				shareHandle('frined');
-		    },
-		    cancel: function () { 
-		        //alert('分享朋友失败');
-		    }
-		});
-
-
-	  // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
-		wx.onMenuShareTimeline({
-			title: window.shareData.fTitle?window.shareData.fTitle:window.shareData.tTitle,
-			link: window.shareData.sendFriendLink,
-			imgUrl: window.shareData.imgUrl,
-		    success: function () { 
-				shareHandle('frineds');
-		        //alert('分享朋友圈成功');
-		    },
-		    cancel: function () { 
-		        //alert('分享朋友圈失败');
-		    }
-		});	
-
-	  // 2.4 监听“分享到微博”按钮点击、自定义分享内容及分享结果接口
-		wx.onMenuShareWeibo({
-			title: window.shareData.tTitle,
-			desc: window.shareData.tContent,
-			link: window.shareData.sendFriendLink,
-			imgUrl: window.shareData.imgUrl,
-		    success: function () { 
-				shareHandle('weibo');
-		       	//alert('分享微博成功');
-		    },
-		    cancel: function () { 
-		        //alert('分享微博失败');
-		    }
-		});
-		if(window.shareData.timeline_hide == '1'){
-			wx.hideMenuItems({
-			  menuList: [
-				'menuItem:share:timeline', //隐藏分享到朋友圈
-			  ],
-			});
-		}
-		wx.error(function (res) {
-			/*if(res.errMsg == 'config:invalid signature'){
-				wx.hideOptionMenu();
-			}else if(res.errMsg == 'config:invalid url domain'){
-				wx.hideOptionMenu();
-			}else{
-				wx.hideOptionMenu();
-				//alert(res.errMsg);
-			}*/
-			if(res.errMsg){
-				wx.hideOptionMenu();
-			}
-		});
-	});
-		
-	function shareHandle(to) {
-		var submitData = {
-			module: window.shareData.moduleName,
-			moduleid: window.shareData.moduleID,
-			token:'',
-			wecha_id:'',
-			url: window.shareData.sendFriendLink,
-			to:to
+<!--微信分享-->
+<script type="text/javascript">
+	wx.ready(function() {
+		var shareData = {
+			title : '${data.bargainName}',
+			desc : '${data.des}',
+			link : '${jsParams.url}',
+			imgUrl : '${domain}${ctx}/resources/upload/poster/${data.posters[0].image}'
 		};
-
-		$.post('index.php?g=Wap&m=Share&a=shareData&token=315750&wecha_id=',submitData,function (data) {},'json');
-		if(window.shareData.isShareNum == 1){
-			var ShareNum = {
-				token:'315750',
-				ShareNumData:window.shareData.ShareNumData
-			}
-			$.post('index.php?g=Wap&m=Share&a=ShareNum&token=315750&wecha_id=',ShareNum,function (data) {if(window.shareData.isShareNumReload == 1){location.reload();}},'json');
-		}
-	}
+		wx.onMenuShareAppMessage(shareData);
+		wx.onMenuShareTimeline(shareData);
+		wx.onMenuShareQQ(shareData);
+		wx.onMenuShareWeibo(shareData);
+	});
+	wx.error(function(res) {
+		//alert(res.errMsg); 
+	});
 </script>
+<!--END 微信分享-->
 	<div id="lean_overlay"></div>
 </body>
-<style type="text/css" id="54008016393"></style>
 </html>

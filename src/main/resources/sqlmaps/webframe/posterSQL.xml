@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.webframe.dao.PosterDao">
 	<select id="getPoster" resultType="PosterDto">
-		SELECT IMAGE,TITILE,BUTTON
+		SELECT IMAGE,TITLE,BUTTON
 		FROM TD_S_POSTER
 		<where>
 			<if test="type !=null and type !='' ">

@@ -14,6 +14,8 @@ public class BargainEntity {
 	private String template;
 	/** 砍价名字 */
 	private String bargainName;
+	/** 描述信息 */
+	private String des;
 	/** 规则 */
 	private String rules;
 	/** 总价 */
@@ -163,6 +165,14 @@ public class BargainEntity {
 
 	public void setRules(String rules) {
 		this.rules = rules;
+	}
+
+	public String getDes() {
+		return des;
+	}
+
+	public void setDes(String des) {
+		this.des = des;
 	}
 
 }

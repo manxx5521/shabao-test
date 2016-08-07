@@ -32,7 +32,7 @@ public class DepartServiceImpl extends AbstractServiceImpl implements DepartServ
 		if(depart==null||StringUtils.isEmpty(depart.getDepartId())){
 			return new AjaxResult("查询的部门不存在");
 		}
-		return new AjaxResult(depart);
+		return new AjaxResult(true,depart);
 	}
 	//修改部门信息
 	@Override

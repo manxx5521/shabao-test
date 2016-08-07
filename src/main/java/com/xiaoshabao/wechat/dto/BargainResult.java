@@ -9,6 +9,10 @@ import com.xiaoshabao.wechat.entity.BargainEntity;
  * 砍价信息返回
  */
 public class BargainResult extends BargainEntity {
+	/**
+	 * 参加活动的id
+	 */
+	private Integer joinId;
 	
 	/**
 	 * 个人信息
@@ -62,4 +66,11 @@ public class BargainResult extends BargainEntity {
 		this.rankingList = rankingList;
 	}
 
+	public Integer getJoinId() {
+		return joinId;
+	}
+
+	public void setJoinId(Integer joinId) {
+		this.joinId = joinId;
+	}
 }

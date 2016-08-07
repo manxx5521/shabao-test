@@ -5,15 +5,23 @@ import java.util.Date;
 /**
  * 砍价成功信息表
  */
-public class BargainSuccess {
+public class BargainSuccessEntity {
 	private Integer id;
 	private Integer joinId;
 	private String openid;
-	/** 当前商品价格 ，类型为1时表示当前砍价的价钱，2时表示当次砍到的价钱 */
+	/** 当前商品价格 ，当次砍到的价钱 */
 	private Integer price;
 	/** 本次砍掉价钱 */
 	private Integer bargainPrice;
 	private Date createTime;
+
+	public BargainSuccessEntity() {
+	}
+
+	public BargainSuccessEntity(Integer joinId, String openid) {
+		this.joinId = joinId;
+		this.openid = openid;
+	}
 
 	public Integer getId() {
 		return id;

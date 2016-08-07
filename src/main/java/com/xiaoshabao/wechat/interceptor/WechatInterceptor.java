@@ -95,10 +95,9 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request,HttpServletResponse response, 
 			Object handler,ModelAndView modelAndView) throws Exception {
-		HttpSession session = request.getSession();
-		String accountId = (String) session.getAttribute("accountId");
+		Integer accountId =ContextHolderWechat.getAccountId();
 		try {
-			if (StringUtils.isNotEmpty(accountId)) {
+			if (accountId!=null) {
 				String domain = wechatConfig.getDomain();
 				String param = request.getQueryString();
 				String url = null;

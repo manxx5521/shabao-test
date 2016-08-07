@@ -12,7 +12,7 @@ import com.xiaoshabao.wechat.api.wxbase.TokenAPI;
  */
 public class TokenAPITest{
 	
-	public final static String accessToken="zNjUEf8HdQI1bnO2pbXLJvsG4C-CtzHviK-E4vh0AJOtO6RawdJzzIMzwQjjoVyi8QnHBpn17fV1WH0m3mod0BrUzReeboMboJSwn3scfT8RlINJnxXb1ulW23_6aHIHIQGfAJABJZ";
+	public final static String accessToken="kl1VWXhO5krFXXDw7KeccOW1aCVYMyP0ojmklQ3CFjpllrROu3lc6DjQIrYuuVyTT_Gs1OdTCEYbqpUHPyy_vNJ3Y6xgh1MZN_aKTKgzcrPYgltmzbKEjb0DXwfXtLXLKIWaAFAFDR";
 	@Before
 	public void setUp() throws Exception {
 	}

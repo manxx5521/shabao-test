@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.wechat.dao.BargainJoinDao">
-	<select id="getBargainJoin" resultType="com.xiaoshabao.wechat.dto.BargainJoinResult">
+	<select id="getBargainJoinResult" resultType="com.xiaoshabao.wechat.dto.BargainJoinResult">
 	SELECT
 		IFNULL(a.nickname, '匿名') 'nickname',
 		IFNULL(a.portrait, 'portrait.jpg') 'portrait',
@@ -21,6 +21,58 @@
 	WHERE
 		a.openid=#{openid}
 	</select>
+	
+	<select id="getBargainJoin" resultType="com.xiaoshabao.wechat.entity.BargainJoinEntity">
+	SELECT
+		bargain_id,
+		bargain_num,
+		bargain_price,
+		join_id,
+		openid,
+		price,
+		status,
+		update_time
+	FROM
+		wx_bargain_join
+	WHERE
+		bargain_id=#{bargainId} and openid=#{openid}
+	</select>
+	
+	<select id="getBargainJoinByJoinId" resultType="com.xiaoshabao.wechat.dto.BargainJoinInfo">
+	SELECT
+		a.bargain_id,
+		a.bargain_num,
+		a.bargain_price,
+		a.join_id,
+		a.openid,
+		a.price,
+		a.status,
+		a.update_time,
+		b.account_id 'bargain.accountId',
+		b.bargain_id 'bargain.bargainId',
+		b.bargain_name 'bargain.bargainName',
+		b.bargain_num 'bargain.bargainNum',
+		b.create_staff 'bargain.createStaff',
+		b.create_time 'bargain.createTime',
+		b.des 'bargain.des',
+		b.end_time 'bargain.endTime',
+		b.start_time 'bargain.startTime',
+		b.max_bargain_num 'bargain.maxBargainNum',
+		b.mim_price 'bargain.minPrice',
+		b.one_price 'bargain.onePrice',
+		b.rules 'bargain.rules',
+		b.sale_num 'bargain.saleNum',
+		b.template 'bargain.template',
+		b.total_price 'bargain.totalPrice',
+		b.user_num 'bargain.userNum',
+		SYSDATE() SYSDATE
+	FROM
+		wx_bargain_join a,wx_bargain b
+	WHERE
+		a.bargain_id=b.bargain_id
+		and a.join_id=#{joinId}
+	</select>
+	
 	<select id="getBargainRanking" resultType="com.xiaoshabao.wechat.dto.BargainRankingDto">
 	SELECT
 		a.bargain_id,
@@ -40,4 +92,19 @@
 	order by a.bargain_price
 	limit 20
 	</select>
+	
+	<insert id="insertBargainJoin" useGeneratedKeys="true" keyProperty="joinId">
+  	INSERT INTO wx_bargain_join(join_id,bargain_id,openid,status,
+		price,bargain_price,bargain_num,create_time,update_time)
+	VALUES(NULL,#{bargainId,jdbcType=NUMERIC},#{openid,jdbcType=VARCHAR},#{status,jdbcType=NUMERIC},
+	#{price,jdbcType=NUMERIC},#{bargainPrice,jdbcType=NUMERIC},#{bargainNum,jdbcType=NUMERIC},SYSDATE(),SYSDATE())
+	</insert>
+	
+	<update id="updateBargainInfo">
+		UPDATE wx_bargain_join 
+			SET bargain_price=bargain_price+#{price},price=price-#{price},
+			bargain_num=bargain_num+1,update_time=SYSDATE()
+		WHERE join_id=#{joinId}
+	</update>
+	
 </mapper>

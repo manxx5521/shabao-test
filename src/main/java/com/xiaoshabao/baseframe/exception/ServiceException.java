@@ -1,5 +1,7 @@
 package com.xiaoshabao.baseframe.exception;
 
+import com.xiaoshabao.baseframe.enums.ErrorInterface;
+
 /**
  * Service层业务异常
  * <p>
@@ -12,6 +14,10 @@ public class ServiceException extends RuntimeException {
 
 	public ServiceException(String mess) {
 		super(mess);
+	}
+	
+	public ServiceException(ErrorInterface error) {
+		super(error.getMessage());
 	}
 
 	public ServiceException(String message, Throwable cause) {

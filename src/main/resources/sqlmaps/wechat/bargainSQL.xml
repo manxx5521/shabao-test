@@ -4,4 +4,37 @@
 	<select id="getBargainResult" resultType="com.xiaoshabao.wechat.dto.BargainResult">
 		select * from wx_bargain where bargain_id=#{bargainId}
 	</select>
+	<select id="getBargainResultByJoinId" resultType="com.xiaoshabao.wechat.dto.BargainResult">
+		SELECT
+			t.*, a.join_id,
+		IF (a.openid IS NULL, 0, 1) 'info.STATUS',
+		 a.bargain_id 'info.joinUser.bargain_id',
+		 a.bargain_num 'info.joinUser.bargain_num',
+		 a.bargain_price 'info.joinUser.bargain_price',
+		 a.join_id 'info.joinUser.join_id',
+		 a.openid 'info.joinUser.openid',
+		 a.price 'info.joinUser.price',
+		 a. STATUS 'info.joinUser.status',
+		 a.update_time 'joinUser.update_time',
+		 IFNULL(b.nickname, '匿名') 'info.nickname',
+		 IFNULL(b.portrait, 'portrait.jpg') 'info.portrait'
+		FROM
+			wx_bargain_join a
+		LEFT JOIN wx_subscriber b ON a.openid = b.openid
+		LEFT JOIN wx_bargain t ON a.bargain_id = t.bargain_id
+		WHERE
+			a.join_id = #{joinId}
+	</select>
+	<select id="getBargainById" resultType="com.xiaoshabao.wechat.entity.BargainEntity">
+		select * from wx_bargain where bargain_id=#{bargainId}
+	</select>
+	<select id="getBargainDtoById" resultType="com.xiaoshabao.wechat.dto.BargainDto">
+		select *,SYSDATE() SYSDATE from wx_bargain where bargain_id=#{bargainId}
+	</select>
+	<update id="addBargainNum">
+		UPDATE WX_BARGAIN SET BARGAIN_NUM=BARGAIN_NUM+1 WHERE BARGAIN_ID=#{bargainId}
+	</update>
+	<update id="addNumber">
+		UPDATE WX_BARGAIN SET BARGAIN_NUM=BARGAIN_NUM+1,USER_NUM=USER_NUM+1 WHERE BARGAIN_ID=#{bargainId}
+	</update>
 </mapper>

@@ -20,6 +20,8 @@ public class BargainJoinEntity {
 	private Integer bargainPrice;
 	/** 当前砍价的次数 */
 	private Integer bargainNum;
+	/** 参加活动时间 **/
+	private Date createTime;
 	/** 更新时间 **/
 	private Date updateTime;
 	
@@ -70,5 +72,11 @@ public class BargainJoinEntity {
 	}
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 }
