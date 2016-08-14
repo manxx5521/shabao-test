@@ -15,6 +15,7 @@
 	<context:component-scan base-package="com.xiaoshabao.*.service" />
 	<context:component-scan base-package="com.xiaoshabao.*.shiro" />
 	<context:component-scan base-package="com.xiaoshabao.*.component" />
+	<context:component-scan base-package="com.xiaoshabao.*.job" />
 	
 	<!-- shiro配置 begin -->
 	<!-- 自定义Realm -->
@@ -51,4 +52,34 @@
     </bean>  
 	<!-- shiro配置 end -->
 	
+	<!-- 任务调度 begin -->
+	<bean name="startQuertz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="updateAccessTokenTrigger" />
+			</list>
+		</property>
+	</bean>
+	<!--定义任务触发时间等-->
+	<bean id="updateAccessTokenTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="updateAccessTokenJobDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0/10 * * * ?</value>
+		</property>
+	</bean>
+	<!--定义任务描述，所在类和方法等-->
+	<bean id="updateAccessTokenJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="updateAccessTokenJob" />
+		</property>
+		<property name="targetMethod">
+			<value>work</value>
+		</property>
+	</bean>
+	<!-- 注入任务-->
+	<bean id="updateAccessTokenJob" class="com.xiaoshabao.wechat.job.UpdateAccessTokenJob" />
+	<!-- 任务调度 end -->
 </beans>

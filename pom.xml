@@ -135,6 +135,12 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
+			<!-- 支持任务调度 -->
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
 			<!-- Spring JDBC支持 -->
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
@@ -265,6 +271,19 @@
 			<version>3.0.0</version>
 		</dependency>
 		<!-- 二维码 end -->
+		
+		<!-- quartz调度任务 begin-->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz-jobs</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		<!-- quartz调度任务 begin-->
 
 	</dependencies>
 	<build>

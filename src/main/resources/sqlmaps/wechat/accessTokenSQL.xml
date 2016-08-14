@@ -46,4 +46,18 @@
 			JSUPDATE_TIME = #{jsupdateTime,jdbcType=TIMESTAMP}
 		WHERE ACCOUNT_ID=#{accountId}
 	</update>
+	<!-- 调度任务查询需要更新的任务 -->
+	<select id="getTokenUpdateDto" resultType="com.xiaoshabao.wechat.dto.TokenUpdateDto">
+		<![CDATA[ 
+			select a.*,
+				DATE_ADD(a.update_time,INTERVAL 110 DAY_MINUTE)<SYSDATE() tokenState,
+				DATE_ADD(a.jsupdate_time,INTERVAL 110 DAY_MINUTE)<SYSDATE() jsState
+			from wx_account a 
+			where a.status=1
+				and (DATE_ADD(a.update_time,INTERVAL 110 DAY_MINUTE)<SYSDATE()
+						or DATE_ADD(a.jsupdate_time,INTERVAL 110 DAY_MINUTE)<SYSDATE()
+					)
+		]]>
+	</select>
+	
 </mapper>
