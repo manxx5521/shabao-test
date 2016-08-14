@@ -2,7 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.wechat.dao.BargainDao">
 	<select id="getBargainResult" resultType="com.xiaoshabao.wechat.dto.BargainResult">
-		select * from wx_bargain where bargain_id=#{bargainId}
+		select 
+			account_id,
+			bargain_id,
+			bargain_name,
+			bargain_num,
+			create_staff,
+			create_time,
+			des,
+			end_time,
+			start_time,
+			max_bargain_num,
+			min_price,
+			one_price,
+			rules,
+			sale_num,
+			template,
+			total_price,
+			user_num
+		from wx_bargain where bargain_id=#{bargainId}
 	</select>
 	<select id="getBargainResultByJoinId" resultType="com.xiaoshabao.wechat.dto.BargainResult">
 		SELECT
@@ -26,7 +44,26 @@
 			a.join_id = #{joinId}
 	</select>
 	<select id="getBargainById" resultType="com.xiaoshabao.wechat.entity.BargainEntity">
-		select * from wx_bargain where bargain_id=#{bargainId}
+		select 
+			account_id,
+			bargain_id,
+			bargain_name,
+			bargain_num,
+			des,
+			end_time,
+			start_time,
+			max_bargain_num,
+			min_price,
+			one_price,
+			rules,
+			sale_num,
+			template,
+			total_price,
+			user_num,
+			goods,
+			create_staff,
+			create_time
+		from wx_bargain where bargain_id=#{bargainId}
 	</select>
 	<select id="getBargainDtoById" resultType="com.xiaoshabao.wechat.dto.BargainDto">
 		select *,SYSDATE() SYSDATE from wx_bargain where bargain_id=#{bargainId}

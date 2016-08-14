@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.xiaoshabao.baseframe.service.AbstractService;
 import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.BargainResult;
+import com.xiaoshabao.wechat.entity.BargainEntity;
 /**
  * 砍价
  */
@@ -34,5 +35,12 @@ public interface BargainService extends AbstractService {
 	 * @return
 	 */
 	public AjaxResult exeShareBargain(Integer joinId);
+	
+	/**
+	 * 获得商品详细信息
+	 * @param bargainId
+	 * @return
+	 */
+	public BargainEntity getDetail(Integer bargainId);
 
 }

@@ -62,6 +62,10 @@ public class AccountEntity {
 	 * js更新时间
 	 */
 	private Timestamp jsupdateTime;
+	/**
+	 * 状态 0未接入，1正常，3失效
+	 */
+	private Integer status;
 
 	public Integer getAccountId() {
 		return accountId;
@@ -157,6 +161,14 @@ public class AccountEntity {
 
 	public void setEncodingAESKey(String encodingAESKey) {
 		this.encodingAESKey = encodingAESKey;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	
 }

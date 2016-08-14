@@ -27,7 +27,7 @@ public class TokenManager {
 	@Resource(name="wechatConfig")
 	private WechatConfig wechatConfig;
 	/** 延迟时间 **/
-	private int time;
+	private int time=60000;
 	
 	/**验证类型，只在数据库获取 1*/
 	private int datdatabase=1;
@@ -87,20 +87,32 @@ public class TokenManager {
 		//计算存在的token是否符合规则
 		long time_now_long = new java.util.Date().getTime();
 		if (time_now_long - accessToken.getUpdateTime().getTime() > accessToken.getExpiresIn() * 1000 - time) {
-			logger.debug("内存中的accessToken不在有效期内需要重新换取");
-			TokenResult token=TokenAPI.getAccessTokenAll(accessToken.getAppid(), accessToken.getAppsecret());
-			accessToken.setUpdateTime(new Timestamp(time_now_long));
-			accessToken.setAccessToken(token.getToken());
-			accessToken.setExpiresIn(token.getExpires_in());
-			int i=tokenDao.updateAccessToken(accessToken);
-			if(i<1){
-				logger.error("换取的accessToken未能更新到数据库");
-			}
-			WeixinUtil.accessTokens.put(accountId, accessToken);
-			logger.debug(accountId+"成功在服务器获取accessToken");
+			accessToken=this.updateAccessToken(accountId, accessToken, time_now_long);
 		}
 		return accessToken;
 	}
+	/**
+	 * 更新Tokon信息包括数据库和内存
+	 * @param accountId
+	 * @param accessToken
+	 * @param time_now_long
+	 * @return
+	 */
+	public AccessToken updateAccessToken(Integer accountId,AccessToken accessToken,long time_now_long) {
+		logger.debug("内存中的accessToken不在有效期内需要重新换取");
+		TokenResult token=TokenAPI.getAccessTokenAll(accessToken.getAppid(), accessToken.getAppsecret());
+		accessToken.setUpdateTime(new Timestamp(time_now_long));
+		accessToken.setAccessToken(token.getToken());
+		accessToken.setExpiresIn(token.getExpires_in());
+		int i=tokenDao.updateAccessToken(accessToken);
+		if(i<1){
+			logger.error("换取的accessToken未能更新到数据库");
+		}
+		WeixinUtil.accessTokens.put(accountId, accessToken);
+		logger.debug(accountId+"成功在服务器获取accessToken");
+		return accessToken;
+	}
+	
 	/**
 	 * 获取jsToken
 	 */
@@ -129,20 +141,24 @@ public class TokenManager {
 		//计算存在的token是否符合规则
 		long time_now_long = new java.util.Date().getTime();
 		if (time_now_long - accessToken.getJsupdateTime().getTime() > accessToken.getJsexpiresIn() * 1000 - time) {
-			logger.debug("内存中的jsToken不在有效期内需要重新换取");
-			//判断accessToken
-			accessToken=getAccessToken(accountId,accessToken);
-			TokenResult token=TokenAPI.getJSTokenAll(accessToken.getAccessToken());
-			accessToken.setJsupdateTime(new Timestamp(time_now_long));
-			accessToken.setJsaccessToken(token.getToken());
-			accessToken.setJsexpiresIn(token.getExpires_in());
-			int i=tokenDao.updateJSToken(accessToken);
-			if(i<1){
-				logger.error("换取的jsToken未能更新到数据库");
-			}
-			WeixinUtil.accessTokens.put(accountId, accessToken);
-			logger.debug(accountId+"成功在服务器获取jsToken");
+			this.updateJSToken(accountId, accessToken, time_now_long);
 		}
+		return accessToken;
+	}
+	public AccessToken updateJSToken(Integer accountId,AccessToken accessToken,long time_now_long ){
+		logger.debug("内存中的jsToken不在有效期内需要重新换取");
+		//判断accessToken
+		accessToken=getAccessToken(accountId,accessToken);
+		TokenResult token=TokenAPI.getJSTokenAll(accessToken.getAccessToken());
+		accessToken.setJsupdateTime(new Timestamp(time_now_long));
+		accessToken.setJsaccessToken(token.getToken());
+		accessToken.setJsexpiresIn(token.getExpires_in());
+		int i=tokenDao.updateJSToken(accessToken);
+		if(i<1){
+			logger.error("换取的jsToken未能更新到数据库");
+		}
+		WeixinUtil.accessTokens.put(accountId, accessToken);
+		logger.debug(accountId+"成功在服务器获取jsToken");
 		return accessToken;
 	}
 	/**

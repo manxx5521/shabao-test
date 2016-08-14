@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.BargainResult;
+import com.xiaoshabao.wechat.entity.BargainEntity;
 import com.xiaoshabao.wechat.service.BargainService;
 
 /**
@@ -68,6 +69,16 @@ public class BargainController {
 		} catch (ServiceException e) {
 			return new AjaxResult(e.getMessage());
 		}
+	}
+	
+	/**
+	 * 获得商品信息
+	 */
+	@RequestMapping("/wechat/bargain/{bargainId}/detail")
+	public ModelAndView getDetail(ModelMap model,@PathVariable("bargainId")Integer bargainId){
+		BargainEntity result=bargainService.getDetail(bargainId);
+		model.put("data", result);
+		return new ModelAndView("/wechat/bargain/"+result.getTemplate()+"/detail");
 	}
 
 }

@@ -98,7 +98,7 @@
 	</div>
 	</header>
 	<div class="banner"
-		onclick="location.href='#">
+		onclick="location.href='${ctx}/wechat/bargain/${data.bargainId}/detail'">
 		<div class="swiper-container s1 swiper-container-horizontal">
 			<div class="swiper-wrapper"
 				style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
@@ -130,8 +130,6 @@ autoplay: 3000,
 pagination: '.p1',
 paginationClickable: true
 });
-$(document).ready(function(){
-	});
 </script>
 	<div class="content">
 		<div class="bargain clearfix">
@@ -149,7 +147,7 @@ $(document).ready(function(){
 					<b>原价：￥${data.totalPrice}</b>
 				</p>
 				<p>
-					<b>底价：￥${data.mimPrice}</b>
+					<b>底价：￥${data.minPrice}</b>
 				</p>
 			</div>
 			<div class="bargain_info">
@@ -160,7 +158,13 @@ $(document).ready(function(){
 				<i class="myrank">已参与</i><i class="helpcount">${data.info.joinUser.bargainNum}人帮砍</i>
 				</c:if>
 			</div>
+			
 		</div>
+		<c:if test="${data.bargainStatus==1}">
+		<div style="border:1px solid #D2CDD1;margin: 10px;background-color: #E6E2E5;border-radius:10px;">
+				<p>已有${data.info.joinUser.bargainNum}位亲友砍价，共计砍掉${data.info.joinUser.bargainPrice}元</p>
+		</div>
+		</c:if>
 		<div class="operation clearfix">
 			<div class="operation_info">
 				<a href=""
@@ -332,9 +336,11 @@ function winning() {
 				"height": "auto",
 				"overflow": "auto"
 			});
+			$('#lean_overlay').css('display','');//解决遮盖不消失
 		}, 6000);
 		$(".close,.layer").click(function() {
 			autioDom.pause();
+			$('#lean_overlay').css('display','');//解决遮盖不消失
 		});
 	}
 	autioPlay(document.getElementById('player'), $('.player'));
@@ -354,6 +360,7 @@ function notwinning() {
 			autioDom.play();
 			$(".close,.layer").click(function() {
 				autioDom.pause();
+				window.location.reload();
 			})
 		},
 		1300);
@@ -366,6 +373,7 @@ function notwinning() {
 				"overflow": "auto"
 			});
 			 window.location.reload();
+			 $('#lean_overlay').css('display','');//解决遮盖不消失
 		}, 6500);
 	}
 	autioPlay(document.getElementById('player_audio'), $('.player_audio'));
@@ -377,7 +385,7 @@ function notwinning() {
 		var shareData = {
 			title : '${data.bargainName}',
 			desc : '${data.des}',
-			link : '${jsParams.url}',
+			link : '${ctx}/wechat/bargain/${joinId}/share',
 			imgUrl : '${domain}${ctx}/resources/upload/poster/${data.posters[0].image}'
 		};
 		wx.onMenuShareAppMessage(shareData);
@@ -390,6 +398,6 @@ function notwinning() {
 	});
 </script>
 <!--END 微信分享-->
-	<div id="lean_overlay"></div>
+	<!-- <div id="lean_overlay"></div> -->
 </body>
 </html>

@@ -9,13 +9,14 @@ import org.springframework.stereotype.Component;
  */
 @Component("sysConfig")
 public class SysConfig {
-	
-	/**资源加载方式*/
+
+	/** 资源加载方式 */
 	@Value("${resourceType}")
 	private String resourceType;
-	
-	/**资源加载方式*/
+
+	/** 资源加载方式 */
 	public String getResourceType() {
 		return resourceType;
 	}
+
 }

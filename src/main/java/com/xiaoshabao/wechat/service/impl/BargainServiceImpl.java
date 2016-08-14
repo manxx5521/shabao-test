@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.xiaoshabao.baseframe.enums.ErrorEnum;
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.webframe.dto.AjaxResult;
@@ -23,8 +24,10 @@ import com.xiaoshabao.wechat.dto.BargainDto;
 import com.xiaoshabao.wechat.dto.BargainJoinInfo;
 import com.xiaoshabao.wechat.dto.BargainJoinResult;
 import com.xiaoshabao.wechat.dto.BargainResult;
+import com.xiaoshabao.wechat.entity.BargainEntity;
 import com.xiaoshabao.wechat.entity.BargainJoinEntity;
 import com.xiaoshabao.wechat.entity.BargainSuccessEntity;
+import com.xiaoshabao.wechat.enums.ErrorWechatEnum;
 import com.xiaoshabao.wechat.service.BargainService;
 
 /**
@@ -50,21 +53,23 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 	public BargainResult getBargainResult(Integer bargainId) {
 		String openid=ContextHolderWechat.getOpenid();
 		if(StringUtils.isEmpty(openid)){
-			throw new ServiceException("自动登录失败，重新打开微信号或者是重新关注");
+			throw new ServiceException(ErrorWechatEnum.LOGIN_ERROR);
 		}
 		BargainResult result=bargainDao.getBargainResult(bargainId);
 		if(result==null){
-			throw new ServiceException("砍价活动不存在");
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_NO_HAVE);
 		}
 		//获得参加砍价信息
 		BargainJoinResult info=bargainJoinDao.getBargainJoinResult(bargainId, openid);
 		if(info==null){
-			throw new ServiceException("登录信息不正常");
+			throw new ServiceException(ErrorEnum.ERROR);
 		}
 		result.setInfo(info);
+		result.setBargainStatus(0);
 		//帮我砍价信息
 		if(info.getStatus()==1){
 			result.setUsers(bargainSuccessDao.getBargainUser(info.getJoinUser().getJoinId()));
+			result.setBargainStatus(1);
 		}
 		result.setRankingList(bargainJoinDao.getBargainRanking(bargainId));
 		result.setPosters(posterComponent.getBargainPoset(bargainId));
@@ -76,18 +81,18 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 	public AjaxResult exeBargain(Integer bargainId) {
 		String openid=ContextHolderWechat.getOpenid();
 		if(StringUtils.isEmpty(openid)){
-			return new AjaxResult("未正常获得您的帐号信息，重新打开微信号或者是重新关注");
+			return new AjaxResult(ErrorWechatEnum.LOGIN_ERROR);
 		}
 		BargainDto bargain=bargainDao.getBargainDtoById(bargainId);
 		if(bargain==null){
-			return new AjaxResult("未正常获得砍价活动信息");
+			return new AjaxResult(ErrorWechatEnum.BARGAIN_NO_HAVE);
 		}
 		Long now=bargain.getSysdate().getTime();
 		if(now<bargain.getStartTime().getTime()){
-			return new AjaxResult("当前砍价活动未开始");
+			return new AjaxResult(ErrorWechatEnum.BARGAIN_START_ERROR);
 		}
 		if(now+time>bargain.getEndTime().getTime()){
-			return new AjaxResult("当前砍价活动已经结束");
+			return new AjaxResult(ErrorWechatEnum.BARGAIN_END_ERROR);
 		}
 		BargainJoinEntity bargainJoin=bargainJoinDao.getBargainJoin(bargainId, openid);
 		if(bargainJoin!=null){
@@ -98,24 +103,27 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 		bargainJoin.setBargainId(bargainId);
 		bargainJoin.setOpenid(openid);
 		bargainJoin.setStatus(1);
-		int num=this.getBargainPrice(bargain.getOnePrice(),bargain.getMimPrice(),bargain.getTotalPrice());
+		int num=this.getBargainPrice(bargain.getOnePrice(),bargain.getMinPrice(),bargain.getTotalPrice());
 		bargainJoin.setBargainPrice(num);
 		bargainJoin.setBargainNum(1);
 		bargainJoin.setPrice(bargain.getTotalPrice()-num);
 		int i=bargainJoinDao.insertBargainJoin(bargainJoin);
 		if(i<1){
-			throw new ServiceException("砍价失败，砍价信息未能正常记录");
+			logger.error(ErrorWechatEnum.BARGAIN_UPDATE_ERROR.getMessage()+"；添加砍价信息join信息错误");
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_UPDATE_ERROR);
 		}
 		BargainSuccessEntity bargainSuccess=new BargainSuccessEntity(bargainJoin.getJoinId(),openid);
 		bargainSuccess.setBargainPrice(num);
 		bargainSuccess.setPrice(bargain.getTotalPrice()-num);
 		i=bargainSuccessDao.insertBargainSuccess(bargainSuccess);
 		if(i<1){
-			throw new ServiceException("砍价失败，砍价信息未能正常记录");
+			logger.error(ErrorWechatEnum.BARGAIN_UPDATE_ERROR.getMessage()+"；添加砍价success日志错误");
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_UPDATE_ERROR);
 		}
 		i=bargainDao.addNumber(bargainId);
 		if(i<1){
-			throw new ServiceException("砍价失败，砍价信息未能正常记录");
+			logger.error(ErrorWechatEnum.BARGAIN_UPDATE_ERROR.getMessage()+"；更新砍价活动信息bargain错误");
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_UPDATE_ERROR);
 		}
 		return new AjaxResult(true,"true",bargainSuccess); 
 	}
@@ -124,7 +132,7 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 	public BargainResult getShareBargain(Integer joinId) {
 		BargainResult result=bargainDao.getBargainResultByJoinId(joinId);
 		if(result==null){
-			throw new ServiceException("砍价信息错误");
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_NO_HAVE);
 		}
 		// 帮我砍价信息
 		result.setUsers(bargainSuccessDao.getBargainUser(joinId));
@@ -140,37 +148,38 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 		String openid=ContextHolderWechat.getOpenid();
 		BargainJoinInfo bargain=bargainJoinDao.getBargainJoinByJoinId(joinId);
 		if(bargain==null){
-			return new AjaxResult("未正常获得砍价信息");
+			return new AjaxResult(ErrorWechatEnum.BARGAIN_NO_HAVE);
 		}
 		Long now=bargain.getSysdate().getTime();
 		if(now<bargain.getBargain().getStartTime().getTime()){
-			return new AjaxResult("当前砍价活动未开始");
+			return new AjaxResult(ErrorWechatEnum.BARGAIN_START_ERROR);
 		}
 		if(now+time>bargain.getBargain().getEndTime().getTime()){
-			return new AjaxResult("当前砍价活动已经结束");
+			return new AjaxResult(ErrorWechatEnum.BARGAIN_END_ERROR);
 		}
 		BargainSuccessEntity success=bargainSuccessDao.getBargainSuccessById(joinId, openid);
 		if(success!=null){
-			return new AjaxResult("你已经参加过本次砍价了");
+			return new AjaxResult(ErrorWechatEnum.BARGAIN_REPEAT);
 		}
 		//砍价价钱
-		int price=this.getBargainPrice(bargain.getBargain().getOnePrice(),bargain.getBargain().getMimPrice(),bargain.getPrice());
+		int price=this.getBargainPrice(bargain.getBargain().getOnePrice(),bargain.getBargain().getMinPrice(),bargain.getPrice());
 		int i=bargainDao.addNumber(bargain.getBargainId());
 		if(i<1){
-			logger.error("砍价失败，未能正常记录砍价次数");
-			throw new ServiceException("砍价失败，砍价信息未能正常记录");
+			logger.error(ErrorWechatEnum.BARGAIN_UPDATE_ERROR.getMessage()+";砍价失败，未能正常记录bargain砍价次数");
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_UPDATE_ERROR);
 		}
 		i=bargainJoinDao.updateBargainInfo(price, joinId);
 		if(i<1){
-			logger.error("砍价失败，未能正常记录砍价价格");
-			throw new ServiceException("砍价失败，砍价信息未能正常记录");
+			logger.error(ErrorWechatEnum.BARGAIN_UPDATE_ERROR.getMessage()+";未能正常记录砍价价格");
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_UPDATE_ERROR);
 		}
 		BargainSuccessEntity bargainSuccess=new BargainSuccessEntity(joinId,openid);
 		bargainSuccess.setBargainPrice(price);
 		bargainSuccess.setPrice(bargain.getPrice()-price);
 		i=bargainSuccessDao.insertBargainSuccess(bargainSuccess);
 		if(i<1){
-			throw new ServiceException("砍价失败，砍价信息未能正常记录");
+			logger.error(ErrorWechatEnum.BARGAIN_UPDATE_ERROR.getMessage()+";砍价失败，未能正常记录砍价成功日志");
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_UPDATE_ERROR);
 		}
 		Map<String, Object> result=new HashMap<String, Object>();
 		result.put("bargainPrice", price);
@@ -187,7 +196,7 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 	private int getBargainPrice(int onePrice,int mimPrice,int price){
 		try {
 			if(mimPrice==price){
-				throw new ServiceException("当前价格已经是最小价格不能砍价了");
+				throw new ServiceException(ErrorWechatEnum.BARGAIN_MIN_PRICE);
 			}
 			Random random = new Random();
 			int bargainPrice= random.nextInt(10)%(onePrice+1);
@@ -205,6 +214,15 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 			logger.error("获得随机砍价数字是错误");
 			throw new ServiceException("砍价价格获取失败");
 		}
+	}
+	//获得商品详细信息
+	@Override
+	public BargainEntity getDetail(Integer bargainId) {
+		BargainEntity bargain=bargainDao.getBargainById(bargainId);
+		if(bargain==null){
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_NO_HAVE);
+		}
+		return bargain;
 	}
 
 }

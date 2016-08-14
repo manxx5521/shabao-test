@@ -1,5 +1,8 @@
 package com.xiaoshabao.wechat.dao;
 
+import java.util.List;
+
+import com.xiaoshabao.wechat.dto.TokenUpdateDto;
 import com.xiaoshabao.wechat.entity.AccessToken;
 /**
  * token等信息获取
@@ -29,5 +32,10 @@ public interface AccessTokenDao {
 	 * @return
 	 */
 	public int updateAccessToken(AccessToken accessToken);
+	/**
+	 * 获得调度任务需要更新的帐号列表
+	 * @return
+	 */
+	public List<TokenUpdateDto> getTokenUpdateDto();
 
 }

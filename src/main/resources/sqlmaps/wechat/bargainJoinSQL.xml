@@ -58,7 +58,7 @@
 		b.end_time 'bargain.endTime',
 		b.start_time 'bargain.startTime',
 		b.max_bargain_num 'bargain.maxBargainNum',
-		b.mim_price 'bargain.minPrice',
+		b.min_price 'bargain.minPrice',
 		b.one_price 'bargain.onePrice',
 		b.rules 'bargain.rules',
 		b.sale_num 'bargain.saleNum',

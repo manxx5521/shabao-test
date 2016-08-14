@@ -21,11 +21,11 @@ public class BargainEntity {
 	/** 总价 */
 	private Integer totalPrice;
 	/** 砍到的最小价钱 */
-	private Integer mimPrice;
+	private Integer minPrice;
 	/** 单次砍掉最大金额 */
 	private Integer onePrice;
 	/** 砍价的最大次数 **/
-	private Integer naxBargainNum;
+	private Integer maxBargainNum;
 	/** 活动砍价的次数 */
 	private Integer bargainNum;
 	/** 销量 */
@@ -36,6 +36,8 @@ public class BargainEntity {
 	private Date startTime;
 	/** 结束时间 */
 	private Date endTime;
+	/** 商品描述 */
+	private String goods;
 	private Integer createStaff;
 	private Date createTime;
 
@@ -69,14 +71,6 @@ public class BargainEntity {
 
 	public void setTotalPrice(Integer totalPrice) {
 		this.totalPrice = totalPrice;
-	}
-
-	public Integer getMimPrice() {
-		return mimPrice;
-	}
-
-	public void setMimPrice(Integer mimPrice) {
-		this.mimPrice = mimPrice;
 	}
 
 	public Integer getOnePrice() {
@@ -143,14 +137,6 @@ public class BargainEntity {
 		this.bargainNum = bargainNum;
 	}
 
-	public Integer getNaxBargainNum() {
-		return naxBargainNum;
-	}
-
-	public void setNaxBargainNum(Integer naxBargainNum) {
-		this.naxBargainNum = naxBargainNum;
-	}
-
 	public String getTemplate() {
 		return template;
 	}
@@ -173,6 +159,30 @@ public class BargainEntity {
 
 	public void setDes(String des) {
 		this.des = des;
+	}
+
+	public Integer getMinPrice() {
+		return minPrice;
+	}
+
+	public void setMinPrice(Integer minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public Integer getMaxBargainNum() {
+		return maxBargainNum;
+	}
+
+	public void setMaxBargainNum(Integer maxBargainNum) {
+		this.maxBargainNum = maxBargainNum;
+	}
+
+	public String getGoods() {
+		return goods;
+	}
+
+	public void setGoods(String goods) {
+		this.goods = goods;
 	}
 
 }

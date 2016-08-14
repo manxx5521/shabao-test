@@ -32,7 +32,11 @@ public class BargainResult extends BargainEntity {
 	 * 排行榜
 	 */
 	private List<BargainRankingDto> rankingList;
-
+	/**
+	 * 1-砍过
+	 */
+	private Integer bargainStatus;
+	
 	public List<PosterDto> getPosters() {
 		return posters;
 	}
@@ -73,4 +77,13 @@ public class BargainResult extends BargainEntity {
 	public void setJoinId(Integer joinId) {
 		this.joinId = joinId;
 	}
+
+	public Integer getBargainStatus() {
+		return bargainStatus;
+	}
+
+	public void setBargainStatus(Integer bargainStatus) {
+		this.bargainStatus = bargainStatus;
+	}
+	
 }
