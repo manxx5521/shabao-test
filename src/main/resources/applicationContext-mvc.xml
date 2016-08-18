@@ -35,6 +35,17 @@
 	<!--静态资源处理，加入对 JS 等处理，允许使用/映射-->
 	<mvc:default-servlet-handler/>
 	
+	<!-- 文件上传 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="maxUploadSize">
+			<value>10484560</value>
+		</property>
+		<!--resolveLazily属性启用是为了推迟文件解析，以便在UploadAction 中捕获文件大小异常 -->
+		<property name="resolveLazily" value="true" />
+	</bean>
+	
 	<!-- 设置JSP视图的属性 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
