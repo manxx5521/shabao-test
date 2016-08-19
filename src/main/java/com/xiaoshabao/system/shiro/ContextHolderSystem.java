@@ -5,27 +5,12 @@ import org.apache.shiro.session.Session;
 
 import com.xiaoshabao.system.entity.SessionUserInfo;
 
-public class SessionManager {
-	private static SessionManager instance = new SessionManager();
-
-	/**
-	 * 私有默认构造子
-	 */
-	private SessionManager() {
- 
-	}
-
-	/**
-	 * 静态工厂方法
-	 */
-	public static SessionManager getInstance() {
-		return instance;
-	}
+public class ContextHolderSystem {
 
 	/**
 	 * 获取Shiro的用户session信息
 	 */
-	public SessionUserInfo getSeesionInfo() {
+	public static SessionUserInfo getSeesionInfo() {
 		Session session = SecurityUtils.getSubject().getSession();
 		Object obj = session.getAttribute("userSession");
 		if (obj != null) {
@@ -38,13 +23,13 @@ public class SessionManager {
 	/**
 	 * 获取Shiro的用户userId信息
 	 */
-	public Integer getUserId() {
-		return this.getSeesionInfo().getUserId();
+	public static Integer getUserId() {
+		return getSeesionInfo().getUserId();
 	}
 	/**
 	 * 获取Shiro的用户权限frame信息
 	 */
-	public String getPriFrame(){
-		return this.getSeesionInfo().getPriFrame();
+	public static String getPriFrame(){
+		return getSeesionInfo().getPriFrame();
 	}
 }

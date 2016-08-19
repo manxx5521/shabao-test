@@ -15,7 +15,7 @@ import com.xiaoshabao.baseframe.controller.AbstractController;
 import com.xiaoshabao.baseframe.exception.DaoException;
 import com.xiaoshabao.system.entity.MenuEntity;
 import com.xiaoshabao.system.service.IndexService;
-import com.xiaoshabao.system.shiro.SessionManager;
+import com.xiaoshabao.system.shiro.ContextHolderSystem;
 
 /**
  * 主页
@@ -48,9 +48,9 @@ public class IndexController extends AbstractController{
 	 */
 	@RequestMapping(value = "/admin/index", method = { RequestMethod.GET })
 	public ModelAndView adminIndex1(ModelMap model) throws DaoException {
-		Integer user_id=SessionManager.getInstance().getSeesionInfo().getUserId();
+		Integer userId=ContextHolderSystem.getUserId();
 		//取出左侧菜单
-		List<MenuEntity> menuList=indexService.getMenuList(user_id);
+		List<MenuEntity> menuList=indexService.getMenuList(userId);
 		model.put("menuList", JSON.toJSONString(menuList));
 		
 		return new ModelAndView("/system/main", model);
