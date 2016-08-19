@@ -7,9 +7,6 @@
 <title>沙包娱乐 - 登录</title>
 <cs:resource type="css" value="jquery,bootstrap,system" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<!--[if lt IE 8]>
-    <meta http-equiv="refresh" content="0;ie.html" />
-<![endif]-->
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg"
 	style="overflow: hidden">

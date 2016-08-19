@@ -17,9 +17,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.wechat.api.wxbase.AuthAPI;
 import com.xiaoshabao.wechat.bean.WechatSession;
+import com.xiaoshabao.wechat.component.ContextHolderWechat;
 import com.xiaoshabao.wechat.component.TokenManager;
 import com.xiaoshabao.wechat.component.WechatConfig;
-import com.xiaoshabao.wechat.component.ContextHolderWechat;
 import com.xiaoshabao.wechat.entity.AccessToken;
 import com.xiaoshabao.wechat.util.WeixinUtil;
 /**
@@ -66,20 +66,29 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 			}
 			if(createSession){
 				String code = request.getParameter("code");
-				String loginType=wechatConfig.getLoginType();
+				String scope=request.getParameter("scope");
+				String resultOpenid=null;
+				WechatSession userSession=new WechatSession();
 				AccessToken token=tokenManager.getAccessToken(Integer.valueOf(account));
 				JSONObject result=AuthAPI.getBaseInfoforJson(token.getAppid(), token.getAppsecret(), code);
-				String resultCode=result.getString("openid");
-				if(StringUtils.isEmpty(resultCode)){
+				resultOpenid=result.getString("openid");
+				if(scope.equals("snsapi_userinfo")&&StringUtils.isNotEmpty(resultOpenid)){
+					JSONObject userJson=AuthAPI.getUserInfoForJson(resultOpenid, result.getString("access_token"));
+					if(StringUtils.isEmpty(userJson.getString("errcode"))||userJson.getString("errcode").equals("0")){
+						userSession.setNickname(userJson.getString("nickname"));
+						userSession.setPortrait(userJson.getString("headimgurl"));;
+					}
+				}
+				String loginType=wechatConfig.getLoginType();
+				if(StringUtils.isEmpty(resultOpenid)){
 					if(loginType.equals("code")){
 						openid=code;
 					}else{
 						logger.error("自动登陆错误,未正常获得openid。\n"+result.toString());
 					}
 				}else{
-					openid=result.getString("openid");
+					openid=resultOpenid;
 				}
-				WechatSession userSession=new WechatSession();
 				userSession.setAccountId(account);
 				userSession.setOpenid(openid);
 				session.setAttribute(ContextHolderWechat.WECHAT_SESSION, userSession);

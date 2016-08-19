@@ -38,7 +38,13 @@ public class SessionManager {
 	/**
 	 * 获取Shiro的用户userId信息
 	 */
-	public Integer getUser_id() {
-		return this.getSeesionInfo().getUser_id();
+	public Integer getUserId() {
+		return this.getSeesionInfo().getUserId();
+	}
+	/**
+	 * 获取Shiro的用户权限frame信息
+	 */
+	public String getPriFrame(){
+		return this.getSeesionInfo().getPriFrame();
 	}
 }

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,9 +7,6 @@
 <title>沙包娱乐 - 登录</title>
 <cs:resource type="css" value="jquery,bootstrap,system,bootbox" />
 <link href="${ctx}/resources/system/login/login.min.css" rel="stylesheet">
-<!--[if lt IE 8]>
-    <meta http-equiv="refresh" content="0;ie.html" />
-<![endif]-->
 <script>
 	if (window.top !== window.self) {
 		window.top.location = window.location

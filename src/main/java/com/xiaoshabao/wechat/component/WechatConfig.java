@@ -15,6 +15,9 @@ public class WechatConfig {
 	/** 获得token方式 */
 	@Value("${wechat.tokenType}")
 	private int tokenType;
+	/** 是否开启token获取调度1开启 */
+	@Value("${wechat.tokenJob}")
+	private int tokenJob;
 
 	/** 微信自动登录方式 */
 	@Value("${wechat.loginType}")
@@ -30,6 +33,26 @@ public class WechatConfig {
 
 	public String getLoginType() {
 		return loginType;
+	}
+
+	public int getTokenJob() {
+		return tokenJob;
+	}
+
+	public void setTokenJob(int tokenJob) {
+		this.tokenJob = tokenJob;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+
+	public void setTokenType(int tokenType) {
+		this.tokenType = tokenType;
+	}
+
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
 	}
 
 }

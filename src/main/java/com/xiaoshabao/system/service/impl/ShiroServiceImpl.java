@@ -4,29 +4,28 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.shiro.authc.UnknownAccountException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xiaoshabao.baseframe.exception.DaoException;
 import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
-import com.xiaoshabao.system.entity.UserEntity;
+import com.xiaoshabao.system.dao.ShiroDao;
+import com.xiaoshabao.system.dto.LoginUserDto;
 import com.xiaoshabao.system.service.ShiroService;
 
 @Service("shiroService")
 public class ShiroServiceImpl extends AbstractServiceImpl implements ShiroService {
-
+	@Autowired
+	private ShiroDao shiroDao;
 	@Override
-	public UserEntity getByUserName(String LoginName) {
-		UserEntity user = new UserEntity();
-		user.setLoginName(LoginName);
+	public LoginUserDto getByUserName(String LoginName) {
 		try {
-			List<UserEntity> list = this.getData(UserEntity.class, user);
-			if (list.isEmpty())
-				throw new DaoException("用户名为空");
-			return list.get(0);
-		} catch (DaoException e) {
-			logger.info("用户登录名:" + LoginName + ",没有在数据库取出内容");
+			LoginUserDto loginUser=shiroDao.getLoginUser(LoginName);
+			return loginUser;
+		} catch (Exception e) {
+			logger.error("用户登录名:" + LoginName + ",没有在数据库取出内容");
 			e.printStackTrace();
-			return null;
+			throw new UnknownAccountException();// 没找到帐号
 		}
 	}
 

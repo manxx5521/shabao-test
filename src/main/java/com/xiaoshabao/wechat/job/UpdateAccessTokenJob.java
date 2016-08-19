@@ -27,7 +27,7 @@ public class UpdateAccessTokenJob {
 	 * 定时更新微信token
 	 */
 	public void work() {
-		if(wechatConfig.getTokenType()==2){
+		if(wechatConfig.getTokenJob()==1){
 			List<TokenUpdateDto> list=accessTokenDao.getTokenUpdateDto();
 			if(!list.isEmpty()){
 				for(TokenUpdateDto result:list){

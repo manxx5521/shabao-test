@@ -1,6 +1,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit|ie-comp|ie-stand"> 
+<meta http-equiv= "X-UA-Compatible" content = "IE=edge,chrome=1"/>
+<meta name="renderer" content="webkit">
 <meta name="keywords" content="沙包娱乐后台管理系统">
 <meta name="description" content="沙包娱乐后台管理系统是一个微信后台管理系统">
 <!--[if lt IE 9]>

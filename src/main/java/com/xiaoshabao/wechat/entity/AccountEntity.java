@@ -12,6 +12,8 @@ public class AccountEntity {
 	 * 这个微信下的应用id
 	 */
 	private Integer accountId;
+	/**所属部门*/
+	private String departId;
 
 	/**
 	 * 微信帐号的id
@@ -169,6 +171,14 @@ public class AccountEntity {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getDepartId() {
+		return departId;
+	}
+
+	public void setDepartId(String departId) {
+		this.departId = departId;
 	}
 	
 }

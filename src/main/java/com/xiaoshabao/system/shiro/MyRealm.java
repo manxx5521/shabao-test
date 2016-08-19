@@ -7,15 +7,14 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 
+import com.xiaoshabao.system.dto.LoginUserDto;
 import com.xiaoshabao.system.entity.SessionUserInfo;
-import com.xiaoshabao.system.entity.UserEntity;
 import com.xiaoshabao.system.service.ShiroService;
 
 
@@ -45,20 +44,19 @@ public class MyRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken token) throws AuthenticationException {
 		String userName = (String) token.getPrincipal();
-		UserEntity user = shiroService.getByUserName(userName);
-		if (user != null) {
-			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(
-					user.getLoginName(), user.getPassword(), "xx");
-			// 当验证都通过后，把用户信息放在session里
-			Session session = SecurityUtils.getSubject().getSession();
-			SessionUserInfo userSession = new SessionUserInfo();
-			userSession.setUser_id(user.getUserId());
-			userSession.setUser_name(user.getUserName());
-			session.setAttribute("userSession", userSession);
-			return authcInfo;
-		} else {
-			throw new UnknownAccountException();// 没找到帐号
-		}
+		LoginUserDto user = shiroService.getByUserName(userName);
+		AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(
+				user.getLoginName(), user.getPassword(), "xx");
+		// 当验证都通过后，把用户信息放在session里
+		Session session = SecurityUtils.getSubject().getSession();
+		SessionUserInfo userSession = new SessionUserInfo();
+		userSession.setUserId(user.getUserId());
+		userSession.setUserName(user.getUserName());
+		userSession.setPriDepart(user.getDepart().getDepartId());
+		userSession.setDepartId(user.getDepart().getDepartId());
+		userSession.setPriFrame("'"+user.getDepart().getDepartFrame()+"%'");
+		session.setAttribute("userSession", userSession);
+		return authcInfo;
 	}
 
 }

@@ -3,7 +3,7 @@ package com.xiaoshabao.system.service;
 import java.util.Set;
 
 import com.xiaoshabao.baseframe.service.AbstractService;
-import com.xiaoshabao.system.entity.UserEntity;
+import com.xiaoshabao.system.dto.LoginUserDto;
 
 public interface ShiroService extends AbstractService{
 	
@@ -12,7 +12,7 @@ public interface ShiroService extends AbstractService{
 	 * @param userName
 	 * @return
 	 */
-	public UserEntity getByUserName(String LoginName);
+	public LoginUserDto getByUserName(String LoginName);
 	
 	/**
 	 * 通过用户名查询角色信息

@@ -13,6 +13,7 @@ WeixinReqDownHandler:可以设置方法method="get"。
 	<req key="getcallbackip" des="服务器地址" url="https://api.weixin.qq.com/cgi-bin/getcallbackip?1=1"></req>
 	<!-- auth2.0授权-->
 	<req key="authBaseInfo" des="获得基本信息" dataType="String" url="https://api.weixin.qq.com/sns/oauth2/access_token?1=1"></req>
+	<req key="getUserInfo" des="获得用户信息" dataType="String" url="https://api.weixin.qq.com/sns/userinfo?lang=zh_CN"></req>
 	<!-- 素材接口 -->
 	<req key="uploadTempMedia" des="上传临时" mappingHandler="WeixinReqUploadHandler" url="https://file.api.weixin.qq.com/cgi-bin/media/upload?1=1"></req>
 	<req key="downTempMedia" des="下载临时" method="get" mappingHandler="WeixinReqDownHandler" url="https://file.api.weixin.qq.com/cgi-bin/media/get?1=1"></req>

@@ -9,6 +9,10 @@ public class WechatSession {
 	private Integer accountId;
 	
 	private String openid;
+	/** 微信昵称 **/
+	private String nickname;
+	/** 微信头，存储的路径 */
+	private String portrait;
 	
 	public WechatSession(){
 		
@@ -34,4 +38,17 @@ public class WechatSession {
 	public void setOpenid(String openid) {
 		this.openid = openid;
 	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getPortrait() {
+		return portrait;
+	}
+	public void setPortrait(String portrait) {
+		this.portrait = portrait;
+	}
+	
 }
