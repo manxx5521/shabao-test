@@ -24,6 +24,10 @@
 	<css key="bootstrap" src="${ctx}/resources/plugins/bootstrap/css/animate.min.css" />
 	<js key="bootstrap" src="${ctx}/resources/plugins/bootstrap/js/bootstrap.min.js" />
 	<js key="bootbox" src="${ctx}/resources/plugins/bootbox/bootbox.js" />
+	<css key="dataTables" src="${ctx}/resources/plugins/dataTables/css/dataTables.bootstrap.css" />
+	<js key="dataTables" src="${ctx}/resources/plugins/dataTables/jquery.dataTables.js" />
+	<js key="dataTables" src="${ctx}/resources/plugins/dataTables/dataTables.bootstrap.js" />
+	<js key="jeditable" des="表单即时编辑" src="${ctx}/resources/plugins/jeditable/jquery.jeditable.js" />
 	<css key="jstree" src="${ctx}/resources/plugins/jstree/default/style.min.css" />
 	<js key="jstree" src="${ctx}/resources/plugins/jstree/jstree.min.js" />
 	<css key="sysjstree" des="系统相关样式"><![CDATA[ <style> .jstree-open>.jstree-anchor>.fa-folder:before{content:\"\f07c\"}.jstree-default .jstree-icon.none{width:0}</style> ]]></css>
@@ -32,6 +36,13 @@
 	<js key="colorbox" des="灯箱" src="${ctx}/resources/plugins/jstree/jstree.min.js" />
 	<js key="masonry" des="瀑布流" src="${ctx}/resources/plugins/masonry/jquery.masonry.min.js" />
 	<js key="leanModal" des="手机弹窗" src="${ctx}/resources/plugins/leanModal/jquery.leanModal.min.js" />
+	<css key="sweetalert" des="提示框" src="${ctx}/resources/plugins/sweetalert/sweetalert.css" />
+	<js key="sweetalert" des="提示框" src="${ctx}/resources/plugins/sweetalert/sweetalert.min.js" />
+	<css key="icheck" des="表单美化" src="${ctx}/resources/plugins/icheck/custom.css" />
+	<js key="icheck" des="表单美化" src="${ctx}/resources/plugins/icheck/icheck.min.js" />
+	<js key="ueditor" des="表单美化" src="${ctx}/resources/plugins/ueditor/ueditor.config.js" />
+	<js key="ueditor" des="表单美化" src="${ctx}/resources/plugins/ueditor/ueditor.all.min.js" />
+	<js key="ueditor" des="表单美化" src="${ctx}/resources/plugins/ueditor/lang/zh-cn/zh-cn.js" />
 	<!-- system系统相关 -->
 	<css key="system" src="${ctx}/resources/system/css/style.min.css" />
 	<css key="system"> <![CDATA[  <link href="${ctx}/resources/system/img/favicon.ico" rel="shortcut icon" />]]></css>

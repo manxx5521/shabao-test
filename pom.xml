@@ -284,6 +284,15 @@
 			<version>2.2.1</version>
 		</dependency>
 		<!-- quartz调度任务 begin-->
+		
+		<!-- 添加自己修改的ueditor -->
+		<dependency>
+			<groupId>com.xiaoshaobao</groupId>
+			<artifactId>ueditor</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ueditor.jar</systemPath>
+		</dependency>
 
 	</dependencies>
 	<build>
