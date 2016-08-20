@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaoshabao.wechat.dao.AccountWxDao">
+<mapper namespace="com.xiaoshabao.wechat.dao.AccountDao">
 	<select id="getAccountById" resultType="com.xiaoshabao.wechat.entity.AccountEntity">
 		select * from wx_account where account_id=#{accountId}
+	</select>
+	<select id="getAccountValues" resultType="com.xiaoshabao.wechat.entity.AccountEntity">
+		SELECT A.DEPART_ID,A.ACCOUNT_ID,A.APP_NAME 
+		FROM WX_ACCOUNT A,TD_M_DEPART B
+		WHERE A.DEPART_ID=B.DEPART_ID
+			AND B.DEPART_FRAME LIKE ${priFrame}
 	</select>
 </mapper>

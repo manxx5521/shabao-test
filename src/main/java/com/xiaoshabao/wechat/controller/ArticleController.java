@@ -15,7 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xiaoshabao.baseframe.controller.AbstractController;
 import com.xiaoshabao.baseframe.exception.DaoException;
 import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.system.shiro.SessionManager;
+import com.xiaoshabao.system.shiro.ContextHolderSystem;
+import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.ArticleDetailDto;
 import com.xiaoshabao.wechat.entity.AccountEntity;
 import com.xiaoshabao.wechat.entity.ArticleEntity;
@@ -54,7 +55,23 @@ public class ArticleController extends AbstractController{
 		return new ModelAndView ("/wechat/article/detail");
 	}
 	
-	
+	/**
+	 * 添加文章方法
+	 * @param map
+	 * @param article_id
+	 * @return
+	 * @throws DaoException 
+	 */
+	@ResponseBody
+	@RequestMapping(value="/admin/wechat/article/add")
+	public AjaxResult addArticle (ArticleEntity article) throws DaoException{
+		try {
+			AjaxResult result=articleService.addArticle(article);
+			return result;
+		} catch (ServiceException e) {
+			return new AjaxResult(e.getMessage());
+		}
+	}
 	
 	
 	
@@ -73,28 +90,7 @@ public class ArticleController extends AbstractController{
 		return new ModelAndView ("/admin/article/articleCode");
 	}
 	
-	/**
-	 * 添加文章方法
-	 * @param map
-	 * @param article_id
-	 * @return
-	 * @throws DaoException 
-	 */
-	@ResponseBody
-	@RequestMapping(value="/admin/articleAdd")
-	public  Map<String, Object> addArticle (ArticleEntity article,Integer[] account_ids) throws DaoException{
-		Integer user_id=SessionManager.getInstance().getUserId();
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		try {
-			this.articleService.addArticle(article,account_ids,user_id);
-			returnMap.put("success", true);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			returnMap.put("success", false);
-			returnMap.put("message", e.getMessage());
-		}
-		return returnMap;
-	}
+	
 	
 	/**
 	 * 微信端文章显示
@@ -112,7 +108,7 @@ public class ArticleController extends AbstractController{
 		params.put("article_id", article_id);
 		ArticleEntity article=this.articleService.getDataSingle(ArticleEntity.class, params);
 		AccountEntity pentity=new AccountEntity();
-		pentity.setAccountId(article.getAccount_id());
+		pentity.setAccountId(article.getAccountId());
 		AccountEntity account=this.articleService.getDataSingle(AccountEntity.class, pentity);
 		model.put("appName", account.getAppName());
 		model.put("article", article);
@@ -128,7 +124,7 @@ public class ArticleController extends AbstractController{
 	 */
 	@RequestMapping(value="/admin/articleAddUe")
 	public ModelAndView addArticleUeInit (ModelMap map,String article_id) throws DaoException{
-		Integer user_id=SessionManager.getInstance().getUserId();
+		Integer user_id=ContextHolderSystem.getUserId();
 		/*UserAccountValue param=new UserAccountValue();
 		param.setUser_id(user_id);
 		List<UserAccountValue> list=this.articleService.getData(UserAccountValue.class, param);*/

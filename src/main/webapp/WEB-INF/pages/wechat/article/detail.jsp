@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,11 +68,11 @@
                     <div class="ibox-content">
                         <form class="form-horizontal m-t" id="commentForm">
                         	<div class="form-group">
-                                <label class="col-sm-2 control-label">选择帐号</label>
+                                <label class="col-sm-2 control-label">帐号选择</label>
                                 <div class="col-sm-10">
-                                	<c:forEach var="r" items="${dataList}" varStatus="idx">
-                                    <label class="checkbox-inline i-checks">
-                                        <input type="checkbox" name="account_ids" value=" ${r.account_id}"> ${r.app_name}</label>
+                                	<c:forEach var="r" items="${data.accounts}" varStatus="idx">
+                                    <label class="radio-inline  i-checks">
+                                        <input type="radio" name="account_ids" value=" ${r.accountId}"> ${r.appName}</label>
                                     </c:forEach>
                                 </div>
                             </div>
@@ -108,9 +107,9 @@
    <script type="text/javascript">
    $(document).ready(function() {
 	   //设置复选框样式
-	   var box= $(":checkbox");
+	   var box= $(":radio");
 	   if (box!=null&&box.length==1){
-		   $(":checkbox").attr('checked', true);
+		   $(":radio").attr('checked', true);
 	   }
 	   $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})
 	   

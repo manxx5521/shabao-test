@@ -15,7 +15,7 @@ import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.wechat.bean.message.Article;
 import com.xiaoshabao.wechat.bean.message.NewsMessage;
 import com.xiaoshabao.wechat.bean.message.TextMessage;
-import com.xiaoshabao.wechat.dao.AccountWxDao;
+import com.xiaoshabao.wechat.dao.AccountDao;
 import com.xiaoshabao.wechat.dao.SubscriberDao;
 import com.xiaoshabao.wechat.entity.AccountEntity;
 import com.xiaoshabao.wechat.entity.SubscriberEntity;
@@ -28,7 +28,7 @@ import com.xiaoshabao.wechat.util.aes.WXBizMsgCrypt;
 public class WechatServiceImpl extends AbstractServiceImpl implements
 		WechatService {
 	@Autowired
-	private AccountWxDao accountDao;
+	private AccountDao accountDao;
 	@Autowired
 	private SubscriberDao subscriberDao;
 	/**

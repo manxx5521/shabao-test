@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.AbstractService;
+import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.ArticleDetailDto;
 import com.xiaoshabao.wechat.entity.ArticleEntity;
 
@@ -25,7 +26,7 @@ public interface ArticleService extends AbstractService{
 	 * @param user_id
 	 * @throws ServiceException
 	 */
-	public void addArticle(ArticleEntity article,Integer[] account_ids,Integer user_id);
+	public AjaxResult addArticle(ArticleEntity article);
 	
 	
 }

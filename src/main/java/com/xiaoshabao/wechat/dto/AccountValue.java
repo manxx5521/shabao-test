@@ -6,9 +6,9 @@ package com.xiaoshabao.wechat.dto;
 public class AccountValue {
 
 	/**
-	 * 用户的user_id
+	 * 所在部门
 	 */
-	private Integer userId;
+	private String departId;
 
 	/**
 	 * 微信帐号在系统对应id
@@ -19,14 +19,6 @@ public class AccountValue {
 	 * 微信应用的名字
 	 */
 	private String appName;
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
 
 	public Integer getAccountId() {
 		return accountId;
@@ -42,6 +34,14 @@ public class AccountValue {
 
 	public void setAppName(String appName) {
 		this.appName = appName;
+	}
+
+	public String getDepartId() {
+		return departId;
+	}
+
+	public void setDepartId(String departId) {
+		this.departId = departId;
 	}
 
 }

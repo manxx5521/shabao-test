@@ -46,9 +46,8 @@
                     	</form>
                     	<button type="submit" class="btn btn-primary col-sm-offset-11">查询</button>
 						<div class="">
-                            <a onclick="add();" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                            <a onclick="add();" href="javascript:void(0);" class="btn btn-primary btn-sm">添加</a>
                            <!--  <a onclick="addByUe();" href="javascript:void(0);" class="btn btn-primary ">添加</a> -->
-                            <a onclick="select2();" href="javascript:void(0);" class="btn btn-primary ">select2插件</a>
                         </div>
                         <table class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
@@ -88,9 +87,6 @@
         //function fnClickAddRow(){$("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
         function add(){
         	window.location.href = '${ctx}/admin/wechat/article/init';
-        }
-        function select2(){
-        	window.location.href = '${webRoot}/select/demo.html';
         }
     </script>
 </body>

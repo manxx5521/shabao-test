@@ -39,10 +39,10 @@
 	<css key="sweetalert" des="提示框" src="${ctx}/resources/plugins/sweetalert/sweetalert.css" />
 	<js key="sweetalert" des="提示框" src="${ctx}/resources/plugins/sweetalert/sweetalert.min.js" />
 	<css key="icheck" des="表单美化" src="${ctx}/resources/plugins/icheck/custom.css" />
-	<js key="icheck" des="表单美化" src="${ctx}/resources/plugins/icheck/icheck.min.js" />
-	<js key="ueditor" des="表单美化" src="${ctx}/resources/plugins/ueditor/ueditor.config.js" />
-	<js key="ueditor" des="表单美化" src="${ctx}/resources/plugins/ueditor/ueditor.all.min.js" />
-	<js key="ueditor" des="表单美化" src="${ctx}/resources/plugins/ueditor/lang/zh-cn/zh-cn.js" />
+	<js key="icheck" src="${ctx}/resources/plugins/icheck/icheck.min.js" />
+	<js key="ueditor" des="编辑器" src="${ctx}/resources/plugins/ueditor/ueditor.config.js" />
+	<js key="ueditor" src="${ctx}/resources/plugins/ueditor/ueditor.all.min.js" />
+	<js key="ueditor" src="${ctx}/resources/plugins/ueditor/lang/zh-cn/zh-cn.js" />
 	<!-- system系统相关 -->
 	<css key="system" src="${ctx}/resources/system/css/style.min.css" />
 	<css key="system"> <![CDATA[  <link href="${ctx}/resources/system/img/favicon.ico" rel="shortcut icon" />]]></css>

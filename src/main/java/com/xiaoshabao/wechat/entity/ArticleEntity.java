@@ -9,11 +9,15 @@ public class ArticleEntity {
 	/**
 	 * 文章id
 	 */
-	private Integer article_id;
+	private Integer articleId;
 	/**
 	 * 发动到的帐号
 	 */
-	private Integer account_id;
+	private Integer accountId;
+	/**
+	 * 0未同步到微信，1已同步
+	 */
+	private Integer status;
 	/**
 	 * 文章题目
 	 */
@@ -25,39 +29,34 @@ public class ArticleEntity {
 	/**
 	 * 创建时间
 	 */
-	private Timestamp create_time;
+	private Timestamp createTime;
 	/**
 	 * 创建帐号
 	 */
-	private Integer create_staff;
+	private Integer createUser;
 	/**
 	 * 更新时间
 	 */
-	private Timestamp update_time;
+	private Timestamp updateTime;
 	/**
 	 * 更新帐号
 	 */
-	private Integer update_staff;
-	
-	/**
-	 * 取数据用来补充用户名
-	 */
-	private String user_name;
+	private Integer updateUser;
 
-	public Integer getArticle_id() {
-		return article_id;
+	public Integer getArticleId() {
+		return articleId;
 	}
 
-	public void setArticle_id(Integer article_id) {
-		this.article_id = article_id;
+	public void setArticleId(Integer articleId) {
+		this.articleId = articleId;
 	}
 
-	public Integer getAccount_id() {
-		return account_id;
+	public Integer getAccountId() {
+		return accountId;
 	}
 
-	public void setAccount_id(Integer account_id) {
-		this.account_id = account_id;
+	public void setAccountId(Integer accountId) {
+		this.accountId = accountId;
 	}
 
 	public String getTitle() {
@@ -76,44 +75,44 @@ public class ArticleEntity {
 		this.content = content;
 	}
 
-	public Timestamp getCreate_time() {
-		return create_time;
+	public Timestamp getCreateTime() {
+		return createTime;
 	}
 
-	public void setCreate_time(Timestamp create_time) {
-		this.create_time = create_time;
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
 	}
 
-	public Integer getCreate_staff() {
-		return create_staff;
+	public Timestamp getUpdateTime() {
+		return updateTime;
 	}
 
-	public void setCreate_staff(Integer create_staff) {
-		this.create_staff = create_staff;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
-	public Timestamp getUpdate_time() {
-		return update_time;
+	public Integer getCreateUser() {
+		return createUser;
 	}
 
-	public void setUpdate_time(Timestamp update_time) {
-		this.update_time = update_time;
+	public void setCreateUser(Integer createUser) {
+		this.createUser = createUser;
 	}
 
-	public Integer getUpdate_staff() {
-		return update_staff;
+	public Integer getUpdateUser() {
+		return updateUser;
 	}
 
-	public void setUpdate_staff(Integer update_staff) {
-		this.update_staff = update_staff;
+	public void setUpdateUser(Integer updateUser) {
+		this.updateUser = updateUser;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
-	
+
 }
