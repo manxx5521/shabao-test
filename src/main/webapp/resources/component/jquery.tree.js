@@ -26,26 +26,28 @@ var dtree = $.widget("ui.dtree",{
 		
 		if(this.options.showpop){
 			//添加淡出框
-			var pop_element=$('<div class="modal fade" id="'+this.options.name+'_pop" tabindex="-1" role="dialog" aria-labelledby="'+this.options.name+'Label"></div>');
-			var pop_document=$('<div class="modal-dialog" role="document"></div>');
-			var pop_content=$(' <div class="modal-content"></div>');
+			var pop_element=$('<div class="modal inmodal" id="'+this.options.name+'_pop" tabindex="-1" role="dialog" aria-hidden="true"></div>');
+			var pop_document=$('<div class="modal-dialog"></div>');
+			var pop_content=$(' <div class="modal-content animated bounceInRight"></div>');
 			var pop_head=$('<div class="modal-header"></div>')
-						.append('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
+						.append('<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>')
 						.append('<h4 class="modal-title" id="'+this.options.name+'Label">'+this.options.title+'</h4>');
+			var body_font=$('<div></div>')//内容样式设置
 			var pop_body=$('<div class="modal-body"></div>');
 			//内容
-			var body_container=$('<div class="container-fluid"></div>').append();
-			body_container.append('<input type="hidden" id="'+this.options.name+'_hval" />')
+			pop_body.append('<input type="hidden" id="'+this.options.name+'_hval" />')
 					.append('<input type="hidden" id="'+this.options.name+'_htext" />');
-			body_container.append(tree);
-			pop_body.append(body_container);
+			pop_body.append(tree);
+			body_font.append(pop_body);
 			
 			var pop_footer=$('<div class="modal-footer"></div>')
-							.append('<button type="button" class="btn btn-primary" id="'+this.options.name+'_ok">确定</button>')
-							.append('<button type="button" class="btn btn-default" data-dismiss="modal" id="'+this.options.name+'_cal">取消</button>');
-			pop_content.append(pop_head).append(pop_body).append(pop_footer);
-			pop_element.append(pop_document.append(pop_content));
-			h_element.append(pop_element);
+							.append('<button type="button" class="btn btn-white" data-dismiss="modal" id="'+this.options.name+'_cal">取消</button>')
+							.append('<button type="button" class="btn btn-primary" id="'+this.options.name+'_ok">确定</button>');
+			body_font.append(pop_footer);
+			pop_content.append(pop_head).append(body_font);
+			pop_element.append(pop_document.append(pop_content).append('<small class="font-bold"> </small>'));
+			pop_element.append('<small class="font-bold"></small>');
+			$('body').append(pop_element);
 			this.element.append(h_element);
 			$this=this;
 			//查询按钮点击

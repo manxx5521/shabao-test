@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.wechat.dao.ArticleDao">
 	<select id="getArticleList" resultType="com.xiaoshabao.wechat.entity.ArticleEntity">
-		select a.article_id,a.account_id,a.title,a.create_time,a.create_staff,a.update_time,a.updata_staff
+		select a.article_id,a.account_id,a.title,a.create_time,a.create_user,a.update_time,a.updata_user
 		from wx_article a,wx_account b,td_m_depart t
 		<where>
 			a.account_id=b.account_id
@@ -11,9 +11,13 @@
 		</where>
 		ORDER BY a.update_time desc
 	</select>
+	
+	
+	
+	
 	<select id="articleentityGetValues" resultType="com.xiaoshabao.wechat.entity.ArticleEntity"
 		parameterType="java.util.Map">
-		select a.article_id,a.account_id,a.title,a.create_time,a.create_staff,a.update_time,a.updata_staff,u.user_name
+		select a.article_id,a.account_id,a.title,a.create_time,a.create_user,a.update_time,a.updata_user,u.user_name
 		from wx_article a,wx_user_account b,td_m_user u
 		<where>
 			a.account_id=b.account_id

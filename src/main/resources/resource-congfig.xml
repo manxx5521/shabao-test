@@ -6,23 +6,28 @@
 2、自定义中的${ctx}代表网站根目录
 -->
 <config>
-		<version>1.0</version>
+		<version>1.0.3</version>
 </config>
 <resource>
 	<!--自定义JS组件-->
 	<js key="dtree" src="${ctx}/resources/component/jquery.tree.js" />
 	<!-- 组件 -->
 	<!-- JQuery -->
-	<js key="jquery" type="1" src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js" />
-	<js key="jquery" type="2" src="${ctx}/resources/plugins/jquery/jquery-1.12.4.min.js" />
-	<js key="jqueryui" type="1" src="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.js" />
-	<js key="jqueryui" type="2" src="${ctx}/resources/plugins/jquery-ui/jquery-ui.min.js" />
-	<js key="validate" src="${ctx}/resources/plugins/jquery-validation/jquery.validate.min.js" />
-	<js key="validate" src="${ctx}/resources/plugins/jquery-validation/localization/messages_zh.min.js" />
-	<css key="bootstrap" src="${ctx}/resources/plugins/bootstrap/css/bootstrap.min.css" />
-	<css key="bootstrap" src="${ctx}/resources/plugins/bootstrap/css/font-awesome.min.css" />
-	<css key="bootstrap" src="${ctx}/resources/plugins/bootstrap/css/animate.min.css" />
-	<js key="bootstrap" src="${ctx}/resources/plugins/bootstrap/js/bootstrap.min.js" />
+	<js key="jquery" type="1" src="${ctx}/resources/plugins/jquery/jquery-1.12.4.min.js" />
+	<js key="jquery" type="2" src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js" />
+	<js key="jqueryui" type="1" src="${ctx}/resources/plugins/jquery-ui/jquery-ui.min.js" />
+	<js key="jqueryui" type="2" src="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.js" />
+	<css key="bootstrap" type="1" src="${ctx}/resources/plugins/bootstrap/css/bootstrap.min.css" />
+	<css key="bootstrap" type="1" src="${ctx}/resources/plugins/bootstrap/css/font-awesome.min.css" />
+	<css key="bootstrap" type="1" src="${ctx}/resources/plugins/bootstrap/css/animate.min.css" />
+	<js key="bootstrap" type="1" src="${ctx}/resources/plugins/bootstrap/js/bootstrap.min.js" />
+	<css key="bootstrap" type="2" src="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<css key="bootstrap" type="2" src="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+	<css key="bootstrap" type="2" src="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" />
+	<js key="bootstrap" type="2" src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" />
+	<js key="validate" type="1" des="验证" src="${ctx}/resources/plugins/jquery-validation/jquery.validate.min.js" />
+	<js key="validate" type="1" src="${ctx}/resources/plugins/jquery-validation/localization/messages_zh.min.js" />
+	<js key="validate" type="2" src="//cdn.bootcss.com/jquery-validate/1.15.0/jquery.validate.min.js" />
 	<js key="bootbox" src="${ctx}/resources/plugins/bootbox/bootbox.js" />
 	<css key="dataTables" src="${ctx}/resources/plugins/dataTables/css/dataTables.bootstrap.css" />
 	<js key="dataTables" src="${ctx}/resources/plugins/dataTables/jquery.dataTables.js" />

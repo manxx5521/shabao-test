@@ -6,7 +6,7 @@
 <%@include file="./common.jsp"%>
 <title>沙包娱乐 - 登录</title>
 <cs:resource type="css" value="jquery,bootstrap,system,bootbox" />
-<link href="${ctx}/resources/system/login/login.min.css" rel="stylesheet">
+<link href="${ctx}/resources/system/login/css/login.min.css" rel="stylesheet">
 <script>
 	if (window.top !== window.self) {
 		window.top.location = window.location
@@ -39,9 +39,8 @@
 				<form method="post" name="loginform" id="loginform">
 					<h4 class="no-margins">登录：</h4>
 					<p class="m-t-md">登录到H+后台主题UI框架</p>
-					<input name="user_id" type="text" class="form-control uname"
-						placeholder="用户名" /> <input name="password" type="password"
-						class="form-control pword m-b" placeholder="密码" /> <a href="">忘记密码了？</a>
+					<input name="user_id" type="text" class="form-control uname" placeholder="用户名" /> 
+					<input name="password" type="password" class="form-control pword m-b" placeholder="密码" /> <a href="">忘记密码了？</a>
 					<button class="btn btn-success btn-block" type="button">登录</button>
 				</form>
 			</div>

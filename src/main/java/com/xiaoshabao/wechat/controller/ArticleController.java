@@ -41,6 +41,10 @@ public class ArticleController extends AbstractController{
 		model.put("dataList", list);
 		return new ModelAndView ("/wechat/article/articleList");
 	}
+	@RequestMapping(value="/test1")
+	public ModelAndView test1 (ModelMap model){
+		return new ModelAndView ("/system/test/modeltest");
+	}
 	/**
 	 * 文章初始化方法
 	 * @param map
