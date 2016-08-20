@@ -13,5 +13,11 @@ public interface ArticleDao {
 	 * @return
 	 */
 	public List<ArticleEntity> getArticleList(@Param("priFrame")String priFrame);
+	/**
+	 * 添加文章
+	 * @param article
+	 * @return
+	 */
+	public int insertArticle(ArticleEntity article);
 
 }
