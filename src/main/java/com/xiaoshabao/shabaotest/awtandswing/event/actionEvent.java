@@ -7,7 +7,6 @@ import java.awt.event.*;
 public class actionEvent {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		final Frame f=new Frame("演示动作事件");
 		Button b=new Button("提交");
 		

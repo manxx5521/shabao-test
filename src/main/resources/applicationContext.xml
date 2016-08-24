@@ -35,10 +35,10 @@
 	    <!-- Shiro连接约束配置,即过滤链的定义 -->  
 	    <property name="filterChainDefinitions">  
 	        <value>  
-	             /admin/login.html=anon
-	             /admin/loginIN.html=anon
-	             /admin/accountUser=perms["wUser:select"]
-	             /admin/wechatUserList=perms["wUser:select"]
+	            /admin/login.html=anon
+	            /admin/loginIN.html=anon
+	            /admin/accountUser=perms["wUser:select"]
+	            /admin/wechatUserList=perms["wUser:select"]
 				/admin/**=authc
 	        </value>  
 	    </property>
@@ -82,4 +82,9 @@
 	<!-- 注入任务-->
 	<bean id="updateAccessTokenJob" class="com.xiaoshabao.wechat.job.UpdateAccessTokenJob" />
 	<!-- 任务调度 end -->
+	
+	<!-- 项目自定义配置 begin-->
+	<!-- web项目中获取项目session参数 -->
+	<bean id="contextSession" class="com.xiaoshabao.system.component.ContextHolderSystem" />
+	<!-- 项目自定义配置 end-->
 </beans>

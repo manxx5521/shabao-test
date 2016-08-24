@@ -293,6 +293,13 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ueditor.jar</systemPath>
 		</dependency>
+		<!-- html解析 -->
+		<dependency>
+    		<groupId>org.htmlparser</groupId>
+    		<artifactId>htmlparser</artifactId>
+    		<version>2.1</version>
+		</dependency>
+		
 
 	</dependencies>
 	<build>

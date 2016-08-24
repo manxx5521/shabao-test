@@ -119,7 +119,6 @@ public class WebBrowser extends JFrame implements HyperlinkListener,
              
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
                 newBrowser();
             }
         });
@@ -131,7 +130,6 @@ public class WebBrowser extends JFrame implements HyperlinkListener,
              
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
                 openLocalPage();
             }
         });
@@ -156,7 +154,6 @@ public class WebBrowser extends JFrame implements HyperlinkListener,
                  
                 @Override
                 public boolean accept(File f) {
-                    // TODO Auto-generated method stub
                     String fn = f.getName();
                     if(fn.endsWith(".html") || fn.endsWith(".htm")){
                         return true;
@@ -176,13 +173,11 @@ public class WebBrowser extends JFrame implements HyperlinkListener,
      
     @Override
     public void propertyChange(PropertyChangeEvent arg0) {
-        // TODO Auto-generated method stub
  
     }
  
     @Override
     public void hyperlinkUpdate(HyperlinkEvent arg0) {
-        // TODO Auto-generated method stub
  
     }
     public static void main(String[] args){

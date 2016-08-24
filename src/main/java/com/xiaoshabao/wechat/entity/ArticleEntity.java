@@ -14,18 +14,16 @@ public class ArticleEntity {
 	 * 发动到的帐号
 	 */
 	private Integer accountId;
+	
+	private String mediaId;
+	/**
+	 * 类型 1图文消息
+	 */
+	private Integer type;
 	/**
 	 * 0未同步到微信，1已同步
 	 */
 	private Integer status;
-	/**
-	 * 文章题目
-	 */
-	private String title;
-	/**
-	 * 文章内容
-	 */
-	private String content;
 	/**
 	 * 创建时间
 	 */
@@ -57,22 +55,6 @@ public class ArticleEntity {
 
 	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
 	}
 
 	public Timestamp getCreateTime() {
@@ -115,4 +97,20 @@ public class ArticleEntity {
 		this.status = status;
 	}
 
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public String getMediaId() {
+		return mediaId;
+	}
+
+	public void setMediaId(String mediaId) {
+		this.mediaId = mediaId;
+	}
+	
 }

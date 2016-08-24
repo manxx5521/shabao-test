@@ -21,7 +21,7 @@ import com.xiaoshabao.wechat.component.ContextHolderWechat;
 import com.xiaoshabao.wechat.component.TokenManager;
 import com.xiaoshabao.wechat.component.WechatConfig;
 import com.xiaoshabao.wechat.entity.AccessToken;
-import com.xiaoshabao.wechat.util.WeixinUtil;
+import com.xiaoshabao.wechat.util.WechatUtil;
 /**
  * 微信服务拦截器
  */
@@ -119,7 +119,7 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 				Integer account = Integer.valueOf(accountId);
 				AccessToken jstoken = tokenManager.getJSToken(account);
 				if (StringUtils.isNotEmpty(jstoken.getJsaccessToken())) {
-					Map<String, String> jsParams = WeixinUtil.getjsSignStr(jstoken.getAppid(), jstoken.getJsaccessToken(),url);
+					Map<String, String> jsParams = WechatUtil.getjsSignStr(jstoken.getAppid(), jstoken.getJsaccessToken(),url);
 					request.setAttribute("domain", domain);
 					request.setAttribute("jsParams", jsParams);
 				}

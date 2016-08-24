@@ -7,6 +7,7 @@ import com.xiaoshabao.baseframe.service.AbstractService;
 import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.ArticleDetailDto;
 import com.xiaoshabao.wechat.entity.ArticleEntity;
+import com.xiaoshabao.wechat.entity.MediaNewsEntity;
 
 public interface ArticleService extends AbstractService{
 	/**
@@ -26,7 +27,7 @@ public interface ArticleService extends AbstractService{
 	 * @param user_id
 	 * @throws ServiceException
 	 */
-	public AjaxResult addArticle(ArticleEntity article);
+	public AjaxResult addArticle(MediaNewsEntity media);
 	
 	
 }

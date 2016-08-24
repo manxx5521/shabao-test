@@ -26,7 +26,6 @@ public class ServiceIpAPITest {
 			List<String> s = ServiceIpAPI.getServiceIpList(accessToken);
 			System.out.println(s);
 		} catch (WexinReqException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

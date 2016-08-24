@@ -1,12 +1,13 @@
 //系统统一弹出框
-var csbox = {
+var cbox = {
 	/** 提示框 */
 	info : function(message) {
 		return bootbox.alert(message);
 	},
 	/** 警告框 */
 	alert : function(message) {
-		return bootbox.alert(message);
+		bootbox.alert(message);
+		return false;
 	},
 	/** 错误框 */
 	error : function(message) {

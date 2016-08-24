@@ -33,7 +33,8 @@ public class SendMessageAPITest {
 			a1.setContent("测试内容111111");
 			a1.setDigest("这是图文摘要");
 			a1.setShow_cover_pic("1");
-			a1.setThumb_media_id("h52d9ii11NC1O9ri6hlFuVW5BSeFDypBsPdl8D8PdAgRg_UCLCUZpUyEugbnumNI");
+			//这个要临时素材
+			a1.setThumb_media_id("5c4QmLVv03ixXxWsEGjmgbuhxVPVLNMwZB5cjb5tkf4P28bS6Fe5I6mTEcmtO7x6");
 			a1.setTitle("这是一个标题");
 			a1.setContent_source_url("www.baidu.com");
 			articles.add(a1);

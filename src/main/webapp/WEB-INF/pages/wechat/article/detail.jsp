@@ -72,14 +72,25 @@
                                 <div class="col-sm-10">
                                 	<c:forEach var="r" items="${data.accounts}" varStatus="idx">
                                     <label class="radio-inline  i-checks">
-                                        <input type="radio" name="account_ids" value=" ${r.accountId}"> ${r.appName}</label>
+                                        <input type="radio" name="accountId" value=" ${r.accountId}"> ${r.appName}</label>
                                     </c:forEach>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">标题：</label>
                                 <div class="col-sm-9">
-                                    <input id="cname" name="title" minlength="4" type="text" class="form-control" required="" aria-required="true">
+                                    <input id="title" name="title" minlength="4" type="text" class="form-control" required="" aria-required="true">
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-sm-2 control-label">封面：</label>
+                                <div class="col-sm-9" id="thumb_media_id">
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-sm-2 control-label">摘要：</label>
+                                <div class="col-sm-9">
+                                    <input id="digest" name="digest" minlength="4" type="text" class="form-control" required="" aria-required="true">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -90,7 +101,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-primary" type="button">保存</button>
+                                	<input id="media_id" name="media_id" type="hidden" value="">
+                                    <button class="btn btn-primary" id="saveBtn" type="button">保存</button>
                                 </div>
                             </div>
                         </form>
@@ -99,54 +111,75 @@
             </div>
         </div>
     </div>
-    <cs:resource type="js" value="jquery,bootstrap,system,sweetalert,validate,icheck,ueditor" />
-  	<!-- baidu ue begin-->
-  	<script type="text/javascript" charset="utf-8">
- 	//	window.PROJECT_CONTEXT = '${webRoot}';
-  	</script>
-   <script type="text/javascript">
-   $(document).ready(function() {
-	   //设置复选框样式
-	   var box= $(":radio");
-	   if (box!=null&&box.length==1){
-		   $(":radio").attr('checked', true);
-	   }
-	   $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})
-	   
-	   	//实例化百度编辑器
-    	var ue = UE.getEditor('editor');
-	   
-		// 提交表单
-		$('.btn').click(function() {
-			swal({ 
-		        title: "您确定要保存吗？",  
-		        text: "您确定要添加这条数据？",  
-		        type: "warning", 
-		        showCancelButton: true, 
-		        closeOnConfirm: false, 
-		        confirmButtonText: "是的，我要保存", 
-		        confirmButtonColor: "#DD6B55" 
-		    }, function() { 
-		    	var fromdata = $("#commentForm").serialize();
-		        $.ajax({ 
-		            url: "articleAdd.html", 
-		            type: "POST",
-		            data : fromdata,
-		            dataType : "json",
-		        }).done(function(data) { 
-		        	if (data.success) {
-		        		swal("操作成功!", "已成功保存数据！", "success");
-		        		window.location.href = './articleList.html';
-		        	}else{
-		        		swal("操作失败!",data.message, "error"); 
-		        	}
-		        }).error(function(data) { 
-		            swal("OMG", "删除操作失败了!", "error"); 
-		        }); 
-		    }); 
+	<cs:resource type="js" value="jquery,jqueryui,bootstrap,system,sweetalert,validate,icheck,ueditor,dimage" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//封面图片选择
+			$('#thumb_media_id').dimage({
+				name:'thumbMediaId',
+				element_id:'100001',
+				data:function(){
+					var data={};
+					var accountId= $("input[name='accountId']:checked").val();
+					data.accountId=accountId;
+					return data;
+				},
+				validation:function(){
+					var accountId= $("input[name='accountId']:checked").val();
+					if(accountId==null||accountId==""||accountId==undefined){
+						cbox.alert("请先选择帐号");
+						return false;
+					}
+				},
+				resdata:false,
+				rescode:function(){
+					return $("input[name='accountId']:checked").val();
+				}
+			});
+			//设置复选框样式
+			var box = $(":radio");
+			if (box != null && box.length == 1) {
+				$(":radio").attr('checked', true);
+			}
+			$(".i-checks").iCheck({
+				checkboxClass : "icheckbox_square-green",
+				radioClass : "iradio_square-green",
+			})
+
+			//实例化百度编辑器
+			var ue = UE.getEditor('editor');
+
+			// 提交表单
+			$('#saveBtn').click(function() {
+				swal({
+					title : "您确定要保存吗？",
+					text : "您确定要添加这条数据？",
+					type : "warning",
+					showCancelButton : true,
+					closeOnConfirm : false,
+					confirmButtonText : "是的，我要保存",
+					confirmButtonColor : "#DD6B55"
+				}, function() {
+					var fromdata = $("#commentForm").serialize();
+					$.ajax({
+						url : "articleAdd.html",
+						type : "POST",
+						data : fromdata,
+						dataType : "json",
+					}).done(function(data) {
+						if (data.success) {
+							swal("操作成功!", "已成功保存数据！", "success");
+							window.location.href = './articleList.html';
+						} else {
+							swal("操作失败!", data.message, "error");
+						}
+					}).error(function(data) {
+						swal("OMG", "删除操作失败了!", "error");
+					});
+				});
+			})
 		})
-	})
-   </script>
+	</script>
 </body>
 
 </html>

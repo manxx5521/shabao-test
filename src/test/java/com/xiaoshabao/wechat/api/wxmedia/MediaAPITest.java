@@ -41,8 +41,7 @@ public class MediaAPITest {
 	public void testUploadTempMedia() throws Exception {
 		try {
 			UploadTempMediaResult bean=MediaAPI.uploadTempMedia(accessToken, MediaType.IMAGE, "E:\\test\\img01.jpg");
-			System.out.println("media_id:"+bean.getMedia_id());
-			System.out.println("created_at:"+bean.getCreated_at());
+			System.out.println(JSON.toJSON(bean));
 		} catch (WexinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
@@ -71,9 +70,8 @@ public class MediaAPITest {
 	@Test
 	public void testUploadMedia() throws Exception {
 		try {
-			UploadMediaResult result=MediaAPI.uploadMedia(accessToken, MediaType.IMAGE, "E:\\test\\11.png");
-			System.out.println("media_id:"+result.getMedia_id());
-			System.out.println("返回url:"+result.getUrl());
+			UploadMediaResult result=MediaAPI.uploadMedia(accessToken, MediaType.THUMB, "E:\\test\\0.jpg");
+			System.out.println("结果:"+JSON.toJSONString(result));
 			//ADqYlnhfHd--TyuNuo0S1SlEARy9hns-9djP8hB1Fmc
 			//https://mmbiz.qlogo.cn/mmbiz/BibYy0opVNUpBx21a13hKe5RwlWd6OicQ5tXpgfu4nkPnD48n6Py45AMpRDIfmgnebnap0ZV6ibkY97oaSfsOJicPA/0?wx_fmt=jpeg
 		} catch (WexinReqException e) {
@@ -107,7 +105,7 @@ public class MediaAPITest {
 			List<Article> articles=new ArrayList<Article>();
 			Article a1=new Article();
 			a1.setTitle("测试");
-			a1.setThumb_media_id("77f1UYMo_5pyjMO9MxLm2YijLpbSoU67JaLfrxi435g");
+			a1.setThumb_media_id("QPreUSwRXnLnMqsVubaUJuH0PxfzBP_BR8AQmLVOvDQ");
 			a1.setAuthor("manxx");
 			a1.setDigest("摘要信息测试");
 			a1.setShow_cover_pic("1");
@@ -127,7 +125,7 @@ public class MediaAPITest {
 	@Test
 	public void testDownloadNews() throws Exception {
 		try {
-			NewsResult bean=MediaAPI.downloadNews(accessToken, "QPreUSwRXnLnMqsVubaUJsKbPnWQrI3mt7KLolAsfPM");
+			NewsResult bean=MediaAPI.downloadNews(accessToken, "QPreUSwRXnLnMqsVubaUJunmkMq5r7TuLnp0-IvuQ_0");
 			System.out.println("图文消息:"+JSON.toJSONString(bean));
 		} catch (WexinReqException e) {
 			e.printStackTrace();
@@ -139,7 +137,7 @@ public class MediaAPITest {
 	@Test
 	public void testDownMedia() throws Exception {
 		try {
-			DwonloadResult bean=MediaAPI.downloadMeida(accessToken, "uP_ofwCmwqX_5Fa4nHhtuvZolDV-cv_JWT5vPrMNubE", "E:\\test");
+			DwonloadResult bean=MediaAPI.downloadMeida(accessToken, "QPreUSwRXnLnMqsVubaUJrN14BP-GaDF0bgc3BkBTYk", "E:\\test");
 			System.out.println("FileName:"+bean.getFileName());
 			System.out.println("Filepath:"+bean.getFilePath());
 		} catch (WexinReqException e) {

@@ -167,7 +167,6 @@ public class WeiXinReqUtil {
 				file_content_type.load(in);
 				in.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				file_content_type = new Properties();
 			}

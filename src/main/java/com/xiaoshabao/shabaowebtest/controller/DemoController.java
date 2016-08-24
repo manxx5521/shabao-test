@@ -29,4 +29,9 @@ public class DemoController extends AbstractController{
 		return new ModelAndView ("/shabaotest/demo/demo");
 	}
 	
+	@RequestMapping(value="/test1")
+	public ModelAndView test1 (ModelMap model){
+		return new ModelAndView ("/system/test/modeltest");
+	}
+	
 }

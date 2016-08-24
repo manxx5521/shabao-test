@@ -13,9 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.xiaoshabao.baseframe.controller.AbstractController;
 import com.xiaoshabao.baseframe.exception.DaoException;
+import com.xiaoshabao.system.component.ContextHolderSystem;
 import com.xiaoshabao.system.entity.MenuEntity;
 import com.xiaoshabao.system.service.IndexService;
-import com.xiaoshabao.system.shiro.ContextHolderSystem;
 
 /**
  * 主页

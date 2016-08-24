@@ -12,8 +12,8 @@ import com.xiaoshabao.wechat.entity.AccessToken;
 /**
  * 微信工具类
  */
-public class WeixinUtil {
-	private static Logger logger = LoggerFactory.getLogger(WeixinUtil.class);
+public class WechatUtil {
+	private static Logger logger = LoggerFactory.getLogger(WechatUtil.class);
 	/**
 	 * token静态类，使用内存缓存
 	 */

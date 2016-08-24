@@ -14,7 +14,7 @@ import com.xiaoshabao.wechat.api.wxbase.TokenAPI;
 import com.xiaoshabao.wechat.api.wxbase.result.TokenResult;
 import com.xiaoshabao.wechat.dao.AccessTokenDao;
 import com.xiaoshabao.wechat.entity.AccessToken;
-import com.xiaoshabao.wechat.util.WeixinUtil;
+import com.xiaoshabao.wechat.util.WechatUtil;
 
 /**
  * 微信token管理类
@@ -108,7 +108,7 @@ public class TokenManager {
 		if(i<1){
 			logger.error("换取的accessToken未能更新到数据库");
 		}
-		WeixinUtil.accessTokens.put(accountId, accessToken);
+		WechatUtil.accessTokens.put(accountId, accessToken);
 		logger.debug(accountId+"成功在服务器获取accessToken");
 		return accessToken;
 	}
@@ -157,7 +157,7 @@ public class TokenManager {
 		if(i<1){
 			logger.error("换取的jsToken未能更新到数据库");
 		}
-		WeixinUtil.accessTokens.put(accountId, accessToken);
+		WechatUtil.accessTokens.put(accountId, accessToken);
 		logger.debug(accountId+"成功在服务器获取jsToken");
 		return accessToken;
 	}
@@ -170,13 +170,13 @@ public class TokenManager {
 	private AccessToken getMemoryToken(Integer accountId){
 		logger.debug(accountId+"开始获取Token");
 		// 获得静态变量里缓存的token
-		AccessToken accessToken = WeixinUtil.accessTokens.get(accountId);
+		AccessToken accessToken = WechatUtil.accessTokens.get(accountId);
 		
 		//将数据库的信息取出放到内存
 		if (accessToken == null) {
 			logger.debug("内存中不存在accessToken，在数据库中获取放到内存");
 			AccessToken token =getRealToken(accountId);
-			WeixinUtil.accessTokens.put(accountId, token);
+			WechatUtil.accessTokens.put(accountId, token);
 			accessToken=token;
 		}
 		return accessToken;

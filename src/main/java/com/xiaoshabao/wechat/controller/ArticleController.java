@@ -15,11 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xiaoshabao.baseframe.controller.AbstractController;
 import com.xiaoshabao.baseframe.exception.DaoException;
 import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.system.shiro.ContextHolderSystem;
+import com.xiaoshabao.system.component.ContextHolderSystem;
 import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.ArticleDetailDto;
 import com.xiaoshabao.wechat.entity.AccountEntity;
 import com.xiaoshabao.wechat.entity.ArticleEntity;
+import com.xiaoshabao.wechat.entity.MediaNewsEntity;
 import com.xiaoshabao.wechat.service.ArticleService;
 
 @Controller
@@ -41,10 +42,7 @@ public class ArticleController extends AbstractController{
 		model.put("dataList", list);
 		return new ModelAndView ("/wechat/article/articleList");
 	}
-	@RequestMapping(value="/test1")
-	public ModelAndView test1 (ModelMap model){
-		return new ModelAndView ("/system/test/modeltest");
-	}
+	
 	/**
 	 * 文章初始化方法
 	 * @param map
@@ -68,9 +66,9 @@ public class ArticleController extends AbstractController{
 	 */
 	@ResponseBody
 	@RequestMapping(value="/admin/wechat/article/add")
-	public AjaxResult addArticle (ArticleEntity article) throws DaoException{
+	public AjaxResult addArticle (MediaNewsEntity media) throws DaoException{
 		try {
-			AjaxResult result=articleService.addArticle(article);
+			AjaxResult result=articleService.addArticle(media);
 			return result;
 		} catch (ServiceException e) {
 			return new AjaxResult(e.getMessage());

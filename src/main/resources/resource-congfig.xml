@@ -11,6 +11,7 @@
 <resource>
 	<!--自定义JS组件-->
 	<js key="dtree" src="${ctx}/resources/component/jquery.tree.js" />
+	<js key="dimage" src="${ctx}/resources/component/jquery.image.js" />
 	<!-- 组件 -->
 	<!-- JQuery -->
 	<js key="jquery" type="1" src="${ctx}/resources/plugins/jquery/jquery-1.12.4.min.js" />
@@ -51,8 +52,10 @@
 	<!-- system系统相关 -->
 	<css key="system" src="${ctx}/resources/system/css/style.min.css" />
 	<css key="system"> <![CDATA[  <link href="${ctx}/resources/system/img/favicon.ico" rel="shortcut icon" />]]></css>
+	<js key="system" src="${ctx}/resources/plugins/bootbox/bootbox.js" />
 	<js key="system" src="${ctx}/resources/component/csbox.js" />
 	<js key="system" src="${ctx}/resources/system/js/content.min.js" />
+	
 	<!-- 微信相关 -->
 	<css key="weui" src="${ctx}/resources/plugins/weui/weui.min.css" />
 	<js key="jweixin" type="1" src="${ctx}/resources/plugins/weixin/jweixin-1.0.0.js" />
