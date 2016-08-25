@@ -20,7 +20,8 @@ public enum ErrorWechatEnum implements ErrorInterface{
 	
 	/** 未能正常获得文章信息 */
 	ARTICLE_NO(9020,"未能正常获得文章信息"),
-	ARTICLE_SAVE_ERROR(9021,"保存数据错误，请重试！"),
+	/** 保存数据错误 */
+	ARTICLE_SAVE_ERROR(9021,"保存文章数据错误，请重试！"),
 	
 	ERROR(1,"系统错误，请重试"),
 	INNER_ERROR(2,"系统内部错误，请重试");

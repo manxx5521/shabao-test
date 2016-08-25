@@ -42,9 +42,9 @@ public class MenuAPITest {
 			btn21.setType(MenuType.VIEW);
 			btn21.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fshabao.tunnel.qydev.com%2Fshabao-test%2Fwechat%2Fbargain%2F11221111%2Fbargain&response_type=code&scope=snsapi_base&state=100001#wechat_redirect");
 			CommonButton btn22=new CommonButton();
-			btn22.setName("测试二级标题");
-			btn22.setType(MenuType.CLICK);
-			btn22.setKey("menutitle22");
+			btn22.setName("文章测试");
+			btn22.setType(MenuType.VIEW);
+			btn22.setUrl("http://mp.weixin.qq.com/s?__biz=MzI2NDA3MDE2OA==&mid=507443969&idx=1&sn=d0f5ba036d1b6ac17dcbb4a3406120d4#rd");
 			
 			//存放多级菜单
 			ComplexButton mainBtn2 = new ComplexButton();

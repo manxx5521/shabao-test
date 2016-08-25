@@ -8,14 +8,14 @@ var dtree = $.widget("ui.dimage",{
 		name:'treevalue',//树的名字唯一标识
 		showpop:true,
 		title:'请选择', //弹出树选择的标题
-		ctx:window.webroot,
 		class:"col-sm-9",
-		data:function(){
+		value:{},//默认值
+		readonly:false,
+		data:function(){//Ajax请求数据要执行的函数
 			var data={};
 			return data;
 		},
-		url:function(){
-			this
+		url:function(){ //Ajax请求数据的URL
 			return window.webroot+'/admin/image/'+this.element_id+'/list';
 		},
 		webroot:window.webroot,
@@ -65,6 +65,12 @@ var dtree = $.widget("ui.dimage",{
 		pop_element.append('<small class="font-bold"></small>');
 		$('body').append(pop_element);
 		this.element.append(h_element);
+		//默认值
+		var value=this.options.value;
+		var valid=value.id;
+		if(value!=''&&valid!=''&&valid!=undefined){
+			this.choose(value);
+		}
 		
 		// 给组件添加监听方法
 		this._on($(this.element), {
@@ -135,7 +141,7 @@ var dtree = $.widget("ui.dimage",{
 		});
 	},
 	closepop:function(){
-		var model=$('#'+$this.options.name+'_pop');
+		var model=$('#'+this.options.name+'_pop');
 		model.modal('hide');
 	},
 	/**
@@ -169,29 +175,32 @@ var dtree = $.widget("ui.dimage",{
 		a.append(a_name);
 		file_box.append(file.append(a));
 		this.element.append(file_box);
-		$this=this;
-		//查询按钮点击
-		$('#'+this.options.name+'_find').click(function(){
-			//进行可能的数据验证
-			var flag=$this.options.validation();
-			if(flag==false){
-				return false;
-			}
-			/*$('#'+element_name+'_hval').val('');
-			$('#'+element_name+'_htext').val('');*/
-			var model=$('#'+$this.options.name+'_pop');
-			model.modal({
-				show:true,//显示弹出层
-				//backdrop:'static',//禁止位置关闭
-				keyboard:false //关闭键盘事件
+		if(!this.options.readonly){
+			$this=this;
+			//查询按钮点击
+			$('#'+this.options.name+'_find').click(function(){
+				//进行可能的数据验证
+				var flag=$this.options.validation();
+				if(flag==false){
+					return false;
+				}
+				/*$('#'+element_name+'_hval').val('');
+				$('#'+element_name+'_htext').val('');*/
+				var model=$('#'+$this.options.name+'_pop');
+				model.modal({
+					show:true,//显示弹出层
+					//backdrop:'static',//禁止位置关闭
+					keyboard:false //关闭键盘事件
+				});
+				$this.showpop();
 			});
-			$this.showpop();
-		});
+		}
 	},
 	choose:function(data){
 		var div=$('#'+this.options.id+' .zpth').removeClass('icon').addClass('image');
 		div.empty();
-		div.append('<img alt="image" class="img-responsive" src="'+this.options.webroot+data.url+'">');
+		var img=$('<img alt="image" class="img-responsive" src="'+this.options.webroot+data.url+'" />').css({height:'100px'})
+		div.append(img);
 		$('#'+this.options.id+' .file-name').html(data.text);
 		$('#'+this.options.name+'_val').val(data.id);
 		this.closepop();

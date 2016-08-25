@@ -18,7 +18,7 @@ public class MediaNewsEntity {
 	/** 摘要 */
 	private String digest;
 	/** 是否显示封面 1.显示 */
-	private Integer showCoverPic;
+	private String showCoverPic;
 	/** 内容 */
 	private String content;
 	/** 阅读原文的URL */
@@ -60,10 +60,10 @@ public class MediaNewsEntity {
 	public void setDigest(String digest) {
 		this.digest = digest;
 	}
-	public Integer getShowCoverPic() {
+	public String getShowCoverPic() {
 		return showCoverPic;
 	}
-	public void setShowCoverPic(Integer showCoverPic) {
+	public void setShowCoverPic(String showCoverPic) {
 		this.showCoverPic = showCoverPic;
 	}
 	public String getContent() {

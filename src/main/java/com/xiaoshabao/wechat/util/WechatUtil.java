@@ -47,4 +47,5 @@ public class WechatUtil {
 		result.put("signature", digest);
 		return result;
 	}
+
 }

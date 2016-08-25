@@ -6,7 +6,7 @@ import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.AbstractService;
 import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.ArticleDetailDto;
-import com.xiaoshabao.wechat.entity.ArticleEntity;
+import com.xiaoshabao.wechat.dto.ArticleInfoDto;
 import com.xiaoshabao.wechat.entity.MediaNewsEntity;
 
 public interface ArticleService extends AbstractService{
@@ -14,7 +14,7 @@ public interface ArticleService extends AbstractService{
 	 * 获得管理端文章列表
 	 * @return
 	 */
-	public List<ArticleEntity> getArticleList();
+	public List<ArticleInfoDto> getArticleList();
 	/**
 	 * 文章初始化方法
 	 * @return
@@ -28,6 +28,17 @@ public interface ArticleService extends AbstractService{
 	 * @throws ServiceException
 	 */
 	public AjaxResult addArticle(MediaNewsEntity media);
+	/**
+	 * 获得文章客户端详情
+	 * @return
+	 */
+	public ArticleDetailDto getDetail(Integer articleId);
+	
+	/**
+	 * 获得文章详情
+	 * @return
+	 */
+	public ArticleDetailDto getArticleById(Integer articleId);
 	
 	
 }

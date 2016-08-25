@@ -25,6 +25,10 @@ public class ArticleEntity {
 	 */
 	private Integer status;
 	/**
+	 * 微信端url
+	 */
+	private String url;
+	/**
 	 * 创建时间
 	 */
 	private Timestamp createTime;
@@ -111,6 +115,14 @@ public class ArticleEntity {
 
 	public void setMediaId(String mediaId) {
 		this.mediaId = mediaId;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 }

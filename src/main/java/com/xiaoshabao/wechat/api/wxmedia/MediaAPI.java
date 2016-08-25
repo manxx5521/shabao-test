@@ -1,6 +1,9 @@
 package com.xiaoshabao.wechat.api.wxmedia;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -18,6 +21,8 @@ import com.xiaoshabao.wechat.api.wxmedia.model.UploadMedia;
 import com.xiaoshabao.wechat.api.wxmedia.model.UploadNews;
 import com.xiaoshabao.wechat.api.wxmedia.model.UploadNewsImg;
 import com.xiaoshabao.wechat.api.wxmedia.model.UploadTempMedia;
+import com.xiaoshabao.wechat.api.wxmedia.result.ArticleOneResult;
+import com.xiaoshabao.wechat.api.wxmedia.result.ArticleResult;
 import com.xiaoshabao.wechat.api.wxmedia.result.DwonloadResult;
 import com.xiaoshabao.wechat.api.wxmedia.result.MediaCountResult;
 import com.xiaoshabao.wechat.api.wxmedia.result.NewsMediaList;
@@ -134,6 +139,36 @@ public class MediaAPI {
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(
 				upload);
 		return result.getString("media_id");
+	}
+	/**
+	 * 上传永久图文消息素材--单条消息返回URL
+	 * @param accessToken 
+	 * @param articles 上传的文本列表
+	 * @return
+	 * @throws WexinReqException
+	 */
+	public static ArticleOneResult uploadNews(String accessToken, Article article)
+			throws WexinReqException {
+		try {
+			List<Article> articles=new ArrayList<Article>();
+			articles.add(article);
+			UploadNews upload = new UploadNews();
+			upload.setAccess_token(accessToken);
+			upload.setArticles(articles);
+			JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(upload);
+			String media_id=result.getString("media_id");
+			NewsResult newsResult=downloadNews(accessToken,media_id);
+			ArticleResult articleResult=newsResult.getNews_item().get(0);
+			if(articleResult==null){
+				throw new WexinReqException("未正常获得图文消息");
+			}
+			ArticleOneResult oneresult=new ArticleOneResult();
+			BeanUtils.copyProperties(oneresult,articleResult);
+			oneresult.setMedia_id(media_id);
+			return oneresult;
+		} catch (Exception e) {
+			throw new WexinReqException(e);
+		} 
 	}
 	
 	/**

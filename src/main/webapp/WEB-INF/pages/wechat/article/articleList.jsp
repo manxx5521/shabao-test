@@ -52,6 +52,7 @@
                         <table class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
+                                    <th>文章ID</th>
                                     <th>文章标题</th>
                                     <th>创建时间</th>
                                     <th>创建人</th>
@@ -60,14 +61,16 @@
                             <tbody>
                             	<c:forEach var="r" items="${dataList}" varStatus="idx">
                                 <tr class="gradeX">
-                                    <td> ${r.title}</td>
-                                    <td class="center"><fmt:formatDate value="${r.create_time}" pattern="yyyy-MM-dd HH:mm:ss" /> </td>
-                                    <td > ${r.user_name}</td>
+                                    <td> ${r.articleId}</td>
+                                    <td> <a href="${ctx}/admin/wechat/article/${r.articleId}/detail" target="_self">${r.news.title}</a></td>
+                                    <td class="center"><fmt:formatDate value="${r.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /> </td>
+                                    <td > ${r.createName}</td>
                                 </tr>
                                 </c:forEach>
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th>文章ID</th>
                                     <th>文章标题</th>
                                     <th>创建时间</th>
                                     <th>创建人</th>

@@ -19,6 +19,16 @@ public class AccountValue {
 	 * 微信应用的名字
 	 */
 	private String appName;
+	
+	public AccountValue() {
+	}
+
+	public AccountValue(Integer accountId, String appName) {
+		this.accountId = accountId;
+		this.appName = appName;
+	}
+
+
 
 	public Integer getAccountId() {
 		return accountId;

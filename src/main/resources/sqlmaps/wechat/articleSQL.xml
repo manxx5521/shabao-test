@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.wechat.dao.ArticleDao">
-	<select id="getArticleList" resultType="com.xiaoshabao.wechat.entity.ArticleEntity">
-		select a.article_id,a.account_id,a.title,a.create_time,a.create_user,a.update_time,a.updata_user
-		from wx_article a,wx_account b,td_m_depart t
+	<select id="getArticleListDto" resultType="com.xiaoshabao.wechat.dto.ArticleInfoDto">
+		select a.article_id,a.account_id,n.title 'news.title',a.create_time,a.create_user,a.update_time,a.updata_user,m.user_name createName
+		from wx_article a,wx_account b,td_m_depart t,wx_media_news n,td_m_user m
 		<where>
 			a.account_id=b.account_id
 			and b.depart_id=t.depart_id
 			and t.depart_frame like ${priFrame}
+			and a.media_id=n.media_id
+			and a.create_user=m.user_id
 		</where>
 		ORDER BY a.update_time desc
 	</select>
 	
+	<insert id="insertArticle" useGeneratedKeys="true" keyProperty="articleId" parameterType="com.xiaoshabao.wechat.entity.ArticleEntity">
+		INSERT INTO WX_ARTICLE (ARTICLE_ID,ACCOUNT_ID,MEDIA_ID,TYPE,STATUS,URL,CREATE_TIME,CREATE_USER,UPDATE_TIME,UPDATA_USER)
+		VALUES (null,#{accountId,jdbcType=NUMERIC},#{mediaId,jdbcType=VARCHAR},#{type,jdbcType=NUMERIC},#{status,jdbcType=NUMERIC}
+				,#{url,jdbcType=VARCHAR},SYSDATE(),#{createUser,jdbcType=NUMERIC},SYSDATE(),#{updateUser,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertArticleTemp" useGeneratedKeys="true" keyProperty="articleId" parameterType="com.xiaoshabao.wechat.entity.ArticleEntity">
+		INSERT INTO WX_ARTICLE_temp (ARTICLE_ID,ACCOUNT_ID,MEDIA_ID,TYPE,STATUS,URL,CREATE_TIME,CREATE_USER,UPDATE_TIME,UPDATA_USER)
+		VALUES (null,#{accountId,jdbcType=NUMERIC},#{mediaId,jdbcType=VARCHAR},#{type,jdbcType=NUMERIC},#{status,jdbcType=NUMERIC}
+				,#{url,jdbcType=VARCHAR},SYSDATE(),#{createUser,jdbcType=NUMERIC},SYSDATE(),#{updateUser,jdbcType=NUMERIC})
+	</insert>
 	
-	
-	
-	<select id="articleentityGetValues" resultType="com.xiaoshabao.wechat.entity.ArticleEntity"
-		parameterType="java.util.Map">
-		select a.article_id,a.account_id,a.title,a.create_time,a.create_user,a.update_time,a.updata_user,u.user_name
-		from wx_article a,wx_user_account b,td_m_user u
+	<update id="updateMedia">
+		UPDATE WX_ARTICLE SET MEDIA_ID=#{mediaId},URL=#{url} WHERE ARTICLE_ID=#{accountId}
+	</update>
+	<select id="getArticleById" resultType="com.xiaoshabao.wechat.dto.ArticleDetailDto">
+		select a.article_id,a.account_id,a.create_time,a.create_user,a.update_time,a.updata_user
+			,n.title 'news.title'
+			,n.content 'news.content'
+			,n.digest 'news.digest'
+			,n.show_cover_pic 'news.show_cover_pic'
+			,n.THUMB_MEDIA_ID 'news.THUMB_MEDIA_ID'
+		from wx_article a,wx_account b,td_m_depart t,wx_media_news n
 		<where>
 			a.account_id=b.account_id
-			and b.user_id=u.user_id
-			<if test="user_id != null and user_id !=''">
-				and b.user_id=#{user_id}
-			</if>
-		</where>
-		ORDER BY a.update_time desc
-	</select>
-	
-	<select id="articleentityGetOne" resultType="com.xiaoshabao.wechat.entity.ArticleEntity"
-		parameterType="java.util.Map">
-		select *
-		from wx_article a
-		<where>
-			<if test="article_id != null and article_id !=''">
-				and a.article_id=#{article_id}
-			</if>
+			and b.depart_id=t.depart_id
+			and a.media_id=n.media_id
+			and a.article_id=#{articleId}
 		</where>
 	</select>
 	
+	<select id="getImage" resultType="com.xiaoshabao.webframe.dto.ImageDto">
+		select a.media_id id,b.file_name text,b.url 
+		from wx_media a,td_s_file b
+		where a.file_id=b.file_id
+			and a.media_id=#{mediaId}
+	</select>
 	
-	<insert id="articleentityInsert"
-		parameterType="com.xiaoshabao.wechat.entity.ArticleEntity">
-		INSERT into wx_article (article_id,account_id,title,content,create_time,create_staff,update_time,updata_staff)
-			VALUES (null,#{account_id,jdbcType=NUMERIC},#{title,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},SYSDATE()
-			,#{create_staff,jdbcType=NUMERIC},SYSDATE(),#{update_staff,jdbcType=NUMERIC})
-	</insert>
 </mapper>

@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <p>暂时不提文本编辑器，你可以通过以下提供的网址来编辑文本内容，然后点击编辑器左上角的html按钮打开代码，然后将代码粘贴到下边的内容处。</p>
+                        <p>你可以通过下面提供的网址来编辑文本内容，然后将代码粘贴到下边的内容处。</p>
                         <p>编辑文本网址：<a href="http://www.lanrenmb.com/zhengtaomoban/###" target="_blank">http://www.lanrenmb.com/zhengtaomoban/###</a>
                         </p>
                     </div>
@@ -72,14 +72,14 @@
                                 <div class="col-sm-10">
                                 	<c:forEach var="r" items="${data.accounts}" varStatus="idx">
                                     <label class="radio-inline  i-checks">
-                                        <input type="radio" name="accountId" value=" ${r.accountId}"> ${r.appName}</label>
+                                        <input type="radio" name="accountId" value="${r.accountId}"> ${r.appName}</label>
                                     </c:forEach>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">标题：</label>
                                 <div class="col-sm-9">
-                                    <input id="title" name="title" minlength="4" type="text" class="form-control" required="" aria-required="true">
+                                    <input id="title" name="title" minlength="4" type="text" class="form-control" value="${data.news.title}" required="" aria-required="true">
                                 </div>
                             </div>
                              <div class="form-group">
@@ -87,10 +87,19 @@
                                 <div class="col-sm-9" id="thumb_media_id">
                                 </div>
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否显示封面</label>
+                                <div class="col-sm-10">
+                                    <label class="radio-inline  i-checks">
+                                        <input type="radio" name="showCoverPic" value="1"> 是</label>
+                                     <label class="radio-inline  i-checks">
+                                        <input type="radio" name="showCoverPic" value="0" checked="checked">否</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">摘要：</label>
                                 <div class="col-sm-9">
-                                    <input id="digest" name="digest" minlength="4" type="text" class="form-control" required="" aria-required="true">
+                                    <input id="digest" name="digest" minlength="4" type="text" value="${data.news.digest}" class="form-control" required="" aria-required="true">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -114,10 +123,21 @@
 	<cs:resource type="js" value="jquery,jqueryui,bootstrap,system,sweetalert,validate,icheck,ueditor,dimage" />
 	<script type="text/javascript">
 		$(document).ready(function() {
+			var valdata={};
+			var img_id='${data.image.id}';
+			var img_readonly=false;
+			if(img_id!=''){
+				valdata.id=img_id;
+				valdata.text='${data.image.text}';
+				valdata.url='${data.image.url}';
+				img_readonly=true;
+			}
 			//封面图片选择
 			$('#thumb_media_id').dimage({
 				name:'thumbMediaId',
 				element_id:'100001',
+				value:valdata,
+				readonly:img_readonly,
 				data:function(){
 					var data={};
 					var accountId= $("input[name='accountId']:checked").val();
@@ -137,17 +157,48 @@
 				}
 			});
 			//设置复选框样式
-			var box = $(":radio");
+			var box = $("input[name='accountId']");
 			if (box != null && box.length == 1) {
-				$(":radio").attr('checked', true);
+				 $("input[name='accountId']").attr('checked', true);
 			}
+			
+			
+			//实例化百度编辑器
+			var ue = UE.getEditor('editor');
+			//对编辑器的操作最好在编辑器ready之后再做
+			ue.ready(function() {
+				var content='${data.news.content}';
+				if(content!=''){
+					//设置编辑器的内容
+				    ue.setContent(content);
+				    ue.setDisabled();
+				}
+			});
+			//初始化值
+			var showCoverPic='${data.news.showCoverPic}';
+			if(showCoverPic!=''&&showCoverPic!=null){
+				var pics = $("input[name='showCoverPic']");
+				$('input[name="showCoverPic"]').each(function() {
+					var data = $(this).attr('value');
+					if (data == showCoverPic) {
+						$(this).attr('checked','checked');//  设置为默认选择的值
+					}else{
+						$(this).removeAttr('checked');
+					}
+					$(this).attr('disabled','disabled');
+				});
+				$("input[name='accountId']").attr('disabled', 'disabled');
+				$('#digest').attr('readonly',true);
+				$('#title').attr('readonly',true);
+				$('#saveBtn').attr('disabled',true);
+			}
+			
+			//美化表单
 			$(".i-checks").iCheck({
 				checkboxClass : "icheckbox_square-green",
 				radioClass : "iradio_square-green",
 			})
-
-			//实例化百度编辑器
-			var ue = UE.getEditor('editor');
+			
 
 			// 提交表单
 			$('#saveBtn').click(function() {
@@ -162,19 +213,19 @@
 				}, function() {
 					var fromdata = $("#commentForm").serialize();
 					$.ajax({
-						url : "articleAdd.html",
+						url : "./add.html",
 						type : "POST",
 						data : fromdata,
 						dataType : "json",
 					}).done(function(data) {
 						if (data.success) {
 							swal("操作成功!", "已成功保存数据！", "success");
-							window.location.href = './articleList.html';
+							window.location.href = './list.html';
 						} else {
 							swal("操作失败!", data.message, "error");
 						}
 					}).error(function(data) {
-						swal("OMG", "删除操作失败了!", "error");
+						swal("OMG", "操作失败了!", "error");
 					});
 				});
 			})
