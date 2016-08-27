@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.core.util.WeiXinReqService;
 import com.xiaoshabao.wechat.api.wxuser.model.UserBaseInfoGet;
 import com.xiaoshabao.wechat.api.wxuser.model.UserBaseInfoGetList;
@@ -21,35 +21,35 @@ public class UserAPI {
 	/**
 	 * 获得用户openId列表-拉取10000条数据
 	 * @param accessToken
-	 * @throws WexinReqException 
+	 * @throws WeixinReqException 
 	 */
-	public static UserOpenIDList getUserOpenIdList(String accessToken) throws WexinReqException{
+	public static UserOpenIDList getUserOpenIdList(String accessToken) throws WeixinReqException{
 		return getUserOpenIdList(accessToken,null,false);
 	}
 	/**
 	 * 获得用户openId列表-拉取10000条数据
 	 * @param accessToken
 	 * @param next_openid 第一个拉取的OPENID，不填默认从头开始拉取，有值时从此id的下一个id开始拉取
-	 * @throws WexinReqException 
+	 * @throws WeixinReqException 
 	 */
-	public static UserOpenIDList getUserOpenIdList(String accessToken,String next_openid) throws WexinReqException{
+	public static UserOpenIDList getUserOpenIdList(String accessToken,String next_openid) throws WeixinReqException{
 		return getUserOpenIdList(accessToken,next_openid,false);
 	}
 	/**
 	 * 获所有用户openId列表
 	 * @param accessToken
-	 * @throws WexinReqException 
+	 * @throws WeixinReqException 
 	 */
-	public static UserOpenIDList getUserOpenIdListAll(String accessToken) throws WexinReqException{
+	public static UserOpenIDList getUserOpenIdListAll(String accessToken) throws WeixinReqException{
 		return getUserOpenIdList(accessToken,null,true);
 	}
 	/**
 	 * 获得所有用户openId列表
 	 * @param accessToken
 	 * @param next_openid 第一个拉取的OPENID，不填默认从头开始拉取，有值时从此id的下一个id开始拉取
-	 * @throws WexinReqException 
+	 * @throws WeixinReqException 
 	 */
-	public static UserOpenIDList getUserOpenIdListAll(String accessToken,String next_openid) throws WexinReqException{
+	public static UserOpenIDList getUserOpenIdListAll(String accessToken,String next_openid) throws WeixinReqException{
 		return getUserOpenIdList(accessToken,next_openid,true);
 	}
 	/**
@@ -57,9 +57,9 @@ public class UserAPI {
 	 * @param accessToken 凭证
 	 * @param next_openid 第一个拉取的OPENID，不填默认从头开始拉取，有值时从此id的下一个id开始拉取
 	 * @param isAll 是否拉取全部，true全部
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static UserOpenIDList getUserOpenIdList(String accessToken,String next_openid,boolean isAll) throws WexinReqException{
+	public static UserOpenIDList getUserOpenIdList(String accessToken,String next_openid,boolean isAll) throws WeixinReqException{
 		UserListGet upload = new UserListGet();
 		upload.setNext_openid(next_openid);
 		upload.setAccess_token(accessToken);
@@ -100,9 +100,9 @@ public class UserAPI {
 	 * @param accessToken
 	 * @param openid
 	 * @param remark 新的备注名，长度必须小于30字符
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static void setUserRemark(String accessToken,String openid,String remark) throws WexinReqException{
+	public static void setUserRemark(String accessToken,String openid,String remark) throws WeixinReqException{
 		UserRemarkSet upload = new UserRemarkSet();
 		upload.setAccess_token(accessToken);
 		upload.setOpenid(openid);
@@ -116,9 +116,9 @@ public class UserAPI {
 	 * @param openid
 	 * @param lang	返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static UserBaseInfo getUserBaseInfo(String accessToken,String openid,String lang) throws WexinReqException{
+	public static UserBaseInfo getUserBaseInfo(String accessToken,String openid,String lang) throws WeixinReqException{
 		UserBaseInfoGet upload = new UserBaseInfoGet();
 		upload.setAccess_token(accessToken);
 		upload.setOpenid(openid);
@@ -132,9 +132,9 @@ public class UserAPI {
 	 * @param accessToken
 	 * @param list 用户列表，最大100
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static List<UserBaseInfo> getUserBaseInfoList(String accessToken,List<UserInfoGetBean> list) throws WexinReqException{
+	public static List<UserBaseInfo> getUserBaseInfoList(String accessToken,List<UserInfoGetBean> list) throws WeixinReqException{
 		UserBaseInfoGetList upload = new UserBaseInfoGetList();
 		upload.setAccess_token(accessToken);
 		upload.setUser_list(list);

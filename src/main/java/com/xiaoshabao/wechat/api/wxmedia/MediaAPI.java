@@ -7,7 +7,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.core.util.WeiXinReqService;
 import com.xiaoshabao.wechat.api.wxmedia.model.Article;
 import com.xiaoshabao.wechat.api.wxmedia.model.DelMedia;
@@ -49,10 +49,10 @@ public class MediaAPI {
 	 * @param fileNamePath
 	 *            上传的文件目录
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static UploadTempMediaResult uploadTempMedia(String accessToken, String type,
-			String fileNamePath) throws WexinReqException {
+			String fileNamePath) throws WeixinReqException {
 		UploadTempMedia uploadMedia = new UploadTempMedia();
 		uploadMedia.setAccess_token(accessToken);
 		uploadMedia.addFile(fileNamePath);
@@ -70,10 +70,10 @@ public class MediaAPI {
 	 * @param filePath
 	 *            路径格式为 E:\\test 无需加最后一个分割符号
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static DwonloadResult downTempMedia(String accessToken,
-			String media_id, String filePath) throws WexinReqException {
+			String media_id, String filePath) throws WeixinReqException {
 		DownloadTempMedia downloadMedia = new DownloadTempMedia();
 		downloadMedia.setAccess_token(accessToken);
 		downloadMedia.setFilePath(filePath);
@@ -94,10 +94,10 @@ public class MediaAPI {
 	 * @param fileNamePath
 	 *            上传的文件目录
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static UploadMediaResult uploadMedia(String accessToken, String type,
-			String fileNamePath) throws WexinReqException {
+			String fileNamePath) throws WeixinReqException {
 		UploadMedia upload = new UploadMedia();
 		upload.setAccess_token(accessToken);
 		upload.addFile(fileNamePath);
@@ -113,10 +113,10 @@ public class MediaAPI {
 	 * @param filePath
 	 *            上传文件路径
 	 * @return 图片URL地址
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static String uploadNewsImg(String accessToken, String filePath)
-			throws WexinReqException {
+			throws WeixinReqException {
 		UploadNewsImg upload = new UploadNewsImg();
 		upload.setAccess_token(accessToken);
 		upload.addFile(filePath);
@@ -129,10 +129,10 @@ public class MediaAPI {
 	 * @param accessToken 
 	 * @param articles 上传的文本列表
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static String uploadNews(String accessToken, List<Article> articles)
-			throws WexinReqException {
+			throws WeixinReqException {
 		UploadNews upload = new UploadNews();
 		upload.setAccess_token(accessToken);
 		upload.setArticles(articles);
@@ -145,10 +145,10 @@ public class MediaAPI {
 	 * @param accessToken 
 	 * @param articles 上传的文本列表
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static ArticleOneResult uploadNews(String accessToken, Article article)
-			throws WexinReqException {
+			throws WeixinReqException {
 		try {
 			List<Article> articles=new ArrayList<Article>();
 			articles.add(article);
@@ -160,14 +160,14 @@ public class MediaAPI {
 			NewsResult newsResult=downloadNews(accessToken,media_id);
 			ArticleResult articleResult=newsResult.getNews_item().get(0);
 			if(articleResult==null){
-				throw new WexinReqException("未正常获得图文消息");
+				throw new WeixinReqException("未正常获得图文消息");
 			}
 			ArticleOneResult oneresult=new ArticleOneResult();
 			BeanUtils.copyProperties(oneresult,articleResult);
 			oneresult.setMedia_id(media_id);
 			return oneresult;
 		} catch (Exception e) {
-			throw new WexinReqException(e);
+			throw new WeixinReqException(e);
 		} 
 	}
 	
@@ -176,10 +176,10 @@ public class MediaAPI {
 	 * @param accessToken 凭证
 	 * @param media_id 素材id
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static NewsResult downloadNews(String accessToken, String media_id)
-			throws WexinReqException {
+			throws WeixinReqException {
 		DownloadNews upload = new DownloadNews();
 		upload.setAccess_token(accessToken);
 		upload.setMedia_id(media_id);
@@ -193,10 +193,10 @@ public class MediaAPI {
 	 * @param media_id
 	 * @param filePath 响应文件后放到的目录
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static DwonloadResult downloadMeida(String accessToken, String media_id ,String filePath)
-			throws WexinReqException {
+			throws WeixinReqException {
 		DownloadMedia downloadMedia = new DownloadMedia();
 		downloadMedia.setAccess_token(accessToken);
 		downloadMedia.setFilePath(filePath);
@@ -210,10 +210,10 @@ public class MediaAPI {
 	 * 删除永久素材
 	 * @param accessToken
 	 * @param media_id
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static void delMeida(String accessToken, String media_id)
-			throws WexinReqException {
+			throws WeixinReqException {
 		DelMedia upload = new DelMedia();
 		upload.setAccess_token(accessToken);
 		upload.setMedia_id(media_id);
@@ -227,10 +227,10 @@ public class MediaAPI {
 	 * @param media_id 素材id
 	 * @param index 第几篇文章，第一篇为0
 	 * @param news
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static void updateNewsMeida(String accessToken,String media_id,Integer index,Article articles)
-			throws WexinReqException {
+			throws WeixinReqException {
 		UpdateNews upload = new UpdateNews();
 		upload.setAccess_token(accessToken);
 		upload.setIndex(index);
@@ -243,10 +243,10 @@ public class MediaAPI {
 	 * 获取永久数量
 	 * @param accessToken
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static MediaCountResult getMediaCount(String accessToken)
-			throws WexinReqException {
+			throws WeixinReqException {
 		MediaCount upload = new MediaCount();
 		upload.setAccess_token(accessToken);
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(
@@ -262,10 +262,10 @@ public class MediaAPI {
 	 * @param offset 从全部素材的该偏移位置开始返回，0表示从第一个素材 返回
 	 * @param count 返回素材的数量，取值在1到20之间
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static JSONObject getMediaList(String accessToken,String type,Integer offset,Integer count)
-			throws WexinReqException {
+			throws WeixinReqException {
 		MediaList upload = new MediaList();
 		upload.setAccess_token(accessToken);
 		upload.setType(type);
@@ -281,10 +281,10 @@ public class MediaAPI {
 	 * @param offset 从全部素材的该偏移位置开始返回，0表示从第一个素材 返回
 	 * @param count 返回素材的数量，取值在1到20之间
 	 * @return NewsMediaList 素材列表
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static NewsMediaList getMediaListByNews(String accessToken,Integer offset,Integer count)
-			throws WexinReqException {
+			throws WeixinReqException {
 		JSONObject result=getMediaList(accessToken,"news",offset,count);
 		return JSONObject.toJavaObject(result, NewsMediaList.class);
 	}
@@ -298,10 +298,10 @@ public class MediaAPI {
 	 * @param offset 从全部素材的该偏移位置开始返回，0表示从第一个素材 返回
 	 * @param count 返回素材的数量，取值在1到20之间
 	 * @return OthersMediaList 素材列表
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static OthersMediaList getMediaListByOthers(String accessToken,String type,Integer offset,Integer count)
-			throws WexinReqException {
+			throws WeixinReqException {
 		JSONObject result=getMediaList(accessToken,type,offset,count);
 		return JSONObject.toJavaObject(result, OthersMediaList.class);
 	}

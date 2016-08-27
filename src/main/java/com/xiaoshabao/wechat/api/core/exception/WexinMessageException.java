@@ -6,7 +6,7 @@ package com.xiaoshabao.wechat.api.core.exception;
  * 返回一些可知的异常信息
  * </p>
  */
-public class WexinMessageException extends WexinReqException {
+public class WexinMessageException extends WeixinReqException {
 
 	private static final long serialVersionUID = 1L;
 	

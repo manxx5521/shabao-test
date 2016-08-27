@@ -6,7 +6,7 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.core.util.WeiXinReqService;
 import com.xiaoshabao.wechat.api.wxmenu.model.Menu;
 import com.xiaoshabao.wechat.api.wxmenu.model.MenuCreate;
@@ -27,10 +27,10 @@ public class MenuAPI {
 	 * 创建菜单通过子继承的方式
 	 * @param accessToken
 	 * @param menu
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static void createMenu(String accessToken, Menu menu)
-			throws WexinReqException {
+			throws WeixinReqException {
 		menu.setAccess_token(accessToken);
 		WeiXinReqService.getInstance().doWeinxinReqJson(menu);
 	}
@@ -45,9 +45,9 @@ public class MenuAPI {
 		url	view类型必须	网页链接，用户点击菜单可打开链接，不超过256字节
 	 * @param accessToken
 	 * @param button  的json字符串
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static void createMenu(String accessToken,List<WeixinButton> button) throws WexinReqException{
+	public static void createMenu(String accessToken,List<WeixinButton> button) throws WeixinReqException{
 		MenuCreate m = new MenuCreate();
 		m.setAccess_token(accessToken);
 		m.setButton(button);
@@ -57,10 +57,10 @@ public class MenuAPI {
 	/**
 	 * 获取自定义菜单
 	 * @param accessToken
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
 	public static List<WeixinButton> getMenu(String accessToken)
-			throws WexinReqException {
+			throws WeixinReqException {
 		MenuGet upload=new MenuGet();
 		upload.setAccess_token(accessToken);
 		JSONObject result =WeiXinReqService.getInstance().doWeinxinReqJson(upload);
@@ -94,9 +94,9 @@ public class MenuAPI {
 	 * 删除所有的菜单
 	 * @param accessToken
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static void deleteMenu(String accessToken) throws WexinReqException{
+	public static void deleteMenu(String accessToken) throws WeixinReqException{
 		MenuDel upload = new MenuDel();
 		upload.setAccess_token(accessToken);
 		WeiXinReqService.getInstance().doWeinxinReqJson(upload);
@@ -107,9 +107,9 @@ public class MenuAPI {
 	 * 包括菜单是否使用，和key信息等
 	 * @param accessToken
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static CustomWeixinButtonConfig getMenuConfigure(String accessToken) throws WexinReqException{
+	public static CustomWeixinButtonConfig getMenuConfigure(String accessToken) throws WeixinReqException{
 		MenuConfigureGet cmcg = new MenuConfigureGet();
 		cmcg.setAccess_token(accessToken);
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(cmcg);

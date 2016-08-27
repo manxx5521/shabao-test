@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.core.util.WeiXinReqService;
 import com.xiaoshabao.wechat.api.wxbase.model.ServiceIP;
 
@@ -23,9 +23,9 @@ public class ServiceIpAPI {
 	 * 获取服务的ip列表信息
 	 * @param accessToke
 	 * @return 返回地址列表[101.226.62.77, 101.226.62.78, 101.226.62.79]
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static List<String> getServiceIpList(String accessToke) throws WexinReqException{
+	public static List<String> getServiceIpList(String accessToke) throws WeixinReqException{
 		ServiceIP param = new ServiceIP();
 		param.setAccess_token(accessToke);
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(param);

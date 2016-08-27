@@ -1,5 +1,10 @@
 package com.xiaoshabao.wechat.api.wxaccount.result;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
+
 /**
  * 微信请求二维码返回信息
  */
@@ -21,9 +26,17 @@ public class QrcodeResult {
 	/**
 	 * 二维码展现下载URL
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	public String getQRurl(){
-		return "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+ticket;
+		try {
+			String url = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+URLEncoder.encode(ticket,"utf-8");
+			return url;
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			throw new WeixinReqException("url解析失败",e);
+		}
+		
 	}
 
 	public String getTicket() {

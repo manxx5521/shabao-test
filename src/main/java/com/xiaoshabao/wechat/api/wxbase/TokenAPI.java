@@ -2,7 +2,7 @@ package com.xiaoshabao.wechat.api.wxbase;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.core.util.WeiXinReqService;
 import com.xiaoshabao.wechat.api.wxbase.model.AccessTokenReq;
 import com.xiaoshabao.wechat.api.wxbase.model.JSTokenReq;
@@ -17,9 +17,9 @@ public class TokenAPI {
 	 * @param appid
 	 * @param appscret
 	 * @return kY9Y9rfdcr8AEtYZ9gPaRUjIAuJBvXO5ZOnbv2PYFxox__uSUQcqOnaGYN1xc4N1rI7NDCaPm_0ysFYjRVnPwCJHE7v7uF_l1hI6qi6QBsA
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static String getAccessToken(String appid, String appscret) throws WexinReqException{
+	public static String getAccessToken(String appid, String appscret) throws WeixinReqException{
 		String newAccessToken = "";
 		AccessTokenReq atoken = new AccessTokenReq();
 		atoken.setAppid(appid);
@@ -34,9 +34,9 @@ public class TokenAPI {
 	 * @param appid
 	 * @param appscret
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static TokenResult getAccessTokenAll(String appid, String appscret) throws WexinReqException{
+	public static TokenResult getAccessTokenAll(String appid, String appscret) throws WeixinReqException{
 		AccessTokenReq atoken = new AccessTokenReq();
 		atoken.setAppid(appid);
 		atoken.setSecret(appscret);
@@ -52,9 +52,9 @@ public class TokenAPI {
 	 * @param appid
 	 * @param appscret
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static TokenResult getJSTokenAll(String accessToken) throws WexinReqException{
+	public static TokenResult getJSTokenAll(String accessToken) throws WeixinReqException{
 		JSTokenReq jstoken = new JSTokenReq();
 		jstoken.setAccess_token(accessToken);
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(jstoken);

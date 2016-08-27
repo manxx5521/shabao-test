@@ -3,7 +3,7 @@ package com.xiaoshabao.wechat.api.wxmessage;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.core.util.WeiXinReqService;
 import com.xiaoshabao.wechat.api.wxmedia.model.Article;
 import com.xiaoshabao.wechat.api.wxmessage.model.MessageFilter;
@@ -18,9 +18,9 @@ public class SendMessageAPI {
 	 * 上传群发图文消息素材
 	 * @param articles 图文消息，一个图文消息支持1到8条图文
 	 * @return
-	 * @throws WexinReqException 
+	 * @throws WeixinReqException 
 	 */
-	public static MessageUploadResult uploadNews(String accessToken,List<Article> articles) throws WexinReqException{
+	public static MessageUploadResult uploadNews(String accessToken,List<Article> articles) throws WeixinReqException{
 		MessageNews upload =new MessageNews();
 		upload.setAccess_token(accessToken);
 		upload.setArticles(articles);
@@ -34,9 +34,9 @@ public class SendMessageAPI {
 	 * @param media_id
 	 * @param group_id 要发送到的分组
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static NewsMessResult sendNewsMessByGroup(String accessToken,String media_id,String group_id) throws WexinReqException{
+	public static NewsMessResult sendNewsMessByGroup(String accessToken,String media_id,String group_id) throws WeixinReqException{
 		SendNewsByGroup upload =new SendNewsByGroup();
 		upload.setAccess_token(accessToken);
 		upload.setFilter(new MessageFilter (group_id));
@@ -52,9 +52,9 @@ public class SendMessageAPI {
 	 * @param content 文本内容
 	 * @param group_id 要发送到的组
 	 * @return msg_id 消息发送任务的ID
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static String sendMessTextByGroup(String accessToken,String content,String group_id) throws WexinReqException{
+	public static String sendMessTextByGroup(String accessToken,String content,String group_id) throws WeixinReqException{
 		SendTextByGroup upload =new SendTextByGroup();
 		upload.setAccess_token(accessToken);
 		upload.setFilter(new MessageFilter (group_id));

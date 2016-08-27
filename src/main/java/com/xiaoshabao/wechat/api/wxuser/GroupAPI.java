@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.core.util.WeiXinReqService;
 import com.xiaoshabao.wechat.api.wxuser.model.Group;
 import com.xiaoshabao.wechat.api.wxuser.model.GroupCreate;
@@ -27,9 +27,9 @@ public class GroupAPI {
 	 * @param accessToken
 	 * @param groupName 分组名字(30个字符以内)
 	 * @return GroupCreate 返回分组的id和name
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static GroupCreate createGroup(String accessToken ,String groupName ) throws WexinReqException{
+	public static GroupCreate createGroup(String accessToken ,String groupName ) throws WeixinReqException{
 		GroupCreate upload = new GroupCreate();
 		upload.setAccess_token(accessToken);
 		Group group = new Group();
@@ -43,9 +43,9 @@ public class GroupAPI {
 	 * 获取所有的分组信息
 	 * @param accessToken
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static List<Group> getGroup(String accessToken) throws WexinReqException{
+	public static List<Group> getGroup(String accessToken) throws WeixinReqException{
 		GroupGet upload = new GroupGet();
 		upload.setAccess_token(accessToken);
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(upload);
@@ -66,9 +66,9 @@ public class GroupAPI {
 	 * @param accessToken
 	 * @param openid
 	 * @return String 用户所在组的id
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static String getUserGroup(String accessToken,String openid) throws WexinReqException{
+	public static String getUserGroup(String accessToken,String openid) throws WeixinReqException{
 		GroupGetId g = new GroupGetId();
 		g.setAccess_token(accessToken);
 		g.setOpenid(openid);
@@ -83,9 +83,9 @@ public class GroupAPI {
 	 * @param accessToken
 	 * @param groupId
 	 * @param groupNewName 分组名(30个字符以内)
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static void updateGroup(String accessToken,String groupId,String groupNewName) throws WexinReqException{
+	public static void updateGroup(String accessToken,String groupId,String groupNewName) throws WeixinReqException{
 		GroupUpdate groupUpdate = new GroupUpdate();
 		groupUpdate.setAccess_token(accessToken);
 		Group g = new Group();
@@ -100,9 +100,9 @@ public class GroupAPI {
 	 * @param accessToken
 	 * @param openid
 	 * @param to_groupid
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static void moveUserGroup(String accessToken,String openid,String to_groupid) throws WexinReqException{
+	public static void moveUserGroup(String accessToken,String openid,String to_groupid) throws WeixinReqException{
 		GroupMoveUserById upload = new GroupMoveUserById();
 		upload.setAccess_token(accessToken);
 		upload.setOpenid(openid);
@@ -115,9 +115,9 @@ public class GroupAPI {
 	 * @param accessToken
 	 * @param openid_list
 	 * @param to_groupid
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static void moveUserGroup(String accessToken,List<String> openid_list,String to_groupid) throws WexinReqException{
+	public static void moveUserGroup(String accessToken,List<String> openid_list,String to_groupid) throws WeixinReqException{
 		GroupMoveUser upload = new GroupMoveUser();
 		upload.setAccess_token(accessToken);
 		upload.setOpenid_list(openid_list);
@@ -130,7 +130,7 @@ public class GroupAPI {
 	 * @param accessToken 访问凭证
 	 * @param deletegGroupid 删除的分组ID
 	 */
-	public static void deleteGroup(String accessToken,String deletegGroupid) throws WexinReqException{
+	public static void deleteGroup(String accessToken,String deletegGroupid) throws WeixinReqException{
 		GroupDelete group = new GroupDelete();
 		Group g = new Group();
 		g.setId(deletegGroupid);

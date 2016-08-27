@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.wechat.api.core.config.WeiXinConstant;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.core.handler.WeiXinReqHandler;
 import com.xiaoshabao.wechat.api.core.http.HttpClientManager;
 import com.xiaoshabao.wechat.api.core.req.WeixinReqConfig;
@@ -27,7 +27,7 @@ public class WeixinReqDefaultHandler implements WeiXinReqHandler {
 	 */
 	@Override
 	public String doRequest(WeixinReqParam weixinReqParam,WeixinReqConfig objConfig)
-			throws WexinReqException {
+			throws WeixinReqException {
 		logger.info("使用WeixinReqDefaultHandler 处理请求");
 		try {
 			String reqUrl = objConfig.getUrl();
@@ -68,7 +68,7 @@ public class WeixinReqDefaultHandler implements WeiXinReqHandler {
 			return HttpClientManager.getInstance().doGetSSL(reqUrl, params);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new WexinReqException("WeixinReqDefaultHandler 进行操作是出现未知异常");
+			throw new WeixinReqException("WeixinReqDefaultHandler 进行操作是出现未知异常");
 		}
 	}
 

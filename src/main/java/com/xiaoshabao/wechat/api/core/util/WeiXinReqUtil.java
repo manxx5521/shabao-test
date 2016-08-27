@@ -16,7 +16,7 @@ import org.jdom.input.SAXBuilder;
 
 import com.xiaoshabao.wechat.api.core.config.WechatApiConfig;
 import com.xiaoshabao.wechat.api.core.config.WeiXinConstant;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.core.handler.WeiXinReqHandler;
 import com.xiaoshabao.wechat.api.core.req.WeixinReqConfig;
 
@@ -69,10 +69,10 @@ public class WeiXinReqUtil {
 	 * @param configName
 	 * @throws JDOMException
 	 * @throws IOException
-	 * @throws WexinReqException 
+	 * @throws WeixinReqException 
 	 */
 	public static void initReqConfig(String configName) throws JDOMException,
-			IOException, WexinReqException {
+			IOException, WeixinReqException {
 		logger.debug("开始初始化weixin-reqconfig.xml文件");
 		try {
 			InputStream is = WeiXinReqService.class.getClassLoader()
@@ -111,7 +111,7 @@ public class WeiXinReqUtil {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new WexinReqException("解析weixin-reqconfig.xml 出现异常");
+			throw new WeixinReqException("解析weixin-reqconfig.xml 出现异常");
 		}
 		logger.debug("完成weixin-reqconfig.xml文件初始化");
 	}

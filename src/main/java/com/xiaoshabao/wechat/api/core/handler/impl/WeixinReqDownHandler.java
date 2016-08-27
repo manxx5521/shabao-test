@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.wechat.api.core.config.WeiXinConstant;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.core.handler.WeiXinReqHandler;
 import com.xiaoshabao.wechat.api.core.http.HttpClientManager;
 import com.xiaoshabao.wechat.api.core.req.WeixinDownParam;
@@ -23,7 +23,7 @@ public class WeixinReqDownHandler implements WeiXinReqHandler {
 	
 	@Override
 	public String doRequest(WeixinReqParam weixinReqParam,
-			WeixinReqConfig objConfig) throws WexinReqException {
+			WeixinReqConfig objConfig) throws WeixinReqException {
 		logger.info("使用WeixinReqDownHandler 下载文件文件");
 		try {
 			String method = objConfig.getMethod();
@@ -46,7 +46,7 @@ public class WeixinReqDownHandler implements WeiXinReqHandler {
 			}	
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new WexinReqException("WeixinReqDownHandler 进行操作是出现未知异常");
+			throw new WeixinReqException("WeixinReqDownHandler 进行操作是出现未知异常");
 		}
 	}
 
