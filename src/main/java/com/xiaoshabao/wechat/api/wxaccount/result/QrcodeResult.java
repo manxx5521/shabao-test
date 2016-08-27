@@ -17,7 +17,7 @@ public class QrcodeResult {
 	/**
 	 * 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天）。
 	 */
-	private String expire_seconds;
+	private Integer expire_seconds;
 	/**
 	 * 二维码图片解析后的地址，开发者可根据该地址自行生成需要的二维码图片
 	 */
@@ -47,13 +47,14 @@ public class QrcodeResult {
 		this.ticket = ticket;
 	}
 
-	public String getExpire_seconds() {
+	public Integer getExpire_seconds() {
 		return expire_seconds;
 	}
 
-	public void setExpire_seconds(String expire_seconds) {
+	public void setExpire_seconds(Integer expire_seconds) {
 		this.expire_seconds = expire_seconds;
 	}
+
 	/**
 	 * 二维码图片解析后的地址，开发者可根据该地址自行生成需要的二维码图片
 	 * @return
