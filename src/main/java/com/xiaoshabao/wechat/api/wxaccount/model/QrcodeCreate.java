@@ -2,6 +2,7 @@ package com.xiaoshabao.wechat.api.wxaccount.model;
 
 import com.xiaoshabao.wechat.api.core.annotation.ReqType;
 import com.xiaoshabao.wechat.api.core.req.WeixinReqParam;
+import com.xiaoshabao.wechat.api.wxaccount.AccountAPI;
 
 /**
  * 创建二维吗
@@ -14,7 +15,7 @@ public class QrcodeCreate extends WeixinReqParam {
 	/**
 	 * 二维码类型，QR_SCENE为临时,QR_LIMIT_SCENE为永久,QR_LIMIT_STR_SCENE为永久的字符串参数值
 	 */
-	private String action_name="QR_SCENE";
+	private String action_name=AccountAPI.QRCODE_TYPE_SCENE;
 	
 	private QrcodeActionInfo action_info;
 
