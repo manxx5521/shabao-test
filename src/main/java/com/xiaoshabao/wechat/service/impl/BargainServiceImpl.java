@@ -15,11 +15,16 @@ import com.xiaoshabao.baseframe.enums.ErrorEnum;
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.wechat.api.wxaccount.AccountAPI;
+import com.xiaoshabao.wechat.api.wxaccount.result.QrcodeResult;
 import com.xiaoshabao.wechat.component.ContextHolderWechat;
 import com.xiaoshabao.wechat.component.PosterWechatComponent;
+import com.xiaoshabao.wechat.component.TokenManager;
 import com.xiaoshabao.wechat.dao.BargainDao;
 import com.xiaoshabao.wechat.dao.BargainJoinDao;
 import com.xiaoshabao.wechat.dao.BargainSuccessDao;
+import com.xiaoshabao.wechat.dao.QrcodeDao;
+import com.xiaoshabao.wechat.dto.BargainAwardDto;
 import com.xiaoshabao.wechat.dto.BargainDto;
 import com.xiaoshabao.wechat.dto.BargainJoinInfo;
 import com.xiaoshabao.wechat.dto.BargainJoinResult;
@@ -27,7 +32,10 @@ import com.xiaoshabao.wechat.dto.BargainResult;
 import com.xiaoshabao.wechat.entity.BargainEntity;
 import com.xiaoshabao.wechat.entity.BargainJoinEntity;
 import com.xiaoshabao.wechat.entity.BargainSuccessEntity;
+import com.xiaoshabao.wechat.entity.QrcodeEntity;
+import com.xiaoshabao.wechat.entity.QrcodeRelEntity;
 import com.xiaoshabao.wechat.enums.ErrorWechatEnum;
+import com.xiaoshabao.wechat.enums.WechatType;
 import com.xiaoshabao.wechat.service.BargainService;
 
 /**
@@ -43,6 +51,10 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 	private PosterWechatComponent posterComponent;
 	@Autowired
 	private BargainJoinDao bargainJoinDao;
+	@Autowired
+	private QrcodeDao qrcodeDao;
+	@Resource(name="tokenManager")
+	private TokenManager tokenManager;
 	/**
 	 * 数据处理时间的差值
 	 */
@@ -73,6 +85,7 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 		}
 		result.setRankingList(bargainJoinDao.getBargainRanking(bargainId));
 		result.setPosters(posterComponent.getBargainPoset(bargainId));
+		result.setType("1");//设置为自己砍价
 		return result;
 	}
 	//执行砍价
@@ -138,6 +151,7 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 		result.setUsers(bargainSuccessDao.getBargainUser(joinId));
 		result.setRankingList(bargainJoinDao.getBargainRanking(result.getBargainId()));
 		result.setPosters(posterComponent.getBargainPoset(result.getBargainId()));
+		result.setType("2");//设置为分享砍价
 		return result;
 	}
 	
@@ -223,6 +237,49 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 			throw new ServiceException(ErrorWechatEnum.BARGAIN_NO_HAVE);
 		}
 		return bargain;
+	}
+	//获得兑奖二维码
+	@Override
+	@Transactional
+	public BargainAwardDto getAward(Integer joinId) {
+		BargainAwardDto awardDto=bargainJoinDao.getBargainAwardDto(joinId);
+		//有效
+		if(awardDto!=null&&awardDto.getFlag()==0){
+			return awardDto;
+		}
+		//无效重新换取
+		Integer accountId=ContextHolderWechat.getAccountId();
+		QrcodeRelEntity qrcodeRel=new QrcodeRelEntity();
+		qrcodeRel.setAccountId(accountId);
+		qrcodeRel.setType(WechatType.BARGAIN.getValue());
+		qrcodeRel.setParams(joinId.toString());
+		int i=qrcodeDao.insertQrcodeRel(qrcodeRel);
+		if(i<1){
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_QRCODE_ERRO);
+		}
+		String accessToken=tokenManager.getAccessToken(accountId).getAccessToken();
+		String expire_seconds="2592000";//有效时间
+		QrcodeResult qrcodeResult=AccountAPI.createQrcodeTemp(accessToken, joinId.toString(), expire_seconds);
+		QrcodeEntity qrcode=new QrcodeEntity();
+		qrcode.setQrcodeId(qrcodeRel.getQrcodeId());
+		qrcode.setDes("砍价兑换自动获取二维码");
+		qrcode.setActionName(AccountAPI.QRCODE_TYPE_SCENE);
+		qrcode.setSceneId(joinId.toString());
+		qrcode.setExpireSeconds(qrcodeResult.getExpire_seconds());
+		qrcode.setTicket(qrcodeResult.getTicket());
+		qrcode.setUrl(qrcodeResult.getUrl());
+		qrcode.setQrUrl(qrcodeResult.getQRurl());
+		i=qrcodeDao.insertQrcode(qrcode);
+		if(i<1){
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_QRCODE_ERRO);
+		}
+		i=bargainJoinDao.updateQrcodeId(joinId, qrcode.getQrcodeId());
+		if(i<1){
+			throw new ServiceException(ErrorWechatEnum.BARGAIN_QRCODE_ERRO);
+		}
+		awardDto.setQrcode(qrcode);
+		awardDto.setQrcodeId(qrcode.getQrcodeId());
+		return awardDto;
 	}
 
 }

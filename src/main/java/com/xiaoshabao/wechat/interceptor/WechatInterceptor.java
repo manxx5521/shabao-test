@@ -66,13 +66,14 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 			}
 			if(createSession){
 				String code = request.getParameter("code");
-				String scope=request.getParameter("scope");
+//				String scope=request.getParameter("scope");
 				String resultOpenid=null;
 				WechatSession userSession=new WechatSession();
 				AccessToken token=tokenManager.getAccessToken(Integer.valueOf(account));
 				JSONObject result=AuthAPI.getBaseInfoforJson(token.getAppid(), token.getAppsecret(), code);
+				String scope=result.getString("scope");
 				resultOpenid=result.getString("openid");
-				if(scope.equals("snsapi_userinfo")&&StringUtils.isNotEmpty(resultOpenid)){
+				if(StringUtils.isNotEmpty(resultOpenid)&&StringUtils.isNotEmpty(scope)&&scope.equals(AuthAPI.AUTHURL_SCOP_SNSAPI_USERINFO)){
 					JSONObject userJson=AuthAPI.getUserInfoForJson(resultOpenid, result.getString("access_token"));
 					if(StringUtils.isEmpty(userJson.getString("errcode"))||userJson.getString("errcode").equals("0")){
 						userSession.setNickname(userJson.getString("nickname"));

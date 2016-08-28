@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.xiaoshabao.baseframe.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframe.component.SysConfig;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 
 public class ResourceManager {
 	private static Logger logger = LoggerFactory.getLogger(ResourceManager.class);
@@ -25,9 +25,9 @@ public class ResourceManager {
 	 * 获取公共的调用处理
 	 * @param type 
 	 * @return
-	 * @throws WexinReqException
+	 * @throws WeixinReqException
 	 */
-	public static ResourceManager getInstance() throws WexinReqException {
+	public static ResourceManager getInstance() throws WeixinReqException {
 		if (instance == null) {
 			// 同步块，线程安全的创建实例
 			synchronized (ResourceManager.class) {

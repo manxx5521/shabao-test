@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.wechat.dto.BargainAwardDto;
 import com.xiaoshabao.wechat.dto.BargainResult;
 import com.xiaoshabao.wechat.entity.BargainEntity;
 import com.xiaoshabao.wechat.service.BargainService;
@@ -80,5 +81,14 @@ public class BargainController {
 		model.put("data", result);
 		return new ModelAndView("/wechat/bargain/"+result.getTemplate()+"/detail");
 	}
-
+	
+	/**
+	 * 获得兑奖二维码
+	 */
+	@RequestMapping("/wechat/bargain/{joinId}/award")
+	public ModelAndView getAward(ModelMap model,@PathVariable("joinId")Integer joinId){
+		BargainAwardDto result=bargainService.getAward(joinId);
+		model.put("data", result);
+		return new ModelAndView("/wechat/bargain/"+result.getTemplate()+"/qrcode");
+	}
 }

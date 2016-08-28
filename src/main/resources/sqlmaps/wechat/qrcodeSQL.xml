@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.wechat.dao.QrcodeDao">
+	<insert id="insertQrcodeRel" useGeneratedKeys="true" keyProperty="qrcodeId">
+  	INSERT INTO wx_qrcode_rel(qrcode_id,account_id,type,params)
+	VALUES(NULL,#{accountId,jdbcType=NUMERIC},#{type,jdbcType=VARCHAR},#{params,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertQrcode">
+  	INSERT INTO wx_qrcode(qrcode_id,des,action_name,scene_id,scene_str,expire_seconds,ticket,url,qr_url,create_time)
+	VALUES(#{qrcodeId,jdbcType=NUMERIC},#{des,jdbcType=VARCHAR},#{actionName,jdbcType=VARCHAR},#{sceneId,jdbcType=VARCHAR},
+			#{sceneStr,jdbcType=VARCHAR},#{expireSeconds,jdbcType=NUMERIC},#{ticket,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},
+			#{qrUrl,jdbcType=VARCHAR},sysdate())
+	</insert>
+</mapper>

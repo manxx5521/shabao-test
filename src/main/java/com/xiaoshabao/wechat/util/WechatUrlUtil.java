@@ -35,7 +35,7 @@ public class WechatUrlUtil {
 	
 	@Test
 	public void test(){
-		String s=getAuthURL_base("http://shabao.tunnel.qydev.com","/shabao-test/wechat/bargain/11221111/bargain");
+		String s=getAuthURL_base("http://shabao.tunnel.qydev.com","/shabao-test/wechat/scanqr/exchange/bargain/10000/init");
 		System.out.println(s);
 	}
 }

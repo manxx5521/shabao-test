@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.wxbase.ServiceIpAPI;
 
 
@@ -25,7 +25,7 @@ public class ServiceIpAPITest {
 		try {
 			List<String> s = ServiceIpAPI.getServiceIpList(accessToken);
 			System.out.println(s);
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 		}
 	}

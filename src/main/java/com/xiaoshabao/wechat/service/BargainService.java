@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframe.service.AbstractService;
 import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.wechat.dto.BargainAwardDto;
 import com.xiaoshabao.wechat.dto.BargainResult;
 import com.xiaoshabao.wechat.entity.BargainEntity;
 /**
@@ -42,5 +43,11 @@ public interface BargainService extends AbstractService {
 	 * @return
 	 */
 	public BargainEntity getDetail(Integer bargainId);
+	/**
+	 * 获得兑奖二维码
+	 * @param bargainId
+	 * @return
+	 */
+	public BargainAwardDto getAward(Integer joinId);
 
 }

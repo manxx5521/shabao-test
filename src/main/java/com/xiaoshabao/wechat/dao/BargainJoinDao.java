@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.xiaoshabao.wechat.dto.BargainAwardDto;
 import com.xiaoshabao.wechat.dto.BargainJoinInfo;
 import com.xiaoshabao.wechat.dto.BargainJoinResult;
 import com.xiaoshabao.wechat.dto.BargainRankingDto;
@@ -53,6 +54,20 @@ public interface BargainJoinDao {
 	 * @return
 	 */
 	public int updateBargainInfo(@Param("price")int price,@Param("joinId")Integer joinId);
+	
+	/**
+	 * 获得兑奖信息
+	 * @param joinId
+	 * @return
+	 */
+	public BargainAwardDto getBargainAwardDto(Integer joinId);
+	/**
+	 * 更新兑换二维码信息
+	 * @param joinId
+	 * @param qrcodeId
+	 * @return
+	 */
+	public int updateQrcodeId(@Param("joinId")Integer joinId,@Param("qrcodeId")Integer qrcodeId);
 	
 	
 }

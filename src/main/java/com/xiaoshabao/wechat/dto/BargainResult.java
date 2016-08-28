@@ -36,6 +36,10 @@ public class BargainResult extends BargainEntity {
 	 * 1-砍过
 	 */
 	private Integer bargainStatus;
+	/**
+	 * 类型1自己砍价，2分享砍价
+	 */
+	private String type;
 	
 	public List<PosterDto> getPosters() {
 		return posters;
@@ -84,6 +88,14 @@ public class BargainResult extends BargainEntity {
 
 	public void setBargainStatus(Integer bargainStatus) {
 		this.bargainStatus = bargainStatus;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

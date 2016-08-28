@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.wxbase.TokenAPI;
 
 /**
@@ -12,7 +12,9 @@ import com.xiaoshabao.wechat.api.wxbase.TokenAPI;
  */
 public class TokenAPITest{
 	
-	public final static String accessToken="MbJfaF3sNlgOSA_X_MFRZSDmOkVgVT7elrixj4_ZekDmoFWgnMEt5xpJI_X-ker0Mt9vRxfH8LfvqbmNkCAnxmqbgaIy35l17bqHpLJVuNOQ57EZexAnyv_odgp-blXvVJBjAFAOCU";
+	public final static String accessToken="bNsD-oFrn6Q43R0ANLR-2uzojZGEnuhjO4l4y3wKqzMmo9Y7a2uIGKuuQop8LN1fQb9FPilyRo57tsp-4vO0ycHOuALt4bAKJceXl9SWMCUVCZiAEAJQN";
+	public final static String appid="wx07e34f9575809866";
+	public final static String appscret="d8c5dae813951b0c31599c1a8aebf410";
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -24,10 +26,10 @@ public class TokenAPITest{
 	@Test
 	public void testGetAccessToken() throws Exception {
 		try {
-			String s = TokenAPI.getAccessToken("wx07e34f9575809866","d8c5dae813951b0c31599c1a8aebf410"); //自己
+			String s = TokenAPI.getAccessToken(appid,appscret); //自己
 			System.out.println(s);
 			//i4NLqMizqTXaDLmD6m397hj1XTQfRFcRASb3HMi8TbLTvBS9wuKKvFf1fXWUB9mMjfw3fJNPwqoHIFTY3NVmDAgRJCz8Kx1tFEOxGmv3ydSkdCXCDZDZIdP695nUw0-bCHKiAHAWBE
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception();
 		}
@@ -37,7 +39,7 @@ public class TokenAPITest{
 		try {
 			String s = TokenAPI.getJSTokenAll(accessToken).getToken(); 
 			System.out.println(s);
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception();
 		}

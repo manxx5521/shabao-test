@@ -20,6 +20,8 @@ public class BargainJoinEntity {
 	private Integer bargainPrice;
 	/** 当前砍价的次数 */
 	private Integer bargainNum;
+	/** 兑奖时对应的二维码id **/
+	private Integer qrcodeId;
 	/** 参加活动时间 **/
 	private Date createTime;
 	/** 更新时间 **/
@@ -79,4 +81,11 @@ public class BargainJoinEntity {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	public Integer getQrcodeId() {
+		return qrcodeId;
+	}
+	public void setQrcodeId(Integer qrcodeId) {
+		this.qrcodeId = qrcodeId;
+	}
+ 	
 }

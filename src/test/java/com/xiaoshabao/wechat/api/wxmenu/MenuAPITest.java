@@ -40,7 +40,7 @@ public class MenuAPITest {
 			CommonButton btn21=new CommonButton();
 			btn21.setName("砍价测试");
 			btn21.setType(MenuType.VIEW);
-			btn21.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fshabao.tunnel.qydev.com%2Fshabao-test%2Fwechat%2Fbargain%2F11221111%2Fbargain&response_type=code&scope=snsapi_base&state=100001#wechat_redirect");
+			btn21.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fshabao.tunnel.qydev.com%2Fshabao-test%2Fwechat%2Fbargain%2F11221111%2Fbargain&response_type=code&scope=snsapi_userinfo&state=100001#wechat_redirect");
 			CommonButton btn22=new CommonButton();
 			btn22.setName("文章测试");
 			btn22.setType(MenuType.VIEW);

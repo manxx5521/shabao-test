@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
-import com.xiaoshabao.wechat.api.core.exception.WexinReqException;
+import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 import com.xiaoshabao.wechat.api.wxbase.TokenAPITest;
 import com.xiaoshabao.wechat.api.wxmedia.MediaAPI;
 import com.xiaoshabao.wechat.api.wxmedia.MediaType;
@@ -42,7 +42,7 @@ public class MediaAPITest {
 		try {
 			UploadTempMediaResult bean=MediaAPI.uploadTempMedia(accessToken, MediaType.IMAGE, "E:\\test\\img01.jpg");
 			System.out.println(JSON.toJSON(bean));
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
@@ -58,7 +58,7 @@ public class MediaAPITest {
 			DwonloadResult bean=MediaAPI.downTempMedia(accessToken, "h52d9ii11NC1O9ri6hlFuVW5BSeFDypBsPdl8D8PdAgRg_UCLCUZpUyEugbnumNI", "E:\\test");
 			System.out.println("FileName:"+bean.getFileName());
 			System.out.println("Filepath:"+bean.getFilePath());
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
@@ -74,7 +74,7 @@ public class MediaAPITest {
 			System.out.println("结果:"+JSON.toJSONString(result));
 			//ADqYlnhfHd--TyuNuo0S1SlEARy9hns-9djP8hB1Fmc
 			//https://mmbiz.qlogo.cn/mmbiz/BibYy0opVNUpBx21a13hKe5RwlWd6OicQ5tXpgfu4nkPnD48n6Py45AMpRDIfmgnebnap0ZV6ibkY97oaSfsOJicPA/0?wx_fmt=jpeg
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
@@ -90,7 +90,7 @@ public class MediaAPITest {
 			 String url=MediaAPI.uploadNewsImg(accessToken,"E:\\test\\img01.jpg");
 			System.out.println("图片地址为:"+url);
 			// http://mmbiz.qpic.cn/mmbiz/BibYy0opVNUoJxJXdQf9b51YFJxv2JEradEbQa5DtuMJv2ms3e4HAB9APsNsmQ8hicEfibfXGCibCok8NLiaLDE5t2A/0
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
@@ -115,7 +115,7 @@ public class MediaAPITest {
 			String media_id=MediaAPI.uploadNews(accessToken, articles);
 			System.out.println("图文素材media_id:"+media_id);
 			//ZN4l8BsTy1QPTKABBI2PzWN_B8Icx30a5-yz0UaxdMc
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
@@ -127,7 +127,7 @@ public class MediaAPITest {
 		try {
 			NewsResult bean=MediaAPI.downloadNews(accessToken, "QPreUSwRXnLnMqsVubaUJunmkMq5r7TuLnp0-IvuQ_0");
 			System.out.println("图文消息:"+JSON.toJSONString(bean));
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
@@ -140,7 +140,7 @@ public class MediaAPITest {
 			DwonloadResult bean=MediaAPI.downloadMeida(accessToken, "QPreUSwRXnLnMqsVubaUJrN14BP-GaDF0bgc3BkBTYk", "E:\\test");
 			System.out.println("FileName:"+bean.getFileName());
 			System.out.println("Filepath:"+bean.getFilePath());
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
@@ -153,7 +153,7 @@ public class MediaAPITest {
 			MediaAPI.delMeida(accessToken,
 					"DarxYfQt2Ef4ZS-jgrbGzO9Mc8L_gqH0p1xvA_yPXAs");
 			System.out.println("测试通过");
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
@@ -173,7 +173,7 @@ public class MediaAPITest {
 			a1.setContent_source_url("hh");
 			MediaAPI.updateNewsMeida(accessToken,"ZN4l8BsTy1QPTKABBI2PzeJrPPPNrLByUEHnSyvMhEs",0 , a1);
 			System.out.println("测试通过");
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
@@ -185,7 +185,7 @@ public class MediaAPITest {
 		try {
 			MediaCountResult result=MediaAPI.getMediaCount(accessToken);
 			System.out.println("结果:"+JSON.toJSONString(result));
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
@@ -197,7 +197,7 @@ public class MediaAPITest {
 		try {
 			NewsMediaList result = MediaAPI.getMediaListByNews(accessToken, 0, 20);
 			System.out.println("结果:" + JSON.toJSONString(result));
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
@@ -209,7 +209,7 @@ public class MediaAPITest {
 		try {
 			OthersMediaList result = MediaAPI.getMediaListByOthers(accessToken,MediaType.IMAGE, 0,20);
 			System.out.println("结果:" + JSON.toJSONString(result));
-		} catch (WexinReqException e) {
+		} catch (WeixinReqException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}

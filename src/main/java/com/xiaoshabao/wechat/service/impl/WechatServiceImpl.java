@@ -1,6 +1,5 @@
 package com.xiaoshabao.wechat.service.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -12,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
-import com.xiaoshabao.wechat.bean.message.Article;
-import com.xiaoshabao.wechat.bean.message.NewsMessage;
+import com.xiaoshabao.webframe.component.TemplateEngine;
 import com.xiaoshabao.wechat.bean.message.TextMessage;
 import com.xiaoshabao.wechat.dao.AccountDao;
+import com.xiaoshabao.wechat.dao.ReturnMessageDao;
 import com.xiaoshabao.wechat.dao.SubscriberDao;
+import com.xiaoshabao.wechat.dto.ReturnMessageDto;
 import com.xiaoshabao.wechat.entity.AccountEntity;
 import com.xiaoshabao.wechat.entity.SubscriberEntity;
 import com.xiaoshabao.wechat.service.WechatService;
@@ -31,6 +31,10 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 	private AccountDao accountDao;
 	@Autowired
 	private SubscriberDao subscriberDao;
+	@Autowired
+	private ReturnMessageDao returnMessageDao;
+	/** 默认回复 */
+	private String returnMessage="success";
 	/**
 	 * 请求的系统帐号id
 	 */
@@ -84,16 +88,10 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 		// 消息类型
 		String msgType = requestMap.get("MsgType");
 
-		AccountEntity account = accountDao.getAccountById(uid);
-		if (StringUtils.isEmpty(account.getAppid())) {
-			logger.info("用户" + uid + "接入失败，数据库未取到相应信息！");
-			return "error";
-		}
-
 		// 文本消息
 		if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
 			result = this.textService(fromUserName, toUserName,
-					requestMap.get("Content"));
+					requestMap.get("Content"),requestMap);
 		}
 		// 事件推送
 		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
@@ -108,6 +106,11 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 			}
 		} else {
 			result = this.defaultService(fromUserName, toUserName);
+		}
+		AccountEntity account = accountDao.getAccountById(uid);
+		if (StringUtils.isEmpty(account.getAppid())) {
+			logger.info("用户" + uid + "接入失败，数据库未取到相应信息！");
+			return "error";
 		}
 		if (StringUtils.isNotEmpty(account.getEncodingAESKey())) {
 			try {
@@ -124,10 +127,42 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 		}
 		return result;
 	}
-
+	/**
+	 * 回复文本消息
+	 * @param fromUserName 发送方openid
+	 * @param toUserName
+	 * @param content 输入内容
+	 * @return
+	 */
 	public String textService(String fromUserName, String toUserName,
-			String content) {
-		String respMessage = null;
+			String content,Map<String, String> requestMap) {
+		ReturnMessageDto messageDto=returnMessageDao.getReturnMessageDto(fromUserName, content);
+		if(messageDto==null){
+			return this.returnMessage;
+		}
+		int type=messageDto.getTemplate().getType();
+		//文本处理
+		if(type==1){
+			TextMessage textMessage = new TextMessage();
+			textMessage.setToUserName(fromUserName);
+			textMessage.setFromUserName(toUserName);
+			textMessage.setCreateTime(new Date().getTime());
+			textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+			textMessage.setFuncFlag(0);
+			//由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义
+			textMessage.setContent(messageDto.getTemplate().getParams());
+			return MessageUtil.textMessageToXml(textMessage);
+			
+		//自定义通过freemarker
+		}else if(type==9){
+			requestMap.put("content", messageDto.getContent());
+			requestMap.put("accountId", messageDto.getAccountId().toString());
+			String result=TemplateEngine.renderTemplate("returnMessage"+messageDto.getTemplateId(), messageDto.getTemplate().getParams(), requestMap);
+			return result;
+		}else{
+			return this.returnMessage;
+		}
+		/*
 		// 接收用户发送的文本消息内容
 		List<Article> articleList = new ArrayList<Article>();
 		// 单图文消息
@@ -155,9 +190,11 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 			// 将图文消息对象转换成xml字符串
 			respMessage = MessageUtil.newsMessageToXml(newsMessage);
 		} else {
-			respMessage = defaultService(fromUserName, toUserName);
+			//respMessage = defaultService(fromUserName, toUserName);
+			respMessage="success";
 		}
 		return respMessage;
+		*/
 	}
 
 	// 事件推送
@@ -234,7 +271,8 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 		contentMsg.append("10 Q友圈").append("\n\n");
 		textMessage.setContent(contentMsg.toString());
 		// 将文本消息对象转换成xml字符串
-		return MessageUtil.textMessageToXml(textMessage);
+//		return MessageUtil.textMessageToXml(textMessage);
+		return "success";
 	}
 
 	// 发送文本信息

@@ -12,6 +12,7 @@ WeixinReqDownHandler:可以设置方法method="get"。
 	<req key="jstoken" dataType="String" url="https://api.weixin.qq.com/cgi-bin/ticket/getticket?1=1"></req>
 	<req key="getcallbackip" des="服务器地址" url="https://api.weixin.qq.com/cgi-bin/getcallbackip?1=1"></req>
 	<!-- auth2.0授权-->
+	<req key="authUrl" des="授权" dataType="String" url="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&amp;redirect_uri=REDIRECT_URI&amp;response_type=code&amp;scope=SCOPE&amp;state=STATE#wechat_redirect"></req>
 	<req key="authBaseInfo" des="获得基本信息" dataType="String" url="https://api.weixin.qq.com/sns/oauth2/access_token?1=1"></req>
 	<req key="getUserInfo" des="获得用户信息" dataType="String" url="https://api.weixin.qq.com/sns/userinfo?lang=zh_CN"></req>
 	<!-- 素材接口 -->

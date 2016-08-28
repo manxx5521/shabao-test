@@ -17,6 +17,8 @@ public enum ErrorWechatEnum implements ErrorInterface{
 	BARGAIN_MIN_PRICE(9015,"当前价格已经是最小价格不能砍价了"),
 	/** 重复砍价 */
 	BARGAIN_REPEAT(9016,"你已经参加过本次砍价了"),
+	/** 二维码解析错误*/
+	BARGAIN_QRCODE_ERRO(9017,"二维码解析错误"),
 	
 	/** 未能正常获得文章信息 */
 	ARTICLE_NO(9020,"未能正常获得文章信息"),

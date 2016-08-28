@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.wechat.dao.ReturnMessageDao">
+	<select id="getReturnMessageDto" resultType="com.xiaoshabao.wechat.dto.ReturnMessageDto">
+		select
+			a.message_id
+			,a.account_id
+			,a.template_id
+			,a.content
+			,a.update_time
+			,a.update_user
+			,a.order_no
+			,t.template_id 'template.templateId'
+			,t.type 'template.type'
+			,t.des 'template.des'
+			,t.params 'template.params'
+			,t.update_user 'template.updateUser'
+			,t.update_time 'template.updateTime'
+		from wx_return_message a,wx_subscriber b,wx_return_template t
+		where a.account_id=b.account_id
+				and a.template_id=t.template_id
+				and b.openid=#{openid}
+				and a.content=#{content}
+		order by a.order_no
+		limit 1
+	</select>
+</mapper>

@@ -134,7 +134,9 @@ paginationClickable: true
 	<div class="content">
 		<div class="bargain clearfix">
 			<div class="bargain_img">
-				<img src="${ctx}/resources/wechat/upload/bargain/${data.info.portrait}">
+				<c:if test="${ empty wechat.portrait}"><img src="${ctx}/resources/wechat/upload/bargain/${data.info.portrait}"></c:if>
+				<c:if test="${ !empty wechat.portrait}"><img src="${wechat.portrait}"></c:if>
+				
 			</div>
 			<div class="bargain_content">
 				<h1>${data.info.nickname}</h1>
@@ -238,12 +240,28 @@ paginationClickable: true
 			</div>
 		</div>
 	</div>
+	<div class="weui_dialog_confirm" style="display: none;">
+		<div class="weui_mask"></div>
+		<div class="weui_dialog">
+			<div class="weui_dialog_hd">
+				<strong class="weui_dialog_title">提示</strong>
+			</div>
+			<div class="weui_dialog_bd">是否现在就去兑换商品？</div>
+			<div class="weui_dialog_ft">
+				<a href="javascript:void(0);" class="weui_btn_dialog default" onclick="$('.weui_dialog_confirm').hide();$('#lean_overlay').css('display','');">否</a> 
+				<a href="javascript:void(0);" class="weui_btn_dialog primary">是</a>
+			</div>
+		</div>
+	</div>
 	<!-- 微信弹窗 end-->
 	<script>
 	var bargain={
 		openid:'${wechat.openid}',
 		bargainId:'${data.bargainId}',
-		joinId:'${joinId}'
+		joinId:'${data.info.joinUser.joinId}',
+		bargainStatus:'${data.bargainStatus}',
+		type:'${data.type}', //1自己砍价，2分享砍价
+		sharejoinId:'${joinId}' //分享时用
 	}
 $(document).ready(function(){
 	tab(".activity_title li", ".acticity_list > ul > li", "curn");
@@ -256,41 +274,52 @@ $(document).ready(function(){
 		});
 	});
 	
-	$('#modaltrigger_notice').click(function(){
-		if(bargain.openid==''){
-			$('.weui_dialog_bd').html('请先关注再参加活动！')
-			$('.weui_dialog_alert').show();
-			return false;
-		}
-		var url=window.webroot+'/wechat/bargain/';
-		if(bargain.joinId==''){
-			url+=bargain.bargainId+'/exeBargain';
-		}else{
-			url+=bargain.joinId+'/exeShareBargain';
-		}
-		$.ajax({
-			  type: 'POST',
-			  url: url,
-			  data: {},
-			  dataType:"json",
-			  success: function(result){
-				  if(result.success){
-					  if(result.message=='true'){
-						  $('.bargain_banner > span').html('￥'+result.data.bargainPrice);
-						  notwinning();
-					  }else{
-						  $('#moeny_num').html(result.data.bargainNum);
-						  $('#moeny_price').html('￥'+result.data.bargainPrice+'元');
-						  winning();
-					  }
-				  }else{
-					  $('.weui_dialog_bd').html(result.message)
-						$('.weui_dialog_alert').show(); 
-				  }
-			 }
+	if(bargain.type=='1'&&bargain.bargainStatus=="1"){
+		$('#modaltrigger_notice :button').html('兑奖');
+		$('.weui_dialog_confirm .primary').click(function() {
+			 window.location.href = window.webroot+'/wechat/bargain/'+bargain.joinId+'/award';
 		});
-		
-	});
+		$('#modaltrigger_notice').click(function(){
+			$('.weui_dialog_confirm').show();
+		});
+	}else{
+		$('#modaltrigger_notice').click(function(){
+			if(bargain.openid==''){
+				$('.weui_dialog_bd').html('请先关注再参加活动！')
+				$('.weui_dialog_alert').show();
+				return false;
+			}
+			var url=window.webroot+'/wechat/bargain/';
+			if(bargain.joinId==''){
+				url+=bargain.bargainId+'/exeBargain';
+			}else{
+				url+=bargain.sharejoinId+'/exeShareBargain';
+			}
+			$.ajax({
+				  type: 'POST',
+				  url: url,
+				  data: {},
+				  dataType:"json",
+				  success: function(result){
+					  if(result.success){
+						  if(result.message=='true'){
+							  $('.bargain_banner > span').html('￥'+result.data.bargainPrice);
+							  notwinning();
+						  }else{
+							  $('#moeny_num').html(result.data.bargainNum);
+							  $('#moeny_price').html('￥'+result.data.bargainPrice+'元');
+							  winning();
+						  }
+					  }else{
+						  $('.weui_dialog_bd').html(result.message)
+							$('.weui_dialog_alert').show(); 
+					  }
+				 }
+			});
+			
+		});
+	}
+	
 });
 	
 	//弹窗设置

@@ -107,4 +107,47 @@
 		WHERE join_id=#{joinId}
 	</update>
 	
+	<!--兑奖二维码信息-->
+	<select id="getBargainAwardDto" resultType="com.xiaoshabao.wechat.dto.BargainAwardDto">
+		<![CDATA[ 
+		select a.*,
+			tm.expire_seconds 'qrcode.expireSeconds',
+			tm.create_time 'qrcode.createTime',
+			tm.ticket 'qrcode.ticket',
+			tm.url 'qrcode.url',
+			tm.des 'qrcode.des',
+			tm.action_name 'qrcode.actionName',
+			IFNULL(DATE_ADD(tm.create_time,INTERVAL 2592000-20000 SECOND)<SYSDATE(),1) flag
+		from (select t1.*,t2.template from wx_bargain_join t1,wx_bargain t2 
+				where t1.bargain_id=t2.bargain_id and t1.join_id=#{joinId}) a
+		LEFT JOIN (select b.* from wx_qrcode b,wx_qrcode_rel n where b.qrcode_id=n.qrcode_id) tm
+		on a.qrcode_id=tm.qrcode_id
+		where 1=1
+		and a.join_id=#{joinId}
+		]]>
+	</select>
+	<select id="getBargainAwardDto_1" resultType="com.xiaoshabao.wechat.dto.BargainAwardDto">
+		<![CDATA[ 
+		select a.*,
+			b.expire_seconds 'qrcode.expireSeconds',
+			b.create_time 'qrcode.createTime',
+			b.ticket 'qrcode.ticket',
+			b.url 'qrcode.url',
+			b.des 'qrcode.des',
+			b.action_name 'qrcode.actionName',
+			t.template,
+			DATE_ADD(b.create_time,INTERVAL 2592000-20000 SECOND)<SYSDATE() flag
+		from wx_bargain_join a,wx_qrcode b,wx_bargain t,wx_qrcode_rel n
+		where a.qrcode_id=n.qrcode_id
+		and b.qrcode_id=n.qrcode_id
+		and a.bargain_id=t.bargain_id
+		and a.join_id=#{joinId}
+		]]>
+	</select>
+	<!--更新兑奖二维码信息-->
+	<update id="updateQrcodeId">
+		UPDATE wx_bargain_join 
+			SET qrcode_id=#{qrcodeId}
+		WHERE join_id=#{joinId}
+	</update>
 </mapper>
