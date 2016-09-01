@@ -29,7 +29,7 @@ public class PosterWechatComponent extends PosterComponent{
 	/**
 	 * 获得微信砍价海报
 	 */
-	public List<PosterDto> getBargainPoset(Integer bargainid){
-		return  getWchatPoset(WechatType.BARGAIN, bargainid.toString());
+	public List<PosterDto> getBargainPoset(Integer bargainId){
+		return  getWchatPoset(WechatType.BARGAIN, bargainId.toString());
 	}
 }
