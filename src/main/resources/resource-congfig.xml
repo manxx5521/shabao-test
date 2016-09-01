@@ -49,6 +49,11 @@
 	<js key="ueditor" des="编辑器" src="${ctx}/resources/plugins/ueditor/ueditor.config.js" />
 	<js key="ueditor" src="${ctx}/resources/plugins/ueditor/ueditor.all.min.js" />
 	<js key="ueditor" src="${ctx}/resources/plugins/ueditor/lang/zh-cn/zh-cn.js" />
+	<css key="fileinput" des="文件上传" src="${ctx}/resources/plugins/fileinput/css/fileinput.min.css" />
+	<js key="fileinput" src="${ctx}/resources/plugins/fileinput/js/fileinput.js" /><!-- 这个删除了后边的ready -->
+	<js key="fileinput" src="${ctx}/resources/plugins/fileinput/js/zh.js" />
+	<css key="datetimepicker" des="日期选择" src="${ctx}/resources/plugins/datetimepicker/jquery.datetimepicker.min.css" />
+	<js key="datetimepicker" src="${ctx}/resources/plugins/datetimepicker/jquery.datetimepicker.full.min.js" />
 	<!-- system系统相关 -->
 	<css key="system" src="${ctx}/resources/system/css/style.min.css" />
 	<css key="system"> <![CDATA[  <link href="${ctx}/resources/system/img/favicon.ico" rel="shortcut icon" />]]></css>

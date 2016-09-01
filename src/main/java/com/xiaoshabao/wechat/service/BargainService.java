@@ -1,10 +1,13 @@
 package com.xiaoshabao.wechat.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframe.service.AbstractService;
 import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.BargainAwardDto;
+import com.xiaoshabao.wechat.dto.BargainInfoDto;
 import com.xiaoshabao.wechat.dto.BargainResult;
 import com.xiaoshabao.wechat.entity.BargainEntity;
 /**
@@ -49,5 +52,34 @@ public interface BargainService extends AbstractService {
 	 * @return
 	 */
 	public BargainAwardDto getAward(Integer joinId);
+	
+	/**
+	 * 获得system项目砍价列表
+	 * @return
+	 */
+	public List<BargainInfoDto> getSystemList();
+	
+	/**
+	 * 添加初始化
+	 */
+	public BargainInfoDto initSystemBargain();
+	/**
+	 * 添加砍价活动
+	 * @param bargain
+	 * @return
+	 */
+	public AjaxResult addSystemBargain(BargainInfoDto bargain);
+	
+	/**
+	 * 获得system项目砍价信息详情
+	 */
+	public BargainInfoDto getSystemBargainDetail(Integer bargainId);
+	
+	/**
+	 * 修改砍价活动
+	 * @param bargain
+	 * @return
+	 */
+	public AjaxResult updateSystemBargain(BargainInfoDto bargain,String posterState);
 
 }

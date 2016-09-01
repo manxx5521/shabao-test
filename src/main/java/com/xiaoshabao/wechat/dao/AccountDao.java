@@ -16,5 +16,11 @@ public interface AccountDao {
 	 * @return
 	 */
 	public List<AccountValue> getAccountValues(@Param("priFrame")String priFrame);
-
+	
+	/**
+	 * 获得帐号信息-根据帐号id
+	 * @param accountId
+	 * @return
+	 */
+	public List<AccountValue> getAccountValuesById(Integer accountId);
 }

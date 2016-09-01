@@ -1,6 +1,7 @@
 package com.xiaoshabao.wechat.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -14,18 +15,23 @@ import org.springframework.transaction.annotation.Transactional;
 import com.xiaoshabao.baseframe.enums.ErrorEnum;
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.system.component.ContextHolderSystem;
 import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.webframe.entity.PosterEntity;
 import com.xiaoshabao.wechat.api.wxaccount.AccountAPI;
 import com.xiaoshabao.wechat.api.wxaccount.result.QrcodeResult;
 import com.xiaoshabao.wechat.component.ContextHolderWechat;
 import com.xiaoshabao.wechat.component.PosterWechatComponent;
 import com.xiaoshabao.wechat.component.TokenManager;
+import com.xiaoshabao.wechat.dao.AccountDao;
 import com.xiaoshabao.wechat.dao.BargainDao;
 import com.xiaoshabao.wechat.dao.BargainJoinDao;
 import com.xiaoshabao.wechat.dao.BargainSuccessDao;
 import com.xiaoshabao.wechat.dao.QrcodeDao;
+import com.xiaoshabao.wechat.dto.AccountValue;
 import com.xiaoshabao.wechat.dto.BargainAwardDto;
 import com.xiaoshabao.wechat.dto.BargainDto;
+import com.xiaoshabao.wechat.dto.BargainInfoDto;
 import com.xiaoshabao.wechat.dto.BargainJoinInfo;
 import com.xiaoshabao.wechat.dto.BargainJoinResult;
 import com.xiaoshabao.wechat.dto.BargainResult;
@@ -55,6 +61,8 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 	private QrcodeDao qrcodeDao;
 	@Resource(name="tokenManager")
 	private TokenManager tokenManager;
+	@Autowired
+	private AccountDao accountDao;
 	/**
 	 * 数据处理时间的差值
 	 */
@@ -280,6 +288,165 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 		awardDto.setQrcode(qrcode);
 		awardDto.setQrcodeId(qrcode.getQrcodeId());
 		return awardDto;
+	}
+	/*********************** system项目相关 begin**************************/
+	//获得system项目砍价列表
+	@Override
+	public List<BargainInfoDto> getSystemList() {
+		String priFrame=ContextHolderSystem.getPriFrame();
+		List<BargainInfoDto> list=bargainDao.getSystemList(priFrame);
+		return list;
+	}
+	@Override
+	public BargainInfoDto initSystemBargain() {
+		String priFrame=ContextHolderSystem.getPriFrame();
+		List<AccountValue> accounts=accountDao.getAccountValues(priFrame);
+		BargainInfoDto result=new BargainInfoDto();
+		result.setAccounts(accounts);
+		return result;
+	}
+	//新增砍价活动
+	@Override
+	@Transactional
+	public AjaxResult addSystemBargain(BargainInfoDto bargain) {
+		String msg=this.validtionBargainInfoDto(bargain);
+		if(StringUtils.isNotEmpty(msg)){
+			return new AjaxResult(msg);
+		}
+		Integer userId=ContextHolderSystem.getUserId();
+		bargain.setCreateStaff(userId);
+		bargain.setTemplate("one");//先默认使用one
+		int i =bargainDao.insertBargain(bargain);
+		if(i<1){
+			logger.debug("添加砍价活动时保存失败");
+			throw new ServiceException(ErrorEnum.SAVE_ERROR);
+		}
+		//插入海报
+		String[] images=bargain.getPoster().getImage().split(",");
+		String title=bargain.getPoster().getTitle();
+		PosterEntity poster=new PosterEntity();
+		poster.setType(WechatType.BARGAIN.getValue());
+		poster.setTypeId(bargain.getBargainId().toString());
+		poster.setTitle(title);
+		poster.setButton("商品详情");
+		int leg=0;
+		for(String image:images){
+			poster.setImage(image);
+			leg++;
+			poster.setOrderNo(leg);
+			i=posterComponent.insertPoster(poster);
+			if(i<1){
+				logger.debug("活动海报保存时失败");
+				throw new ServiceException(ErrorEnum.SAVE_ERROR);
+			}
+		}
+		return new AjaxResult(true,"保存成功");
+	}
+	
+	/**
+	 * 验证砍价活动信息
+	 */
+	private String validtionBargainInfoDto(BargainInfoDto bargain){
+		String message=null;
+		if(bargain.getAccountId()==null){
+			message="请选择帐号";
+		}
+		if(StringUtils.isEmpty(bargain.getBargainName())){
+			message="活动名称不能为空";
+		}
+		if(StringUtils.isEmpty(bargain.getDes())){
+			message="活动描述不能为空";
+		}
+		if(StringUtils.isEmpty(bargain.getTotalPrice().toString())){
+			message="商品总价不能为空";
+		}
+		if(StringUtils.isEmpty(bargain.getMinPrice().toString())){
+			message="商品底价不能为空";
+		}
+		if(StringUtils.isEmpty(bargain.getOnePrice().toString())){
+			message="单次砍掉的最高价钱不能为空";
+		}
+		if(StringUtils.isEmpty(bargain.getMaxBargainNum().toString())){
+			message="砍价的最大次数不能为空";
+		}
+		if(StringUtils.isEmpty(bargain.getStartTime().toString())){
+			message="活动开始时间不能为空";
+		}
+		if(StringUtils.isEmpty(bargain.getEndTime().toString())){
+			message="活动结束时间不能为空";
+		}
+		if(StringUtils.isEmpty(bargain.getRules())){
+			message="活动规则不能为空";
+		}
+		if(StringUtils.isEmpty(bargain.getGoods())){
+			message="商品描述不能为空";
+		}
+		if(StringUtils.isEmpty(bargain.getPoster().getImage())){
+			message="海报照片不能为空";
+		}
+		if(StringUtils.isEmpty(bargain.getPoster().getTitle())){
+			message="海报标题不能为空";
+		}
+		return message;
+	}
+	
+	//获得system项目砍价信息详情
+	@Override
+	public BargainInfoDto getSystemBargainDetail(Integer bargainId) {
+		BargainInfoDto bargain= bargainDao.getBargainInfoDtoById(bargainId);
+		List<AccountValue> accounts=accountDao.getAccountValuesById(bargain.getAccountId());
+		List<String> posters=posterComponent.getPosterUrl(WechatType.BARGAIN.getValue(), bargainId.toString());
+		String images=StringUtils.join(posters, ",");
+		bargain.getPoster().setImage(images);
+		bargain.setAccounts(accounts);
+		return bargain;
+	}
+	//修改砍价活动
+	@Override
+	@Transactional
+	public AjaxResult updateSystemBargain(BargainInfoDto bargain,String posterState) {
+		String msg=this.validtionBargainInfoDto(bargain);
+		if(StringUtils.isNotEmpty(msg)){
+			return new AjaxResult(msg);
+		}
+		int i =bargainDao.updateBargain(bargain);
+		if(i<1){
+			logger.debug("修改砍价活动时修改砍价活动失败");
+			throw new ServiceException(ErrorEnum.SAVE_ERROR);
+		}
+		PosterEntity poster=new PosterEntity(WechatType.BARGAIN.getValue(),bargain.getBargainId().toString());
+		if(StringUtils.isNotEmpty(posterState)&&posterState.equals("1")){
+			i=posterComponent.deletePoster(poster);
+			if(i<1){
+				logger.debug("活动海报，删除海报时失败");
+				throw new ServiceException(ErrorEnum.SAVE_ERROR);
+			}
+			//插入海报
+			String[] images=bargain.getPoster().getImage().split(",");
+			String title=bargain.getPoster().getTitle();
+			poster.setTitle(title);
+			poster.setButton("商品详情");
+			int leg=0;
+			for(String image:images){
+				poster.setImage(image);
+				leg++;
+				poster.setOrderNo(leg);
+				i=posterComponent.insertPoster(poster);
+				if(i<1){
+					logger.debug("修改活动海报时，保存海报记录失败");
+					throw new ServiceException(ErrorEnum.SAVE_ERROR);
+				}
+			}
+		}else{
+			//只修改标题
+			poster.setTitle(bargain.getPoster().getTitle());
+			i=posterComponent.updatePoster(poster);
+			if(i<1){
+				logger.debug("活动海报，保存海报标题时失败");
+				throw new ServiceException(ErrorEnum.SAVE_ERROR);
+			}
+		}
+		return new AjaxResult(true,"保存成功");
 	}
 
 }

@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.wechat.dao.BargainDao">
+	<insert id="insertBargain" useGeneratedKeys="true" keyProperty="bargainId">
+  	INSERT INTO wx_bargain(bargain_id,account_id,template,bargain_name,des,rules,total_price,min_price,one_price,max_bargain_num
+  		<if test="bargainNum != null and bargainNum !=''">
+  			,bargain_num
+  		</if>
+  		<if test="saleNum != null and saleNum !=''">
+  			,sale_num
+  		</if>
+  		<if test="userNum != null and userNum !=''">
+  			,user_num
+  		</if>
+  		,start_time,end_time,goods,create_staff,create_time)
+	VALUES(NULL,#{accountId,jdbcType=NUMERIC},#{template,jdbcType=VARCHAR},#{bargainName,jdbcType=VARCHAR},#{des,jdbcType=VARCHAR}
+		,#{rules,jdbcType=VARCHAR},#{totalPrice,jdbcType=NUMERIC},#{minPrice,jdbcType=NUMERIC},#{onePrice,jdbcType=NUMERIC},#{maxBargainNum,jdbcType=NUMERIC}
+		 <if test="bargainNum != null and bargainNum !=''">
+  			,#{bargainNum,jdbcType=NUMERIC}
+  		</if>
+  		<if test="saleNum != null and saleNum !=''">
+  			,#{saleNum,jdbcType=NUMERIC}
+  		</if>
+  		<if test="userNum != null and userNum !=''">
+  			,#{userNum,jdbcType=NUMERIC}
+  		</if>
+		,#{startTime,jdbcType=DATE},#{endTime,jdbcType=DATE},#{goods,jdbcType=VARCHAR},#{createStaff,jdbcType=NUMERIC},sysdate())
+	</insert>
 	<select id="getBargainResult" resultType="com.xiaoshabao.wechat.dto.BargainResult">
 		select 
 			account_id,
@@ -73,5 +98,71 @@
 	</update>
 	<update id="addNumber">
 		UPDATE WX_BARGAIN SET BARGAIN_NUM=BARGAIN_NUM+1,USER_NUM=USER_NUM+1 WHERE BARGAIN_ID=#{bargainId}
+	</update>
+	<!-- system项目相关 -->
+	<select id="getSystemList" resultType="com.xiaoshabao.wechat.dto.BargainInfoDto">
+		select a.*,b.app_name  
+		from wx_bargain a,wx_account b,td_m_depart t
+		where a.account_id=b.account_id
+			and	b.depart_id=t.depart_id
+			and t.depart_frame like ${priFrame}
+	</select>
+	<!--查询详情设置信息-->
+	<select id="getBargainInfoDtoById" resultType="com.xiaoshabao.wechat.dto.BargainInfoDto">
+		select 
+			a.account_id,
+			a.bargain_id,
+			a.bargain_name,
+			a.bargain_num,
+			a.create_staff,
+			a.create_time,
+			a.des,
+			a.end_time,
+			a.start_time,
+			a.max_bargain_num,
+			a.min_price,
+			a.one_price,
+			a.rules,
+			a.sale_num,
+			a.template,
+			a.total_price,
+			a.user_num,
+			a.goods,
+			b.title 'poster.title'
+		from wx_bargain a,(select b.* from td_s_poster b where b.type='bargain' and b.type_id=#{bargainId} limit 1) b
+		where 
+			a.bargain_id=b.type_id
+		and a.bargain_id=#{bargainId}
+	</select>
+	<!--修改砍价活动-->
+	<update id="updateBargain">
+		UPDATE wx_bargain
+		<set>
+			<if test="bargainName !=null and bargainName !='' ">
+				bargain_name=#{bargainName},
+			</if>
+			<if test="des !=null and des !='' ">
+				des=#{des},
+			</if>
+			<if test="totalPrice !=null and totalPrice !='' ">
+				total_price=#{totalPrice},
+			</if>
+			<if test="minPrice !=null and minPrice !='' ">
+				min_price=#{minPrice},
+			</if>
+			<if test="onePrice !=null and onePrice !='' ">
+				one_price=#{onePrice},
+			</if>
+			<if test="maxBargainNum !=null and maxBargainNum !='' ">
+				max_bargain_num=#{maxBargainNum},
+			</if>
+			<if test="rules !=null and rules !='' ">
+				rules=#{rules},
+			</if>
+			<if test="goods !=null and goods !='' ">
+				goods=#{goods},
+			</if>
+		</set>
+		where bargain_id=#{bargainId}
 	</update>
 </mapper>

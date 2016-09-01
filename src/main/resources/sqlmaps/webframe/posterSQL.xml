@@ -15,4 +15,34 @@
 		</where>
 		ORDER BY ORDERNO
 	</select>
+	<select id="getPosterUrl" resultType="java.lang.String">
+		SELECT IMAGE
+		FROM TD_S_POSTER
+		<where>
+			<if test="type !=null and type !='' ">
+				AND TYPE=#{type}
+			</if>
+			<if test="typeId !=null and typeId !='' ">
+				AND TYPE_ID=#{typeId}
+			</if>
+		</where>
+		ORDER BY ORDERNO
+	</select>
+	<insert id="insertPoster" useGeneratedKeys="true" keyProperty="posterId">
+	  	INSERT INTO TD_S_POSTER(poster_id,type,type_id,image,title,button,orderNo)
+		VALUES(NULL,#{type,jdbcType=VARCHAR},#{typeId,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR}
+			,#{title,jdbcType=VARCHAR},#{button,jdbcType=VARCHAR},#{orderNo,jdbcType=NUMERIC})
+	</insert>
+	<update id="updatePoster">
+		update TD_S_POSTER
+		<set>
+			<if test="title !=null and title !='' ">
+			title=#{title},
+			</if>
+		</set>
+		where type=#{type} and type_id=#{typeId}
+	</update>
+	<delete id="deletePoster">
+  		delete from TD_S_POSTER where type=#{type} and type_id=#{typeId}
+	</delete>
 </mapper>

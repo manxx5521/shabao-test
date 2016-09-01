@@ -105,7 +105,7 @@
 				<c:forEach var="r" items="${data.posters}" varStatus="idx">
 				<div class="swiper-slide swiper-slide-active" style="width: 1325px;height:217px;">
 					<div class="banner_img">
-						<img src="${ctx}/resources/upload/poster/${r.image}">
+						<img src="${ctx}${r.image}">
 					</div>
 					<div class="banner_txt clearfix">
 						<div style="clear: both"></div>

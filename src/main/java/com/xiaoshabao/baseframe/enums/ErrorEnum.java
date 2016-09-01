@@ -4,7 +4,9 @@ package com.xiaoshabao.baseframe.enums;
  */
 public enum ErrorEnum implements ErrorInterface{
 	ERROR(1,"系统错误，请重试"),
-	INNER_ERROR(2,"系统内部错误，请重试");
+	INNER_ERROR(2,"系统内部错误，请重试"),
+	/** 数据保存失败 */
+	SAVE_ERROR(3,"数据保存失败");
 	
 	/** 代码 */
 	private int code;

@@ -18,6 +18,12 @@ public interface PosterDao {
 	 */
 	public List<PosterDto> getPoster(@Param("type") String type,@Param("typeId")String typeId);
 	/**
+	 * 获得海报
+	 * @param poster
+	 * @return
+	 */
+	public List<String> getPosterUrl(@Param("type") String type,@Param("typeId")String typeId);
+	/**
 	 * 添加海报
 	 * @param poster
 	 * @return
