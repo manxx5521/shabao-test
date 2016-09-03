@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.wechat.api.wxbase.AuthAPI;
 import com.xiaoshabao.wechat.bean.WechatSession;
 import com.xiaoshabao.wechat.component.ContextHolderWechat;
@@ -38,38 +37,33 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 			HttpServletResponse response, Object handler) throws Exception {
 		try {
 			HttpSession session = request.getSession();
+			String loginType=wechatConfig.getLoginType();
 			Integer account=null;
 			String openid=null;
 			Object obj=session.getAttribute(ContextHolderWechat.WECHAT_SESSION);
 			//oauth2.0接口带的参数
 			String state=request.getParameter("state");
-			if(StringUtils.isEmpty(state)){
-				String accountId = request.getParameter("accountId");
-				if(StringUtils.isEmpty(accountId)){
-					throw new ServiceException("未正常获得accountId");
-				}else{
-					account=Integer.valueOf(accountId);
-				}
-			}else{
+			if(StringUtils.isNotEmpty(state)){
 				account=Integer.valueOf(state);
 			}
-			
-			boolean createSession=false;
+			boolean createSession=true;
 			if(obj!=null){
 				WechatSession sessionInfo=(WechatSession) obj;
 				Integer accountId=sessionInfo.getAccountId();
-				if(accountId==null||!accountId.equals(account)){
-					createSession=true;
+				if(accountId!=null){
+					if(account==null){
+						createSession=false;
+					}else if(accountId.equals(account)){
+						createSession=false;
+					}
 				}
-			}else{
-				createSession=true;
 			}
 			if(createSession){
+				logger.info("微信session信息失效，需要重新换取");
 				String code = request.getParameter("code");
-//				String scope=request.getParameter("scope");
 				String resultOpenid=null;
 				WechatSession userSession=new WechatSession();
-				AccessToken token=tokenManager.getAccessToken(Integer.valueOf(account));
+				AccessToken token=tokenManager.getAccessToken(account);
 				JSONObject result=AuthAPI.getBaseInfoforJson(token.getAppid(), token.getAppsecret(), code);
 				String scope=result.getString("scope");
 				resultOpenid=result.getString("openid");
@@ -80,7 +74,6 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 						userSession.setPortrait(userJson.getString("headimgurl"));;
 					}
 				}
-				String loginType=wechatConfig.getLoginType();
 				if(StringUtils.isEmpty(resultOpenid)){
 					if(loginType.equals("code")){
 						openid=code;
