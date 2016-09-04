@@ -1,4 +1,7 @@
 package com.xiaoshabao.wechat.bean;
+
+import com.xiaoshabao.wechat.entity.SubscriberEntity;
+
 /**
  * 微信session
  */
@@ -9,10 +12,12 @@ public class WechatSession {
 	private Integer accountId;
 	
 	private String openid;
-	/** 微信昵称 **/
-	private String nickname;
-	/** 微信头，存储的路径 */
-	private String portrait;
+	/** 登录方式1-base和2-info两种 */
+	private int type=0;
+	/**
+	 * 获得微信相关信息
+	 */
+	private SubscriberEntity info;
 	
 	public WechatSession(){
 		
@@ -38,17 +43,18 @@ public class WechatSession {
 	public void setOpenid(String openid) {
 		this.openid = openid;
 	}
-	public String getNickname() {
-		return nickname;
+	public SubscriberEntity getInfo() {
+		return info;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setInfo(SubscriberEntity info) {
+		this.info = info;
 	}
-	public String getPortrait() {
-		return portrait;
+	/** 登录方式1-base和2-info两种 */
+	public int getType() {
+		return type;
 	}
-	public void setPortrait(String portrait) {
-		this.portrait = portrait;
+	/** 登录方式1-base和2-info两种 */
+	public void setType(int type) {
+		this.type = type;
 	}
-	
 }
