@@ -111,11 +111,6 @@ public class FileController extends AbstractController{
 			return getError("上传目录没有写权限。");
 
 		}
-
-		File saveDirFile = new File(savePath);
-		if (!saveDirFile.exists()) {
-			saveDirFile.mkdirs();
-		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String ymd = sdf.format(new Date());
 		savePath += ymd + separator;
