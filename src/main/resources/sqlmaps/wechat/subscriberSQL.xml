@@ -19,12 +19,39 @@
 	<update id="update">
 		update wx_subscriber 
 		<set>
+			<if test="type !=null and type !='' ">
 			update_time=SYSDATE(),
+			</if>
 			<if test="type !=null and type !='' ">
 			type=#{type},
 			</if>
+			<if test="sex !=null and sex !='' ">
+			sex=#{sex},
+			</if>
+			<if test="city !=null and city !='' ">
+			city=#{city},
+			</if>
+			<if test="nickname !=null and nickname !='' ">
+			nickname=#{nickname},
+			</if>
+			<if test="headimgurl !=null and headimgurl !='' ">
+			headimgurl=#{headimgurl},
+			</if>
+			<if test="portrait !=null and portrait !='' ">
+			portrait=#{portrait},
+			</if>
+			<if test="province !=null and province !='' ">
+			province=#{province},
+			</if>
 		</set>
-		where account_id=#{accountId}
-			and	openid=#{openid}
+		where openid=#{openid}
 	</update>
+	<select id="getUserList" resultType="com.xiaoshabao.wechat.dto.WechatUserDto">
+		SELECT a.id,a.TYPE,a.ACCOUNT_ID,a.OPENID,a.SEX,a.CITY,a.NICKNAME,a.HEADIMGURL,a.PORTRAIT
+			,a.PROVINCE,a.SUB_TIME,a.UPDATE_TIME,B.APP_NAME
+		FROM WX_SUBSCRIBER A,WX_ACCOUNT B,td_m_depart t
+		WHERE A.ACCOUNT_ID=B.ACCOUNT_ID
+			and b.depart_id=t.depart_id
+			and t.depart_frame like ${priFrame}
+	</select>
 </mapper>

@@ -16,11 +16,15 @@ public class SubscriberEntity {
 	private String openid;
 	/** 性别 */
 	private String sex;
+	/** 省份 */
+	private String province;
 	/** 城市 */
 	private String city;
 	/** 昵称 */
 	private String nickname;
-	/** 头像 */
+	/**微信的头像url */
+	private String headimgurl;
+	/** 头像本地地址 */
 	private String portrait;
 	/** 操作时间 */
 	private Date updateTime;
@@ -106,4 +110,20 @@ public class SubscriberEntity {
 		this.nickname = nickname;
 	}
 
+	public String getHeadimgurl() {
+		return headimgurl;
+	}
+
+	public void setHeadimgurl(String headimgurl) {
+		this.headimgurl = headimgurl;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	
 }

@@ -4,7 +4,7 @@
 	<select id="getBargainUser" resultType="com.xiaoshabao.wechat.dto.BargainUser">
 		select a.*,
 			IFNULL(b.nickname,'匿名') 'user.nickname',
-			IFNULL(b.portrait,'portrait.jpg') 'user.portrait'
+			IFNULL(b.portrait,'/resources/wechat/upload/bargain/portrait.jpg') 'user.portrait'
 		from wx_bargain_success a
 		LEFT JOIN wx_subscriber b
 			on a.openid=b.openid
@@ -20,6 +20,6 @@
 	<insert id="insertBargainSuccess">
   	INSERT INTO wx_bargain_success(id,join_id,openid,price,bargain_price,create_time)
 	VALUES(NULL,#{joinId,jdbcType=NUMERIC},#{openid,jdbcType=VARCHAR},
-	#{price,jdbcType=NUMERIC},#{bargainPrice,jdbcType=NUMERIC},SYSDATE())
+	#{price,jdbcType=DECIMAL},#{bargainPrice,jdbcType=DECIMAL},SYSDATE())
 	</insert>
 </mapper>

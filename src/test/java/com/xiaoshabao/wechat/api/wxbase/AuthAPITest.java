@@ -33,7 +33,8 @@ public class AuthAPITest {
 	@Test
 	public void testGetAuthURL() {
 		try {
-			AuthAPI.getAuthURL(appid, "http://www.xiaoshabao.com/signin/init.jhtml", AuthAPI.AUTHURL_SCOP_SNSAPI_BASE, "1001");
+			String url=AuthAPI.getAuthURL(appid, "http://shabao.tunnel.qydev.com/", AuthAPI.AUTHURL_SCOP_SNSAPI_BASE, "1001");
+			System.out.println(url);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("获取授权url未通过");
@@ -44,7 +45,8 @@ public class AuthAPITest {
 	@Test
 	public void testGetAuthURL_base() {
 		try {
-			AuthAPI.getAuthURL_base(appid, "http://www.xiaoshabao.com/signin/init.jhtml", "1001");
+			String url=AuthAPI.getAuthURL_base(appid, "http://wechat.xiaoshabao.com/wechat/vote/10000001/list", "100001");
+			System.out.println(url);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("获取授权url未通过");
@@ -54,7 +56,8 @@ public class AuthAPITest {
 	@Test
 	public void testGetAuthURL_info() {
 		try {
-			AuthAPI.getAuthURL_info(appid, "http://www.xiaoshabao.com/signin/init.jhtml", "1001");
+			String url=AuthAPI.getAuthURL_info(appid, "http://wechat.xiaoshabao.com/wechat/vote/10000001/list", "100001");
+			System.out.println(url);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("获取授权url未通过");

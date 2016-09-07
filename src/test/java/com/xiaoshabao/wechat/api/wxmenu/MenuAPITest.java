@@ -32,31 +32,39 @@ public class MenuAPITest {
 	@Test
 	public void testCreateMenu() throws Exception {
 		try {
-			CommonButton btn1 = new CommonButton();
-			btn1.setName("投票测试");
-			btn1.setType(MenuType.VIEW);
-			btn1.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fshabao.tunnel.qydev.com%2Fshabao-test%2Fwechat%2Fvote%2F10000001%2Flist&response_type=code&scope=snsapi_base&state=100001#wechat_redirect");
+			CommonButton btn11 = new CommonButton();
+			btn11.setName("投票测试");
+			btn11.setType(MenuType.VIEW);
+			btn11.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fwechat.xiaoshabao.com%2Fwechat%2Fvote%2F10000001%2Flist&response_type=code&scope=snsapi_base&state=100001#wechat_redirect");
+			CommonButton btn12=new CommonButton();
+			btn12.setName("砍价测试");
+			btn12.setType(MenuType.VIEW);
+			btn12.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fwechat.xiaoshabao.com%2Fwechat%2Fbargain%2F11221111%2Fbargain%3Ftype%3Dinfo&response_type=code&scope=snsapi_userinfo&state=100001#wechat_redirect");
+			
 			
 			CommonButton btn21=new CommonButton();
 			btn21.setName("砍价测试");
 			btn21.setType(MenuType.VIEW);
-			btn21.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fshabao.tunnel.qydev.com%2Fshabao-test%2Fwechat%2Fbargain%2F11221111%2Fbargain&response_type=code&scope=snsapi_userinfo&state=100001#wechat_redirect");
+			btn21.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx07e34f9575809866&redirect_uri=http%3A%2F%2Fwechat.xiaoshabao.com%2Fwechat%2Fbargain%2F11221111%2Fbargain&response_type=code&scope=snsapi_userinfo&state=100001#wechat_redirect");
 			CommonButton btn22=new CommonButton();
 			btn22.setName("文章测试");
 			btn22.setType(MenuType.VIEW);
 			btn22.setUrl("http://mp.weixin.qq.com/s?__biz=MzI2NDA3MDE2OA==&mid=507443969&idx=1&sn=d0f5ba036d1b6ac17dcbb4a3406120d4#rd");
 			
 			//存放多级菜单
+			ComplexButton mainBtn1 = new ComplexButton();
+			mainBtn1.setName("活动");
+			mainBtn1.setSub_button(new CommonButton[] { btn11, btn12 });
 			ComplexButton mainBtn2 = new ComplexButton();
-			mainBtn2.setName("测试");
-			mainBtn2.setSub_button(new CommonButton[] { btn21, btn22 });
+			mainBtn2.setName("内容");
+			mainBtn2.setSub_button(new CommonButton[] {  btn22 });
 			
 			CommonButton btn3 = new CommonButton();
 			btn3.setName("关注我");
 			btn3.setType(MenuType.VIEW);
 			btn3.setUrl("http://www.soso.com/");
 			Menu menu=new Menu();
-			menu.setButton(new Button[] {btn1,mainBtn2,btn3});
+			menu.setButton(new Button[] {mainBtn1,mainBtn2,btn3});
 			MenuAPI.createMenu(accessToken, menu);
 			System.out.print("测试通过");
 		} catch (Exception e) {

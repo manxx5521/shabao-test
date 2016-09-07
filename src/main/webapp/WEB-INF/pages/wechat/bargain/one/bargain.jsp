@@ -134,8 +134,8 @@ paginationClickable: true
 	<div class="content">
 		<div class="bargain clearfix">
 			<div class="bargain_img">
-				<c:if test="${ empty wechat.portrait}"><img src="${ctx}/resources/wechat/upload/bargain/${data.info.portrait}"></c:if>
-				<c:if test="${ !empty wechat.portrait}"><img src="${wechat.portrait}"></c:if>
+				<c:if test="${ empty wechat.info.headimgurl}"><img src="${ctx}${data.info.portrait}"></c:if>
+				<c:if test="${ !empty wechat.info.headimgurl}"><img src="${wechat.info.headimgurl}"></c:if>
 				
 			</div>
 			<div class="bargain_content">
@@ -196,7 +196,7 @@ paginationClickable: true
 						<c:forEach var="r" items="${data.users}" varStatus="idx">
 						<li class="clearfix">
 							<div class="head_img">
-								<img src="${ctx}/resources/wechat/upload/bargain/${r.user.portrait}">
+								<img src="${ctx}${r.user.portrait}">
 							</div>
 							<h2>${r.user.nickname}</h2>
 							<p>
@@ -211,7 +211,7 @@ paginationClickable: true
 					<c:forEach var="r" items="${data.rankingList}" varStatus="idx">
 						<li class=" clearfix"><i>${idx.index+1}</i>
 							<div class="head_img">
-								<img src="${ctx}/resources/wechat/upload/bargain/${r.user.portrait}">
+								<img src="${ctx}${r.user.portrait}">
 							</div>
 							<h2>${r.user.nickname}</h2>
 							<p>
@@ -414,8 +414,10 @@ function notwinning() {
 		var shareData = {
 			title : '${data.bargainName}',
 			desc : '${data.des}',
-			link : '${ctx}/wechat/bargain/${joinId}/share',
-			imgUrl : '${domain}${ctx}/resources/upload/poster/${data.posters[0].image}'
+			link : '${domain}${ctx}/wechat/bargain/'+
+				'<c:if test="${ empty data.info.joinUser.joinId}">${data.bargainId}/bargain</c:if>'
+				+'<c:if test="${ !empty data.info.joinUser.joinId}">${data.info.joinUser.joinId}/share</c:if>',
+			imgUrl : '${domain}${ctx}${data.posters[0].image}'
 		};
 		wx.onMenuShareAppMessage(shareData);
 		wx.onMenuShareTimeline(shareData);
@@ -423,7 +425,7 @@ function notwinning() {
 		wx.onMenuShareWeibo(shareData);
 	});
 	wx.error(function(res) {
-		//alert(res.errMsg); 
+		alert(res.errMsg); 
 	});
 </script>
 <!--END 微信分享-->

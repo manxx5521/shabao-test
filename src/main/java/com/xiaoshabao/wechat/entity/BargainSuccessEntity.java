@@ -1,5 +1,6 @@
 package com.xiaoshabao.wechat.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -10,9 +11,9 @@ public class BargainSuccessEntity {
 	private Integer joinId;
 	private String openid;
 	/** 当前商品价格 ，当次砍到的价钱 */
-	private Integer price;
+	private BigDecimal price;
 	/** 本次砍掉价钱 */
-	private Integer bargainPrice;
+	private BigDecimal bargainPrice;
 	private Date createTime;
 
 	public BargainSuccessEntity() {
@@ -39,11 +40,19 @@ public class BargainSuccessEntity {
 		this.openid = openid;
 	}
 
-	public Integer getBargainPrice() {
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public BigDecimal getBargainPrice() {
 		return bargainPrice;
 	}
 
-	public void setBargainPrice(Integer bargainPrice) {
+	public void setBargainPrice(BigDecimal bargainPrice) {
 		this.bargainPrice = bargainPrice;
 	}
 
@@ -53,14 +62,6 @@ public class BargainSuccessEntity {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}
-
-	public Integer getPrice() {
-		return price;
-	}
-
-	public void setPrice(Integer price) {
-		this.price = price;
 	}
 
 	public Integer getJoinId() {

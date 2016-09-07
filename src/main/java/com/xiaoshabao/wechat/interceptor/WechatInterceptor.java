@@ -20,6 +20,7 @@ import com.xiaoshabao.wechat.component.ContextHolderWechat;
 import com.xiaoshabao.wechat.component.TokenManager;
 import com.xiaoshabao.wechat.component.WechatConfig;
 import com.xiaoshabao.wechat.entity.AccessToken;
+import com.xiaoshabao.wechat.entity.SubscriberEntity;
 import com.xiaoshabao.wechat.util.WechatUtil;
 /**
  * 微信服务拦截器
@@ -43,6 +44,7 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 			Object obj=session.getAttribute(ContextHolderWechat.WECHAT_SESSION);
 			//oauth2.0接口带的参数
 			String state=request.getParameter("state");
+			String type =request.getParameter("type");
 			if(StringUtils.isNotEmpty(state)){
 				account=Integer.valueOf(state);
 			}
@@ -57,9 +59,12 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 						createSession=false;
 					}
 				}
+				if(sessionInfo.getType()!=2&&StringUtils.isNotEmpty(type)&&type.equals("info")){
+					createSession=true;
+				}
 			}
 			if(createSession){
-				logger.info("微信session信息失效，需要重新换取");
+				logger.info("\n ->微信端session信息失效，需要重新换取\n");
 				String code = request.getParameter("code");
 				String resultOpenid=null;
 				WechatSession userSession=new WechatSession();
@@ -67,11 +72,20 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 				JSONObject result=AuthAPI.getBaseInfoforJson(token.getAppid(), token.getAppsecret(), code);
 				String scope=result.getString("scope");
 				resultOpenid=result.getString("openid");
+				userSession.setType(1);
 				if(StringUtils.isNotEmpty(resultOpenid)&&StringUtils.isNotEmpty(scope)&&scope.equals(AuthAPI.AUTHURL_SCOP_SNSAPI_USERINFO)){
 					JSONObject userJson=AuthAPI.getUserInfoForJson(resultOpenid, result.getString("access_token"));
 					if(StringUtils.isEmpty(userJson.getString("errcode"))||userJson.getString("errcode").equals("0")){
-						userSession.setNickname(userJson.getString("nickname"));
-						userSession.setPortrait(userJson.getString("headimgurl"));;
+						SubscriberEntity wechatInfo=new SubscriberEntity();
+						wechatInfo.setAccountId(account);
+						wechatInfo.setOpenid(resultOpenid);
+						wechatInfo.setNickname(userJson.getString("nickname"));
+						wechatInfo.setHeadimgurl(userJson.getString("headimgurl"));
+						wechatInfo.setSex(userJson.getString("sex"));
+						wechatInfo.setProvince(userJson.getString("province"));
+						wechatInfo.setCity(userJson.getString("city"));
+						userSession.setInfo(wechatInfo);
+						userSession.setType(2);
 					}
 				}
 				if(StringUtils.isEmpty(resultOpenid)){

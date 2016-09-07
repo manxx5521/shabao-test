@@ -37,7 +37,7 @@
 			title : '兑换二维码',
 			desc : '可以凭此二维码兑换商品',
 			link : '${jsParams.url}',
-			imgUrl : ''
+			imgUrl : '${domain}${ctx}/resources/wechat/image/share1.jpg'
 		};
 		wx.onMenuShareAppMessage(shareData);
 		wx.onMenuShareTimeline(shareData);

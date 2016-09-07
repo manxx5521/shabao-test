@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE>
 <html lang="zh-CN">
 <head>
@@ -7,8 +6,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>砍价列表</title>
-	<%@include file="../../../context/head.jsp"%>
-    <%@include file="../../../system/common.jsp"%>
+	<%@include file="../../context/head.jsp"%>
+    <%@include file="../../system/common.jsp"%>
 	<cs:resource type="css" value="jquery,bootstrap,system,bootbox,dataTables" />
 	<base target="_blank">
 </head>
@@ -52,33 +51,25 @@
                         <table class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
-                                    <th>砍价标识</th>
-                                    <th>标题</th>
-                                    <th>应用</th>
-                                    <th>总价</th>
-                                    <th>底价</th>
-                                    <th>单次砍掉最高</th>
-                                    <th>砍价次数</th>
-                                    <th>销量</th>
-                                    <th>参与人数</th>
-                                    <th>创建时间</th>
-                                    <th>操作</th>
+                                    <th>应用名</th>
+                                    <th>昵称</th>
+                                    <th>性别</th>
+                                    <th>省份</th>
+                                    <th>城市</th>
+                                    <th>是否关注</th>
+                                    <th>更新时间</th>
                                 </tr>
                             </thead>
                             <tbody>
                             	<c:forEach var="r" items="${data}" varStatus="idx">
                                 <tr class="gradeX">
-                                    <td> ${r.bargainId}</td>
-                                    <td> <a href="#" target="_self">${r.bargainName}</a></td>
                                     <td> ${r.appName}</td>
-                                    <td> ￥${r.totalPrice}</td>
-                                    <td> ￥${r.minPrice}</td>
-                                    <td> ￥${r.onePrice}</td>
-                                    <td> ${r.bargainNum}</td>
-                                    <td> ${r.saleNum}</td>
-                                    <td> ${r.userNum}</td>
-                                    <td class="center"><fmt:formatDate value="${r.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /> </td>
-                                    <td> <a href="${ctx}/admin/wechat/bargain/${r.bargainId}/detail" target="_self">编辑</a></td>
+                                    <td> ${r.nickname}</td>
+                                    <td><c:if test="${r.sex==1}">男</c:if><c:if test="${r.sex==0}">女</c:if></td>
+                                    <td> ${r.province}</td>
+                                    <td> ${r.city}</td>
+                                    <td><c:if test="${r.type==1}">关注</c:if><c:if test="${r.type==0}">取消关注</c:if></td>
+                                    <td class="center"><fmt:formatDate value="${r.updateTime}" pattern="yyyy-MM-dd HH:mm:ss" /> </td>
                                 </tr>
                                 </c:forEach>
                             </tbody>

@@ -43,6 +43,7 @@
 							<i class="fa fa-home"></i> <span class="nav-label">主页</span>
 						</a>
 					</li>
+					<%-- 
 					<li><a href="#"><i class="fa fa-edit"></i> <span
 							class="nav-label">表单</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
@@ -77,6 +78,7 @@
 							</li>
 						</ul>
 					</li>
+					 --%>
 				</ul>
 			</div>
 		</nav>

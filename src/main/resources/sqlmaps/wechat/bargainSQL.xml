@@ -14,7 +14,7 @@
   		</if>
   		,start_time,end_time,goods,create_staff,create_time)
 	VALUES(NULL,#{accountId,jdbcType=NUMERIC},#{template,jdbcType=VARCHAR},#{bargainName,jdbcType=VARCHAR},#{des,jdbcType=VARCHAR}
-		,#{rules,jdbcType=VARCHAR},#{totalPrice,jdbcType=NUMERIC},#{minPrice,jdbcType=NUMERIC},#{onePrice,jdbcType=NUMERIC},#{maxBargainNum,jdbcType=NUMERIC}
+		,#{rules,jdbcType=VARCHAR},#{totalPrice,jdbcType=DECIMAL},#{minPrice,jdbcType=DECIMAL},#{onePrice,jdbcType=DECIMAL},#{maxBargainNum,jdbcType=NUMERIC}
 		 <if test="bargainNum != null and bargainNum !=''">
   			,#{bargainNum,jdbcType=NUMERIC}
   		</if>
@@ -60,7 +60,7 @@
 		 a. STATUS 'info.joinUser.status',
 		 a.update_time 'joinUser.update_time',
 		 IFNULL(b.nickname, '匿名') 'info.nickname',
-		 IFNULL(b.portrait, 'portrait.jpg') 'info.portrait'
+		 IFNULL(b.portrait, '/resources/wechat/upload/bargain/portrait.jpg') 'info.portrait'
 		FROM
 			wx_bargain_join a
 		LEFT JOIN wx_subscriber b ON a.openid = b.openid
@@ -106,6 +106,7 @@
 		where a.account_id=b.account_id
 			and	b.depart_id=t.depart_id
 			and t.depart_frame like ${priFrame}
+		order by a.create_time desc
 	</select>
 	<!--查询详情设置信息-->
 	<select id="getBargainInfoDtoById" resultType="com.xiaoshabao.wechat.dto.BargainInfoDto">

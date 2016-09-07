@@ -1,5 +1,6 @@
 package com.xiaoshabao.wechat.service.impl;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Random;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +22,11 @@ import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.webframe.entity.PosterEntity;
 import com.xiaoshabao.wechat.api.wxaccount.AccountAPI;
 import com.xiaoshabao.wechat.api.wxaccount.result.QrcodeResult;
+import com.xiaoshabao.wechat.bean.WechatSession;
 import com.xiaoshabao.wechat.component.ContextHolderWechat;
 import com.xiaoshabao.wechat.component.PosterWechatComponent;
 import com.xiaoshabao.wechat.component.TokenManager;
+import com.xiaoshabao.wechat.component.WechatComponent;
 import com.xiaoshabao.wechat.dao.AccountDao;
 import com.xiaoshabao.wechat.dao.BargainDao;
 import com.xiaoshabao.wechat.dao.BargainJoinDao;
@@ -63,6 +67,8 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 	private TokenManager tokenManager;
 	@Autowired
 	private AccountDao accountDao;
+	@Autowired
+	private WechatComponent wechatComponent;
 	/**
 	 * 数据处理时间的差值
 	 */
@@ -100,7 +106,8 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 	@Override
 	@Transactional
 	public AjaxResult exeBargain(Integer bargainId) {
-		String openid=ContextHolderWechat.getOpenid();
+		WechatSession session=ContextHolderWechat.getWechatSession();
+		String openid=session.getOpenid();
 		if(StringUtils.isEmpty(openid)){
 			return new AjaxResult(ErrorWechatEnum.LOGIN_ERROR);
 		}
@@ -124,10 +131,15 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 		bargainJoin.setBargainId(bargainId);
 		bargainJoin.setOpenid(openid);
 		bargainJoin.setStatus(1);
-		int num=this.getBargainPrice(bargain.getOnePrice(),bargain.getMinPrice(),bargain.getTotalPrice());
-		bargainJoin.setBargainPrice(num);
+		BigDecimal num=this.getBargainPrice(bargain.getOnePrice(),bargain.getMinPrice(),bargain.getTotalPrice());
+		BigDecimal bargainPrice=new BigDecimal(0);
+		if(bargainJoin.getBargainPrice()!=null){
+			bargainPrice=bargainJoin.getBargainPrice();
+		}
+		bargainPrice=bargainPrice.add(num);
+		bargainJoin.setBargainPrice(bargainPrice);
 		bargainJoin.setBargainNum(1);
-		bargainJoin.setPrice(bargain.getTotalPrice()-num);
+		bargainJoin.setPrice(bargain.getTotalPrice().subtract(num));
 		int i=bargainJoinDao.insertBargainJoin(bargainJoin);
 		if(i<1){
 			logger.error(ErrorWechatEnum.BARGAIN_UPDATE_ERROR.getMessage()+"；添加砍价信息join信息错误");
@@ -135,7 +147,7 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 		}
 		BargainSuccessEntity bargainSuccess=new BargainSuccessEntity(bargainJoin.getJoinId(),openid);
 		bargainSuccess.setBargainPrice(num);
-		bargainSuccess.setPrice(bargain.getTotalPrice()-num);
+		bargainSuccess.setPrice(bargain.getTotalPrice().subtract(num));
 		i=bargainSuccessDao.insertBargainSuccess(bargainSuccess);
 		if(i<1){
 			logger.error(ErrorWechatEnum.BARGAIN_UPDATE_ERROR.getMessage()+"；添加砍价success日志错误");
@@ -145,6 +157,13 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 		if(i<1){
 			logger.error(ErrorWechatEnum.BARGAIN_UPDATE_ERROR.getMessage()+"；更新砍价活动信息bargain错误");
 			throw new ServiceException(ErrorWechatEnum.BARGAIN_UPDATE_ERROR);
+		}
+		//保存微信 个人信息
+		try {
+			wechatComponent.savaSessionInfo();
+		} catch (Exception e) {
+			logger.error("砍价时未能正常保存个人信息");
+			e.printStackTrace();
 		}
 		return new AjaxResult(true,"true",bargainSuccess); 
 	}
@@ -184,7 +203,7 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 			return new AjaxResult(ErrorWechatEnum.BARGAIN_REPEAT);
 		}
 		//砍价价钱
-		int price=this.getBargainPrice(bargain.getBargain().getOnePrice(),bargain.getBargain().getMinPrice(),bargain.getPrice());
+		BigDecimal price=this.getBargainPrice(bargain.getBargain().getOnePrice(),bargain.getBargain().getMinPrice(),bargain.getPrice());
 		int i=bargainDao.addNumber(bargain.getBargainId());
 		if(i<1){
 			logger.error(ErrorWechatEnum.BARGAIN_UPDATE_ERROR.getMessage()+";砍价失败，未能正常记录bargain砍价次数");
@@ -197,7 +216,7 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 		}
 		BargainSuccessEntity bargainSuccess=new BargainSuccessEntity(joinId,openid);
 		bargainSuccess.setBargainPrice(price);
-		bargainSuccess.setPrice(bargain.getPrice()-price);
+		bargainSuccess.setPrice(bargain.getPrice().subtract(price));
 		i=bargainSuccessDao.insertBargainSuccess(bargainSuccess);
 		if(i<1){
 			logger.error(ErrorWechatEnum.BARGAIN_UPDATE_ERROR.getMessage()+";砍价失败，未能正常记录砍价成功日志");
@@ -215,27 +234,38 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 	 * @param price 当前价钱
 	 * @return
 	 */
-	private int getBargainPrice(int onePrice,int mimPrice,int price){
+	private BigDecimal getBargainPrice(BigDecimal onePrice,BigDecimal mimPrice,BigDecimal price){
 		try {
+			int bargainPrice=0;
 			if(mimPrice==price){
 				throw new ServiceException(ErrorWechatEnum.BARGAIN_MIN_PRICE);
 			}
 			Random random = new Random();
-			int bargainPrice= random.nextInt(10)%(onePrice+1);
+			//单位角
+			int one=onePrice.intValue()*10;
+			bargainPrice= random.nextInt(10)%(one+1);
 			if(bargainPrice==0){
-				bargainPrice+=0.1;
+				bargainPrice+=1;
 			}
-			if(bargainPrice>onePrice){
-				bargainPrice=onePrice;
+			if(bargainPrice>one){
+				bargainPrice=one;
 			}
-			if(price-bargainPrice<mimPrice){
-				bargainPrice=mimPrice;
+			if(price.doubleValue()*10-bargainPrice<mimPrice.doubleValue()*10){
+				return mimPrice;
 			}
-			return bargainPrice;
+			return new BigDecimal(bargainPrice).divide(new BigDecimal(10));
 		} catch (Exception e) {
 			logger.error("获得随机砍价数字是错误");
 			throw new ServiceException("砍价价格获取失败");
 		}
+	}
+	@Test
+	public void test(){
+		BigDecimal onePrice=new BigDecimal(5);
+		BigDecimal mimPrice=new BigDecimal(60);
+		BigDecimal price=new BigDecimal(100);
+		this.getBargainPrice(onePrice, mimPrice, price);
+		
 	}
 	//获得商品详细信息
 	@Override

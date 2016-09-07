@@ -25,19 +25,6 @@ public class VoteController extends AbstractController{
 	
 	@Resource(name="voteServiceImpl")
 	private VoteService voteService;
-	
-	/**
-	 * 管理端列表界面列表
-	 * @param map
-	 * @param article_id
-	 * @return
-	 * @throws DaoException 
-	 */
-	@RequestMapping(value="/wechat/vote")
-	public ModelAndView getVote (ModelMap model){
-		return new ModelAndView ("/wechat/vote/vote");
-	}
-	
 	/**
 	 * 投票界面列表<br>
 	 * <p>http://localhost:8080/shabao-test/wechat/vote/10000001/list</p>
@@ -137,5 +124,17 @@ public class VoteController extends AbstractController{
 			return new AjaxResult(false,"投票时，系统错误，请重试");
 		}
 		
+	}
+	
+	/**
+	 * 管理端列表界面列表
+	 * @param map
+	 * @param article_id
+	 * @return
+	 * @throws DaoException 
+	 */
+	@RequestMapping(value="/wechat/vote")
+	public ModelAndView getVote (ModelMap model){
+		return new ModelAndView ("/wechat/vote/vote");
 	}
 }

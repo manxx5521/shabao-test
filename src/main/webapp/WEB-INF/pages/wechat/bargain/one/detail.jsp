@@ -33,7 +33,7 @@
 			title : '${data.bargainName}',
 			desc : '${data.des}',
 			link : '${jsParams.url}',
-			imgUrl : ''
+			imgUrl : '${domain}${ctx}/resources/wechat/image/share1.jpg'
 		};
 		wx.onMenuShareAppMessage(shareData);
 		wx.onMenuShareTimeline(shareData);

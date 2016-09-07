@@ -1,5 +1,6 @@
 package com.xiaoshabao.wechat.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -19,11 +20,11 @@ public class BargainEntity {
 	/** 规则 */
 	private String rules;
 	/** 总价 */
-	private Integer totalPrice;
+	private BigDecimal totalPrice;
 	/** 砍到的最小价钱 */
-	private Integer minPrice;
+	private BigDecimal minPrice;
 	/** 单次砍掉最大金额 */
-	private Integer onePrice;
+	private BigDecimal onePrice;
 	/** 砍价的最大次数 **/
 	private Integer maxBargainNum;
 	/** 活动砍价的次数 */
@@ -65,19 +66,27 @@ public class BargainEntity {
 		this.bargainName = bargainName;
 	}
 
-	public Integer getTotalPrice() {
+	public BigDecimal getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(Integer totalPrice) {
+	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
-	public Integer getOnePrice() {
+	public BigDecimal getMinPrice() {
+		return minPrice;
+	}
+
+	public void setMinPrice(BigDecimal minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public BigDecimal getOnePrice() {
 		return onePrice;
 	}
 
-	public void setOnePrice(Integer onePrice) {
+	public void setOnePrice(BigDecimal onePrice) {
 		this.onePrice = onePrice;
 	}
 
@@ -159,14 +168,6 @@ public class BargainEntity {
 
 	public void setDes(String des) {
 		this.des = des;
-	}
-
-	public Integer getMinPrice() {
-		return minPrice;
-	}
-
-	public void setMinPrice(Integer minPrice) {
-		this.minPrice = minPrice;
 	}
 
 	public Integer getMaxBargainNum() {

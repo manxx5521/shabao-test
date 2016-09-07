@@ -1,5 +1,6 @@
 package com.xiaoshabao.wechat.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -15,9 +16,9 @@ public class BargainJoinEntity {
 	/** 状态，1-砍价中，2-兑奖 */
 	private Integer status;
 	/** 当前价格 */
-	private Integer price;
+	private BigDecimal price;
 	/** 砍掉价钱 */
-	private Integer bargainPrice;
+	private BigDecimal bargainPrice;
 	/** 当前砍价的次数 */
 	private Integer bargainNum;
 	/** 兑奖时对应的二维码id **/
@@ -51,16 +52,16 @@ public class BargainJoinEntity {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public Integer getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
-	public void setPrice(Integer price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
-	public Integer getBargainPrice() {
+	public BigDecimal getBargainPrice() {
 		return bargainPrice;
 	}
-	public void setBargainPrice(Integer bargainPrice) {
+	public void setBargainPrice(BigDecimal bargainPrice) {
 		this.bargainPrice = bargainPrice;
 	}
 	public Integer getBargainNum() {

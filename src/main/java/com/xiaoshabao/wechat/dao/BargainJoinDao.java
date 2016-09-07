@@ -1,5 +1,6 @@
 package com.xiaoshabao.wechat.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -53,7 +54,7 @@ public interface BargainJoinDao {
 	 * 添加砍价价格
 	 * @return
 	 */
-	public int updateBargainInfo(@Param("price")int price,@Param("joinId")Integer joinId);
+	public int updateBargainInfo(@Param("price")BigDecimal price,@Param("joinId")Integer joinId);
 	
 	/**
 	 * 获得兑奖信息

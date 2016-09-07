@@ -2,8 +2,6 @@ package com.xiaoshabao.wechat.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.xiaoshabao.baseframe.service.AbstractService;
 import com.xiaoshabao.webframe.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.BargainAwardDto;
@@ -13,7 +11,6 @@ import com.xiaoshabao.wechat.entity.BargainEntity;
 /**
  * 砍价
  */
-@Service("bargainService")
 public interface BargainService extends AbstractService {
 	/**
 	 * 获得砍价信息

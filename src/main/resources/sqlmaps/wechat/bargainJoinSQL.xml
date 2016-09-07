@@ -4,7 +4,7 @@
 	<select id="getBargainJoinResult" resultType="com.xiaoshabao.wechat.dto.BargainJoinResult">
 	SELECT
 		IFNULL(a.nickname, '匿名') 'nickname',
-		IFNULL(a.portrait, 'portrait.jpg') 'portrait',
+		IFNULL(a.portrait, '/resources/wechat/upload/bargain/portrait.jpg') 'portrait',
 		b.bargain_id 'joinUser.bargain_id',
 		b.bargain_num 'joinUser.bargain_num',
 		b.bargain_price 'joinUser.bargain_price',
@@ -89,7 +89,7 @@
 	LEFT JOIN wx_subscriber b ON a.openid = b.openid
 	WHERE
 		a.bargain_id=#{bargainId}
-	order by a.bargain_price
+	order by a.bargain_price desc
 	limit 20
 	</select>
 	
@@ -97,7 +97,7 @@
   	INSERT INTO wx_bargain_join(join_id,bargain_id,openid,status,
 		price,bargain_price,bargain_num,create_time,update_time)
 	VALUES(NULL,#{bargainId,jdbcType=NUMERIC},#{openid,jdbcType=VARCHAR},#{status,jdbcType=NUMERIC},
-	#{price,jdbcType=NUMERIC},#{bargainPrice,jdbcType=NUMERIC},#{bargainNum,jdbcType=NUMERIC},SYSDATE(),SYSDATE())
+	#{price,jdbcType=DECIMAL},#{bargainPrice,jdbcType=DECIMAL},#{bargainNum,jdbcType=NUMERIC},SYSDATE(),SYSDATE())
 	</insert>
 	
 	<update id="updateBargainInfo">
@@ -116,6 +116,7 @@
 			tm.ticket 'qrcode.ticket',
 			tm.url 'qrcode.url',
 			tm.des 'qrcode.des',
+			tm.qr_url 'qrcode.qrUrl',
 			tm.action_name 'qrcode.actionName',
 			IFNULL(DATE_ADD(tm.create_time,INTERVAL 2592000-20000 SECOND)<SYSDATE(),1) flag
 		from (select t1.*,t2.template from wx_bargain_join t1,wx_bargain t2 

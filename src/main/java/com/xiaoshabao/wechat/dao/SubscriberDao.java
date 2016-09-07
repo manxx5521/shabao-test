@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.xiaoshabao.wechat.dto.WechatUserDto;
 import com.xiaoshabao.wechat.entity.SubscriberEntity;
 
 /**
@@ -39,4 +40,10 @@ public interface SubscriberDao {
 	 * @return
 	 */
 	public int update(SubscriberEntity wxSubscriber);
+	/**
+	 * 获得用户列表
+	 * @param accountId
+	 * @return
+	 */
+	public List<WechatUserDto> getUserList(@Param("priFrame") String priFrame);
 }

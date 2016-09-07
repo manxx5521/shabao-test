@@ -92,10 +92,8 @@ public class FileController extends AbstractController{
 		long maxSize = 1000000;
 
 		response.setContentType("text/html; charset=UTF-8");
-
 		if (!ServletFileUpload.isMultipartContent(request)) {
 			return getError("请选择文件。");
-
 		}
 		// 检查目录
 		File uploadDir = new File(savePath);
@@ -104,12 +102,10 @@ public class FileController extends AbstractController{
 		}
 		if (!uploadDir.isDirectory()) {
 			return getError("上传目录不存在。");
-
 		}
 		// 检查目录写权限
 		if (!uploadDir.canWrite()) {
 			return getError("上传目录没有写权限。");
-
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String ymd = sdf.format(new Date());
@@ -127,7 +123,6 @@ public class FileController extends AbstractController{
 			for (MultipartFile multipartFile : fileList) {
 				if (multipartFile.getSize() > maxSize) {
 					return getError("上传文件大小超过限制。");
-
 				}
 				String fileName = multipartFile.getOriginalFilename();
 				String fileExt = fileName.substring(
@@ -136,7 +131,6 @@ public class FileController extends AbstractController{
 						.contains(fileExt)) {
 					return getError("上传文件扩展名是不允许的扩展名。\n只允许"
 							+ extMap.get(type) + "格式。");
-
 				}
 				SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
 				String newFileName = df.format(new Date()) + "_"
