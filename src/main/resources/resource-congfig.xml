@@ -54,6 +54,9 @@
 	<js key="fileinput" src="${ctx}/resources/plugins/fileinput/js/zh.js" />
 	<css key="datetimepicker" des="日期选择" src="${ctx}/resources/plugins/datetimepicker/jquery.datetimepicker.min.css" />
 	<js key="datetimepicker" src="${ctx}/resources/plugins/datetimepicker/jquery.datetimepicker.full.min.js" />
+	<css key="select2" src="${ctx}/resources/plugins/select2/css/select2.min.css" />
+	<js key="select2" src="${ctx}/resources/plugins/select2/select2.full.min.js" />
+	<js key="select2" src="${ctx}/resources/plugins/select2/zh-CN.js" />
 	<!-- system系统相关 -->
 	<css key="system" src="${ctx}/resources/system/css/style.min.css" />
 	<css key="system"> <![CDATA[  <link href="${ctx}/resources/system/img/favicon.ico" rel="shortcut icon" />]]></css>
