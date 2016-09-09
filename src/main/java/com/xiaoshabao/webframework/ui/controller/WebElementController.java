@@ -1,4 +1,4 @@
-package com.xiaoshabao.webframework.controller;
+package com.xiaoshabao.webframework.ui.controller;
 
 import javax.annotation.Resource;
 
@@ -11,12 +11,12 @@ import com.xiaoshabao.baseframework.controller.AbstractController;
 import com.xiaoshabao.baseframework.enums.ErrorEnum;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
-import com.xiaoshabao.webframework.service.ElementService;
+import com.xiaoshabao.webframework.ui.service.WebElementService;
 @Controller
 @RequestMapping("/admin/ui")
-public class ElementController extends AbstractController{
+public class WebElementController extends AbstractController{
 	@Resource(name="elementServiceImpl")
-	private ElementService elementService;
+	private WebElementService elementService;
 
 	@RequestMapping(value="/select/{elementId}")
 	@ResponseBody
