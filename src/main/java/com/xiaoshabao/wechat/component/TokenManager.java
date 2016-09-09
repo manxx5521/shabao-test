@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.xiaoshabao.baseframe.exception.ServiceException;
+import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.wechat.api.wxbase.TokenAPI;
 import com.xiaoshabao.wechat.api.wxbase.result.TokenResult;
 import com.xiaoshabao.wechat.dao.AccessTokenDao;

@@ -2,7 +2,7 @@ package com.xiaoshabao.system.component;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xiaoshabao.baseframe.exception.ServiceException;
+import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.system.dao.SeqStringDao;
 import com.xiaoshabao.system.entity.SeqStringEntity;
 

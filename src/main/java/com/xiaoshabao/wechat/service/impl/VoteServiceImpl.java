@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.xiaoshabao.baseframe.bean.PageValue;
-import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.baseframework.bean.PageValue;
+import com.xiaoshabao.baseframework.exception.ServiceException;
+import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.component.PosterWechatComponent;
 import com.xiaoshabao.wechat.component.ContextHolderWechat;

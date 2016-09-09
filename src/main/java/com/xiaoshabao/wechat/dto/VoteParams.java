@@ -1,6 +1,6 @@
 package com.xiaoshabao.wechat.dto;
 
-import com.xiaoshabao.baseframe.bean.PagingParams;
+import com.xiaoshabao.baseframework.bean.PagingParams;
 
 /**
  * 投票分页参数

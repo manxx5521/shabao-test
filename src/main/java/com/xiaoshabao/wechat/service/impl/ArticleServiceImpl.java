@@ -23,8 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.baseframework.exception.ServiceException;
+import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.system.component.ContextHolderSystem;
 import com.xiaoshabao.system.entity.SessionUserInfo;
 import com.xiaoshabao.webframework.component.ContextHolderUtils;

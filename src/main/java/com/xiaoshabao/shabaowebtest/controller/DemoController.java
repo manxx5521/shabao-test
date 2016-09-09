@@ -7,8 +7,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xiaoshabao.baseframe.controller.AbstractController;
-import com.xiaoshabao.baseframe.exception.DaoException;
+import com.xiaoshabao.baseframework.controller.AbstractController;
+import com.xiaoshabao.baseframework.exception.DaoException;
 import com.xiaoshabao.shabaowebtest.dto.DemoDto;
 import com.xiaoshabao.shabaowebtest.service.DemoService;
 /**

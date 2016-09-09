@@ -8,7 +8,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.system.dao.ShiroDao;
 import com.xiaoshabao.system.dto.LoginUserDto;
 import com.xiaoshabao.system.service.ShiroService;

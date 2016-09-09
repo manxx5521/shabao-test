@@ -1,6 +1,6 @@
 package com.xiaoshabao.system.service;
 
-import com.xiaoshabao.baseframe.service.AbstractService;
+import com.xiaoshabao.baseframework.service.AbstractService;
 import com.xiaoshabao.system.entity.SessionUserInfo;
 
 /**

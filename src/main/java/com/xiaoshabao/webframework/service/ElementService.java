@@ -1,6 +1,6 @@
 package com.xiaoshabao.webframework.service;
 
-import com.xiaoshabao.baseframe.service.AbstractService;
+import com.xiaoshabao.baseframework.service.AbstractService;
 /**
  * 表单元素请求服务
  */

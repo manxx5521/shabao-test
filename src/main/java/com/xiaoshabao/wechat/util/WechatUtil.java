@@ -7,7 +7,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xiaoshabao.baseframe.util.UUIDGenerator;
+import com.xiaoshabao.baseframework.util.UUIDGenerator;
 import com.xiaoshabao.wechat.entity.AccessToken;
 /**
  * 微信工具类

@@ -1,6 +1,6 @@
 package com.xiaoshabao.wechat.service;
 
-import com.xiaoshabao.baseframe.service.AbstractService;
+import com.xiaoshabao.baseframework.service.AbstractService;
 
 
 /**

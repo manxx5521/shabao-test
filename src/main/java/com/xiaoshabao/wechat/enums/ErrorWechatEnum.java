@@ -1,6 +1,6 @@
 package com.xiaoshabao.wechat.enums;
 
-import com.xiaoshabao.baseframe.enums.ErrorInterface;
+import com.xiaoshabao.baseframework.enums.ErrorInterface;
 
 public enum ErrorWechatEnum implements ErrorInterface{
 	/** 登录错误 */

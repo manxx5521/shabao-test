@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xiaoshabao.baseframe.controller.AbstractController;
+import com.xiaoshabao.baseframework.controller.AbstractController;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 /**
  * 扫码

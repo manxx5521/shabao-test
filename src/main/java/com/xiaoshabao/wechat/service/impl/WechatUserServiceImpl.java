@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.system.component.ContextHolderSystem;
 import com.xiaoshabao.system.entity.SessionUserInfo;
 import com.xiaoshabao.wechat.dao.SubscriberDao;

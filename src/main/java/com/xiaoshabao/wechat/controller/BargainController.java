@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xiaoshabao.baseframe.enums.ErrorEnum;
-import com.xiaoshabao.baseframe.exception.ServiceException;
+import com.xiaoshabao.baseframework.enums.ErrorEnum;
+import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.BargainAwardDto;
 import com.xiaoshabao.wechat.dto.BargainInfoDto;

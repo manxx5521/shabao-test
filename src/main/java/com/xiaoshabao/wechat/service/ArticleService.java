@@ -2,8 +2,8 @@ package com.xiaoshabao.wechat.service;
 
 import java.util.List;
 
-import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.baseframe.service.AbstractService;
+import com.xiaoshabao.baseframework.exception.ServiceException;
+import com.xiaoshabao.baseframework.service.AbstractService;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.ArticleDetailDto;
 import com.xiaoshabao.wechat.dto.ArticleInfoDto;

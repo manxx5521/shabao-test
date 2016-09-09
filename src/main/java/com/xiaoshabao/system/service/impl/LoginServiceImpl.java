@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.baseframework.exception.ServiceException;
+import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.system.entity.SessionUserInfo;
 import com.xiaoshabao.system.entity.UserEntity;
 import com.xiaoshabao.system.service.LoginService;

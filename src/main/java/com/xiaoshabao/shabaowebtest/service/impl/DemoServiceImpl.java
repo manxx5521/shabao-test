@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.xiaoshabao.baseframe.exception.DaoException;
-import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.baseframework.exception.DaoException;
+import com.xiaoshabao.baseframework.exception.ServiceException;
+import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.shabaowebtest.dto.DemoDto;
 import com.xiaoshabao.shabaowebtest.service.DemoService;
 

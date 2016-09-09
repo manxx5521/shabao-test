@@ -2,8 +2,8 @@ package com.xiaoshabao.system.service;
 
 import java.util.List;
 
-import com.xiaoshabao.baseframe.exception.DaoException;
-import com.xiaoshabao.baseframe.service.AbstractService;
+import com.xiaoshabao.baseframework.exception.DaoException;
+import com.xiaoshabao.baseframework.service.AbstractService;
 import com.xiaoshabao.system.entity.MenuEntity;
 
 /**

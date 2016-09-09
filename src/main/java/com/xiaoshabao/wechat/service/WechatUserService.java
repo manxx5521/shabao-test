@@ -2,7 +2,7 @@ package com.xiaoshabao.wechat.service;
 
 import java.util.List;
 
-import com.xiaoshabao.baseframe.service.AbstractService;
+import com.xiaoshabao.baseframework.service.AbstractService;
 import com.xiaoshabao.wechat.dto.WechatUserDto;
 /**
  * 微信用户

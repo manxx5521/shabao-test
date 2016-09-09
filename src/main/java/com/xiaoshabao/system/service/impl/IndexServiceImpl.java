@@ -8,8 +8,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.xiaoshabao.baseframe.exception.DaoException;
-import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.baseframework.exception.DaoException;
+import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.system.component.SystemConfig;
 import com.xiaoshabao.system.entity.MenuEntity;
 import com.xiaoshabao.system.service.IndexService;

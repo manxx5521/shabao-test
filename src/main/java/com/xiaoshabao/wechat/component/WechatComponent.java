@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.xiaoshabao.baseframe.exception.ServiceException;
+import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.wechat.api.core.http.HttpClientManager;
 import com.xiaoshabao.wechat.bean.WechatSession;
 import com.xiaoshabao.wechat.dao.SubscriberDao;

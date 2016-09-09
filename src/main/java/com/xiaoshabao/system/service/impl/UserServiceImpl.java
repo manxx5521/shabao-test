@@ -2,7 +2,7 @@ package com.xiaoshabao.system.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.system.entity.UserEntity;
 import com.xiaoshabao.system.service.UserService;
 import com.xiaoshabao.webframework.dto.AjaxResult;

@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.xiaoshabao.baseframe.component.SysConfig;
-import com.xiaoshabao.baseframe.controller.AbstractController;
+import com.xiaoshabao.baseframework.component.SysConfig;
+import com.xiaoshabao.baseframework.controller.AbstractController;
 /**
  * 文件上传操作
  */

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xiaoshabao.baseframe.controller.AbstractController;
+import com.xiaoshabao.baseframework.controller.AbstractController;
 import com.xiaoshabao.webframework.component.ContextHolderUtils;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.api.wxmedia.MediaAPI;

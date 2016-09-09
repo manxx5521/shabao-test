@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.xiaoshabao.baseframe.exception.ServiceException;
+import com.xiaoshabao.baseframework.exception.ServiceException;
 
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;

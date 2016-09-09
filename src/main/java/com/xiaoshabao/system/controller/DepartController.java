@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xiaoshabao.baseframe.exception.ServiceException;
+import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.system.entity.DepartEntity;
 import com.xiaoshabao.system.service.DepartService;
 import com.xiaoshabao.webframework.dto.AjaxResult;

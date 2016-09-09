@@ -3,8 +3,8 @@ package com.xiaoshabao.webframework.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xiaoshabao.baseframe.component.ApplicationContextUtil;
-import com.xiaoshabao.baseframe.component.SysConfig;
+import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
+import com.xiaoshabao.baseframework.component.SysConfig;
 import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 
 public class ResourceManager {

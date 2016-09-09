@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.abel533.sql.SqlMapper;
-import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.baseframework.exception.ServiceException;
+import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.webframework.dao.ElementDao;
 import com.xiaoshabao.webframework.dto.JSTreeNode;
 import com.xiaoshabao.webframework.entity.ElementEntity;

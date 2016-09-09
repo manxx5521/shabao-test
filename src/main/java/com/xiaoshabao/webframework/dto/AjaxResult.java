@@ -1,6 +1,6 @@
 package com.xiaoshabao.webframework.dto;
 
-import com.xiaoshabao.baseframe.enums.ErrorInterface;
+import com.xiaoshabao.baseframework.enums.ErrorInterface;
 import com.xiaoshabao.webframework.enums.AJAXResultEnum;
 
 /**

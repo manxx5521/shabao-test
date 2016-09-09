@@ -2,7 +2,7 @@ package com.xiaoshabao.system.service;
 
 import java.util.Set;
 
-import com.xiaoshabao.baseframe.service.AbstractService;
+import com.xiaoshabao.baseframework.service.AbstractService;
 import com.xiaoshabao.system.dto.LoginUserDto;
 
 public interface ShiroService extends AbstractService{
