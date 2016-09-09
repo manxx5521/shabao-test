@@ -59,6 +59,7 @@
 	<js key="select2" src="${ctx}/resources/plugins/select2/zh-CN.js" />
 	<!-- system系统相关 -->
 	<css key="system" src="${ctx}/resources/system/css/style.min.css" />
+	<css key="system" des="自定义样式" src="${ctx}/resources/system/css/custom.css" />
 	<css key="system"> <![CDATA[  <link href="${ctx}/resources/system/img/favicon.ico" rel="shortcut icon" />]]></css>
 	<js key="system" src="${ctx}/resources/plugins/bootbox/bootbox.js" />
 	<js key="system" src="${ctx}/resources/component/csbox.js" />
