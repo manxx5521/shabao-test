@@ -16,6 +16,7 @@
 	<context:component-scan base-package="com.xiaoshabao.*.shiro" />
 	<context:component-scan base-package="com.xiaoshabao.*.component" />
 	<context:component-scan base-package="com.xiaoshabao.*.job" />
+	<context:component-scan base-package="com.xiaoshabao.webframework.ui.*" />
 	
 	<!-- shiro配置 begin -->
 	<!-- 自定义Realm -->
