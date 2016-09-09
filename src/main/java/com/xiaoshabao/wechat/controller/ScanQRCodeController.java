@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xiaoshabao.baseframe.controller.AbstractController;
-import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 /**
  * 扫码
  */

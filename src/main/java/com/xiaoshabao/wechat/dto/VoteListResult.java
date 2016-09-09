@@ -3,7 +3,7 @@ package com.xiaoshabao.wechat.dto;
 import java.util.List;
 
 import com.xiaoshabao.baseframe.bean.PageValue;
-import com.xiaoshabao.webframe.dto.PosterDto;
+import com.xiaoshabao.webframework.dto.PosterDto;
 import com.xiaoshabao.wechat.entity.VoteCountEntity;
 import com.xiaoshabao.wechat.entity.VoteEntity;
 import com.xiaoshabao.wechat.entity.VotePlayerEntity;

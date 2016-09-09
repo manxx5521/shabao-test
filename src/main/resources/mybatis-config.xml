@@ -25,8 +25,8 @@
         <!-- 配置类的包，别名就是类名，不区分大小写 -->
         <package name="com.xiaoshabao.shabaowebtest.entity" />
         <package name="com.xiaoshabao.shabaowebtest.dto"/>
-        <package name="com.xiaoshabao.webframe.entity" />
-        <package name="com.xiaoshabao.webframe.dto"/>
+        <package name="com.xiaoshabao.webframework.entity" />
+        <package name="com.xiaoshabao.webframework.dto"/>
     </typeAliases>
     <plugins>
 		<!-- com.github.pagehelper为PageHelper类所在包名 -->

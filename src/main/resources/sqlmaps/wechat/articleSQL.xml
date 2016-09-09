@@ -44,7 +44,7 @@
 		</where>
 	</select>
 	
-	<select id="getImage" resultType="com.xiaoshabao.webframe.dto.ImageDto">
+	<select id="getImage" resultType="com.xiaoshabao.webframework.dto.ImageDto">
 		select a.media_id id,b.file_name text,b.url 
 		from wx_media a,td_s_file b
 		where a.file_id=b.file_id

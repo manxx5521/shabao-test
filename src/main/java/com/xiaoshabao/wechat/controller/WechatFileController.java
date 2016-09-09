@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xiaoshabao.baseframe.controller.AbstractController;
-import com.xiaoshabao.webframe.component.ContextHolderUtils;
-import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.webframework.component.ContextHolderUtils;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.api.wxmedia.MediaAPI;
 import com.xiaoshabao.wechat.component.TokenManager;
 import com.xiaoshabao.wechat.component.ContextHolderWechat;

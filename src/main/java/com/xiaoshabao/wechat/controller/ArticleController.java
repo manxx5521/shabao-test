@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xiaoshabao.baseframe.controller.AbstractController;
 import com.xiaoshabao.baseframe.exception.DaoException;
 import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.ArticleDetailDto;
 import com.xiaoshabao.wechat.dto.ArticleInfoDto;
 import com.xiaoshabao.wechat.entity.MediaNewsEntity;

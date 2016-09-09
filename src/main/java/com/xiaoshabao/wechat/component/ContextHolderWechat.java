@@ -2,7 +2,7 @@ package com.xiaoshabao.wechat.component;
 
 import javax.servlet.http.HttpSession;
 
-import com.xiaoshabao.webframe.component.ContextHolderUtils;
+import com.xiaoshabao.webframework.component.ContextHolderUtils;
 import com.xiaoshabao.wechat.bean.WechatSession;
 /**
  * 获取上下问工具类

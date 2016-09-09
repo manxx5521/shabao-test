@@ -13,7 +13,7 @@ import com.xiaoshabao.baseframe.bean.PageValue;
 import com.xiaoshabao.baseframe.controller.AbstractController;
 import com.xiaoshabao.baseframe.exception.DaoException;
 import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.VoteDetailResult;
 import com.xiaoshabao.wechat.dto.VoteListResult;
 import com.xiaoshabao.wechat.dto.VoteParams;

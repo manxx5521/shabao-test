@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import util.ServiceTest;
 
-import com.xiaoshabao.webframe.service.TreeService;
+import com.xiaoshabao.webframework.service.TreeService;
 
 public class TreeServiceImplTest extends ServiceTest{
 	

@@ -10,7 +10,7 @@ import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.system.dao.DepartDao;
 import com.xiaoshabao.system.entity.DepartEntity;
 import com.xiaoshabao.system.service.DepartService;
-import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 
 @Service("departServiceImpl")
 public class DepartServiceImpl extends AbstractServiceImpl implements DepartService {

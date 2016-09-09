@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.xiaoshabao.baseframe.bean.PageValue;
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.impl.AbstractServiceImpl;
-import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.component.PosterWechatComponent;
 import com.xiaoshabao.wechat.component.ContextHolderWechat;
 import com.xiaoshabao.wechat.dao.SubscriberDao;

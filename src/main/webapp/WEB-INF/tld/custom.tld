@@ -11,7 +11,7 @@
 	<uri>/custom-tags</uri>
 	<tag>
 		<name>resource</name>
-		<tag-class>com.xiaoshabao.webframe.tag.ResourceTag</tag-class>
+		<tag-class>com.xiaoshabao.webframework.tag.ResourceTag</tag-class>
 		<display-name>菜单加载组件</display-name>
 		<attribute>
 			<name>type</name>

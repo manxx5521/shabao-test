@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.baseframe.service.AbstractService;
-import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.ArticleDetailDto;
 import com.xiaoshabao.wechat.dto.ArticleInfoDto;
 import com.xiaoshabao.wechat.entity.MediaNewsEntity;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xiaoshabao.baseframe.exception.ServiceException;
 import com.xiaoshabao.system.entity.DepartEntity;
 import com.xiaoshabao.system.service.DepartService;
-import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 
 @RequestMapping("/admin/depart")
 @Controller

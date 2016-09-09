@@ -3,7 +3,7 @@ package com.xiaoshabao.wechat.service;
 import java.util.List;
 
 import com.xiaoshabao.baseframe.service.AbstractService;
-import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.BargainAwardDto;
 import com.xiaoshabao.wechat.dto.BargainInfoDto;
 import com.xiaoshabao.wechat.dto.BargainResult;

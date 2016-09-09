@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xiaoshabao.baseframe.enums.ErrorEnum;
 import com.xiaoshabao.baseframe.exception.ServiceException;
-import com.xiaoshabao.webframe.dto.AjaxResult;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.BargainAwardDto;
 import com.xiaoshabao.wechat.dto.BargainInfoDto;
 import com.xiaoshabao.wechat.dto.BargainResult;

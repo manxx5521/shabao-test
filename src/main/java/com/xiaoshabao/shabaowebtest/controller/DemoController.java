@@ -21,6 +21,10 @@ public class DemoController extends AbstractController{
 	@Resource(name="demoService")
 	private DemoService demoService;
 	
+	@RequestMapping(value="/list")
+	public ModelAndView listDemo (ModelMap model){
+		return new ModelAndView ("/shabaotest/demo/listDemo");
+	}
 	
 	@RequestMapping(value="/test")
 	public ModelAndView reqMap (ModelMap model) throws DaoException{
@@ -33,5 +37,7 @@ public class DemoController extends AbstractController{
 	public ModelAndView test1 (ModelMap model){
 		return new ModelAndView ("/system/test/modeltest");
 	}
+	
+	
 	
 }

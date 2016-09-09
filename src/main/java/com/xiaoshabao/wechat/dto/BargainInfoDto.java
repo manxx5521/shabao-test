@@ -2,7 +2,7 @@ package com.xiaoshabao.wechat.dto;
 
 import java.util.List;
 
-import com.xiaoshabao.webframe.entity.PosterEntity;
+import com.xiaoshabao.webframework.entity.PosterEntity;
 import com.xiaoshabao.wechat.entity.BargainEntity;
 
 /**

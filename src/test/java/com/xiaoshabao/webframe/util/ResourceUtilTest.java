@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.xiaoshabao.webframework.util.ResourceUtil;
+
 public class ResourceUtilTest {
 
 	@Test

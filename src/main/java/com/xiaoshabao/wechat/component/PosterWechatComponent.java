@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.xiaoshabao.webframe.component.PosterComponent;
-import com.xiaoshabao.webframe.dto.PosterDto;
+import com.xiaoshabao.webframework.component.PosterComponent;
+import com.xiaoshabao.webframework.dto.PosterDto;
 import com.xiaoshabao.wechat.enums.WechatType;
 
 @Component("wechatPoster")

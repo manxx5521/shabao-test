@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.xiaoshabao.webframe.dto.ImageDto;
+import com.xiaoshabao.webframework.dto.ImageDto;
 import com.xiaoshabao.wechat.dto.ArticleDetailDto;
 import com.xiaoshabao.wechat.dto.ArticleInfoDto;
 import com.xiaoshabao.wechat.entity.ArticleEntity;

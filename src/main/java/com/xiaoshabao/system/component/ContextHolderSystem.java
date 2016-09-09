@@ -7,7 +7,7 @@ import org.apache.shiro.session.Session;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.system.entity.SessionUserInfo;
-import com.xiaoshabao.webframe.component.IContextSession;
+import com.xiaoshabao.webframework.component.IContextSession;
 /**
  * 上下文操作
  *
