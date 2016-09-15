@@ -8,7 +8,7 @@
 	<title>列表</title>
 	<%@include file="../../context/head.jsp"%>
     <%@include file="../../system/common.jsp"%>
-	<cs:resource type="css" value="jquery,bootstrap,system,bootbox,dataTables" />
+	<cs:resource type="css" value="jquery,jqueryui,select2,dselect2,bootstrap,system,bootbox,dataTables" />
 	<base target="_blank">
 </head>
 <body class="gray-bg">
@@ -50,9 +50,9 @@
 		                            </div>
 		                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 		                                <div class="form-group">
-		                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">营业务：</label>
+		                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">是否：</label>
 		                                    <div class="col-md-8 col-sm-8 col-xs-12">
-		                                        <input name="element_id" class="form-control" type="text" placeholder="Default Input">
+		                                        <select id="select1" name="PUBLIC_BOOLEAN"></select>
 		                                    </div>
 		                                </div>
 		                            </div>
@@ -541,12 +541,17 @@
             </div>
         </div>
     </div>
-    <cs:resource type="js" value="jquery,bootstrap,system,bootbox,jeditable,dataTables" />
+    <cs:resource type="js" value="jquery,bootstrap,jqueryui,system,select2,dselect2,bootbox,jeditable,dataTables" />
     <script>
     	//下面用来显示上下页标签
         $(document).ready(function(){
         	$(".dataTables-example").dataTable({
         		"bSort": false, //排序功能
+        	});
+        	
+        	//下拉框
+        	$('#select1').dselect2({
+        		element_id:100002,
         	});
         });
         function add(){

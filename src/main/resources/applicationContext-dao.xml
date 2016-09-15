@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 	<!--配置数据库相关参数-->
 	<!--扫描注册DAO相关包-->
-	<context:component-scan base-package="com.xiaoshabao.*.dao" />
+	<context:component-scan base-package="com.xiaoshabao.**.dao" />
 	<!--定义c3p0数据源
 	<bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
@@ -73,7 +73,7 @@
 		<!--注入sqlSessionFactory-->
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 		<!--给出需要扫描DAO接口包-->
-		<property name="basePackage" value="com.xiaoshabao.*.dao" />
+		<property name="basePackage" value="com.xiaoshabao.**.dao" />
 	</bean>
 	<!-- 事务配置 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

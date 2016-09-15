@@ -18,11 +18,11 @@ import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.webframework.component.ContextHolderUtils;
 import com.xiaoshabao.webframework.component.SessionManager;
-import com.xiaoshabao.webframework.dao.ElementDao;
 import com.xiaoshabao.webframework.dto.ImageDto;
 import com.xiaoshabao.webframework.entity.ElementEntity;
 import com.xiaoshabao.webframework.entity.ImageElement;
 import com.xiaoshabao.webframework.service.ImageService;
+import com.xiaoshabao.webframework.ui.dao.ElementDao;
 @Service("imageServiceImpl")
 public class ImageServiceImpl extends AbstractServiceImpl implements ImageService{
 	@Autowired

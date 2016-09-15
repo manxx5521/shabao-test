@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 	<!--配置Spring MVC相关配置-->
 	<!--扫描controller包下所有使用注解的类型-->
-	<context:component-scan base-package="com.xiaoshabao.*.controller" />
+	<context:component-scan base-package="com.xiaoshabao.**.controller" />
 	<!--开启SpringMVC注解模式，可以使用Controller注解联系页面，
 		支持数据绑定、数据格式化、JSON转换
 		<mvc:annotation-driven /> 

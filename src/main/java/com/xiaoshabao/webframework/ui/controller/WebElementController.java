@@ -1,5 +1,7 @@
 package com.xiaoshabao.webframework.ui.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -11,18 +13,20 @@ import com.xiaoshabao.baseframework.controller.AbstractController;
 import com.xiaoshabao.baseframework.enums.ErrorEnum;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
+import com.xiaoshabao.webframework.ui.dto.SelectResultDto;
 import com.xiaoshabao.webframework.ui.service.WebElementService;
 @Controller
 @RequestMapping("/admin/ui")
 public class WebElementController extends AbstractController{
-	@Resource(name="elementServiceImpl")
+	@Resource(name="webElementServiceImpl")
 	private WebElementService elementService;
 
 	@RequestMapping(value="/select/{elementId}")
 	@ResponseBody
-	public AjaxResult getSelect(@PathVariable("elementId") Integer elementId){
+	public AjaxResult getSelectValues(@PathVariable("elementId") Integer elementId){
 		try {
-			return new AjaxResult(true,null);
+			List<SelectResultDto> list=elementService.getSelectValues(elementId);
+			return new AjaxResult(list);
 		} catch (ServiceException e) {
 			logger.error("请求下拉列表时，出现业务异常");
 			e.printStackTrace();

@@ -10,11 +10,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.abel533.sql.SqlMapper;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
-import com.xiaoshabao.webframework.dao.ElementDao;
 import com.xiaoshabao.webframework.dto.JSTreeNode;
 import com.xiaoshabao.webframework.entity.ElementEntity;
 import com.xiaoshabao.webframework.entity.TreeElement;
 import com.xiaoshabao.webframework.service.TreeService;
+import com.xiaoshabao.webframework.ui.dao.ElementDao;
 @Service("treeServiceImpl")
 public class TreeServiceImpl extends AbstractServiceImpl implements TreeService{
 	@Autowired

@@ -5,9 +5,9 @@ var dtree = $.widget("ui.dimage",{
 	options : {
 		id : '',//无需传入自动获取
 		element_id:'',	
-		name:'treevalue',//树的名字唯一标识
+		name:'treevalue',//名字唯一标识
 		showpop:true,
-		title:'请选择', //弹出树选择的标题
+		title:'请选择', //标题
 		class:"col-sm-9",
 		value:{},//默认值
 		readonly:false,
@@ -82,7 +82,7 @@ var dtree = $.widget("ui.dimage",{
 	showpop:function(){
 		var element_id=this.options.element_id;
 		if(element_id==''){
-			console.log('未获得树元素id');
+			console.log('未获得元素id');
 			return false;
 		}
 		if(!this.options.resdata){
