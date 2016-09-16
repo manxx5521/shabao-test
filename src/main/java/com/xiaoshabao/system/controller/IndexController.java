@@ -55,6 +55,12 @@ public class IndexController extends AbstractController{
 		
 		return new ModelAndView("/system/main", model);
 	}
+	/***web项目关**/
+	/** 首页 */
+	@RequestMapping(value = "/index")
+	public ModelAndView getIndex(ModelMap model) throws DaoException {
+		return new ModelAndView("/system/web/index", model);
+	}
 
 	
 }

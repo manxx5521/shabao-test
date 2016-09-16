@@ -22,49 +22,74 @@
 	<css key="bootstrap" type="1" src="${ctx}/resources/plugins/bootstrap/css/bootstrap.min.css" />
 	<css key="bootstrap" type="1" src="${ctx}/resources/plugins/bootstrap/css/font-awesome.min.css" />
 	<css key="bootstrap" type="1" src="${ctx}/resources/plugins/bootstrap/css/animate.min.css" />
-	<js key="bootstrap" type="1" src="${ctx}/resources/plugins/bootstrap/js/bootstrap.min.js" />
+	<js  key="bootstrap" type="1" src="${ctx}/resources/plugins/bootstrap/js/bootstrap.min.js" />
 	<css key="bootstrap" type="2" src="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 	<css key="bootstrap" type="2" src="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" />
 	<css key="bootstrap" type="2" src="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" />
-	<js key="bootstrap" type="2" src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" />
+	<js  key="bootstrap" type="2" src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" />
 	<js key="validate" type="1" des="验证" src="${ctx}/resources/plugins/jquery-validation/jquery.validate.min.js" />
 	<js key="validate" type="1" src="${ctx}/resources/plugins/jquery-validation/localization/messages_zh.min.js" />
 	<js key="validate" type="2" src="//cdn.bootcss.com/jquery-validate/1.15.0/jquery.validate.min.js" />
 	<js key="bootbox" src="${ctx}/resources/plugins/bootbox/bootbox.js" />
 	<css key="dataTables" src="${ctx}/resources/plugins/dataTables/css/dataTables.bootstrap.css" />
-	<js key="dataTables" src="${ctx}/resources/plugins/dataTables/jquery.dataTables.js" />
-	<js key="dataTables" src="${ctx}/resources/plugins/dataTables/dataTables.bootstrap.js" />
+	<js  key="dataTables" src="${ctx}/resources/plugins/dataTables/jquery.dataTables.js" />
+	<js  key="dataTables" src="${ctx}/resources/plugins/dataTables/dataTables.bootstrap.js" />
 	<js key="jeditable" des="表单即时编辑" src="${ctx}/resources/plugins/jeditable/jquery.jeditable.js" />
 	<css key="jstree" src="${ctx}/resources/plugins/jstree/default/style.min.css" />
-	<js key="jstree" src="${ctx}/resources/plugins/jstree/jstree.min.js" />
+	<js  key="jstree" src="${ctx}/resources/plugins/jstree/jstree.min.js" />
 	<css key="sysjstree" des="系统相关样式"><![CDATA[ <style> .jstree-open>.jstree-anchor>.fa-folder:before{content:\"\f07c\"}.jstree-default .jstree-icon.none{width:0}</style> ]]></css>
 	<css key="swiper" des="弹窗" src="${ctx}/resources/plugins/swiper/swiper.min.css" />
-	<js key="swiper" des="弹窗" src="${ctx}/resources/plugins/swiper/swiper.jquery.min.js" />
+	<js  key="swiper" des="弹窗" src="${ctx}/resources/plugins/swiper/swiper.jquery.min.js" />
 	<js key="colorbox" des="灯箱" src="${ctx}/resources/plugins/jstree/jstree.min.js" />
 	<js key="masonry" des="瀑布流" src="${ctx}/resources/plugins/masonry/jquery.masonry.min.js" />
 	<js key="leanModal" des="手机弹窗" src="${ctx}/resources/plugins/leanModal/jquery.leanModal.min.js" />
 	<css key="sweetalert" des="提示框" src="${ctx}/resources/plugins/sweetalert/sweetalert.css" />
-	<js key="sweetalert" des="提示框" src="${ctx}/resources/plugins/sweetalert/sweetalert.min.js" />
+	<js  key="sweetalert" des="提示框" src="${ctx}/resources/plugins/sweetalert/sweetalert.min.js" />
 	<css key="icheck" des="表单美化" src="${ctx}/resources/plugins/icheck/custom.css" />
 	<js key="icheck" src="${ctx}/resources/plugins/icheck/icheck.min.js" />
 	<js key="ueditor" des="编辑器" src="${ctx}/resources/plugins/ueditor/ueditor.config.js" />
 	<js key="ueditor" src="${ctx}/resources/plugins/ueditor/ueditor.all.min.js" />
 	<js key="ueditor" src="${ctx}/resources/plugins/ueditor/lang/zh-cn/zh-cn.js" />
 	<css key="fileinput" des="文件上传" src="${ctx}/resources/plugins/fileinput/css/fileinput.min.css" />
-	<js key="fileinput" src="${ctx}/resources/plugins/fileinput/js/fileinput.js" /><!-- 这个删除了后边的ready -->
-	<js key="fileinput" src="${ctx}/resources/plugins/fileinput/js/zh.js" />
+	<js  key="fileinput" src="${ctx}/resources/plugins/fileinput/js/fileinput.js" /><!-- 这个删除了后边的ready -->
+	<js  key="fileinput" src="${ctx}/resources/plugins/fileinput/js/zh.js" />
 	<css key="datetimepicker" des="日期选择" src="${ctx}/resources/plugins/datetimepicker/jquery.datetimepicker.min.css" />
-	<js key="datetimepicker" src="${ctx}/resources/plugins/datetimepicker/jquery.datetimepicker.full.min.js" />
-	<css key="select2" src="${ctx}/resources/plugins/select2/css/select2.min.css" />
-	<js key="select2" src="${ctx}/resources/plugins/select2/select2.full.min.js" />
-	<js key="select2" src="${ctx}/resources/plugins/select2/zh-CN.js" />
+	<js  key="datetimepicker" src="${ctx}/resources/plugins/datetimepicker/jquery.datetimepicker.full.min.js" />
+	<css key="select2" type="1" src="${ctx}/resources/plugins/select2/css/select2.min.css" />
+	<js  key="select2" type="1" src="${ctx}/resources/plugins/select2/select2.full.min.js" />
+	<js  key="select2" type="1" src="${ctx}/resources/plugins/select2/zh-CN.js" />
+	<css key="select2" type="2" src="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css" />
+	<js  key="select2" type="2" src="//cdn.bootcss.com/select2/4.0.3/js/select2.full.min.js" />
+	<js  key="select2" type="2" src="//cdn.bootcss.com/select2/4.0.3/js/i18n/zh-CN.js" />
+	<css key="carousel" type="1" des="bootstrap轮播" src="${ctx}/resources/plugins/owl.carousel/owl.carousel.min.css" />
+	<css key="carousel" type="1" src="${ctx}/resources/plugins/owl.carousel/owl.theme.min.css" />
+	<js  key="carousel" type="1" src="${ctx}/resources/plugins/owl.carousel/owl.carousel.min.js" />
+	<css key="carousel" type="2" src="//cdn.bootcss.com/owl-carousel/1.32/owl.carousel.min.css" />
+	<css key="carousel" type="2" src="//cdn.bootcss.com/owl-carousel/1.32/owl.theme.min.css" />
+	<js  key="carousel" type="2" src="//cdn.bootcss.com/owl-carousel/1.32/owl.carousel.min.js" />
+	<css key="magnific-popup" type="1" des="灯箱插件" src="${ctx}/resources/plugins/magnific-popup/magnific-popup.css" />
+	<js  key="magnific-popup" type="1" src="${ctx}/resources/plugins/magnific-popup/jquery.magnific-popup.min.js" />
+	<css key="magnific-popup" type="2" src="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css" />
+	<js  key="magnific-popup" type="2" src="//cdn.bootcss.com/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" />
+	<css key="superfish" type="1" des="菜单" src="${ctx}/resources/plugins/superfish/superfish.css" />
+	<js  key="superfish" type="1" src="${ctx}/resources/plugins/superfish/hoverIntent.js" />
+	<js  key="superfish" type="1" src="${ctx}/resources/plugins/superfish/superfish.min.js" />
+	<css key="superfish" type="2" src="//cdn.bootcss.com/superfish/1.7.9/css/superfish.min.css" />
+	<js  key="superfish"  type="2" src="${ctx}/resources/plugins/superfish/hoverIntent.js" />
+	<js key="modernizr" type="1" des="浏览器样式兼容" src="${ctx}/resources/plugins/modernizr/modernizr.min.js" />
+	<js key="modernizr" type="2" src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js" />
+	<js key="fastclick" type="1" des="消除移动端点击延迟" src="${ctx}/resources/plugins/fastclick/fastclick.min.js" />
+	<js key="fastclick" type="2" src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js" />
+	<js key="waypoints" type="1" des="滚动监听" src="${ctx}/resources/plugins/waypoints/jquery.waypoints.min.js" />
+	<js key="waypoints" type="2" src="//cdn.bootcss.com/waypoints/4.0.1/jquery.waypoints.min.js" />
+	<css key="themify-icons" des="字体图标" src="${ctx}/resources/plugins/themify-icons/themify-icons.css" />
 	<!-- system系统相关 -->
 	<css key="system" src="${ctx}/resources/system/css/style.min.css" />
 	<css key="system" des="自定义样式" src="${ctx}/resources/system/css/custom.css" />
 	<css key="system"> <![CDATA[  <link href="${ctx}/resources/system/img/favicon.ico" rel="shortcut icon" />]]></css>
-	<js key="system" src="${ctx}/resources/plugins/bootbox/bootbox.js" />
-	<js key="system" src="${ctx}/resources/component/csbox.js" />
-	<js key="system" src="${ctx}/resources/system/js/content.min.js" />
+	<js  key="system" src="${ctx}/resources/plugins/bootbox/bootbox.js" />
+	<js  key="system" src="${ctx}/resources/component/csbox.js" />
+	<js  key="system" src="${ctx}/resources/system/js/content.min.js" />
 	
 	<!-- 微信相关 -->
 	<css key="weui" src="${ctx}/resources/plugins/weui/weui.min.css" />

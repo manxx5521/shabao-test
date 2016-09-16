@@ -86,14 +86,17 @@
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
+	<welcome-file-list>
+		<welcome-file>/index</welcome-file>
+	</welcome-file-list>
 	 <!-- 错误界面  -->
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/WEB-INF/error/500.jsp</location>
+        <location>/500</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/WEB-INF/error/500.jsp</location>
+        <location>/500</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
