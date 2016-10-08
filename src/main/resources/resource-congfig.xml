@@ -75,7 +75,8 @@
 	<js  key="superfish" type="1" src="${ctx}/resources/plugins/superfish/hoverIntent.js" />
 	<js  key="superfish" type="1" src="${ctx}/resources/plugins/superfish/superfish.min.js" />
 	<css key="superfish" type="2" src="//cdn.bootcss.com/superfish/1.7.9/css/superfish.min.css" />
-	<js  key="superfish"  type="2" src="${ctx}/resources/plugins/superfish/hoverIntent.js" />
+	<js  key="superfish" type="2" src="${ctx}/resources/plugins/superfish/hoverIntent.js" />
+	<js  key="superfish" type="2" src="//cdn.bootcss.com/superfish/1.7.9/js/superfish.min.js" />
 	<js key="modernizr" type="1" des="浏览器样式兼容" src="${ctx}/resources/plugins/modernizr/modernizr.min.js" />
 	<js key="modernizr" type="2" src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js" />
 	<js key="fastclick" type="1" des="消除移动端点击延迟" src="${ctx}/resources/plugins/fastclick/fastclick.min.js" />

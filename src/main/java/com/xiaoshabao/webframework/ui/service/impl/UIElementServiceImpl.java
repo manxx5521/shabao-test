@@ -8,9 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.abel533.sql.SqlMapper;
 import com.xiaoshabao.baseframework.exception.ServiceException;
-import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.webframework.ui.dao.ElementDao;
 import com.xiaoshabao.webframework.ui.dao.UIElementDao;
 import com.xiaoshabao.webframework.ui.element.AbstractUIElement;

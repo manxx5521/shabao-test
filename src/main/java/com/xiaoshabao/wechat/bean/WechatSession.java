@@ -12,6 +12,7 @@ public class WechatSession {
 	private Integer accountId;
 	
 	private String openid;
+	private String appid;
 	/** 登录方式1-base和2-info两种 */
 	private int type=0;
 	/**
@@ -57,4 +58,11 @@ public class WechatSession {
 	public void setType(int type) {
 		this.type = type;
 	}
+	public String getAppid() {
+		return appid;
+	}
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
+	
 }

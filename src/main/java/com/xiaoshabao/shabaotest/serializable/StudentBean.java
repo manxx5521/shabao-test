@@ -1,4 +1,4 @@
-package com.xiaoshabao.shabaotest.module.commons.beanutils;
+package com.xiaoshabao.shabaotest.serializable;
 
 
 public class StudentBean{

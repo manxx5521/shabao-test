@@ -54,7 +54,7 @@ public interface BargainService extends AbstractService {
 	 * 获得system项目砍价列表
 	 * @return
 	 */
-	public List<BargainInfoDto> getSystemList();
+	public List<BargainInfoDto> getSystemList(Integer accountId);
 	
 	/**
 	 * 添加初始化

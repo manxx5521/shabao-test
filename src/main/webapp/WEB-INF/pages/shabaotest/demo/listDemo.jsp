@@ -60,7 +60,13 @@
 		                                <div class="form-group">
 		                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">归属部门：</label>
 		                                    <div class="col-md-8 col-sm-8 col-xs-12">
-		                                        <input name="element_id" class="form-control" type="text" placeholder="Default Input">
+		                                        <select class="form-control">
+		                                            <option>Choose option</option>
+		                                            <option>Option one</option>
+		                                            <option>Option two</option>
+		                                            <option>Option three</option>
+		                                            <option>Option four</option>
+		                                        </select>
 		                                    </div>
 		                                </div>
 		                            </div>
@@ -118,6 +124,7 @@
                     	<!-- <button type="submit" class="btn btn-primary col-sm-offset-11">查询</button> -->
 						<div class="">
                             <a onclick="add();" href="javascript:void(0);" class="btn btn-primary btn-sm">添加</a>
+                            <a onclick="test();" href="javascript:void(0);" class="btn btn-primary btn-sm">测试</a>
                         </div>
                         <table class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
@@ -552,10 +559,14 @@
         	//下拉框
         	$('#select1').dselect2({
         		element_id:100002,
+        		hasall:false
         	});
         });
         function add(){
         	window.location.href = '';
+        }
+        function test(){
+        	alert($('#select1').val())
         }
     </script>
 </body>

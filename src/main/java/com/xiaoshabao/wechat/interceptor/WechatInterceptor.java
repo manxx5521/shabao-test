@@ -99,6 +99,7 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 				}
 				userSession.setAccountId(account);
 				userSession.setOpenid(openid);
+				userSession.setAppid(token.getAppid());
 				session.setAttribute(ContextHolderWechat.WECHAT_SESSION, userSession);
 			}
 		} catch (Exception e) {

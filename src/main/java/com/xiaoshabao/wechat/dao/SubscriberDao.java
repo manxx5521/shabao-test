@@ -45,5 +45,5 @@ public interface SubscriberDao {
 	 * @param accountId
 	 * @return
 	 */
-	public List<WechatUserDto> getUserList(@Param("priFrame") String priFrame);
+	public List<WechatUserDto> getUserList(@Param("priFrame") String priFrame,@Param("accountId")Integer accountId);
 }

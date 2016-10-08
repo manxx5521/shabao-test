@@ -1,59 +1,24 @@
 package com.xiaoshabao.wechat.component;
 
-import java.sql.Timestamp;
-
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.xiaoshabao.baseframework.exception.ServiceException;
-import com.xiaoshabao.wechat.api.wxbase.TokenAPI;
-import com.xiaoshabao.wechat.api.wxbase.result.TokenResult;
-import com.xiaoshabao.wechat.dao.AccessTokenDao;
 import com.xiaoshabao.wechat.entity.AccessToken;
-import com.xiaoshabao.wechat.util.WechatUtil;
+import com.xiaoshabao.wechat.service.TokenService;
 
 /**
  * 微信token管理类
  */
-@Component("tokenManager")
+//@Component("tokenManager")通过配置文件注入
 public class TokenManager {
-	private static Logger logger = LoggerFactory.getLogger(TokenManager.class);
-	@Autowired
-	private AccessTokenDao tokenDao;
-	@Resource(name="wechatConfig")
-	private WechatConfig wechatConfig;
-	/** 延迟时间 **/
-	private int time=60000;
-	
-	/**验证类型，只在数据库获取 1*/
-	private int datdatabase=1;
-
+	/**
+	 * spring注入的token服务
+	 */
+	private TokenService tokenService;
 	/**
 	 * 获取所有token信息
 	 * @param accountId
 	 * @return
 	 */
 	public AccessToken getToken(Integer accountId) {
-		AccessToken accessToken=null;
-		try {
-			if(wechatConfig.getTokenType()==datdatabase){
-				return getRealToken(accountId);
-			}
-			accessToken =this.getAccessToken(accountId);
-			AccessToken jsToken=this.getJSToken(accountId, accessToken);
-			accessToken.setJsupdateTime(jsToken.getJsupdateTime());
-			accessToken.setJsaccessToken(jsToken.getJsaccessToken());
-			accessToken.setJsexpiresIn(jsToken.getJsexpiresIn());
-		} catch (Exception e) {
-			logger.error("获取token错误"+e.getMessage());
-			e.printStackTrace();
-			throw new ServiceException("获取token错误");
-		}
-		return accessToken;
+		return tokenService.getToken(accountId);
 	}
 	
 	/**
@@ -62,135 +27,30 @@ public class TokenManager {
 	 * @return
 	 */
 	public AccessToken getAccessToken(Integer accountId) {
-		AccessToken accessToken=null;
-		try {
-			if(wechatConfig.getTokenType()==datdatabase){
-				return getRealToken(accountId);
-			}
-			//现有
-			accessToken =this.getMemoryToken(accountId);
-			accessToken=this.getAccessToken(accountId,accessToken);
-		} catch (Exception e) {
-			logger.error("获取token错误"+e.getMessage());
-			e.printStackTrace();
-			throw new ServiceException("获取token错误");
-		}
-		return accessToken;
+		return tokenService.getAccountToken(accountId);
 	}
 	/**
-	 * 获取accessToken
+	 * 获取accessTokenString
 	 * @param accountId
-	 * @param accessToken
 	 * @return
 	 */
-	public AccessToken getAccessToken(Integer accountId,AccessToken accessToken) {
-		//计算存在的token是否符合规则
-		long time_now_long = new java.util.Date().getTime();
-		if (time_now_long - accessToken.getUpdateTime().getTime() > accessToken.getExpiresIn() * 1000 - time) {
-			accessToken=this.updateAccessToken(accountId, accessToken, time_now_long);
-		}
-		return accessToken;
-	}
-	/**
-	 * 更新Tokon信息包括数据库和内存
-	 * @param accountId
-	 * @param accessToken
-	 * @param time_now_long
-	 * @return
-	 */
-	public AccessToken updateAccessToken(Integer accountId,AccessToken accessToken,long time_now_long) {
-		logger.debug("内存中的accessToken不在有效期内需要重新换取");
-		TokenResult token=TokenAPI.getAccessTokenAll(accessToken.getAppid(), accessToken.getAppsecret());
-		accessToken.setUpdateTime(new Timestamp(time_now_long));
-		accessToken.setAccessToken(token.getToken());
-		accessToken.setExpiresIn(token.getExpires_in());
-		int i=tokenDao.updateAccessToken(accessToken);
-		if(i<1){
-			logger.error("换取的accessToken未能更新到数据库");
-		}
-		WechatUtil.accessTokens.put(accountId, accessToken);
-		logger.debug(accountId+"成功在服务器获取accessToken");
-		return accessToken;
+	public String getAccessTokenString(Integer accountId) {
+		return tokenService.getAccountToken(accountId).getAccessToken();
 	}
 	
 	/**
 	 * 获取jsToken
 	 */
 	public AccessToken getJSToken(Integer accountId){
-		AccessToken accessToken=null;
-		try {
-			if(wechatConfig.getTokenType()==datdatabase){
-				return getRealToken(accountId);
-			}
-			accessToken =this.getMemoryToken(accountId);
-			accessToken=this.getJSToken(accountId,accessToken);
-		} catch (Exception e) {
-			logger.error("获取token错误"+e.getMessage());
-			e.printStackTrace();
-			throw new ServiceException("获取token错误");
-		}
-		return accessToken;
+		return tokenService.getJSToken(accountId);
 	}
-	/**
-	 * 获取JSToken
-	 * @param accountId
-	 * @param accessToken
-	 * @return
-	 */
-	public AccessToken getJSToken(Integer accountId,AccessToken accessToken){
-		//计算存在的token是否符合规则
-		long time_now_long = new java.util.Date().getTime();
-		if (time_now_long - accessToken.getJsupdateTime().getTime() > accessToken.getJsexpiresIn() * 1000 - time) {
-			this.updateJSToken(accountId, accessToken, time_now_long);
-		}
-		return accessToken;
-	}
-	public AccessToken updateJSToken(Integer accountId,AccessToken accessToken,long time_now_long ){
-		logger.debug("内存中的jsToken不在有效期内需要重新换取");
-		//判断accessToken
-		accessToken=getAccessToken(accountId,accessToken);
-		TokenResult token=TokenAPI.getJSTokenAll(accessToken.getAccessToken());
-		accessToken.setJsupdateTime(new Timestamp(time_now_long));
-		accessToken.setJsaccessToken(token.getToken());
-		accessToken.setJsexpiresIn(token.getExpires_in());
-		int i=tokenDao.updateJSToken(accessToken);
-		if(i<1){
-			logger.error("换取的jsToken未能更新到数据库");
-		}
-		WechatUtil.accessTokens.put(accountId, accessToken);
-		logger.debug(accountId+"成功在服务器获取jsToken");
-		return accessToken;
-	}
-	/**
-	 * 获得内存中的token
-	 * <br>
-	 * 如果没有会获取数据库的token放到内存中
-	 * @param accountId
-	 */
-	private AccessToken getMemoryToken(Integer accountId){
-		logger.debug(accountId+"开始获取Token");
-		// 获得静态变量里缓存的token
-		AccessToken accessToken = WechatUtil.accessTokens.get(accountId);
-		
-		//将数据库的信息取出放到内存
-		if (accessToken == null) {
-			logger.debug("内存中不存在accessToken，在数据库中获取放到内存");
-			AccessToken token =getRealToken(accountId);
-			WechatUtil.accessTokens.put(accountId, token);
-			accessToken=token;
-		}
-		return accessToken;
-	}
+
 	
-	/**
-	 * 获得数据库信息
-	 */
-	private AccessToken getRealToken(Integer accountId){
-		AccessToken token = tokenDao.getTokenById(accountId);
-		if (token == null) {
-			throw new ServiceException("未在数据库中获得token信息");
-		}
-		return token;
+	public TokenService getTokenService() {
+		return tokenService;
 	}
-	
+
+	public void setTokenService(TokenService tokenService) {
+		this.tokenService = tokenService;
+	}
 }

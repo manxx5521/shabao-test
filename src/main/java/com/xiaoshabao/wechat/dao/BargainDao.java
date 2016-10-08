@@ -49,7 +49,7 @@ public interface BargainDao {
 	/**
 	 * 获得system项目砍价列表
 	 */
-	public List<BargainInfoDto> getSystemList(@Param("priFrame")String priFrame);
+	public List<BargainInfoDto> getSystemList(@Param("priFrame")String priFrame,@Param("accountId")Integer accountId);
 	/**
 	 * 获得system项目砍价活动 详细信息
 	 */

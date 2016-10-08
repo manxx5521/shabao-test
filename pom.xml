@@ -306,6 +306,12 @@
     		<version>2.3.23</version>
 		</dependency>
 		
+		<!-- webservice cxf -->
+		<dependency>
+		    <groupId>org.apache.cxf</groupId>
+		    <artifactId>cxf-rt-frontend-jaxws</artifactId>
+		    <version>3.1.7</version>
+		</dependency>
 		
 
 	</dependencies>

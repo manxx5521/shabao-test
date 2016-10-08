@@ -117,9 +117,10 @@ public class BargainController {
 	 * @return
 	 */
 	@RequestMapping("/admin/wechat/bargain/list")
-	public ModelAndView getSystemList(ModelMap model){
-		List<BargainInfoDto> list=bargainService.getSystemList();
+	public ModelAndView getSystemList(ModelMap model,Integer accountId){
+		List<BargainInfoDto> list=bargainService.getSystemList(accountId);
 		model.put("data", list);
+		model.put("accountId", accountId);
 		return new ModelAndView("/wechat/bargain/system/bargainList");
 	}
 	/**

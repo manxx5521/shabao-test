@@ -21,7 +21,7 @@ public abstract class AbstractUIElement<E extends FormElementDef> implements UIE
 	
 	/** element带的参数 */
 	private E elementDef;
-
+	
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * 给表单元元素设置值

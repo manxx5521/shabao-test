@@ -23,10 +23,11 @@ var asiainfoSelect2 = $.widget("ui.dselect2", {
 		validation:function(){ //获取数据时可能要做的验证
 			return true;
 		},
-		hasall:false,//是否有请选择,select2有问题无法填true
-		datadefault:{"id":"","text":"请选择"},//默认请选择数据
+		hasall:true,//是否有请选择,select2有问题无法填true
+		datadefault:{id:'',text:''},//默认请选择数据
+		placeholder:'请选择',
 		minimumResultsForSearch: Infinity,  //隐藏搜索框
-		//allowClear: true,
+		allowClear: true,
 		/*templateSelection:function(state){
 			var text='<span style="white-space:nowrap;">' + state.text + '</span> '
 			return text;
@@ -92,13 +93,11 @@ var asiainfoSelect2 = $.widget("ui.dselect2", {
 						}
 					}
 					this.options.data=data;
-					$(this.options.id).val(null).empty();
+					$(this.options.id).empty();
 					$(this.options.id).select2(this.options);
 					
 					if(this.options.value!=''){
-						//$(this.options.id+" option[value='"+this.options.default_value+"']").attr("selected", true);
-						//$(this.options.id).select2(this.options);
-						$(this.options.id).select2('val',this.options.value);
+						$(this.options.id).val(this.options.value).trigger("change");;
 					}
 					var disabled=$(this.options.id).attr("disabled");
 					if(disabled=='true'||disabled=='disabled'||this.options.disabled==true){

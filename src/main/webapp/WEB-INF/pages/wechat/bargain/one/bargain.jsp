@@ -14,6 +14,27 @@
 <%@include file="../../../context/head.jsp"%>
 <cs:resource type="all" value="jquery,swiper,leanModal,jweixin,weui" />
 <%@include file="../../common.jsp"%>
+<!--微信分享-->
+<script type="text/javascript">
+	wx.ready(function() {
+		var shareData = {
+			title : '${data.bargainName}',
+			desc : '${data.des}',
+			link : getInfoUrl('${domain}${ctx}/wechat/bargain/'+
+				'<c:if test="${ empty data.info.joinUser.joinId}">${data.bargainId}/bargain</c:if>'
+				+'<c:if test="${ !empty data.info.joinUser.joinId}">${data.info.joinUser.joinId}/share</c:if>'),
+			imgUrl : '${domain}${ctx}${data.posters[0].image}'
+		};
+		wx.onMenuShareAppMessage(shareData);
+		wx.onMenuShareTimeline(shareData);
+		wx.onMenuShareQQ(shareData);
+		wx.onMenuShareWeibo(shareData);
+	});
+	wx.error(function(res) {
+		alert(res.errMsg); 
+	});
+</script>
+<!--END 微信分享-->
 <link href="${ctx}/resources/wechat/bargain/one/base.css" rel="stylesheet">
 <link href="${ctx}/resources/wechat/bargain/one/index.css" rel="stylesheet">
 <link href="${ctx}/resources/wechat/bargain/one/media.css" rel="stylesheet">
@@ -408,27 +429,6 @@ function notwinning() {
 	autioPlay(document.getElementById('player_audio'), $('.player_audio'));
 }
 </script>
-<!--微信分享-->
-<script type="text/javascript">
-	wx.ready(function() {
-		var shareData = {
-			title : '${data.bargainName}',
-			desc : '${data.des}',
-			link : '${domain}${ctx}/wechat/bargain/'+
-				'<c:if test="${ empty data.info.joinUser.joinId}">${data.bargainId}/bargain</c:if>'
-				+'<c:if test="${ !empty data.info.joinUser.joinId}">${data.info.joinUser.joinId}/share</c:if>',
-			imgUrl : '${domain}${ctx}${data.posters[0].image}'
-		};
-		wx.onMenuShareAppMessage(shareData);
-		wx.onMenuShareTimeline(shareData);
-		wx.onMenuShareQQ(shareData);
-		wx.onMenuShareWeibo(shareData);
-	});
-	wx.error(function(res) {
-		alert(res.errMsg); 
-	});
-</script>
-<!--END 微信分享-->
 	<!-- <div id="lean_overlay"></div> -->
 </body>
 </html>

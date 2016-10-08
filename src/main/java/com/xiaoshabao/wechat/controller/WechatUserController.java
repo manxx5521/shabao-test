@@ -6,9 +6,14 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xiaoshabao.baseframework.enums.ErrorEnum;
+import com.xiaoshabao.baseframework.exception.ServiceException;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.WechatUserDto;
 import com.xiaoshabao.wechat.service.WechatUserService;
 
@@ -25,9 +30,10 @@ public class WechatUserController {
 	 * @return
 	 */
 	@RequestMapping("/admin/wechat/user/list")
-	public ModelAndView getList(ModelMap model){
-		List<WechatUserDto> list=wechatUserService.getList();
+	public ModelAndView getList(ModelMap model,Integer accountId){
+		List<WechatUserDto> list=wechatUserService.getList(accountId);
 		model.put("data", list);
+		model.put("accountId", accountId);
 		return new ModelAndView("/wechat/user/userList");
 	}
 	
@@ -36,12 +42,12 @@ public class WechatUserController {
 	 * @param joinId
 	 * @param posterState 是否需要更新海报图片
 	 * @return
-	 
+	 */
 	@ResponseBody
-	@RequestMapping("/admin/wechat/user/list")
-	public AjaxResult updateSystemBargain(){
+	@RequestMapping("/admin/wechat/user/{accountId}/sync")
+	public AjaxResult syncUser(@PathVariable("accountId")Integer accountId){
 		try {
-			return null;
+			return wechatUserService.syncUser(accountId);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			return new AjaxResult(e.getMessage());
@@ -50,5 +56,4 @@ public class WechatUserController {
 			return new AjaxResult(ErrorEnum.INNER_ERROR);
 		}
 	}
-	*/
 }

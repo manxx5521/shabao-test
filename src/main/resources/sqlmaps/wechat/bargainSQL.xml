@@ -106,6 +106,9 @@
 		where a.account_id=b.account_id
 			and	b.depart_id=t.depart_id
 			and t.depart_frame like ${priFrame}
+			<if test="accountId !=null and accountId !='' ">
+				and a.account_id=#{accountId}
+			</if>
 		order by a.create_time desc
 	</select>
 	<!--查询详情设置信息-->

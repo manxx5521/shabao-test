@@ -23,4 +23,18 @@
 						'chooseWXPay', 'openProductSpecificView', 'addCard',
 						'chooseCard', 'openCard' ]
 	});
+	function getUrl(url,scope){
+		authUrl='https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
+		var appid='${wechat.appid}';
+		var accountId='${wechat.accountId}';
+		authUrl=authUrl.replace('APPID', appid).replace('REDIRECT_URI', encodeURI(url))
+			.replace('STATE', accountId).replace('SCOPE', scope);
+		return authUrl;
+	}
+	function getBaseUrl(url){
+		return getUrl(url,'snsapi_base');
+	}
+	function getInfoUrl(url){
+		return getUrl(url,'snsapi_userinfo');
+	}
 </script>

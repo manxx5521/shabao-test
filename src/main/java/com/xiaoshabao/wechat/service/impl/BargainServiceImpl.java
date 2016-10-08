@@ -322,9 +322,9 @@ public class BargainServiceImpl extends AbstractServiceImpl implements BargainSe
 	/*********************** system项目相关 begin**************************/
 	//获得system项目砍价列表
 	@Override
-	public List<BargainInfoDto> getSystemList() {
+	public List<BargainInfoDto> getSystemList(Integer accountId) {
 		String priFrame=ContextHolderSystem.getPriFrame();
-		List<BargainInfoDto> list=bargainDao.getSystemList(priFrame);
+		List<BargainInfoDto> list=bargainDao.getSystemList(priFrame,accountId);
 		return list;
 	}
 	@Override

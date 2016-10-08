@@ -8,7 +8,7 @@
 	<title>砍价列表</title>
 	<%@include file="../../context/head.jsp"%>
     <%@include file="../../system/common.jsp"%>
-	<cs:resource type="css" value="jquery,bootstrap,system,bootbox,dataTables" />
+	<cs:resource type="css" value="jquery,bootstrap,system,bootbox,dataTables,select2" />
 	<base target="_blank">
 </head>
 <body class="gray-bg">
@@ -37,21 +37,29 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                    	<form class="form-inline">
-  							<div class="form-group col-xs-4">
-    							<label for="exampleInputName2" class="col-xs-5 control-label">微信帐号</label>
-    							<input type="text" class="form-control col-xs-7" id="exampleInputName2" placeholder="Jane Doe">
-  							</div>
+                    	<form id ="form1" class="form-horizontal form-label-left" action="./list" target="_self">
+                    		<div class="row search">
+                    			<div class="col-md-12 col-sm-12 col-xs-12">
+                    				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		                                <div class="form-group">
+		                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">帐号：</label>
+		                                    <div class="col-md-8 col-sm-8 col-xs-12">
+		                                        <select id="accountId" name="accountId"></select>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <button class="btn btn-primary col-sm-offset-11" type="button" onclick="$('#form1').submit();">执行查询</button>
+                            	</div>
+                            </div>
                     	</form>
-                    	<button type="submit" class="btn btn-primary col-sm-offset-11">查询</button>
 						<div class="">
-                            <a onclick="add();" href="javascript:void(0);" class="btn btn-primary btn-sm">添加</a>
-                           <!--  <a onclick="addByUe();" href="javascript:void(0);" class="btn btn-primary ">添加</a> -->
+                            <a onclick="sync();" href="javascript:void(0);" class="btn btn-primary btn-sm">同步用户</a>
                         </div>
                         <table class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
                                     <th>应用名</th>
+                                    <th>openid</th>
                                     <th>昵称</th>
                                     <th>性别</th>
                                     <th>省份</th>
@@ -64,6 +72,7 @@
                             	<c:forEach var="r" items="${data}" varStatus="idx">
                                 <tr class="gradeX">
                                     <td> ${r.appName}</td>
+                                    <td> ${r.openid}</td>
                                     <td> ${r.nickname}</td>
                                     <td><c:if test="${r.sex==1}">男</c:if><c:if test="${r.sex==0}">女</c:if></td>
                                     <td> ${r.province}</td>
@@ -79,16 +88,38 @@
             </div>
         </div>
     </div>
-    <cs:resource type="js" value="jquery,bootstrap,system,bootbox,jeditable,dataTables" />
+    <cs:resource type="js" value="jquery,bootstrap,system,bootbox,jeditable,dataTables,jqueryui,select2,dselect2" />
     <script>
     	//下面用来显示上下页标签
         $(document).ready(function(){
         	$(".dataTables-example").dataTable({
         		"bSort": false, //排序功能
         	});
+        	//下拉框
+        	$('#accountId').dselect2({
+        		element_id:100003,
+        		value:'${accountId}'
+        	});
         });
-        function add(){
-        	window.location.href = window.webroot+'/admin/wechat/bargain/init';
+        function sync(){
+        	var account_id=$('#accountId').val();
+        	if(!account_id){
+        		cbox.alert('请选择同步帐号');
+        		return false;
+        	}
+        	$.ajax({
+				  type: 'POST',
+				  url: window.webroot+'/admin/wechat/user/'+account_id+'/sync',
+				  data: {},
+				  dataType:'json',
+				  success: function(result){
+					  if(result.success){
+						  cbox.info(result.message);
+					  }else{
+						  cbox.alert(result.message);
+					  }
+				 }
+			});
         }
     </script>
 </body>

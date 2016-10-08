@@ -53,5 +53,8 @@
 		WHERE A.ACCOUNT_ID=B.ACCOUNT_ID
 			and b.depart_id=t.depart_id
 			and t.depart_frame like ${priFrame}
+			<if test="accountId !=null and accountId !='' ">
+				and a.account_id=#{accountId}
+			</if>
 	</select>
 </mapper>

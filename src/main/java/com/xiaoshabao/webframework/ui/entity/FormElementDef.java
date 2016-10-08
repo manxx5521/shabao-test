@@ -12,7 +12,6 @@ public class FormElementDef {
 	protected String help;
 	protected String tempplate;
 	protected String viewtempplate;
-	
    
 
 	/**

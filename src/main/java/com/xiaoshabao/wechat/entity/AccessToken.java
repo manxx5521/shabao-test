@@ -19,15 +19,25 @@ public class AccessToken {
 	 * 微信帐号的id
 	 */
 	private String appid;
+	
 	/**
-	 * 微信给的加密
+	 * 微信系统名
 	 */
-	private String appsecret;
-
+	private String appName;
+	
 	/**
 	 * 同一个appid下的应用id
 	 */
 	private String id;
+	/**
+	 * 微信给的加密
+	 */
+	private String appsecret;
+	
+	/**
+	 * 消息加密秘钥
+	 */
+	private String encodingAESKey;
 
 	/**
 	 * 凭证
@@ -136,4 +146,19 @@ public class AccessToken {
 		this.jsupdateTime = jsupdateTime;
 	}
 
+	public String getEncodingAESKey() {
+		return encodingAESKey;
+	}
+
+	public void setEncodingAESKey(String encodingAESKey) {
+		this.encodingAESKey = encodingAESKey;
+	}
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
 }

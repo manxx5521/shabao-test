@@ -86,5 +86,12 @@
 	<!-- 项目自定义配置 begin-->
 	<!-- web项目中获取项目session参数 -->
 	<bean id="contextSession" class="com.xiaoshabao.system.component.ContextHolderSystem" />
+	
+	<!-- 项目中获取项目token参数服务类 -->
+	<bean id="tokenManager" class="com.xiaoshabao.wechat.component.TokenManager" >
+		<property name="tokenService">
+			<ref bean="${wechat.tokenService}" />
+		</property>
+	</bean>
 	<!-- 项目自定义配置 end-->
 </beans>

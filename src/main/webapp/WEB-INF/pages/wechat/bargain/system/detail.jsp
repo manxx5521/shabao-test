@@ -206,7 +206,7 @@
 		//初始化文件上传
 		$("#file-5").fileinput({
 			language: 'zh', //设置语言
-               uploadUrl: "http://localhost:8080/shabao-test/file/upload", //上传的地址
+               uploadUrl: window.webroot+'/file/upload', //上传的地址
                allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
                uploadExtraData:{'dir': '/resources/upload/poster/', 'type':'image'},
                uploadAsync: true, //默认异步上传
