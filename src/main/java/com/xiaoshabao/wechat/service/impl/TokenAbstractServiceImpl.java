@@ -106,7 +106,7 @@ public abstract class TokenAbstractServiceImpl implements TokenService{
 	/**
 	 * 获得内存中的token
 	 * <br>
-	 * 如果没有会获取数据库的token放到内存中
+	 * 如果没有会获取数据库的token放到内存中(不保证token有效)
 	 * @param accountId
 	 */
 	protected AccessToken getMemoryToken(Integer accountId){

@@ -12,6 +12,8 @@ import com.xiaoshabao.wechat.entity.AccessToken;
 import com.xiaoshabao.wechat.service.TokenService;
 /**
  * token服务
+ * 生成客户端代码命令
+ * wsdl2java -p com.xiaoshabao.wechat.webservice -d E:/test -client http://www.xiaoshabao.com/ws/token?wsdl
  */
 @WebService
 @Component("tokenServerWSImpl")

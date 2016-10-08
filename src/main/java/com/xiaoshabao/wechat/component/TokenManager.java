@@ -13,6 +13,14 @@ public class TokenManager {
 	 */
 	private TokenService tokenService;
 	/**
+	 * 获得帐号信息(不保证token有效)
+	 * @param accountId
+	 * @return
+	 */
+	public AccessToken getAccountToken(Integer accountId){
+		return tokenService.getAccountToken(accountId);
+	};
+	/**
 	 * 获取所有token信息
 	 * @param accountId
 	 * @return
@@ -27,7 +35,7 @@ public class TokenManager {
 	 * @return
 	 */
 	public AccessToken getAccessToken(Integer accountId) {
-		return tokenService.getAccountToken(accountId);
+		return tokenService.getAccessToken(accountId);
 	}
 	/**
 	 * 获取accessTokenString
@@ -35,7 +43,7 @@ public class TokenManager {
 	 * @return
 	 */
 	public String getAccessTokenString(Integer accountId) {
-		return tokenService.getAccountToken(accountId).getAccessToken();
+		return tokenService.getAccessToken(accountId).getAccessToken();
 	}
 	
 	/**
@@ -45,7 +53,7 @@ public class TokenManager {
 		return tokenService.getJSToken(accountId);
 	}
 
-	
+	/************** getter and setter*****************/
 	public TokenService getTokenService() {
 		return tokenService;
 	}

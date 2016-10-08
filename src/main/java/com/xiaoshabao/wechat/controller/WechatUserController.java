@@ -38,9 +38,7 @@ public class WechatUserController {
 	}
 	
 	/**
-	 * 修改砍价活动
-	 * @param joinId
-	 * @param posterState 是否需要更新海报图片
+	 * 同步用户
 	 * @return
 	 */
 	@ResponseBody
