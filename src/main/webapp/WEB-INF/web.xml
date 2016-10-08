@@ -35,7 +35,7 @@
 	<!-- 加载Spring配置文件 ContextConfigLocation监听要装配的内容-->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath*:/applicationContext.xml,classpath*:/applicationContext-dao.xml</param-value>
+		<param-value>classpath*:/applicationContext.xml,classpath*:/applicationContext-dao.xml,classpath*:/applicationContext-ws.xml</param-value>
 	</context-param>
 	<!-- 编码过滤器 -->
 	<filter>
@@ -74,6 +74,16 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<!-- spring设置  end -->
+	<!-- cxf  begin -->
+	<servlet>  
+	 <servlet-name>CXFServlet</servlet-name>  
+	 <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>  
+	</servlet>  
+	<servlet-mapping>  
+	   <servlet-name>CXFServlet</servlet-name>  
+	   <url-pattern>/ws/*</url-pattern>  
+	</servlet-mapping>
+	<!-- cxf  end -->
 	
 	<!--JSP自定义标签设置-->
 	<jsp-config>

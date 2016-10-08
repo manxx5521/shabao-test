@@ -19,6 +19,9 @@ public class WechatConfig {
 	/** 微信自动登录方式 */
 	@Value("${wechat.loginType}")
 	private String loginType;
+	/**获取token方式*/
+	@Value("${wechat.tokenService}")
+	private String tokenService;
 
 	public String getDomain() {
 		return domain;
@@ -42,6 +45,14 @@ public class WechatConfig {
 
 	public void setLoginType(String loginType) {
 		this.loginType = loginType;
+	}
+
+	public String getTokenService() {
+		return tokenService;
+	}
+
+	public void setTokenService(String tokenService) {
+		this.tokenService = tokenService;
 	}
 
 }
