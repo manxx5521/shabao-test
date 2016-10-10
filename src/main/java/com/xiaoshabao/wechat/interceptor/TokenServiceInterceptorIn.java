@@ -2,6 +2,8 @@ package com.xiaoshabao.wechat.interceptor;
 
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.binding.soap.SoapMessage;
 import org.apache.cxf.headers.Header;
 import org.apache.cxf.interceptor.Fault;
@@ -30,12 +32,24 @@ public class TokenServiceInterceptorIn  extends AbstractPhaseInterceptor<SoapMes
         Header firstHeader=headers.get(0);
         Element ele=(Element) firstHeader.getObject();
         NodeList keys=ele.getElementsByTagName("key");
+        NodeList times=ele.getElementsByTagName("time");
         if(keys.getLength()!=1){
-            throw new Fault(new IllegalArgumentException("用户名格式不对"));
+            throw new Fault(new IllegalArgumentException("key格式不对"));
         }
-        String key=keys.item(0).getNodeValue();
-        if(!key.equals(this.key)){
-        	 throw new Fault(new IllegalArgumentException("用户名格式不对"));
+        if(times.getLength()!=1){
+            throw new Fault(new IllegalArgumentException("时间格式不对"));
+        }
+        String key=keys.item(0).getTextContent();
+        String time=times.item(0).getTextContent();
+        if(StringUtils.isEmpty(key)){
+        	throw new Fault(new IllegalArgumentException("key格式不对"));
+        }
+        if(StringUtils.isEmpty(time)){
+        	throw new Fault(new IllegalArgumentException("时间格式不对"));
+        }
+        String md5=DigestUtils.md5Hex(this.key+time);
+        if(!key.equals(md5)){
+        	 throw new Fault(new IllegalArgumentException("key验证未通过"));
         }
          
     }

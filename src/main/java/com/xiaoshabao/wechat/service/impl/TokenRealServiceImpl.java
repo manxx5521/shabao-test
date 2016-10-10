@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.wechat.entity.AccessToken;
 /**
- * 直接在webService侧获得
+ * 直接在数据库侧获得
  */
 @Service("tokenRealServiceImpl")
 public class TokenRealServiceImpl extends TokenAbstractServiceImpl{
