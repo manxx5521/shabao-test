@@ -1,5 +1,6 @@
 package com.xiaoshabao.wechat.interceptor;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -25,6 +26,7 @@ public class TokenServiceInterceptorIn  extends AbstractPhaseInterceptor<SoapMes
      * 拦截获取消息
      */
     public void handleMessage(SoapMessage message) throws Fault {
+    	
         List<Header> headers=message.getHeaders();
         if(headers==null || headers.size()==0){
             throw new Fault(new IllegalArgumentException("没有Header,拦截器实施拦截"));
@@ -47,7 +49,19 @@ public class TokenServiceInterceptorIn  extends AbstractPhaseInterceptor<SoapMes
         if(StringUtils.isEmpty(time)){
         	throw new Fault(new IllegalArgumentException("时间格式不对"));
         }
+        long ltime;
+		try {
+			ltime = Long.valueOf(time);
+		} catch (NumberFormatException e) {
+			throw new Fault(new IllegalArgumentException("时间格式不对"));
+		}
+		long newDate=new Date().getTime();
+        if((newDate-1000*5)>ltime){
+        	 throw new Fault(new IllegalArgumentException("已超过最大验证时间"));
+        }
+        
         String md5=DigestUtils.md5Hex(this.key+time);
+        
         if(!key.equals(md5)){
         	 throw new Fault(new IllegalArgumentException("key验证未通过"));
         }
