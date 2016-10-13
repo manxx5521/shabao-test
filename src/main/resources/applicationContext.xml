@@ -3,10 +3,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:p="http://www.springframework.org/schema/p"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context 
-        http://www.springframework.org/schema/context/spring-context.xsd">
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
         
     <!-- 加载配置文件便于系统使用 -多个可用逗号分割-->
 	<context:property-placeholder location="classpath*:/config.properties"
@@ -39,16 +39,23 @@
 	            /admin/login.html=anon
 	            /admin/loginIN.html=anon
 	            /admin/accountUser=perms["wUser:select"]
-	            /admin/wechatUserList=perms["wUser:select"]
+	            /admin/wechatUserList=login,perms["wUser:select"]
 				/admin/**=authc
 	        </value>  
 	    </property>
-	</bean>  
-	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->  
+	    <!--过滤器 这个过滤器需要在上边的URL配置才能进入-->
+	    <property name="filters">
+           <util:map>
+              <entry key="login" value-ref="loginFilter"></entry>
+           </util:map>
+       </property>
+	</bean>
+	<bean id="loginFilter" class="com.xiaoshabao.system.shiro.filter.LoginFilter"/>  
+	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 生命周期处理 -->  
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>  
 	<!-- 开启Shiro注解 -->
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>  
-  		<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
+  	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
   	  <property name="securityManager" ref="securityManager"/>  
     </bean>  
 	<!-- shiro配置 end -->
@@ -59,13 +66,21 @@
         <property name="minIdle" value="${redis.minIdle}"/><!-- 最小闲置 -->
         <property name="testOnBorrow" value="${redis.testOnBorrow}"/><!-- 可以获取 -->
     </bean>  
-      
+    <!-- redis 配置,也可以把配置挪到properties配置文件中,再读取 -->
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+		<constructor-arg index="0" ref="jedisPoolConfig" />
+	    <constructor-arg index="2" value="${redis.port}"  name="port" type="int"/>
+	    <constructor-arg index="3" value="5000"  name="timeout" type="int"/>
+	    <constructor-arg index="1" value="${redis.host}" name="host" type="java.lang.String"/>
+	</bean>
+    <!--其他配置方式 使用spring自带的redis
     <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"  
         p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}"  p:pool-config-ref="jedisPoolConfig"/>  
       
     <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">  
         <property name="connectionFactory"   ref="connectionFactory" />  
     </bean> 
+    -->
 	<!-- redis 设置end -->
 	
 	<!-- 任务调度 begin -->

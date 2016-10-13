@@ -56,7 +56,7 @@ public class TokenServiceInterceptorIn  extends AbstractPhaseInterceptor<SoapMes
 			throw new Fault(new IllegalArgumentException("时间格式不对"));
 		}
 		long newDate=new Date().getTime();
-        if((newDate-1000*5)>ltime){
+        if((newDate-1000*5*60)>ltime){
         	 throw new Fault(new IllegalArgumentException("已超过最大验证时间"));
         }
         

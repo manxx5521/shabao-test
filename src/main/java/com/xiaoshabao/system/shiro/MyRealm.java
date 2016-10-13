@@ -25,6 +25,8 @@ public class MyRealm extends AuthorizingRealm {
 
 	/**
 	 * 为当限前登录的用户授予角色和权
+	 * <br>
+	 * 当URL需要进行权限验证时调用
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
