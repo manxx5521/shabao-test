@@ -11,7 +11,9 @@ import com.xiaoshabao.baseframework.exception.ServiceException;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-
+/**
+ * freemarker 模版引擎
+ */
 @Component("templateEngine")
 public class TemplateEngine {
 	
@@ -27,9 +29,9 @@ public class TemplateEngine {
 	
 	/**
 	 * 渲染模板
-	 * @param key
-	 * @param template
-	 * @param params
+	 * @param key 模版id
+	 * @param template 模版文件
+	 * @param params 参数
 	 * @return
 	 */
 	public static String renderTemplate(String key,String templateSource,Object params) throws ServiceException{
