@@ -44,13 +44,13 @@ public class TokenWsServiceImpl extends TokenAbstractServiceImpl{
 			client.getOutInterceptors().add(new LoggingOutInterceptor()); 
 					    
 			com.xiaoshabao.wechat.webservice.AccessToken wstoken=tokenws.getToken(accountId);
+			accessToken.setAppid(wstoken.getAppid());
 			accessToken.setAccessToken(wstoken.getAccessToken());
 			accessToken.setJsaccessToken(wstoken.getJsaccessToken());
 			logger.debug("*成功在webService获得token信息 token:{}",accessToken.getAccessToken());
 		} catch (Exception e) {
-			logger.error("数据库获取token错误"+e.getMessage());
-			e.printStackTrace();
-			throw new ServiceException("获取token错误");
+			logger.error("数据库获取token错误{}",e);
+			throw new ServiceException("获取token错误",e);
 		}
 		return accessToken;
 	}
