@@ -37,4 +37,23 @@
 	function getInfoUrl(url){
 		return getUrl(url,'snsapi_userinfo');
 	}
+	
+	function getShareUrl(url,scope){
+		authUrl='https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
+		
+		authUrl=authUrl.replace('APPID', appid).replace('REDIRECT_URI', encodeURI(url))
+			.replace('STATE', accountId).replace('SCOPE', scope);
+		return authUrl;
+	}
+	function getBaseUrl(url){
+		return getUrl(url,'snsapi_base');
+	}
+	function getShareUrl(url){
+		var appid='${wechat.appid}';
+		var accountId='${wechat.accountId}'; 
+		eurl=encodeURIComponent(url);
+		rurl= '${domain}${ctx}/wechat/share/url?appid='+appid+'&accountId='+accountId+'&scope=snsapi_userinfo'
+				+'&url='+eurl;
+		return rurl;
+	}
 </script>

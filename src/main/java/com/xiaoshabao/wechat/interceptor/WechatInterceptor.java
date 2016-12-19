@@ -125,8 +125,7 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 					url = request.getRequestURL().toString() + "?"+ request.getQueryString();
 				}
 				logger.info(accountId + "进行数据签名--签名url为：" + url);
-				Integer account = Integer.valueOf(accountId);
-				AccessToken jstoken = tokenManager.getJSToken(account);
+				AccessToken jstoken = tokenManager.getJSToken(accountId);
 				if (StringUtils.isNotEmpty(jstoken.getJsaccessToken())) {
 					Map<String, String> jsParams = WechatUtil.getjsSignStr(jstoken.getAppid(), jstoken.getJsaccessToken(),url);
 					request.setAttribute("domain", domain);

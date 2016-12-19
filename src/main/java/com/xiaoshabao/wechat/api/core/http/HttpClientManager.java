@@ -61,7 +61,7 @@ public class HttpClientManager {
 
 	}
 
-	public static HttpClientManager getInstance() {
+	public static synchronized HttpClientManager getInstance() {
 		if (instance == null) {
 			instance = new HttpClientManager();
 		}

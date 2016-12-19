@@ -3,7 +3,6 @@ package com.xiaoshabao.webframework.ui.service;
 import java.util.List;
 
 import com.xiaoshabao.baseframework.exception.ServiceException;
-import com.xiaoshabao.baseframework.service.AbstractService;
 import com.xiaoshabao.webframework.ui.element.AbstractUIElement;
 import com.xiaoshabao.webframework.ui.element.UIElement;
 /**

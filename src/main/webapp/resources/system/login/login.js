@@ -21,8 +21,9 @@ $(document).ready(function(){
 					}
 				},
 				error : function(info) {
-					alert(info.responseText);
-					alert(info);
+					console.log(info.responseText);
+					console.log(info);
+					cbox.alert("登录异常");
 				}
 			});
 		}

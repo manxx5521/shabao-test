@@ -4,7 +4,7 @@
 <mapper namespace="com.xiaoshabao.system.dao.ShiroDao">
 	<select id="getLoginUser" resultType="com.xiaoshabao.system.dto.LoginUserDto">
 		SELECT 
-			A.USER_ID,A.DEPART_ID,A.LOGIN_NAME,A.USER_NAME,A.PASSWORD,A.LOGIN_STATE,A.UPDATE_TIME,
+			A.USER_ID,A.DEPART_ID,A.LOGIN_NAME,A.USER_NAME,A.PASSWORD,A.PASSWORD_SALT,A.LOGIN_STATE,A.UPDATE_TIME,
 			b.depart_id 'depart.departId',
 			b.depart_frame 'depart.departFrame'
 		FROM TD_M_USER A,TD_M_DEPART B

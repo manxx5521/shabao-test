@@ -7,7 +7,7 @@
 <title>添加文章</title>
 <%@include file="../../context/head.jsp"%>
 <%@include file="../../system/common.jsp"%>
-<cs:resource type="css" value="jquery,bootstrap,system,sweetalert,icheck" />
+<cs:resource type="css" value="jquery,bootstrap,system,sweetalert,icheck,select2" />
 </head>
 <body class="gray-bg">
    <div class="wrapper wrapper-content animated fadeInRight">
@@ -69,11 +69,14 @@
                         <form class="form-horizontal m-t" id="commentForm">
                         	<div class="form-group">
                                 <label class="col-sm-2 control-label">帐号选择</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-3">
+                                	<%-- 
                                 	<c:forEach var="r" items="${data.accounts}" varStatus="idx">
                                     <label class="radio-inline  i-checks">
-                                        <input type="radio" name="accountId" value="${r.accountId}"> ${r.appName}</label>
+                                        <input type="radio" name="accountId" value="${r.accountId}" required> ${r.appName}</label>
                                     </c:forEach>
+                                     --%>
+		                            <select id="accountId" name="accountId" required></select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -120,9 +123,15 @@
             </div>
         </div>
     </div>
-	<cs:resource type="js" value="jquery,jqueryui,bootstrap,system,sweetalert,validate,icheck,ueditor,dimage" />
+	<cs:resource type="js" value="jquery,jqueryui,bootstrap,system,sweetalert,validate,icheck,ueditor,dimage,select2,dselect2" />
 	<script type="text/javascript">
 		$(document).ready(function() {
+			//帐号初始化
+			$('#accountId').dselect2({
+        		element_id:100003,
+        		value:'${accountId}'
+        	});
+			
 			var valdata={};
 			var img_id='${data.image.id}';
 			var img_readonly=false;
@@ -140,12 +149,14 @@
 				readonly:img_readonly,
 				data:function(){
 					var data={};
-					var accountId= $("input[name='accountId']:checked").val();
+					//var accountId= $("input[name='accountId']:checked").val();
+					var accountId= $('#accountId').val();
 					data.accountId=accountId;
 					return data;
 				},
 				validation:function(){
-					var accountId= $("input[name='accountId']:checked").val();
+					//var accountId= $("input[name='accountId']:checked").val();
+					var accountId= $('#accountId').val();
 					if(accountId==null||accountId==""||accountId==undefined){
 						cbox.alert("请先选择帐号");
 						return false;
@@ -199,9 +210,13 @@
 				radioClass : "iradio_square-green",
 			})
 			
-
+			//注册验证
+			$('#form1').validate({});
 			// 提交表单
 			$('#saveBtn').click(function() {
+				//执行验证
+				if(!$("#commentForm").valid())
+					return false;
 				swal({
 					title : "您确定要保存吗？",
 					text : "您确定要添加这条数据？",
@@ -209,8 +224,10 @@
 					showCancelButton : true,
 					closeOnConfirm : false,
 					confirmButtonText : "是的，我要保存",
-					confirmButtonColor : "#DD6B55"
+					cancelButtonText : "不，取消",
+					//confirmButtonColor : "#18a689"
 				}, function() {
+					$('#saveBtn').attr('disabled','disabled');
 					var fromdata = $("#commentForm").serialize();
 					$.ajax({
 						url : "./add.html",
@@ -224,6 +241,7 @@
 						} else {
 							swal("操作失败!", data.message, "error");
 						}
+						$('#saveBtn').removeAttr('disabled')
 					}).error(function(data) {
 						swal("OMG", "操作失败了!", "error");
 					});

@@ -23,8 +23,7 @@ public class UIElementServiceImpl implements UIElementService {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private ElementDao elementDao;
-	
-	
+
 	@Autowired
 	protected UIElementDao UIElementDao;
 	private String templateid = "";

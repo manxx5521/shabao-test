@@ -15,12 +15,33 @@ public class SerializableMethod {
 	//String实现序列化，原字符串不变
 	@Test
 	public void testString(){
+		//变量式不会变
 		String s="11";
 		changeString(s);
 		System.out.println("字符串序列化："+s);
+		
+		//对象式也不便，因为实例化了
+		String b=new String("11");
+		changeString(b);
+		System.out.println("字符串序列化："+b);
 	}
 	private void changeString(String s){
 		s="22";
+	}
+	
+	/**
+	 * 数组这种，即使是基本类型，但是改变时，值仍然改变
+	 */
+	@Test
+	public void testArray(){
+		int[] a={1,2,3};
+		changeArray(a);
+		System.out.println("输出数字数组："+a[0]+""+a[1]+a[2]);
+	}
+	
+	private void changeArray(int[] a){
+		a[2]=1;
+		a[1]=1;
 	}
 	
 	//Lit对象是序列化的，方法改变list本身时，list的值不变。

@@ -14,8 +14,6 @@ import com.xiaoshabao.wechat.api.core.handler.WeiXinReqHandler;
 import com.xiaoshabao.wechat.api.core.req.WeixinReqConfig;
 import com.xiaoshabao.wechat.api.core.req.WeixinReqParam;
 
-
-
 /**
  * 获取微信接口的信息
  */

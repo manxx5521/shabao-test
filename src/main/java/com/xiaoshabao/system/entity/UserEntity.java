@@ -23,6 +23,10 @@ public class UserEntity {
 	 */
 	private String password;
 	/**
+	 * 密码盐值
+	 */
+	private String passwordSalt;
+	/**
 	 * 登录状态：1可登录，0不可登录
 	 */
 	private Integer loginState;
@@ -79,4 +83,13 @@ public class UserEntity {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getPasswordSalt() {
+		return passwordSalt;
+	}
+
+	public void setPasswordSalt(String passwordSalt) {
+		this.passwordSalt = passwordSalt;
+	}
+	
 }

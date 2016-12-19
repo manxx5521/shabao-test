@@ -32,7 +32,8 @@
 		var shareData = {
 			title : '${data.bargainName}',
 			desc : '${data.des}',
-			link : '${jsParams.url}',
+			//link : '${jsParams.url}',
+			link : getShareUrl('${jsParams.url}'),
 			imgUrl : '${domain}${ctx}/resources/wechat/image/share1.jpg'
 		};
 		wx.onMenuShareAppMessage(shareData);

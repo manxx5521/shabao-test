@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="demosql">
-	
+<mapper namespace="com.xiaoshabao.shabaowebtest.dao.DemoDao">
 	<!-- SQL尝试 -->
 	<select id="demotestsql" resultType="DemoDto"
 		parameterType="java.util.Map">
 		${sql}
 	</select>
+	<!-- 插入单条记录, useGeneratedKeys主键自动生长，keyProperty 返回该列的值。-->
+	<insert id="insertSingle" useGeneratedKeys="true" keyProperty="id">
+		<!--ignore 表示主键冲突时，不报错返回结果为0-->
+		insert ignore into ts_s_test(id,name,age)
+		values(null,#{name},#{age})
+	</insert>
+	<!-- 插入多条记录 -->
+	<insert id="insertList" useGeneratedKeys="true" parameterType="java.util.List">
+		<!--获得自增值-->
+		<selectKey resultType="long" keyProperty="id" order="AFTER">  
+        	SELECT LAST_INSERT_ID()  
+    	</selectKey>  
+    	insert into ts_s_test(name,age) 
+    	values  
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.name},#{item.age})  
+	    </foreach>  
+	</insert>
+	<!-- 删除 -->
+	<delete id="delete">
+	  delete from td_s_test
+	  <where>
+	  	<if test="name !=null and name !='' ">
+			and name=#{name},
+		</if>
+		<if test=" !=null and departType !='' ">
+			and age=#{age},
+		</if>
+	  </where>
+	</delete>
+	<!-- 更新 -->
+	<update id="update">
+		update ts_s_test 
+		<set>
+			<if test="name !=null and name !='' ">
+			name=#{name},
+			</if>
+			<if test="age !=null and age !='' ">
+			age=#{age},
+			</if>
+		</set>
+		where depart_id=#{id}
+	</update>
 </mapper>

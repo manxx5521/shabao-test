@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xiaoshabao.baseframework.controller.AbstractController;
 import com.xiaoshabao.system.service.LoginService;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 
 /**
  * 后台登录
@@ -57,6 +59,11 @@ public class LoginController extends AbstractController {
 			subject.login(token);
 			logger.info("\n" + user_id + " 登录成功\n");
 			returnMap.put("success", true);
+		}catch(ExcessiveAttemptsException ea){
+			logger.info("用户被锁定*********");
+			ea.printStackTrace();
+			returnMap.put("success", false);
+			returnMap.put("message", "用户已经被锁定，请稍候重试。或者联系管理员！");
 		} catch (Exception e) {
 			e.printStackTrace();
 			returnMap.put("success", false);
@@ -77,19 +84,23 @@ public class LoginController extends AbstractController {
 	@RequestMapping(value = "/admin/loginIN;jsessionid=*", method = { RequestMethod.POST })
 	@ResponseBody
 	public Map<String, Object> adminLoginByShiroSESSION(String user_id, String password) {
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken(user_id,
-				password);
+		return this.adminLoginByShiro(user_id, password);
+	}
+	
+	/**
+	 * 退出登录
+	 */
+	@RequestMapping(value = "/admin/logout")
+	@ResponseBody
+	public AjaxResult logout() {
 		try {
-			subject.login(token);
-			logger.info("\n" + user_id + " 登录成功\n");
-			returnMap.put("success", true);
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();
+		return new AjaxResult(true,"安全退出成功！");
 		} catch (Exception e) {
+			logger.error("安全退出失败");
 			e.printStackTrace();
-			returnMap.put("success", false);
-			returnMap.put("message", "用户名或密码错误！");
+			return new AjaxResult("安全退出失败");
 		}
-		return returnMap;
 	}
 }

@@ -53,7 +53,7 @@
                             </div>
                     	</form>
 						<div class="">
-                            <a onclick="sync();" href="javascript:void(0);" class="btn btn-primary btn-sm">同步用户</a>
+                            <a id="syncBtn" href="javascript:void(0);" class="btn btn-primary btn-sm">同步用户</a>
                         </div>
                         <table class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
@@ -100,27 +100,30 @@
         		element_id:100003,
         		value:'${accountId}'
         	});
+        	
+        	$('#syncBtn').click(function(){
+        		var account_id=$('#accountId').val();
+            	if(!account_id){
+            		cbox.alert('请选择同步帐号');
+            		return false;
+            	}
+            	$('#syncBtn').attr('disabled','disabled');
+            	$.ajax({
+    				  type: 'POST',
+    				  url: window.webroot+'/admin/wechat/user/'+account_id+'/sync',
+    				  data: {},
+    				  dataType:'json',
+    				  success: function(result){
+    					  if(result.success){
+    						  cbox.info(result.message);
+    					  }else{
+    						  cbox.alert(result.message);
+    					  }
+    					  $('#syncBtn').removeAttr('disabled')
+    				 }
+    			});
+        	})
         });
-        function sync(){
-        	var account_id=$('#accountId').val();
-        	if(!account_id){
-        		cbox.alert('请选择同步帐号');
-        		return false;
-        	}
-        	$.ajax({
-				  type: 'POST',
-				  url: window.webroot+'/admin/wechat/user/'+account_id+'/sync',
-				  data: {},
-				  dataType:'json',
-				  success: function(result){
-					  if(result.success){
-						  cbox.info(result.message);
-					  }else{
-						  cbox.alert(result.message);
-					  }
-				 }
-			});
-        }
     </script>
 </body>
 

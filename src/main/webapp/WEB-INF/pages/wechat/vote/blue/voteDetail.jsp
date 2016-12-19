@@ -39,7 +39,8 @@
 		var shareData = {
 			title : '${data.vote.voteName}',
 			desc : '${data.des}',
-			link : '${url}',
+			//link : '${url}', 
+			link : getShareUrl('${jsParams.url}'),
 			imgUrl : '${data.image}'
 		};
 		wx.onMenuShareAppMessage(shareData);

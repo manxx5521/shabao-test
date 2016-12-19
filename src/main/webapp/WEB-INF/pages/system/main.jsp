@@ -33,7 +33,7 @@
 								<li><a class="J_menuItem" href="contacts.html">联系我们</a></li>
 								<li><a class="J_menuItem" href="mailbox.html">信箱</a></li>
 								<li class="divider"></li>
-								<li><a href="login.html">安全退出</a></li>
+								<li><a class="logout" href="javascript:;">安全退出</a></li>
 							</ul>
 						</div>
 						<div class="logo-element">H+</div>
@@ -204,7 +204,7 @@
 						<li class="J_tabCloseOther"><a>关闭其他选项卡</a></li>
 					</ul>
 				</div>
-				<a href="login.html" class="roll-nav roll-right J_tabExit"><i
+				<a href="javascript:;" class="roll-nav roll-right J_tabExit logout"><i
 					class="fa fa fa-sign-out"></i> 退出</a>
 			</div>
 			
@@ -609,6 +609,33 @@
 		//调用加载菜单
 		var webRoot='${ctx}';
 		getMenu(menuList);
+		
+		//退出
+		$('.logout').click(function(){
+			$.ajax({
+				type : "POST",
+				url : "logout.html",
+				data : {},
+				dataType : "json",
+				success : function(data) {
+					debugger;
+					if (data.success) {
+						 window.location.href = './login';
+					} else {
+						if (data.message != null && data.message != "") {
+							cbox.alert(data.message);
+						} else {
+							alert('安全退出失败，未能正常返回信息');
+						}
+					}
+				},
+				error : function(info) {
+					console.log(info.responseText);
+					console.log(info);
+					cbox.alert("登录异常");
+				}
+			});
+		});
 	</script>
 
 </body>

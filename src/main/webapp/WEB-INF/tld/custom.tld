@@ -25,4 +25,15 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<name>condition</name>
+		<tag-class>com.xiaoshabao.webframework.ui.tag.ConditionTag</tag-class>
+		<display-name>条件组件</display-name>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<type>String</type>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

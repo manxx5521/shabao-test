@@ -12,6 +12,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 
 import com.xiaoshabao.system.dto.LoginUserDto;
 import com.xiaoshabao.system.entity.SessionUserInfo;
@@ -47,8 +48,12 @@ public class MyRealm extends AuthorizingRealm {
 			AuthenticationToken token) throws AuthenticationException {
 		String userName = (String) token.getPrincipal();
 		LoginUserDto user = shiroService.getByUserName(userName);
+		/*此处是简单验证
 		AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(
 				user.getLoginName(), user.getPassword(), "xx");
+		*/
+		SimpleAuthenticationInfo ai=new SimpleAuthenticationInfo(user.getLoginName(), user.getPassword(), getName());
+		ai.setCredentialsSalt(ByteSource.Util.bytes(userName+user.getPasswordSalt())); //盐是用户名+随机数  
 		// 当验证都通过后，把用户信息放在session里
 		Session session = SecurityUtils.getSubject().getSession();
 		SessionUserInfo userSession = new SessionUserInfo();
@@ -58,7 +63,7 @@ public class MyRealm extends AuthorizingRealm {
 		userSession.setDepartId(user.getDepart().getDepartId());
 		userSession.setPriFrame("'"+user.getDepart().getDepartFrame()+"%'");
 		session.setAttribute("userSession", userSession);
-		return authcInfo;
+		return ai;
 	}
 
 }

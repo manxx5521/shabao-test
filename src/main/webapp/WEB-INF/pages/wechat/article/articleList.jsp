@@ -9,7 +9,7 @@
 	<title>添加文章</title>
 	<%@include file="../../context/head.jsp"%>
     <%@include file="../../system/common.jsp"%>
-	<cs:resource type="css" value="jquery,bootstrap,system,bootbox,dataTables" />
+	<cs:resource type="css" value="jquery,bootstrap,system,bootbox,dataTables,select2" />
 	<base target="_blank">
 </head>
 <body class="gray-bg">
@@ -38,16 +38,24 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                    	<form class="form-inline">
-  							<div class="form-group col-xs-4">
-    							<label for="exampleInputName2" class="col-xs-5 control-label">微信帐号</label>
-    							<input type="text" class="form-control col-xs-7" id="exampleInputName2" placeholder="Jane Doe">
-  							</div>
-                    	</form>
                     	<button type="submit" class="btn btn-primary col-sm-offset-11">查询</button>
+                    	<form id ="form1" class="form-horizontal form-label-left" action="./list" target="_self">
+                    		<div class="row search">
+                    			<div class="col-md-12 col-sm-12 col-xs-12">
+                    				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		                                <div class="form-group">
+		                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">帐号：</label>
+		                                    <div class="col-md-8 col-sm-8 col-xs-12">
+		                                        <select id="accountId" name="accountId"></select>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <button class="btn btn-primary col-sm-offset-11" type="button" onclick="$('#form1').submit();">执行查询</button>
+                            	</div>
+                            </div>
+                    	</form>
 						<div class="">
                             <a onclick="add();" href="javascript:void(0);" class="btn btn-primary btn-sm">添加</a>
-                           <!--  <a onclick="addByUe();" href="javascript:void(0);" class="btn btn-primary ">添加</a> -->
                         </div>
                         <table class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
@@ -83,14 +91,25 @@
             </div>
         </div>
     </div>
-    <cs:resource type="js" value="jquery,bootstrap,system,bootbox,jeditable,dataTables" />
+    <cs:resource type="js" value="jquery,bootstrap,system,bootbox,jeditable,dataTables,jqueryui,select2,dselect2" />
     <script>
-    	//下面用来显示上下页标签
-        $(document).ready(function(){$(".dataTables-example").dataTable();var oTable=$("#editable").dataTable();oTable.$("td").editable("../example_ajax.php",{"callback":function(sValue,y){var aPos=oTable.fnGetPosition(this);oTable.fnUpdate(sValue,aPos[0],aPos[1])},"submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})});
-        //function fnClickAddRow(){$("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
         function add(){
         	window.location.href = '${ctx}/admin/wechat/article/init';
         }
+      
+	$(document).ready(function(){
+		//下拉框
+		$('#accountId').dselect2({
+    		element_id:100003,
+    		value:'${accountId}'
+    	});
+		
+		//table 初始化
+		$(".dataTables-example").dataTable({
+    		"bSort": false, //排序功能
+    	});
+		
+	})
     </script>
 </body>
 

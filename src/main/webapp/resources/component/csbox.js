@@ -6,7 +6,7 @@ var cbox = {
 	},
 	/** 警告框 */
 	alert : function(message) {
-		bootbox.alert(message);
+		bootbox.alert(message.toString());
 		return false;
 	},
 	/** 错误框 */

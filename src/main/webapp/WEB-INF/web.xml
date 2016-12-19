@@ -35,7 +35,7 @@
 	<!-- 加载Spring配置文件 ContextConfigLocation监听要装配的内容-->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath*:/applicationContext.xml,classpath*:/applicationContext-dao.xml,classpath*:/applicationContext-ws.xml</param-value>
+		<param-value>classpath*:/applicationContext.xml,classpath*:/applicationContext-dao.xml,classpath*:/applicationContext-ws.xml,classpath*:/applicationContext-shiro.xml</param-value>
 	</context-param>
 	<!-- 编码过滤器 -->
 	<filter>
