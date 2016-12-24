@@ -25,6 +25,14 @@ public interface UIElement {
 	public String render(Map<String,Object> params);
 	
 	/**
+	 * render,按类型
+	 * @param params
+	 * @param templateTypeName
+	 * @return
+	 */
+	public String render(Map<String,Object> params,String templateTypeName);
+	
+	/**
 	 * 设置公共参数
 	 * @param params
 	 */

@@ -17,7 +17,7 @@ import com.github.abel533.sql.SqlMapper;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.webframework.component.ContextHolderUtils;
-import com.xiaoshabao.webframework.component.SessionManager;
+import com.xiaoshabao.webframework.component.SessionParams;
 import com.xiaoshabao.webframework.dto.ImageDto;
 import com.xiaoshabao.webframework.entity.ElementEntity;
 import com.xiaoshabao.webframework.entity.ImageElement;
@@ -27,8 +27,8 @@ import com.xiaoshabao.webframework.ui.dao.ElementDao;
 public class ImageServiceImpl extends AbstractServiceImpl implements ImageService{
 	@Autowired
 	private ElementDao elementDao;
-	@Resource(name="sessionManager")
-	private SessionManager sessionManager;
+	@Resource(name="sessionParams")
+	private SessionParams sessionParams;
 	
 	//获得图片的数据列表
 	@Override
@@ -44,7 +44,7 @@ public class ImageServiceImpl extends AbstractServiceImpl implements ImageServic
 		String type=element.getType();
 		List<ImageDto> list=null;
 		SqlMapper sqlMapper=this.baseDao.getSqlMapper();
-		Map<String,Object> session=sessionManager.getSessionParams();
+		Map<String,Object> session=sessionParams.getSessionParams();
 		params.put("session", session);
 		if(type.equals("1")){
 			list=sqlMapper.selectList(element.getSql(), params, ImageDto.class);

@@ -91,9 +91,10 @@ public abstract class AbstractUIElement<E extends FormElementDef> implements UIE
 			params.putAll(cutomparams);
 		}
 		try {
-			return TemplateEngine.renderTemplate(this.getFormElement()
+			/*return TemplateEngine.renderTemplate(this.getFormElement()
 					.getElementid().toString(), this.getFormElement()
-					.getFormElementDef().getTempplate(), params);
+					.getFormElementDef().getTempplate(), params);*/
+			return null;
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			logger.error("render template {} element {} error {}", this
@@ -123,9 +124,7 @@ public abstract class AbstractUIElement<E extends FormElementDef> implements UIE
 			params.putAll(cutomparams);
 		}
 		try {
-			return TemplateEngine.renderTemplate(this.getFormElement()
-					.getElementid().toString(), this.getFormElement()
-					.getFormElementDef().getViewtempplate(), params);
+			return null;
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			logger.error("render template {} element {} error {}", this

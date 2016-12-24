@@ -31,7 +31,7 @@
 	</select>
 	<!--获得元素-->
 	<select id="getElementById1" resultType="com.xiaoshabao.webframework.ui.entity.ElementEntity">
-		select element_id,element_type,element_name,element_desc,params,version
+		select element_id,element_type,element_name,element_desc,params,session_tag,version
 			,view_template,read_template
 		from td_ui_element
 		where element_id=#{elementId}

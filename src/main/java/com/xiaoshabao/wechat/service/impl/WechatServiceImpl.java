@@ -157,7 +157,12 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 		}else if(type==9){
 			requestMap.put("content", messageDto.getContent());
 			requestMap.put("accountId", messageDto.getAccountId().toString());
-			String result=TemplateEngine.renderTemplate("returnMessage"+messageDto.getTemplateId(), messageDto.getTemplate().getParams(), requestMap);
+			String result="";
+			try {
+				result=TemplateEngine.renderTemplate("returnMessage"+messageDto.getTemplateId(), messageDto.getTemplate().getParams(), requestMap);
+			} catch (Exception e) {
+				logger.error("回复微信模版消息时，使用freemarker模版解析错误；错误模版returnMessage{}", messageDto.getTemplateId(),e);
+			}
 			return result;
 		}else{
 			return this.returnMessage;

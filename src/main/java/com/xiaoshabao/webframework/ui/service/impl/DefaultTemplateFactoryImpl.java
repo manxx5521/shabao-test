@@ -13,29 +13,31 @@ import com.xiaoshabao.webframework.ui.service.element.UIElement;
 
 @Service("defaultTemplateFactoryImpl")
 public class DefaultTemplateFactoryImpl extends AbstractTemplateFactoryImpl {
+	/** 传入到模版的session标识 **/
+	private final static String SESSION_STRING = "session";
 
-  @Override
-  public String getTemplateElements(String templateId) {
-    List<TemplatElementEntity> elementList=this.elementDao.getTemplateElements(templateId);
-    StringBuffer rs=new StringBuffer();
-    for(TemplatElementEntity te:elementList){
-    	ElementEntity element=this.elementDao.getElementById1(te.getElementId());
-    	String elementType=this.formEngineComponet.getElementType(element.getElementType());
-    	if(elementType==null){
-    		elementType=this.formEngineComponet.getDefaultElementType();
-    	}
-    	UIElement uielement=ApplicationContextUtil.getBean(elementType, UIElement.class);
-    	//初始化元素数据
-    	uielement.initData(te,element);
-    	Map<String,Object> params=new HashMap<String,Object>();
-    	uielement.setPublicProperties(params);
-    	uielement.setCustomParams(params);
-    	rs.append(uielement.render(params));
-    	uielement.clear();
-    }
-    return rs.toString();
-  }
+	@Override
+	public String getTemplateElements(String templateId) {
+		List<TemplatElementEntity> elementList = this.elementDao
+				.getTemplateElements(templateId);
+		StringBuffer rs = new StringBuffer();
+		for (TemplatElementEntity te : elementList) {
+			ElementEntity element = this.elementDao.getElementById1(te.getElementId());
+			String elementType = this.formEngineComponet.getElementType(element.getElementType());
+			if (elementType == null) {
+				logger.error("模版{} 未获得元素{}的类型", templateId,element.getElementId());
+				continue;
+			}
+			UIElement uielement = ApplicationContextUtil.getBean(elementType,UIElement.class);
+			// 初始化元素数据
+			uielement.initData(te, element);
+			Map<String, Object> params = new HashMap<String, Object>();
+			uielement.setPublicProperties(params);
+			uielement.setCustomParams(params);
+			rs.append(uielement.render(params));
+			uielement.clear();
+		}
+		return rs.toString();
+	}
 
- 
-  
 }

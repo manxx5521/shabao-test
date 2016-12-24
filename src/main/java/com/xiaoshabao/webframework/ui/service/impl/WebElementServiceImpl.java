@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import com.github.abel533.sql.SqlMapper;
 import com.xiaoshabao.baseframework.dao.BaseDao;
 import com.xiaoshabao.webframework.component.ContextHolderUtils;
-import com.xiaoshabao.webframework.component.SessionManager;
+import com.xiaoshabao.webframework.component.SessionParams;
 import com.xiaoshabao.webframework.ui.dao.ElementDao;
 import com.xiaoshabao.webframework.ui.dto.SelectResultDto;
 import com.xiaoshabao.webframework.ui.element.SelectUIElement;
@@ -27,8 +27,8 @@ public class WebElementServiceImpl extends UIElementServiceImpl implements WebEl
 	private ElementDao elementDao;
 	@Resource(name="mybatisBaseDao")
 	private BaseDao baseDao;
-	@Resource(name="sessionManager")
-	private SessionManager sessionManager;
+	@Resource(name="sessionParams")
+	private SessionParams sessionParams;
 	
 	//下拉列表数据获取
 	@Override
@@ -43,7 +43,7 @@ public class WebElementServiceImpl extends UIElementServiceImpl implements WebEl
 			String paramname = paramnames.nextElement();
 			params.put(paramname,request.getParameter(paramname));
 		}
-		Map<String,Object> session=sessionManager.getSessionParams();
+		Map<String,Object> session=sessionParams.getSessionParams();
 		params.put("session", session);
 		
 		SqlMapper sqlMapper=this.baseDao.getSqlMapper();
