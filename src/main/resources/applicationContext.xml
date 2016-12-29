@@ -91,6 +91,7 @@
 		<property name="elementType">
 			<map>
 				<entry key="default" value="defaultUIElement" />
+				<entry key="select2" value="defaultUIElement" />
 			</map>	
 		</property>
 		<property name="templateType">

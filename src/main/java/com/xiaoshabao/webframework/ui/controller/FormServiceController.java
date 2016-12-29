@@ -1,7 +1,5 @@
 package com.xiaoshabao.webframework.ui.controller;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -13,28 +11,29 @@ import com.xiaoshabao.baseframework.controller.AbstractController;
 import com.xiaoshabao.baseframework.enums.ErrorEnum;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
-import com.xiaoshabao.webframework.ui.dto.SelectResultDto;
-import com.xiaoshabao.webframework.ui.service.WebElementService;
+import com.xiaoshabao.webframework.ui.service.FormService;
+
 @Controller
 @RequestMapping("/admin/ui")
-public class WebElementController extends AbstractController{
-	@Resource(name="webElementServiceImpl")
-	private WebElementService elementService;
+public class FormServiceController extends AbstractController {
+	@Resource(name = "webElementServiceImpl")
+	private FormService formService;
 
-	@RequestMapping(value="/select/{elementId}")
+	@RequestMapping(value = "/{engineType}/ajax/{elementId}")
 	@ResponseBody
-	public AjaxResult getSelectValues(@PathVariable("elementId") Integer elementId){
+	public AjaxResult getElementResponse(@PathVariable("engineType") String engineType,@PathVariable("elementId") String elementId) {
 		try {
-			List<SelectResultDto> list=elementService.getSelectValues(elementId);
-			return new AjaxResult(list);
+			AjaxResult result = formService.getElementResponse(engineType,elementId,null);
+			return result;
 		} catch (ServiceException e) {
 			logger.error("请求下拉列表时，出现业务异常");
 			e.printStackTrace();
 			return new AjaxResult(e.getMessage());
-		}catch(Exception e){
+		} catch (Exception e) {
 			logger.error("请求下拉列表时，出现未知异常");
 			e.printStackTrace();
 			return new AjaxResult(ErrorEnum.INNER_ERROR);
 		}
 	}
+
 }

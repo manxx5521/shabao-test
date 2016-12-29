@@ -13,8 +13,6 @@ import com.xiaoshabao.webframework.ui.service.element.UIElement;
 
 @Service("defaultTemplateFactoryImpl")
 public class DefaultTemplateFactoryImpl extends AbstractTemplateFactoryImpl {
-	/** 传入到模版的session标识 **/
-	private final static String SESSION_STRING = "session";
 
 	@Override
 	public String getTemplateElements(String templateId) {

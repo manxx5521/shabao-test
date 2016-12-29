@@ -13,14 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.abel533.sql.SqlMapper;
+import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.dao.BaseDao;
 import com.xiaoshabao.webframework.component.ContextHolderUtils;
 import com.xiaoshabao.webframework.component.SessionParams;
+import com.xiaoshabao.webframework.dto.AjaxResult;
+import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.dao.ElementDao;
 import com.xiaoshabao.webframework.ui.dto.SelectResultDto;
 import com.xiaoshabao.webframework.ui.element.SelectUIElement;
+import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.SelectElementDef;
 import com.xiaoshabao.webframework.ui.service.WebElementService;
+import com.xiaoshabao.webframework.ui.service.element.UIElement;
 @Service("webElementServiceImpl")
 public class WebElementServiceImpl extends UIElementServiceImpl implements WebElementService{
 	@Autowired
@@ -68,6 +73,34 @@ public class WebElementServiceImpl extends UIElementServiceImpl implements WebEl
 			list=sqlMapper.selectList(selectInfo.getSql(), params, SelectResultDto.class);
 		}
 		return list;
+	}
+	
+	@Resource(name="formEngineComponet")
+	private FormEngineComponet formEngineComponet;
+	
+	//相应元素web请求
+	@Override
+	public AjaxResult getElementResponse(String elementId) {
+		ElementEntity element=this.elementDao.getElementById1(elementId);
+		if(StringUtils.isEmpty(elementId)){
+			logger.error("未找到元素id对应的元素，请查看元素id填写是否正确;元素{}.",elementId);
+			return new AjaxResult("元素类型错误");
+		}
+		String elementType=formEngineComponet.getEngineType(element.getElementType());
+		if(StringUtils.isEmpty(elementType)){
+			logger.error("未找到元素类型对应的 元素，请查看元素类型服务映射;元素{}.",elementId);
+			return new AjaxResult("元素类型错误");
+		}
+		
+		UIElement uielement = ApplicationContextUtil.getBean(elementType,UIElement.class);
+		// 初始化元素数据
+		uielement.initData(element);
+		Map<String, Object> params = new HashMap<String, Object>();
+		uielement.setPublicProperties(params);
+		uielement.setCustomParams(params);
+		uielement.clear();
+		
+		return null;
 	}
 	
 }

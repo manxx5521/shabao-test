@@ -2,23 +2,7 @@ package com.xiaoshabao.webframework.ui.service.element;
 
 import java.util.Map;
 
-import com.xiaoshabao.webframework.ui.entity.ElementEntity;
-import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
-
-public interface UIElement {
-	
-	/**
-	 * 初始化数据
-	 * @param templateElement 表单参数
-	 * @param element 定义元素
-	 */
-	public void initData(TemplatElementEntity templateElement,ElementEntity element);
-	/**
-	 * 设置元素JSON参数
-	 * @param params
-	 */
-	public void setJSONParams(Map<String,Object> params);
-	
+public interface UIElement extends AbstractElement{
 	/**
 	 * 无参数render
 	 */

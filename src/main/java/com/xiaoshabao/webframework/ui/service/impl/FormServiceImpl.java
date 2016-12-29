@@ -1,16 +1,22 @@
 package com.xiaoshabao.webframework.ui.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
+import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 import com.xiaoshabao.webframework.ui.service.FormService;
 import com.xiaoshabao.webframework.ui.service.TemplateFactory;
+import com.xiaoshabao.webframework.ui.service.element.UIElement;
 /**
  * 表单服务
  */
@@ -37,5 +43,24 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl implements Form
 		templateData.setHtml(templateFactory.getTemplateElements(templateId));
 		return templateData;
 	}
+	
+	// 相应元素web请求
+	@Override
+	public AjaxResult getElementResponse(String engineType,String elementId,Map<String, Object> params) {
+		ElementEntity element = this.elementDao.getElementById1(elementId);
+		if (element==null) {
+			logger.error("未找到元素id对应的元素，请查看元素id填写是否正确；元素id{}。", elementId);
+			return new AjaxResult("元素类型错误");
+		}
+		
+		engineType=formEngineComponet.getEngineType(engineType);
+		if(StringUtils.isEmpty(engineType)){
+			logger.info("模版渲染失败，未摸得渲染引擎类型，失败模版id为{}",elementId);
+			return null;
+		}
+		TemplateFactory templateFactory=ApplicationContextUtil.getBean(engineType, TemplateFactory.class);
+		return templateFactory.getElementResponse(element, params);
+	}
+	
 
 }

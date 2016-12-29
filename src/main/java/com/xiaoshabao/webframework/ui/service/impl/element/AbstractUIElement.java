@@ -5,10 +5,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
+import com.xiaoshabao.baseframework.exception.ServiceException;
+import com.xiaoshabao.webframework.component.SessionParams;
 import com.xiaoshabao.webframework.component.TemplateEngine;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
@@ -31,33 +35,50 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl impl
 	private JSONObject paramJSON;
 	/** 默认模版 **/
 	private String defaultTempalte="viewTemplate";
+	/** 传入到模版的session标识 **/
+	private  String sessionTagString = "session";
 	
+	// 初始化数据
+	@Override
+	public void initData(ElementEntity element) {
+		this.element = element;
+	}
 	//初始化数据
 	@Override
 	public void initData(TemplatElementEntity tempalteElement,ElementEntity element){
 		this.element=element;
 		this.tempalteElement=tempalteElement;
 	}
-	/**
-	 * 设置JOSN参数
-	 */
+	
+	//设置元素bean参数
 	@Override
-	public void setJSONParams(Map<String,Object> params){
-		String elementParam=element.getParams();
-		if(StringUtils.isNotEmpty(elementParam)){
-			JSONObject elementJSON=JSONObject.parseObject(elementParam);
-			params.putAll(elementJSON);
-		}
-		String formParam=tempalteElement.getFromParams();
-		if(StringUtils.isNotEmpty(formParam)){
-			JSONObject formJSON = JSON.parseObject(formParam);
-			if(paramJSON==null){
-				paramJSON=formJSON;
-			}else{
-				paramJSON.putAll(formJSON);
+	public void setBeanParams(Map<String,Object> params){
+		try {
+			//element表获取
+			params.putAll(PropertyUtils.describe(element));
+			String elementParam=element.getParams();
+			if(StringUtils.isNotEmpty(elementParam)){
+				JSONObject elementJSON=JSONObject.parseObject(elementParam);
+				params.putAll(elementJSON);
 			}
-			params.putAll(formJSON);
-		}
+			//关联表参数获取向上覆盖
+			if(tempalteElement!=null){
+				params.putAll(PropertyUtils.describe(tempalteElement));
+				String formParam=tempalteElement.getFromParams();
+				if(StringUtils.isNotEmpty(formParam)){
+					JSONObject formJSON = JSON.parseObject(formParam);
+					if(paramJSON==null){
+						paramJSON=formJSON;
+					}else{
+						paramJSON.putAll(formJSON);
+					}
+					params.putAll(formJSON);
+				}
+			}
+		} catch (Exception e) {
+			throw new ServiceException(String.format("render设置bean参数异常,获取bean的map时错误;参数template {}, element {}",
+				this.tempalteElement==null?"null":this.tempalteElement.getTemplateId(),this.element.getElementId()),e);
+		} 
 	}
 	
 	//默认调用view模版
@@ -76,7 +97,7 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl impl
 			}
 			//通过配置文件加载
 			StringBuffer path=new StringBuffer();
-			path.append("form/");
+			path.append("/webframework/form/");
 			path.append(this.element.getElementType());
 			path.append("_");
 			path.append(templateTypeName);
@@ -89,7 +110,7 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl impl
 		}catch (MalformedTemplateNameException e) {
 			this.getReaderExcepiton("模版类型获取错误", templateTypeName, e);
 		}catch (IOException e) {
-			this.getReaderExcepiton("获取模版是读写异常", templateTypeName, e);
+			this.getReaderExcepiton("获取模版时读写异常", templateTypeName, e);
 		}catch (IllegalAccessException | InvocationTargetException
 				| NoSuchMethodException e) {
 			this.getReaderExcepiton("未能正常获得模版类型，可能是是配置错误或者获取element属性错误", templateTypeName, e);
@@ -104,9 +125,13 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl impl
 		logger.error("render异常,{};模版类型{},参数template {}, element {}",message,templateTypeName,
 				this.tempalteElement==null?"null":this.tempalteElement.getTemplateId(),this.element.getElementId(),e);
 	}
+	//设置公共参数
 	@Override
 	public void setPublicProperties(Map<String,Object> params){
-		
+		//设置session参数
+		if(this.element.getSessionTag()==1){
+			params.put(sessionTagString, ApplicationContextUtil.getBean("sessionParams", SessionParams.class));
+		}
 	}
 	@Override
 	public void setCustomParams(Map<String,Object> params){

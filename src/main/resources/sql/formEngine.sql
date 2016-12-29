@@ -5,7 +5,7 @@ CREATE TABLE td_ui_element (
 	element_name varchar(30) NOT NULL comment '元素名字',
 	element_desc varchar(100) comment '描述',
   	params text comment '参数',
-  	session_tag int(1) default 0 comment '是否使用session参数，1是0不',
+  	session_tag int(1) default 0 comment '是否使用session参数，1是0不' not null,
   	version int(2) default 1 comment '版本',
 	view_template text comment '显示模版',
 	read_template text comment '只读模版',
