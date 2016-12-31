@@ -2,21 +2,16 @@ package com.xiaoshabao.webframework.ui.service.impl;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang3.StringUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.webframework.dto.AjaxResult;
-import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.service.TemplateFactory;
 import com.xiaoshabao.webframework.ui.service.element.WebElement;
 
 public abstract class AbstractTemplateFactoryImpl extends AbstractTemplateServiceImpl implements TemplateFactory {
-	
-	@Resource(name="formEngineComponet")
-	protected FormEngineComponet formEngineComponet;
 	
 	//默认的表单AJAX响应
 	@Override
@@ -30,9 +25,8 @@ public abstract class AbstractTemplateFactoryImpl extends AbstractTemplateServic
 
 		WebElement webelement = ApplicationContextUtil.getBean(elementType,WebElement.class);
 		// 初始化元素数据
-		webelement.initData(element);
-		webelement.setBeanParams(params);
-		return webelement.getElementResponse(params);
+		JSONObject paramJSON=webelement.initData(params,element);
+		return webelement.getElementResponse(params,paramJSON);
 	}
   
 }

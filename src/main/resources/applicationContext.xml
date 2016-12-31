@@ -83,6 +83,9 @@
 	</bean>
 	<!--表单引擎设置-->
 	<bean id="formEngineComponet" class="com.xiaoshabao.webframework.ui.component.FormEngineComponet">
+		<property name="sessionComponet">
+			<ref bean="sessionParams" />
+		</property>
 		<property name="engineType">
 			<map>
 				<entry key="default" value="defaultTemplateFactoryImpl" />

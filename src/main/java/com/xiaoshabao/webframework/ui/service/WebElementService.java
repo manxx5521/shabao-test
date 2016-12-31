@@ -21,6 +21,6 @@ public interface WebElementService{
 	 * @param engineType 引擎类型
 	 * @return
 	 */
-	public AjaxResult getElementResponse(String elementId);
+//	public AjaxResult getElementResponse(String elementId);
 
 }

@@ -2,6 +2,7 @@ package com.xiaoshabao.webframework.ui.service.element;
 
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 
 /**
@@ -13,5 +14,5 @@ public interface WebElement extends AbstractElement{
 	 * @param params
 	 * @return
 	 */
-	public AjaxResult getElementResponse(Map<String, Object> params);
+	public AjaxResult getElementResponse(Map<String, Object> params,JSONObject paramJSON);
 }

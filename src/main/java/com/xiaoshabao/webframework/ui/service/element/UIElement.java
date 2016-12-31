@@ -2,11 +2,15 @@ package com.xiaoshabao.webframework.ui.service.element;
 
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import com.xiaoshabao.webframework.ui.entity.ElementEntity;
+import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
+
 public interface UIElement extends AbstractElement{
 	/**
 	 * 无参数render
 	 */
-	public String render(Map<String,Object> params);
+	public String render(Map<String,Object> params,ElementEntity element);
 	
 	/**
 	 * render,按类型
@@ -14,22 +18,17 @@ public interface UIElement extends AbstractElement{
 	 * @param templateTypeName
 	 * @return
 	 */
-	public String render(Map<String,Object> params,String templateTypeName);
+	public String render(Map<String,Object> params,ElementEntity element,String templateTypeName);
 	
 	/**
 	 * 设置公共参数
 	 * @param params
 	 */
-	public void setPublicProperties(Map<String,Object> params);
+	public void setPublicProperties(Map<String,Object> params,TemplatElementEntity tempalteElement,ElementEntity element);
 	/**
 	 * 设置元素自定义参数
 	 * @param params
 	 */
-	public void setCustomParams(Map<String,Object> params);
-	
-	/**
-	 * 清空元素，便于内存回收
-	 */
-	public void clear();
+	public void setCustomParams(Map<String,Object> params,JSONObject paramJSON);
 
 }

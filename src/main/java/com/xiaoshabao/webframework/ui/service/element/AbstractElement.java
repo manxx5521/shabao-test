@@ -2,6 +2,7 @@ package com.xiaoshabao.webframework.ui.service.element;
 
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
 /**
@@ -11,19 +12,16 @@ public interface AbstractElement {
 	
 	/**
 	 * 初始化数据
+	 * @param params 参数
 	 * @param element 定义元素
 	 */
-	public void initData(ElementEntity element);
+	public JSONObject initData(Map<String,Object> params,ElementEntity element);
 	/**
 	 * 初始化数据
 	 * @param templateElement 表单参数
+	 * @param params 参数
 	 * @param element 定义元素
 	 */
-	public void initData(TemplatElementEntity templateElement,ElementEntity element);
-	/**
-	 * 设置元素bean参数
-	 * @param params
-	 */
-	public void setBeanParams(Map<String,Object> params);
+	public JSONObject initData(Map<String,Object> params,TemplatElementEntity templateElement,ElementEntity element);
 
 }

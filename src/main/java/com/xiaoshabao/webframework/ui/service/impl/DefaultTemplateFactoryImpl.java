@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
@@ -16,6 +17,11 @@ public class DefaultTemplateFactoryImpl extends AbstractTemplateFactoryImpl {
 
 	@Override
 	public String getTemplateElements(String templateId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		return getTemplateElements(templateId, params);
+	}
+	
+	public String getTemplateElements(String templateId,Map<String,Object> params) {
 		List<TemplatElementEntity> elementList = this.elementDao
 				.getTemplateElements(templateId);
 		StringBuffer rs = new StringBuffer();
@@ -28,12 +34,10 @@ public class DefaultTemplateFactoryImpl extends AbstractTemplateFactoryImpl {
 			}
 			UIElement uielement = ApplicationContextUtil.getBean(elementType,UIElement.class);
 			// 初始化元素数据
-			uielement.initData(te, element);
-			Map<String, Object> params = new HashMap<String, Object>();
-			uielement.setPublicProperties(params);
-			uielement.setCustomParams(params);
-			rs.append(uielement.render(params));
-			uielement.clear();
+			JSONObject paramJSON=uielement.initData(params,te, element);
+			uielement.setPublicProperties(params,te, element);
+			uielement.setCustomParams(params,paramJSON);
+			rs.append(uielement.render(params, element));
 		}
 		return rs.toString();
 	}

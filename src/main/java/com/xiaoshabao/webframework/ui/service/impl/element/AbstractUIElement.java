@@ -1,18 +1,14 @@
 package com.xiaoshabao.webframework.ui.service.impl.element;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.exception.ServiceException;
-import com.xiaoshabao.webframework.component.SessionParams;
 import com.xiaoshabao.webframework.component.TemplateEngine;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
@@ -31,35 +27,25 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl impl
 	private TemplatElementEntity tempalteElement;
 	/** 组件元素数据 **/
 	private ElementEntity element;
-	/** 元素参数json,可以用来转换为子类参数类型 **/
-	private JSONObject paramJSON;
-	/** 默认模版 **/
-	private String defaultTempalte="viewTemplate";
 	/** 传入到模版的session标识 **/
 	private  String sessionTagString = "session";
 	
 	// 初始化数据
 	@Override
-	public void initData(ElementEntity element) {
-		this.element = element;
+	public final JSONObject initData(Map<String,Object> params,ElementEntity element) {
+		return initData(params,null,element);
 	}
 	//初始化数据
 	@Override
-	public void initData(TemplatElementEntity tempalteElement,ElementEntity element){
-		this.element=element;
-		this.tempalteElement=tempalteElement;
-	}
-	
-	//设置元素bean参数
-	@Override
-	public void setBeanParams(Map<String,Object> params){
+	public final JSONObject initData(Map<String,Object> params,TemplatElementEntity tempalteElement,ElementEntity element){
 		try {
+			logger.debug("开始解析元素{}",element.getElementId());
+			JSONObject paramJSON=null;
 			//element表获取
 			params.putAll(PropertyUtils.describe(element));
 			String elementParam=element.getParams();
 			if(StringUtils.isNotEmpty(elementParam)){
-				JSONObject elementJSON=JSONObject.parseObject(elementParam);
-				params.putAll(elementJSON);
+				paramJSON=JSONObject.parseObject(elementParam);
 			}
 			//关联表参数获取向上覆盖
 			if(tempalteElement!=null){
@@ -72,77 +58,73 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl impl
 					}else{
 						paramJSON.putAll(formJSON);
 					}
-					params.putAll(formJSON);
 				}
 			}
+			if(paramJSON!=null){
+				params.putAll(paramJSON);
+			}
+			return paramJSON;
 		} catch (Exception e) {
 			throw new ServiceException(String.format("render设置bean参数异常,获取bean的map时错误;参数template {}, element {}",
 				this.tempalteElement==null?"null":this.tempalteElement.getTemplateId(),this.element.getElementId()),e);
 		} 
 	}
 	
+	
+	
 	//默认调用view模版
 	@Override
-	public String render(Map<String,Object> params) {
-		return this.render(params, defaultTempalte);
+	public final String render(Map<String,Object> params,ElementEntity element) {
+		return this.render(params,element, this.formEngineComponet.getDefaultTemplateType());
 	}
 	
 	@Override
-	public String render(Map<String,Object> params,String templateTypeName) {
+	public final String render(Map<String,Object> params,ElementEntity element,String templateTypeName) {
 		try {
-			String template=BeanUtils.getProperty(this.element, templateTypeName);
+			Object template=params.get(templateTypeName);
 			//优先使用数据库配置
 			if(template!=null){
-				return TemplateEngine.renderTemplate(this.element.getElementId(), template, params);
+				logger.debug("在数据库加载模版{}",templateTypeName);
+				return TemplateEngine.renderTemplate("elementid"+element.getElementId(), template.toString(), params);
 			}
-			//通过配置文件加载
 			StringBuffer path=new StringBuffer();
 			path.append("/webframework/form/");
-			path.append(this.element.getElementType());
+			path.append(element.getElementType());
 			path.append("_");
 			path.append(templateTypeName);
 			path.append(".ftl");
+			logger.debug("通过配置文件flt加载模版{}，模版文件{}",templateTypeName,path.toString());
 			return TemplateEngine.renderTemplate(path.toString(), params);
 		}catch (ParseException e) {
-			this.getReaderExcepiton("模版解析错误", templateTypeName, e);
+			this.getReaderExcepiton("模版解析错误",params,templateTypeName, e);
 		}catch (TemplateNotFoundException e) {
-			this.getReaderExcepiton("未发现输入的模版", templateTypeName, e);
+			this.getReaderExcepiton("未发现输入的模版",params, templateTypeName, e);
 		}catch (MalformedTemplateNameException e) {
-			this.getReaderExcepiton("模版类型获取错误", templateTypeName, e);
+			this.getReaderExcepiton("模版类型获取错误",params, templateTypeName, e);
 		}catch (IOException e) {
-			this.getReaderExcepiton("获取模版时读写异常", templateTypeName, e);
-		}catch (IllegalAccessException | InvocationTargetException
-				| NoSuchMethodException e) {
-			this.getReaderExcepiton("未能正常获得模版类型，可能是是配置错误或者获取element属性错误", templateTypeName, e);
+			this.getReaderExcepiton("获取模版时读写异常",params, templateTypeName, e);
 		} catch (Exception e) {
-			this.getReaderExcepiton("模版解析未知异常", templateTypeName, e);
+			this.getReaderExcepiton("模版解析未知异常", params,templateTypeName, e);
 		}
 		return "";
 	}
 	
 	/** 打印reader异常信息 **/
-	private void getReaderExcepiton(String message,String templateTypeName,Object e){
+	private void getReaderExcepiton(String message,Map<String,Object> params,String templateTypeName,Object e){
 		logger.error("render异常,{};模版类型{},参数template {}, element {}",message,templateTypeName,
-				this.tempalteElement==null?"null":this.tempalteElement.getTemplateId(),this.element.getElementId(),e);
+				params.get("templateId").toString(),params.get("elementId").toString(),e);
 	}
 	//设置公共参数
 	@Override
-	public void setPublicProperties(Map<String,Object> params){
+	public final void setPublicProperties(Map<String,Object> params,TemplatElementEntity tempalteElement,ElementEntity element){
 		//设置session参数
-		if(this.element.getSessionTag()==1){
-			params.put(sessionTagString, ApplicationContextUtil.getBean("sessionParams", SessionParams.class));
+		if(element.getSessionTag()==1){
+			params.put(sessionTagString, this.formEngineComponet.getSessionObject());
 		}
 	}
 	@Override
-	public void setCustomParams(Map<String,Object> params){
+	public void setCustomParams(Map<String,Object> params,JSONObject paramJSON){
 		
 	}
 	
-	//清空便于内存回收
-	@Override
-	public void clear() {
-		this.element=null;
-		this.tempalteElement=null;
-		this.paramJSON=null;
-	}
 }

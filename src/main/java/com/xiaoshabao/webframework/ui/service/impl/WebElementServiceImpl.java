@@ -79,6 +79,7 @@ public class WebElementServiceImpl extends UIElementServiceImpl implements WebEl
 	private FormEngineComponet formEngineComponet;
 	
 	//相应元素web请求
+	/*
 	@Override
 	public AjaxResult getElementResponse(String elementId) {
 		ElementEntity element=this.elementDao.getElementById1(elementId);
@@ -101,6 +102,6 @@ public class WebElementServiceImpl extends UIElementServiceImpl implements WebEl
 		uielement.clear();
 		
 		return null;
-	}
+	}*/
 	
 }
