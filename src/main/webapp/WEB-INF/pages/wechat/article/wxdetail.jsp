@@ -3,7 +3,7 @@
 <html lang="zh-cmn-Hans">
 <head>
 <%@include file="../../context/head.jsp"%>
-<cs:resource type="all" value="jquery,jweixin,weui" />
+<cbox:resource type="all" value="jquery,jweixin,weui" />
 <%@include file="../common.jsp"%>
 <title>${title}</title>
 </head>

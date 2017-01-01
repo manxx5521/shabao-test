@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>${data.bargainName}</title>
 <%@include file="../../../context/head.jsp"%>
-<cs:resource type="all" value="jquery,swiper,leanModal,jweixin,weui" />
+<cbox:resource type="all" value="jquery,swiper,leanModal,jweixin,weui" />
 <%@include file="../../common.jsp"%>
 <link href="${ctx}/resources/wechat/bargain/one/base.css" rel="stylesheet">
 <link href="${ctx}/resources/wechat/bargain/one/index.css" rel="stylesheet">

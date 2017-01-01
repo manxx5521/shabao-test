@@ -8,7 +8,7 @@
 	<title>砍价列表</title>
 	<%@include file="../../context/head.jsp"%>
     <%@include file="../../system/common.jsp"%>
-	<cs:resource type="css" value="jquery,bootstrap,system,bootbox,dataTables,select2" />
+	<cbox:resource type="css" value="jquery,bootstrap,system,bootbox,dataTables,select2" />
 	<base target="_blank">
 </head>
 <body class="gray-bg">
@@ -40,6 +40,7 @@
                     	<form id ="form1" class="form-horizontal form-label-left" action="./list" target="_self">
                     		<div class="row search">
                     			<div class="col-md-12 col-sm-12 col-xs-12">
+                    				<!-- 
                     				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 		                                <div class="form-group">
 		                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">帐号：</label>
@@ -48,6 +49,8 @@
 		                                    </div>
 		                                </div>
 		                            </div>
+		                             -->
+		                             <cbox:condition id="11" />
 		                            <button class="btn btn-primary col-sm-offset-11" type="button" onclick="$('#form1').submit();">执行查询</button>
                             	</div>
                             </div>

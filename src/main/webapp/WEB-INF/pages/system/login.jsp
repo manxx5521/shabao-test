@@ -5,7 +5,7 @@
 <%@include file="../context/head.jsp"%>
 <%@include file="./common.jsp"%>
 <title>沙包娱乐 - 登录</title>
-<cs:resource type="css" value="jquery,bootstrap,system,bootbox" />
+<cbox:resource type="css" value="jquery,bootstrap,system,bootbox" />
 <link href="${ctx}/resources/system/login/css/login.min.css" rel="stylesheet">
 <script>
 	if (window.top !== window.self) {
@@ -50,7 +50,7 @@
 			</div>
 		</div>
 	</div>
-	<cs:resource type="js" value="jquery,bootstrap,system,bootbox" />
+	<cbox:resource type="js" value="jquery,bootstrap,system,bootbox" />
 	<script src="${ctx}/resources/system/login/login.js"></script>
 </body>
 </html>

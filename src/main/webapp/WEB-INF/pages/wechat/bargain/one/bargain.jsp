@@ -12,7 +12,7 @@
 <meta name="applicable-device" content="mobile">
 <title>${data.bargainName}</title>
 <%@include file="../../../context/head.jsp"%>
-<cs:resource type="all" value="jquery,swiper,leanModal,jweixin,weui" />
+<cbox:resource type="css" value="jquery,swiper,leanModal,jweixin,weui" />
 <%@include file="../../common.jsp"%>
 <!--微信分享-->
 <script type="text/javascript">
@@ -274,6 +274,7 @@ paginationClickable: true
 			</div>
 		</div>
 	</div>
+	<cbox:resource type="js" value="jquery,swiper,leanModal,jweixin,weui" />
 	<!-- 微信弹窗 end-->
 	<script>
 	var bargain={

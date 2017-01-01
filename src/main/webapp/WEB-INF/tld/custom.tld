@@ -7,7 +7,7 @@
 	http://javasuncom/xml/ns/j2ee/web-jsptaglibrary_2_xsd" >
 	<tlib-version>1.0</tlib-version>
 	<jsp-version>2.3</jsp-version>
-	<short-name>自定义标签cs</short-name>
+	<short-name>自定义标签cbox</short-name>
 	<uri>/custom-tags</uri>
 	<tag>
 		<name>resource</name>

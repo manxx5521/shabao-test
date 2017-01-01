@@ -9,7 +9,7 @@
 	<title>添加文章</title>
 	<%@include file="../../context/head.jsp"%>
     <%@include file="../../system/common.jsp"%>
-	<cs:resource type="css" value="jquery,bootstrap,system,bootbox,dataTables,select2" />
+	<cbox:resource type="css" value="jquery,bootstrap,system,bootbox,dataTables,select2" />
 	<base target="_blank">
 </head>
 <body class="gray-bg">
@@ -91,7 +91,7 @@
             </div>
         </div>
     </div>
-    <cs:resource type="js" value="jquery,bootstrap,system,bootbox,jeditable,dataTables,jqueryui,select2,dselect2" />
+    <cbox:resource type="js" value="jquery,bootstrap,system,bootbox,jeditable,dataTables,jqueryui,select2,dselect2" />
     <script>
         function add(){
         	window.location.href = '${ctx}/admin/wechat/article/init';

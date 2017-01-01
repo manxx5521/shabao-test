@@ -3,27 +3,21 @@ package com.xiaoshabao.webframework.ui.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.webframework.dto.AjaxResult;
-import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 import com.xiaoshabao.webframework.ui.service.FormService;
 import com.xiaoshabao.webframework.ui.service.TemplateFactory;
-import com.xiaoshabao.webframework.ui.service.element.UIElement;
 /**
  * 表单服务
  */
 @Service("formServiceImpl")
 public class FormServiceImpl extends AbstractTemplateServiceImpl implements FormService {
-	@Resource(name="formEngineComponet")
-	private FormEngineComponet formEngineComponet;
 	
 	// 获得模版数据
 	@Override
@@ -40,7 +34,9 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl implements Form
 		}
 		TemplateFactory templateFactory=ApplicationContextUtil.getBean(engineType, TemplateFactory.class);
 		TemplateData templateData=new TemplateData();
-		templateData.setHtml(templateFactory.getTemplateElements(templateId));
+		Map<String, Object> params=new HashMap<String, Object>();
+		this.formEngineComponet.putTemplateData(params, templateEntity);
+		templateData.setHtml(templateFactory.getTemplateElements(templateId,params));
 		return templateData;
 	}
 	

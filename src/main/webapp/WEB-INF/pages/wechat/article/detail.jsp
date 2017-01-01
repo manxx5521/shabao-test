@@ -7,7 +7,7 @@
 <title>添加文章</title>
 <%@include file="../../context/head.jsp"%>
 <%@include file="../../system/common.jsp"%>
-<cs:resource type="css" value="jquery,bootstrap,system,sweetalert,icheck,select2" />
+<cbox:resource type="css" value="jquery,bootstrap,system,sweetalert,icheck,select2" />
 </head>
 <body class="gray-bg">
    <div class="wrapper wrapper-content animated fadeInRight">
@@ -123,7 +123,7 @@
             </div>
         </div>
     </div>
-	<cs:resource type="js" value="jquery,jqueryui,bootstrap,system,sweetalert,validate,icheck,ueditor,dimage,select2,dselect2" />
+	<cbox:resource type="js" value="jquery,jqueryui,bootstrap,system,sweetalert,validate,icheck,ueditor,dimage,select2,dselect2" />
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//帐号初始化

@@ -18,7 +18,7 @@
 <title>数据排行</title>
 <%@include file="../../../context/head.jsp"%>
 <link rel="stylesheet" href="${ctx}/resources/plugins/bootstrap/css/bootstrap.min.css">
-<cs:resource type="all" value="swiper" />
+<cbox:resource type="all" value="swiper" />
 </head>
 <body style="padding: 0">
 	<h5 style="padding: 0 10px;">${data.voteName} 排行榜/当前总票数:${data.count.voteNum}</h5>

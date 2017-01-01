@@ -5,7 +5,7 @@
 <%@include file="../../context/head.jsp"%>
 <%@include file="../common.jsp"%>
 <title>沙包娱乐 - 用户添加</title>
-<cs:resource type="css" value="jquery,bootstrap,system,jstree,bootbox" />
+<cbox:resource type="css" value="jquery,bootstrap,system,jstree,bootbox" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 </head>
 <body class="gray-bg">
@@ -76,7 +76,7 @@
             </div>
         </div>
 	</div>
-	<cs:resource type="js" value="jquery,bootstrap,jqueryui,system,jstree,dtree,validate" />
+	<cbox:resource type="js" value="jquery,bootstrap,jqueryui,system,jstree,dtree,validate" />
 	<script>
 		$(document).ready(function() {
 			//部门树

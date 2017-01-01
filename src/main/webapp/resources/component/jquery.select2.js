@@ -18,7 +18,7 @@ var asiainfoSelect2 = $.widget("ui.dselect2", {
 			return data;
 		},
 		url:function(){ //Ajax请求数据的URL
-			return window.webroot+'/admin/ui/select/'+this.element_id;
+			return window.webroot+'/admin/ui/default/ajax/'+this.element_id;
 		},
 		validation:function(){ //获取数据时可能要做的验证
 			return true;

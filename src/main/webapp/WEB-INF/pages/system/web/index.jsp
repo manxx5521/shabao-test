@@ -22,9 +22,8 @@
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
-	
 	<%@include file="../../context/head.jsp"%>
-	<cs:resource type="css" value="jquery,bootstrap,carousel,magnific-popup,superfish,themify-icons" />
+	<cbox:resource type="css" value="jquery,bootstrap,carousel,magnific-popup,superfish,themify-icons" />
 
   	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   	<link rel="shortcut icon" href="${ctx}/resources/img/favicon.ico">
@@ -261,7 +260,7 @@
 				<div class="fh5co-spacer fh5co-spacer-md"></div>
 			</div>
 		</footer>
-		<cs:resource type="js" value="jquery,bootstrap,carousel,magnific-popup,superfish,modernizr,fastclick,waypoints" />
+		<cbox:resource type="js" value="jquery,bootstrap,carousel,magnific-popup,superfish,modernizr,fastclick,waypoints" />
 		<!-- jQuery Easing -->
 		<script src="${ctx}/resources/system/web/js/jquery.easing.1.3.js"></script>
 		<!-- Easy Responsive Tabs -->

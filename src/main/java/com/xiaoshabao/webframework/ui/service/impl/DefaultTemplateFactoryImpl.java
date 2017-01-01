@@ -1,6 +1,5 @@
 package com.xiaoshabao.webframework.ui.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,11 +15,6 @@ import com.xiaoshabao.webframework.ui.service.element.UIElement;
 public class DefaultTemplateFactoryImpl extends AbstractTemplateFactoryImpl {
 
 	@Override
-	public String getTemplateElements(String templateId) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		return getTemplateElements(templateId, params);
-	}
-	
 	public String getTemplateElements(String templateId,Map<String,Object> params) {
 		List<TemplatElementEntity> elementList = this.elementDao
 				.getTemplateElements(templateId);

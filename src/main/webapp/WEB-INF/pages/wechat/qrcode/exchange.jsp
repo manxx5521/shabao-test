@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>${data.bargainName}</title>
 <%@include file="../../context/head.jsp"%>
-<cs:resource type="all" value="jquery,jweixin,weui" />
+<cbox:resource type="all" value="jquery,jweixin,weui" />
 <%@include file="../common.jsp"%>
 </head>
 <body>

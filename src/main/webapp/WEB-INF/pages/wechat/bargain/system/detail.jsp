@@ -7,7 +7,7 @@
 <title>添加砍价活动</title>
 <%@include file="../../../context/head.jsp"%>
 <%@include file="../../../system/common.jsp"%>
-<cs:resource type="css" value="jquery,bootstrap,system,sweetalert,icheck,fileinput,datetimepicker" />
+<cbox:resource type="css" value="jquery,bootstrap,system,sweetalert,icheck,fileinput,datetimepicker" />
 </head>
 <body class="gray-bg">
    <div class="wrapper wrapper-content animated fadeInRight">
@@ -162,7 +162,7 @@
             </div>
         </div>
     </div>
-	<cs:resource type="js" value="jquery,jqueryui,bootstrap,system,sweetalert,validate,icheck,ueditor,dimage,fileinput,datetimepicker" />
+	<cbox:resource type="js" value="jquery,jqueryui,bootstrap,system,sweetalert,validate,icheck,ueditor,dimage,fileinput,datetimepicker" />
 <script type="text/javascript">
 	var files = new Array();//上传文件列表
 	var bargain={

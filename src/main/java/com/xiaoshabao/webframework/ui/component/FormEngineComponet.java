@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.xiaoshabao.webframework.component.SessionParams;
+import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 
 /**
  * 表单引擎组件(XML注入)
@@ -54,6 +55,15 @@ public class FormEngineComponet {
 	 */
 	public Object getSessionObject(){
 		return sessionComponet.getSessionObject();
+	}
+	
+	/**
+	 * 向表单数据要添加的template值
+	 * @param data
+	 * @param template
+	 */
+	public void putTemplateData(Map<String,Object> data,TemplateEntity template){
+		data.put("engineType", template.getEngineType());
 	}
 	
 	//getter and setter

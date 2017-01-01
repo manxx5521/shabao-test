@@ -5,7 +5,7 @@
 <%@include file="../context/head.jsp"%>
 <%@include file="./common.jsp"%>
 <title>沙包娱乐 - 登录</title>
-<cs:resource type="css" value="jquery,bootstrap,system" />
+<cbox:resource type="css" value="jquery,bootstrap,system" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg"
@@ -590,7 +590,7 @@
 			</a>
 		</div>
 	</div>
-	<cs:resource type="js" value="jquery,bootstrap,system" />
+	<cbox:resource type="js" value="jquery,bootstrap,system" />
 	<!-- 手风琴菜单 -->
 	<script src="${ctx}/resources/plugins/metisMenu/metisMenu.min.js"></script>
 	<!-- 滚动条 -->

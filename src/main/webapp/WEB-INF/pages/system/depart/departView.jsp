@@ -6,7 +6,7 @@
 <%@include file="../../context/head.jsp"%>
 <%@include file="../common.jsp"%>
 <title>沙包娱乐 - 登录</title>
-<cs:resource type="css" value="jquery,bootstrap,system,jstree,bootbox" />
+<cbox:resource type="css" value="jquery,bootstrap,system,jstree,bootbox" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 </head>
 <body class="gray-bg">
@@ -107,7 +107,7 @@
 			</div>
 		</div>
 	</div>
-	<cs:resource type="js" value="jquery,bootstrap,system,jstree,validate" />
+	<cbox:resource type="js" value="jquery,bootstrap,system,jstree,validate" />
 	<script>
 		$(document).ready(function() {
 			getTree();

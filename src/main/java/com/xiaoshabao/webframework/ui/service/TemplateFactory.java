@@ -13,7 +13,7 @@ public interface TemplateFactory {
 	 * 获得表单元素
 	 * @param templateId 模版id，必传
 	 */
-	public String getTemplateElements(String templateId);
+	public String getTemplateElements(String templateId,Map<String, Object> params);
 
 	/**
 	 * 相应元素web请求
