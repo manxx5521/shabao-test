@@ -23,7 +23,7 @@ var asiainfoSelect2 = $.widget("ui.dselect2", {
 		validation:function(){ //获取数据时可能要做的验证
 			return true;
 		},
-		hasall:true,//是否有请选择,select2有问题无法填true
+		hasall:true,//是否有请选择
 		datadefault:{id:'',text:''},//默认请选择数据
 		placeholder:'请选择',
 		minimumResultsForSearch: Infinity,  //隐藏搜索框

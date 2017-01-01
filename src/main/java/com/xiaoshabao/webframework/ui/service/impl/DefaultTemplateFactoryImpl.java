@@ -26,7 +26,7 @@ public class DefaultTemplateFactoryImpl extends AbstractTemplateFactoryImpl {
 				.getTemplateElements(templateId);
 		StringBuffer rs = new StringBuffer();
 		for (TemplatElementEntity te : elementList) {
-			ElementEntity element = this.elementDao.getElementById1(te.getElementId());
+			ElementEntity element = this.elementDao.getElementById(te.getElementId());
 			String elementType = this.formEngineComponet.getElementType(element.getElementType());
 			if (elementType == null) {
 				logger.error("模版{} 未获得元素{}的类型", templateId,element.getElementId());

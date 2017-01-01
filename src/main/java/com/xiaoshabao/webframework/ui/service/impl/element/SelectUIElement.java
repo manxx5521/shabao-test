@@ -23,23 +23,23 @@ public class SelectUIElement extends AbstractUIElement implements WebElement{
 		SelectElementDef selectInfo=JSONObject.toJavaObject(paramJSON, SelectElementDef.class);
 		SqlMapper sqlMapper=this.baseDao.getSqlMapper();
 		List<SelectResultDto> list=null;
-		if(selectInfo.getSourcetype()==1){
+		if(selectInfo.getType()==1){
 			list=sqlMapper.selectList("SELECT A.DATA_ID id, A.DATA_NAME text FROM TD_S_STATIC A WHERE A.TYPE_ID ='"+selectInfo.getCondition()+"'", params, SelectResultDto.class);
-		}else if(selectInfo.getSourcetype()==2){
+		}else if(selectInfo.getType()==2){
 			StringBuffer sql=new StringBuffer();
 			sql.append("select ");
-			sql.append(selectInfo.getCodecolname());
+			sql.append(selectInfo.getId());
 			sql.append(" ID,");
-			sql.append(selectInfo.getNamecolname());
+			sql.append(selectInfo.getText());
 			sql.append(" text from ");
-			sql.append(selectInfo.getTablename());
+			sql.append(selectInfo.getTable());
 			String condition=selectInfo.getCondition();
 			if(StringUtils.isNotEmpty(condition)){
 				sql.append(" where ");
 				sql.append(selectInfo.getCondition());
 			}
 			list=sqlMapper.selectList(sql.toString(), params, SelectResultDto.class);
-		}else if(selectInfo.getSourcetype()==3){
+		}else if(selectInfo.getType()==3){
 			list=sqlMapper.selectList(selectInfo.getSql(), params, SelectResultDto.class);
 		}
 		return new AjaxResult(true,"刷新成功",list);

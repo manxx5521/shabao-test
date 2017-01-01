@@ -14,7 +14,7 @@ public class TreeServiceImplTest extends ServiceTest{
 	TreeService treeService;
 	@Test
 	public void testGetJSTreeList() {
-		treeService.getJSTreeList(100000);
+		treeService.getJSTreeList("100000");
 	}
 
 }

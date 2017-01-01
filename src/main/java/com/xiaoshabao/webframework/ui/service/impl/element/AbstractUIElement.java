@@ -23,12 +23,10 @@ import freemarker.template.TemplateNotFoundException;
  * 添加表单元素时，继承的类
  */
 public abstract class AbstractUIElement extends AbstractTemplateServiceImpl implements UIElement {
-	/** 关联表元素 **/
-	private TemplatElementEntity tempalteElement;
-	/** 组件元素数据 **/
-	private ElementEntity element;
 	/** 传入到模版的session标识 **/
-	private  String sessionTagString = "session";
+	private final static String SESSION_TAG_STRING = "session";
+	/** def元素标识 **/
+	private final static String DEF_STRING="def";
 	
 	// 初始化数据
 	@Override
@@ -61,12 +59,12 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl impl
 				}
 			}
 			if(paramJSON!=null){
-				params.putAll(paramJSON);
+				params.put(DEF_STRING,paramJSON);
 			}
 			return paramJSON;
 		} catch (Exception e) {
 			throw new ServiceException(String.format("render设置bean参数异常,获取bean的map时错误;参数template {}, element {}",
-				this.tempalteElement==null?"null":this.tempalteElement.getTemplateId(),this.element.getElementId()),e);
+					params.get("templateId").toString(),params.get("elementId").toString()),e);
 		} 
 	}
 	
@@ -119,7 +117,7 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl impl
 	public final void setPublicProperties(Map<String,Object> params,TemplatElementEntity tempalteElement,ElementEntity element){
 		//设置session参数
 		if(element.getSessionTag()==1){
-			params.put(sessionTagString, this.formEngineComponet.getSessionObject());
+			params.put(SESSION_TAG_STRING, this.formEngineComponet.getSessionObject());
 		}
 	}
 	@Override

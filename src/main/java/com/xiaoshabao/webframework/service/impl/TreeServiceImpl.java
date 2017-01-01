@@ -11,10 +11,10 @@ import com.github.abel533.sql.SqlMapper;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.webframework.dto.JSTreeNode;
-import com.xiaoshabao.webframework.entity.ElementEntity;
 import com.xiaoshabao.webframework.entity.TreeElement;
 import com.xiaoshabao.webframework.service.TreeService;
 import com.xiaoshabao.webframework.ui.dao.ElementDao;
+import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 @Service("treeServiceImpl")
 public class TreeServiceImpl extends AbstractServiceImpl implements TreeService{
 	@Autowired
@@ -22,7 +22,7 @@ public class TreeServiceImpl extends AbstractServiceImpl implements TreeService{
 	
 	//获得JSTree数据
 	@Override
-	public List<JSTreeNode> getJSTreeList(Integer elementId){
+	public List<JSTreeNode> getJSTreeList(String elementId){
 		TreeElement param=this.validation(elementId);
 		String type=param.getType();
 		List<JSTreeNode> list=null;
@@ -38,15 +38,15 @@ public class TreeServiceImpl extends AbstractServiceImpl implements TreeService{
 	 * @param elementId
 	 * @return
 	 */
-	private TreeElement validation(Integer elementId){
-		if(elementId==null||elementId==0){
+	private TreeElement validation(String elementId){
+		if(elementId==null){
 			throw new ServiceException("传入的元素不能为空");
 		}
 		ElementEntity element=elementDao.getElementById(elementId);
-		if(element==null||element.getElementId()==null||element.getElementId()==0){
+		if(element==null||element.getElementId()==null){
 			throw new ServiceException("没有获取到对应元素");
 		}
-		String json=element.getParam();
+		String json=element.getParams();
 		if(StringUtils.isEmpty(json)){
 			throw new ServiceException("没有获得树组件对应参数");
 		}

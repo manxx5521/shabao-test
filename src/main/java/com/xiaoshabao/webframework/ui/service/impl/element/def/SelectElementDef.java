@@ -1,108 +1,79 @@
 package com.xiaoshabao.webframework.ui.service.impl.element.def;
-
+/**
+ * select表单参数
+ */
 public class SelectElementDef extends FormElementDef {
 	/** 类型 */
-	private Integer sourcetype;
+	private Integer type;
 	/** 要枚举的表 */
-	private String tablename;
+	private String table;
 	/** 查询表返回的key */
-	private String codecolname;
+	private String id;
 	/** 查询表返回的value,显示的值 */
-	private String namecolname;
+	private String text;
 	/** 条件 */
 	private String condition;
 	/** 过滤 */
 	private String filtercol;
-	/**
-	 * 数据源sql
-	 */
+	/** 数据源 sql*/
 	private String sql;
-	
-	/**
-	 * 是否显示全部
-	 */
+	/** 是否显示全部 */
 	private boolean TextAll=false;
-	/**
-	 * 是否初始化值
-	 */
+	/** 是否初始化值 */
 	private boolean initData=true;
-
-	public Integer getSourcetype() {
-		return sourcetype;
+	
+	public Integer getType() {
+		return type;
 	}
-
-	public void setSourcetype(Integer sourcetype) {
-		this.sourcetype = sourcetype;
+	public void setType(Integer type) {
+		this.type = type;
 	}
-
-	public String getTablename() {
-		return tablename;
+	public String getTable() {
+		return table;
 	}
-
-	public void setTablename(String tablename) {
-		this.tablename = tablename;
+	public void setTable(String table) {
+		this.table = table;
 	}
-
-	public String getCodecolname() {
-		return codecolname;
+	public String getId() {
+		return id;
 	}
-
-	public void setCodecolname(String codecolname) {
-		this.codecolname = codecolname;
+	public void setId(String id) {
+		this.id = id;
 	}
-
-	public String getNamecolname() {
-		return namecolname;
+	public String getText() {
+		return text;
 	}
-
-	public void setNamecolname(String namecolname) {
-		this.namecolname = namecolname;
+	public void setText(String text) {
+		this.text = text;
 	}
-
 	public String getCondition() {
 		return condition;
 	}
-
 	public void setCondition(String condition) {
 		this.condition = condition;
 	}
-
 	public String getFiltercol() {
 		return filtercol;
 	}
-
 	public void setFiltercol(String filtercol) {
 		this.filtercol = filtercol;
 	}
-
-	/**
-	 * @return the sql
-	 */
 	public String getSql() {
 		return sql;
 	}
-
-	/**
-	 * @param sql the sql to set
-	 */
 	public void setSql(String sql) {
 		this.sql = sql;
 	}
-
 	public boolean isTextAll() {
 		return TextAll;
 	}
-
 	public void setTextAll(boolean textAll) {
 		TextAll = textAll;
 	}
-
 	public boolean isInitData() {
 		return initData;
 	}
-
 	public void setInitData(boolean initData) {
 		this.initData = initData;
 	}
-	
 }

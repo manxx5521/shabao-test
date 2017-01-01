@@ -1,8 +1,6 @@
 package com.xiaoshabao.webframework.ui.entity;
 /**
  * 组件数据过滤值
- * @author dell
- *
  */
 public class FilterValue {
 	/**

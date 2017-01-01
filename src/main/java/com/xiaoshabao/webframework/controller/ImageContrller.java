@@ -25,7 +25,7 @@ public class ImageContrller {
 	
 	@RequestMapping(value="{elementId}/list")
 	@ResponseBody
-	public AjaxResult getList(@PathVariable("elementId") Integer elementId){
+	public AjaxResult getList(@PathVariable("elementId") String elementId){
 		try {
 			List<ImageDto> list=imageService.getList(elementId);
 			return new AjaxResult(true,"success",list);

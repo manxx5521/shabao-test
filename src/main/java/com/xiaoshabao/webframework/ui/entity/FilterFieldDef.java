@@ -1,8 +1,6 @@
 package com.xiaoshabao.webframework.ui.entity;
 /**
  * 字段过滤器
- * @author baowzh
- *
  */
 public class FilterFieldDef {
 private String filedname;

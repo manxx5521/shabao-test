@@ -9,7 +9,7 @@ public interface TreeService extends AbstractService{
 	/**
 	 * 获得JSTree的数据列表
 	 */
-	public List<JSTreeNode> getJSTreeList(Integer elementId);
+	public List<JSTreeNode> getJSTreeList(String elementId);
 	
 
 }

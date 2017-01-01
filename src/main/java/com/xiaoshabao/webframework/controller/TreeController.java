@@ -22,7 +22,7 @@ public class TreeController extends AbstractController{
 
 	@RequestMapping(value="{elementId}/list")
 	@ResponseBody
-	public AjaxResult getList(@PathVariable("elementId") Integer elementId){
+	public AjaxResult getList(@PathVariable("elementId") String elementId){
 		try {
 			List<JSTreeNode> list= treeService.getJSTreeList(elementId);
 			return new AjaxResult(true,list);

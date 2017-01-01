@@ -47,7 +47,7 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl implements Form
 	// 相应元素web请求
 	@Override
 	public AjaxResult getElementResponse(String engineType,String elementId,Map<String, Object> params) {
-		ElementEntity element = this.elementDao.getElementById1(elementId);
+		ElementEntity element = this.elementDao.getElementById(elementId);
 		if (element==null) {
 			logger.error("未找到元素id对应的元素，请查看元素id填写是否正确；元素id{}。", elementId);
 			return new AjaxResult("元素类型错误");

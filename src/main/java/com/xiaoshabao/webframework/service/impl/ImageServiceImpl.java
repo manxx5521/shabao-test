@@ -19,10 +19,10 @@ import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.webframework.component.ContextHolderUtils;
 import com.xiaoshabao.webframework.component.SessionParams;
 import com.xiaoshabao.webframework.dto.ImageDto;
-import com.xiaoshabao.webframework.entity.ElementEntity;
 import com.xiaoshabao.webframework.entity.ImageElement;
 import com.xiaoshabao.webframework.service.ImageService;
 import com.xiaoshabao.webframework.ui.dao.ElementDao;
+import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 @Service("imageServiceImpl")
 public class ImageServiceImpl extends AbstractServiceImpl implements ImageService{
 	@Autowired
@@ -32,7 +32,7 @@ public class ImageServiceImpl extends AbstractServiceImpl implements ImageServic
 	
 	//获得图片的数据列表
 	@Override
-	public List<ImageDto> getList(Integer elementId) {
+	public List<ImageDto> getList(String elementId) {
 		HttpServletRequest request=ContextHolderUtils.getRequest();
 		Map<String,Object> params=new HashMap<>();
 		Enumeration<String> paramnames = request.getParameterNames();
@@ -57,15 +57,15 @@ public class ImageServiceImpl extends AbstractServiceImpl implements ImageServic
 	 * @param elementId
 	 * @return
 	 */
-	private ImageElement validation(Integer elementId){
-		if(elementId==null||elementId==0){
+	private ImageElement validation(String elementId){
+		if(elementId==null){
 			throw new ServiceException("传入的元素不能为空");
 		}
 		ElementEntity element=elementDao.getElementById(elementId);
-		if(element==null||element.getElementId()==null||element.getElementId()==0){
+		if(element==null||element.getElementId()==null){
 			throw new ServiceException("没有获取到对应元素");
 		}
-		String json=element.getParam();
+		String json=element.getParams();
 		if(StringUtils.isEmpty(json)){
 			throw new ServiceException("没有获得对应参数");
 		}

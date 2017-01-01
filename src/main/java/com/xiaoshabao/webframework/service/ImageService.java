@@ -11,7 +11,7 @@ public interface ImageService extends AbstractService{
 	/**
 	 * 获得图片的数据列表
 	 */
-	public List<ImageDto> getList(Integer elementId);
+	public List<ImageDto> getList(String elementId);
 	
 
 }
