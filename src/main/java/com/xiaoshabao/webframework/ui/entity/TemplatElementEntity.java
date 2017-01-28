@@ -12,7 +12,7 @@ public class TemplatElementEntity {
 	/** 表单key元素名字 */
 	private String formKey;
 	/** 表单显示 */
-	private String lable;
+	private String label;
 	/** 表单个性参数 */
 	private String fromParams;
 	/** 描述 */
@@ -50,11 +50,12 @@ public class TemplatElementEntity {
 	public void setFormKey(String formKey) {
 		this.formKey = formKey;
 	}
-	public String getLable() {
-		return lable;
+	
+	public String getLabel() {
+		return label;
 	}
-	public void setLable(String lable) {
-		this.lable = lable;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	public String getFromParams() {
 		return fromParams;

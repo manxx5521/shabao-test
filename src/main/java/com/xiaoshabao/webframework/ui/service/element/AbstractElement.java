@@ -24,4 +24,10 @@ public interface AbstractElement {
 	 */
 	public JSONObject initData(Map<String,Object> params,TemplatElementEntity templateElement,ElementEntity element);
 
+	/**
+	 * 设置session参数
+	 * @param params
+	 */
+	public void setSessionParams(Map<String,Object> params,ElementEntity element);
+	
 }

@@ -27,6 +27,9 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl implements Form
 			logger.info("模版渲染失败，未根据模版id获得模版，失败模版id为{}",templateId);
 			return null;
 		}
+		if(StringUtils.isEmpty(templateEntity.getEngineType())){
+			templateEntity.setEngineType(this.formEngineComponet.getDefaultEngineType());
+		}
 		String engineType=formEngineComponet.getEngineType(templateEntity.getEngineType());
 		if(StringUtils.isEmpty(engineType)){
 			logger.info("模版渲染失败，未摸得渲染引擎类型，失败模版id为{}",templateId);

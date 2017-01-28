@@ -81,7 +81,7 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl impl
 		try {
 			Object template=params.get(templateTypeName);
 			//优先使用数据库配置
-			if(template!=null){
+			if(StringUtils.isNotEmpty(template.toString())){
 				logger.debug("在数据库加载模版{}",templateTypeName);
 				return TemplateEngine.renderTemplate("elementid"+element.getElementId(), template.toString(), params);
 			}
@@ -115,11 +115,18 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl impl
 	//设置公共参数
 	@Override
 	public final void setPublicProperties(Map<String,Object> params,TemplatElementEntity tempalteElement,ElementEntity element){
-		//设置session参数
-		if(element.getSessionTag()==1){
-			params.put(SESSION_TAG_STRING, this.formEngineComponet.getSessionObject());
+		
+	}
+	
+	//设置session参数
+	@Override
+	public final void setSessionParams(Map<String, Object> params,ElementEntity element) {
+		// 设置session参数
+		if (element.getSessionTag() == 1) {
+			params.put(SESSION_TAG_STRING,this.formEngineComponet.getSessionObject());
 		}
 	}
+	
 	@Override
 	public void setCustomParams(Map<String,Object> params,JSONObject paramJSON){
 		

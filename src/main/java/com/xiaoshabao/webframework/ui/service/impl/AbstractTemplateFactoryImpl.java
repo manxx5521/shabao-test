@@ -26,6 +26,7 @@ public abstract class AbstractTemplateFactoryImpl extends AbstractTemplateServic
 		WebElement webelement = ApplicationContextUtil.getBean(elementType,WebElement.class);
 		// 初始化元素数据
 		JSONObject paramJSON=webelement.initData(params,element);
+		webelement.setSessionParams(params, element);
 		return webelement.getElementResponse(params,paramJSON);
 	}
   

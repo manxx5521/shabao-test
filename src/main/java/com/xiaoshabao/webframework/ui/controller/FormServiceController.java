@@ -21,7 +21,7 @@ import com.xiaoshabao.webframework.ui.service.FormService;
 @Controller
 @RequestMapping("/admin/ui")
 public class FormServiceController extends AbstractController {
-	@Resource(name = "webElementServiceImpl")
+	@Resource(name = "formServiceImpl")
 	private FormService formService;
 
 	@RequestMapping(value = "/{engineType}/ajax/{elementId}")

@@ -14,7 +14,7 @@ public class SelectElementDef extends FormElementDef {
 	/** 条件 */
 	private String condition;
 	/** 过滤 */
-	private String filtercol;
+	private String filter;
 	/** 数据源 sql*/
 	private String sql;
 	/** 是否显示全部 */
@@ -52,11 +52,12 @@ public class SelectElementDef extends FormElementDef {
 	public void setCondition(String condition) {
 		this.condition = condition;
 	}
-	public String getFiltercol() {
-		return filtercol;
+	
+	public String getFilter() {
+		return filter;
 	}
-	public void setFiltercol(String filtercol) {
-		this.filtercol = filtercol;
+	public void setFilter(String filter) {
+		this.filter = filter;
 	}
 	public String getSql() {
 		return sql;

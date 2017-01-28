@@ -2,8 +2,6 @@ package com.xiaoshabao.webframework.ui.component;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.xiaoshabao.webframework.component.SessionParams;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 
@@ -19,6 +17,8 @@ public class FormEngineComponet {
 	private Map<String,String> templateType;
 	/** 默认freemarker模版类型 **/
 	private String defaultTemplateType="viewTemplate";
+	/** 默认引擎类型 **/
+	private String defaultEngineType="default";
 	/**获得子项目session**/
 	private SessionParams sessionComponet;
 	
@@ -28,9 +28,6 @@ public class FormEngineComponet {
 	 * @return
 	 */
 	public String getEngineType(String typeSN){
-		if(StringUtils.isEmpty(typeSN)){
-			typeSN="default";
-		}
 		return engineType.get(typeSN);
 	}
 	/**
@@ -97,6 +94,12 @@ public class FormEngineComponet {
 	}
 	public void setSessionComponet(SessionParams sessionComponet) {
 		this.sessionComponet = sessionComponet;
+	}
+	public String getDefaultEngineType() {
+		return defaultEngineType;
+	}
+	public void setDefaultEngineType(String defaultEngineType) {
+		this.defaultEngineType = defaultEngineType;
 	}
 	
 }

@@ -9,6 +9,7 @@
 	<%@include file="../../context/head.jsp"%>
     <%@include file="../../system/common.jsp"%>
 	<cbox:resource type="css" value="jquery,bootstrap,system,bootbox,dataTables,select2" />
+	<cbox:resource type="js" value="jquery,bootstrap,system,bootbox,jeditable,dataTables,jqueryui,select2,dselect2" />
 	<base target="_blank">
 </head>
 <body class="gray-bg">
@@ -50,7 +51,7 @@
 		                                </div>
 		                            </div>
 		                             -->
-		                             <cbox:condition id="11" />
+		                             <cbox:condition id="wxsys00001" />
 		                            <button class="btn btn-primary col-sm-offset-11" type="button" onclick="$('#form1').submit();">执行查询</button>
                             	</div>
                             </div>
@@ -91,17 +92,11 @@
             </div>
         </div>
     </div>
-    <cs:resource type="js" value="jquery,bootstrap,system,bootbox,jeditable,dataTables,jqueryui,select2,dselect2" />
     <script>
     	//下面用来显示上下页标签
         $(document).ready(function(){
         	$(".dataTables-example").dataTable({
         		"bSort": false, //排序功能
-        	});
-        	//下拉框
-        	$('#accountId').dselect2({
-        		element_id:100003,
-        		value:'${accountId}'
         	});
         	
         	$('#syncBtn').click(function(){

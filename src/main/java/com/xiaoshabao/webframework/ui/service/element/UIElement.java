@@ -25,6 +25,7 @@ public interface UIElement extends AbstractElement{
 	 * @param params
 	 */
 	public void setPublicProperties(Map<String,Object> params,TemplatElementEntity tempalteElement,ElementEntity element);
+	
 	/**
 	 * 设置元素自定义参数
 	 * @param params

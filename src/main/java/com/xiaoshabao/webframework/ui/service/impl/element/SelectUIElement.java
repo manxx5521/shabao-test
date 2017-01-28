@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.abel533.sql.SqlMapper;
@@ -15,6 +16,7 @@ import com.xiaoshabao.webframework.ui.service.impl.element.def.SelectElementDef;
 /**
  * 下拉列表
  */
+@Service("selectUIElement")
 public class SelectUIElement extends AbstractUIElement implements WebElement{
 	
 	//web数据AJAX响应
