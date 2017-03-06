@@ -14,6 +14,7 @@ public class Test1 {
 	@SuppressWarnings("unused")
 	@Test
 	public void test(){
+		//ceshi
 		Map<String,Object> params = JSON.parseObject("{'name':'wang','age':'12'}");
 	}
 
