@@ -24,6 +24,7 @@ public class SeckillServiceImplTest extends ServiceTest{
 
 	@Test
 	public void testGetSeckillList() {
+		
 		List<Seckill> list=seckillService.getSeckillList();
 		logger.info("list={}",list);
 	}
