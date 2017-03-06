@@ -14,7 +14,7 @@ public class Test1 {
 	@SuppressWarnings("unused")
 	@Test
 	public void test(){
-		//ceshi
+		//ceshi1
 		Map<String,Object> params = JSON.parseObject("{'name':'wang','age':'12'}");
 	}
 
