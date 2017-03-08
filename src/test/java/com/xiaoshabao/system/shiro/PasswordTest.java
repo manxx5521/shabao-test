@@ -14,7 +14,7 @@ public class PasswordTest {
 	public void test() {
 		//登录算法
 		String algorithmName = "md5";  
-		String username = "root2";  
+		String username = "root";  
 		String password = "123456";  
 		String salt1 = username;  
 		String salt2 = new SecureRandomNumberGenerator().nextBytes().toHex();  
@@ -24,7 +24,6 @@ public class PasswordTest {
 		String encodedPassword = hash.toHex();  
 		System.out.println("password:"+encodedPassword);
 		System.out.println("salt:"+ salt2);
-		fail("Not yet implemented");
 	}
 
 }

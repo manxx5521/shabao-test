@@ -1,3 +1,6 @@
+/**
+ 表单引擎1.0
+ */
 --元素表
 CREATE TABLE td_ui_element (
   	element_id varchar(10) NOT NULL comment '元素id',
