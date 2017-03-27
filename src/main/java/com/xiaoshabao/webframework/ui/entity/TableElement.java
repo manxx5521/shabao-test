@@ -1,4 +1,4 @@
-package com.xiaoshabao.webframework.entity;
+package com.xiaoshabao.webframework.ui.entity;
 
 import java.io.Serializable;
 

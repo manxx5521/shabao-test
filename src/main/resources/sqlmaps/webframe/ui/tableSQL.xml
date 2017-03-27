@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.dao.TableDao">
+	<!--添加td_ui_table的信息-->
+	<insert id="addTableDesc" useGeneratedKeys="true" keyProperty="tableId">
+	  	INSERT INTO td_ui_table(table_id,table_name,table_type,remark)
+		VALUES(NULL,#{tableName,jdbcType=VARCHAR},#{tableType,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
+	</insert>
+	<!--添加td_ui_table_element的信息-->
+	<insert id="addTableElements" useGeneratedKeys="true" parameterType="list">
+	  	INSERT INTO td_ui_table_elelment(table_id,field_code,field_name,field_type,
+	  		field_length,field_decimal,is_key,is_null,is_ref,ref_table)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">    
+       		(#{item.tableId}, #{item.fieldCode}, #{item.fieldName},#{item.fieldType},   
+        	#{item.fieldLength}, #{item.fieldDecimal}#{item.isKey},#{item.isNull},#{item.isRef},#{item.refTable})  
+    	</foreach>
+	</insert>
+	
+</mapper>
