@@ -1,4 +1,4 @@
-代办
+/*代办*/
 /**数据表*/
 CREATE TABLE td_ui_table (
   table_id varchar(10) NOT NULL comment '数据表id',
@@ -21,7 +21,7 @@ CREATE TABLE td_ui_table_element (
   is_ref int(1) comment '是否有关联表',
   ref_table varchar(20) comment '关联表明',
   ref_table_key varchar(20) comment '关联字段',
-  ref_table_value varchar(20) comment '翻译字段'，
+  ref_table_value varchar(20) comment '翻译字段',
   ref_table_sql varchar(1000) comment '翻译sql', 
 	remark varchar(100) comment '备注',
   PRIMARY KEY  (table_id,field_code),

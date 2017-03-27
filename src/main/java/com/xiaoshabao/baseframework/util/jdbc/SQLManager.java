@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Deprecated
 public class SQLManager {
 	private static Logger logger = LoggerFactory.getLogger(SQLManager.class);
 	// 定义需要的变量
@@ -26,7 +27,7 @@ public class SQLManager {
 	 * @return
 	 * @throws XjdbcException 
 	 */
-	public SQLManager(String driver,String url,String username,String password) throws XjdbcException {
+	public SQLManager(String driver,String url,String username,String password) {
 		conn=JDBCUtil.getConnection(driver, url, username, password);
 	}
 
@@ -105,7 +106,7 @@ public class SQLManager {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
-			throw new XjdbcException("执行sql时出错");
+			throw new SQLException("执行sql时出错");
 		} finally {
 			// 关闭资源
 			JDBCUtil.close(conn, ps, rs);
@@ -154,7 +155,7 @@ public class SQLManager {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
-			throw new XjdbcException("执行sql时出错");
+			throw new SQLException("执行sql时出错");
 		} finally {
 			// 关闭资源
 			JDBCUtil.close(conn, ps, rs);
@@ -192,7 +193,7 @@ public class SQLManager {
 			logger.debug("sql语句执行成功");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new XjdbcException("执行sql时出错");
+			throw new SQLException("执行sql时出错");
 		} finally {
 			// 关闭资源
 			JDBCUtil.close(conn, ps, rs);
@@ -240,7 +241,7 @@ public class SQLManager {
 			logger.debug("sql语句执行成功");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new XjdbcException("执行sql时出错");
+			throw new SQLException("执行sql时出错");
 		} finally {
 			// 关闭资源
 			JDBCUtil.close(conn, ps, rs);
@@ -248,7 +249,7 @@ public class SQLManager {
 		return results;
 	}
 	
-	private void getConnection() throws XjdbcException{
+	private void getConnection(){
 		if(conn==null){
 			conn = JDBCUtil.getConnection();
 		}

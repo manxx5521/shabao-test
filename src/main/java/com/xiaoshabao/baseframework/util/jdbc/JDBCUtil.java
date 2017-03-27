@@ -6,55 +6,96 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
+import com.xiaoshabao.baseframework.component.SysConfig;
+
+
 public class JDBCUtil {
-	
-	/**
-	 * 获取连接
-	 * 
-	 * @return
-	 * @throws XjdbcException 
-	 */
-	public static Connection getConnection() throws XjdbcException {
-		Connection conn = null;
-		try {
-			JDBCConstants constants=JDBCConstants.getInstance();
-			
-			 // 用来注册驱动
-			Class.forName(constants.getDriver());
-			conn = DriverManager.getConnection(constants.getUrl(),
-					constants.getUsername(), constants.getPassword());
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new XjdbcException("未能连接数据库", e);
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new XjdbcException("获取连接错误", e);
+	private static Logger logger = LoggerFactory.getLogger(JDBCUtil.class);
+
+	private volatile static String driver = null;
+
+	private static String url;
+	private static String username;
+	private static String password;
+
+	private static void init() {
+		if (driver == null) {
+			synchronized (JDBCUtil.class) {
+				if (driver == null) {
+					SysConfig sysConfig = ApplicationContextUtil.getBean(
+							"sysConfig", SysConfig.class);
+					driver=sysConfig.getJdbcDriver();
+					url=sysConfig.getJdbcUrl();
+					username=sysConfig.getJdbcUsername();
+					password=sysConfig.getJdbcPassword();
+					// 用来注册驱动
+					try {
+						Class.forName(driver);
+					} catch (ClassNotFoundException e) {
+						logger.error("jdbc初始化启动错误", e);
+						driver = null;
+					}
+				}
+			}
 		}
-		return conn;
-	}
-	
-	/**
-	 * 获取连接
-	 * 
-	 * @return
-	 * @throws XjdbcException 
-	 */
-	public static Connection getConnection(String driver,String url,String username,String password) throws XjdbcException {
-		Connection conn = null;
-		try {
-			 // 用来注册驱动
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url,username,password);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new XjdbcException("未能连接数据库", e);
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new XjdbcException("获取连接错误", e);
-		}
-		return conn;
 	}
 
+	/**
+	 * 获取连接
+	 * 
+	 * @return
+	 * @throws XjdbcException
+	 */
+	public static Connection getConnection() {
+		init();
+		return getConnection(url, username, password);
+	}
+
+	/**
+	 * 获取连接
+	 * 
+	 * @return
+	 * @throws XjdbcException
+	 */
+	public static Connection getConnection(String driver, String url,
+			String username, String password) {
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			logger.error("jdbc初始化启动错误", e);
+		}
+		return getConnection(url, username, password);
+	}
+
+	/**
+	 * 获取连接
+	 * 
+	 * @return
+	 * @throws XjdbcException
+	 */
+	public static Connection getConnection(String url, String username,
+			String password) {
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(url, username, password);
+		} catch (Exception e) {
+			logger.error("jdbc获取数据链接错误", e);
+		}
+		return conn;
+	}
+	/**
+	 * 用来释放资源
+	 * 
+	 * @param conn
+	 * @param st
+	 */
+	public static void close(Connection conn, Statement st){
+		close(conn,st,null);
+	}
 	/**
 	 * 用来释放资源
 	 * 

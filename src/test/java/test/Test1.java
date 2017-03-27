@@ -1,5 +1,8 @@
 package test;
 
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Map;
 
 import org.junit.Test;
@@ -16,6 +19,13 @@ public class Test1 {
 	public void test(){
 		//ceshi
 		Map<String,Object> params = JSON.parseObject("{'name':'wang','age':'12'}");
+		ResultSetMetaData a = null;
+		try {
+			a.getColumnType(0);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

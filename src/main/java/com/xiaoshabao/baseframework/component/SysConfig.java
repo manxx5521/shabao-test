@@ -20,6 +20,16 @@ public class SysConfig {
 	/** 文件上传附件格式 */
 	@Value("${file.attached}")
 	private String fileAttached;
+	
+	
+	@Value("${jdbc.driver}")
+	private String jdbcDriver;
+	@Value("${jdbc.url}")
+	private String jdbcUrl;
+	@Value("${jdbc.username}")
+	private String jdbcUsername;
+	@Value("${jdbc.password}")
+	private String jdbcPassword;
 
 	/** 资源加载方式 */
 	public String getResourceType() {
@@ -33,5 +43,16 @@ public class SysConfig {
 	public String getFileAttached() {
 		return fileAttached;
 	}
-
+	public String getJdbcDriver() {
+		return jdbcDriver;
+	}
+	public String getJdbcUrl() {
+		return jdbcUrl;
+	}
+	public String getJdbcUsername() {
+		return jdbcUsername;
+	}
+	public String getJdbcPassword() {
+		return jdbcPassword;
+	}
 }
