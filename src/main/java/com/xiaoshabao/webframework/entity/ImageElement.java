@@ -1,6 +1,6 @@
 package com.xiaoshabao.webframework.entity;
 
-public class ImageElement {
+public class ImageElement { 
 	/**
 	 * 类型 1完整SQL形式
 	 */
