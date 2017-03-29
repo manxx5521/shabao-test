@@ -13,6 +13,8 @@ import org.quartz.SchedulerFactory;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
 
 import com.xiaoshabao.baseframework.component.quartz.core.dao.QuartzWorkDao;
 import com.xiaoshabao.baseframework.component.quartz.core.dto.QuartzConfig;
@@ -22,12 +24,19 @@ import com.xiaoshabao.baseframework.component.quartz.core.dto.QuartzWorkEntity;
 /**
  * 调度工作
  */
-public class QuartzWorkBase {
+public class QuartzWorkBase   implements ApplicationListener<ApplicationEvent>{
   @Resource(name = "quartzComponent")
   private QuartzComponent quartzComponent;
-
+  
   /**
-   * 启动后调用方法
+   * 启动后执行
+   */
+  @Override
+  public void onApplicationEvent(ApplicationEvent arg0) {
+    init();
+  }
+  /**
+   * 初始化方法
    */
   public void init() {
     try {
