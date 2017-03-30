@@ -43,4 +43,11 @@ public class DataTablesElementDef extends FormElementDef {
 	public void setbSort(boolean bSort) {
 		this.bSort = bSort;
 	}
+  public String getTableId() {
+    return tableId;
+  }
+  public void setTableId(String tableId) {
+    this.tableId = tableId;
+  }
+	
 }
