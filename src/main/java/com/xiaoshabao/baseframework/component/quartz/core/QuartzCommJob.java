@@ -8,6 +8,7 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.component.quartz.core.dao.QuartzWorkDao;
 import com.xiaoshabao.baseframework.component.quartz.core.dto.QuartzStatus;
 import com.xiaoshabao.baseframework.component.quartz.core.dto.QuartzTaskType;
@@ -26,7 +27,7 @@ public class QuartzCommJob implements Job {
       id=QuartzUtil.getId();
       JobDataMap dataMap = context.getJobDetail().getJobDataMap();
       workId = dataMap.getInt("workId");
-      QuartzComponent quartzComponent = new QuartzComponentDefault();
+      QuartzComponent quartzComponent =ApplicationContextUtil.getBean("quartzComponent", QuartzComponent.class);
       QuartzWorkDao dao = quartzComponent.getServiceDao();
       List<TaskInfoDto> taskList = dao.getTaskInfoList(workId);
 

@@ -15,6 +15,7 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 import com.xiaoshabao.baseframework.component.quartz.core.dao.QuartzWorkDao;
 import com.xiaoshabao.baseframework.component.quartz.core.dto.QuartzConfig;
@@ -22,23 +23,29 @@ import com.xiaoshabao.baseframework.component.quartz.core.dto.QuartzStatus;
 import com.xiaoshabao.baseframework.component.quartz.core.dto.QuartzWorkEntity;
 
 /**
- * 调度工作
+ * 调度工作基础
+ * <p>
+ * 基本类，需要设置QuartzComponent接口，应对不同的环境
+ * </p>
  */
-public class QuartzWorkBase   implements ApplicationListener<ApplicationEvent>{
+@Component("quartzWorkDefault")
+public class QuartzWork implements ApplicationListener<ApplicationEvent> {
+
   @Resource(name = "quartzComponent")
   private QuartzComponent quartzComponent;
-  
+
   /**
    * 启动后执行
    */
   @Override
-  public void onApplicationEvent(ApplicationEvent arg0) {
+  public void onApplicationEvent(ApplicationEvent event) {
     init();
   }
+
   /**
    * 初始化方法
    */
-  public void init() {
+  public final void init() {
     try {
       QuartzWorkDao dao = quartzComponent.getServiceDao();
       List<QuartzWorkEntity> works = dao.getWorkList();
@@ -65,7 +72,7 @@ public class QuartzWorkBase   implements ApplicationListener<ApplicationEvent>{
     }
   }
 
-  private void runWork(Scheduler sched, QuartzWorkDao dao, QuartzWorkEntity work, QuartzConfig config) {
+  private final void runWork(Scheduler sched, QuartzWorkDao dao, QuartzWorkEntity work, QuartzConfig config) {
     try {
       //任务已经过期
       if (work.getEndTime().before(config.getNowDate())) {
@@ -80,18 +87,18 @@ public class QuartzWorkBase   implements ApplicationListener<ApplicationEvent>{
       int exeNum = work.getExeNum();
       ScheduleBuilder<?> scheduleBuilder = null;
       if (exeNum > 0) {
-//        int month=work.getExpMonth()==null?0:work.getExpMonth();
-        int day=work.getExpDay()==null?0:work.getExpDay();
-        int hours=work.getExpHours()==null?0:work.getExpHours();
-        int minutes=work.getExpMinutes()==null?0:work.getExpMinutes();
-        int seconds=work.getExpSeconds()==null?0:work.getExpSeconds();
-        
-        int number=seconds+minutes*60+hours*60*60+day*24*60*60;
-        scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withRepeatCount(exeNum)
-          .withIntervalInSeconds(number).repeatForever();
+        //        int month=work.getExpMonth()==null?0:work.getExpMonth();
+        int day = work.getExpDay() == null ? 0 : work.getExpDay();
+        int hours = work.getExpHours() == null ? 0 : work.getExpHours();
+        int minutes = work.getExpMinutes() == null ? 0 : work.getExpMinutes();
+        int seconds = work.getExpSeconds() == null ? 0 : work.getExpSeconds();
+
+        int number = seconds + minutes * 60 + hours * 60 * 60 + day * 24 * 60 * 60;
+        scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withRepeatCount(exeNum).withIntervalInSeconds(number)
+          .repeatForever();
       } else {
         scheduleBuilder = CronScheduleBuilder.cronSchedule(work.getExpression());
-//        CronExpression b=new CronExpression(cronExpression)
+        //        CronExpression b=new CronExpression(cronExpression)
       }
       Trigger trigger = TriggerBuilder.newTrigger().withIdentity("trigger" + work.getWorkId(), work.getSysType())
         .startAt(work.getStartTime()).endAt(work.getEndTime()).withSchedule(scheduleBuilder).startNow().build();
