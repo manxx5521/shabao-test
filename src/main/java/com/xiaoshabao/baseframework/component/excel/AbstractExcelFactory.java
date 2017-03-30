@@ -45,7 +45,6 @@ public abstract class AbstractExcelFactory implements ExcelFactory {
 
   private static DateFormat ddFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-  @SuppressWarnings("unused")
   private static Pattern pattern = Pattern.compile("[0-9]*");
 
   /**
@@ -188,7 +187,6 @@ public abstract class AbstractExcelFactory implements ExcelFactory {
       } else {
         //根据输入类型输出格式(比对小写即可，上边已经转换)
         type = type.toLowerCase();
-        /*
         switch (type) {
         case "string":
           rs = obj.toString();
@@ -210,7 +208,6 @@ public abstract class AbstractExcelFactory implements ExcelFactory {
         default:
           rs = obj.toString();
         }
-        */
       }
     } catch (Exception e) {
       e.printStackTrace();
