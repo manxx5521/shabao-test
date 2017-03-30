@@ -1,5 +1,7 @@
 package com.xiaoshabao.baseframework.component.cache;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -16,14 +18,32 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 @EnableCaching
 public class RedisCacheConfig extends CachingConfigurerSupport {
+  @Value("redis.host")
+  private String host;
+  @Value("redis.port")
+  private int port;
+  @Value("redis.password")
+  private String password;
+  @Value("redis.maxIdle")
+  private String maxIdle;
+  @Value("redis.minIdle")
+  private String minIdle;
+  @Value("redis.maxActive")
+  private String maxActive;
+  @Value("redis.maxWait")
+  private int maxWait;
+  @Value("redis.testOnBorrow")
+  private boolean testOnBorrow;
 
   @Bean
   public JedisConnectionFactory redisConnectionFactory() {
     JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
 
-    // Defaults  
-    redisConnectionFactory.setHostName("192.168.1.166");
-    redisConnectionFactory.setPort(6379);
+    redisConnectionFactory.setHostName(host);
+    redisConnectionFactory.setPort(port);
+    if(StringUtils.isNotEmpty(password))
+      redisConnectionFactory.setPassword(password);
+    redisConnectionFactory.setTimeout(maxWait);
     return redisConnectionFactory;
   }
 
