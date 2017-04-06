@@ -30,8 +30,11 @@ public class IdcardInfoExtractor {
     // 出生日期   
     private Date birthday;   
   
-    private Map<String, String> cityCodeMap = new HashMap<String, String>() {   
-        {   
+    private Map<String, String> cityCodeMap = new HashMap<String, String>() {
+    	
+		private static final long serialVersionUID = 1L;
+
+		{   
             this.put("11", "北京");   
             this.put("12", "天津");   
             this.put("13", "河北");   
