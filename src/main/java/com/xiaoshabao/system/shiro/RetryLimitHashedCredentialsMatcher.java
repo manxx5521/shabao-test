@@ -7,7 +7,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 
-import com.xiaoshabao.baseframework.component.VCache;
+import com.xiaoshabao.baseframework.component.cache.redis.VCache;
 
 /**
  * 密码凭证匹配

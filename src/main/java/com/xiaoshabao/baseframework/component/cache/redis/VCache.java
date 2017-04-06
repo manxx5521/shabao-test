@@ -1,4 +1,4 @@
-package com.xiaoshabao.baseframework.component;
+package com.xiaoshabao.baseframework.component.cache.redis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import redis.clients.jedis.Jedis;
 
+import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.util.SerializeUtil;
 /**
  * 简单封装的Cache

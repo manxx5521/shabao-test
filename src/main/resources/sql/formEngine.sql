@@ -1,7 +1,27 @@
 /**
  表单引擎1.0
  */
---元素表
+/*模版表*/
+create table td_ui_template(
+template_id varchar(10) not null comment '模版id',
+template_name varchar(30) not null comment '模版名字',
+engine_type varchar(10) comment '引擎类型',
+remark varchar(40) comment '模版描述',
+primary key (template_id),
+)engine=INNODB default CHARSET=utf8 comment='模版表';
+/*单据表*/
+create table td_ui_bill(
+bill_id varchar(10) not null comment '单据id',
+bill_name varchar(30) not null comment '单据名字',
+bill_desc varchar(40) comment '单据描述',
+list_template_id varchar(10) comment '列表模版',
+view_template_id varchar(10) comment '展现模版',
+primary key (bill_id),
+CONSTRAINT pk_td_ui_bill_pk1 FOREIGN KEY (list_template_id) REFERENCES td_ui_template(template_id),
+CONSTRAINT pk_td_ui_bill_pk2 FOREIGN KEY (view_template_id) REFERENCES td_ui_template(template_id)
+)engine=INNODB default CHARSET=utf8 comment='单据表';
+
+/*元素表*/
 CREATE TABLE td_ui_element (
   	element_id varchar(10) NOT NULL comment '元素id',
 	element_type varchar(10) NOT NULL comment '类型 tree，select等',
@@ -14,16 +34,7 @@ CREATE TABLE td_ui_element (
 	read_template text comment '只读模版',
   	PRIMARY KEY  (element_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
---模版表
-create table td_ui_template(
-template_id varchar(10) not null comment '模版id',
-template_name varchar(30) not null comment '模版名字',
-template_desc varchar(40) comment '模版描述',
-engine_type varchar(10) comment '引擎类型',
-primary key (template_id),
-)engine=INNODB default CHARSET=utf8 comment='模版表';
-
-----模版元素关联表
+/**模版元素关联表*/
 create table td_ui_template_element(
 template_id varchar(10) not null comment '模版id',
 element_id varchar(10) not null comment '元素id',

@@ -1,4 +1,4 @@
-package com.xiaoshabao.baseframework.component;
+package com.xiaoshabao.baseframework.component.cache.redis;
 
 import static org.junit.Assert.fail;
 

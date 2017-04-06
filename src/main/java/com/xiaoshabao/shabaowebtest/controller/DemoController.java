@@ -15,7 +15,7 @@ import com.xiaoshabao.shabaowebtest.service.DemoService;
  * 实例controller
  */
 @Controller
-@RequestMapping(value="demo")
+@RequestMapping(value="/demo")
 public class DemoController extends AbstractController{
 	
 	@Resource(name="demoService")

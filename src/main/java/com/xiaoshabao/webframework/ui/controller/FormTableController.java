@@ -23,10 +23,11 @@ public class FormTableController extends AbstractController {
 	public AjaxResult getTableInfo(@PathVariable("tableId") String tableId) {
 		return formTableService.getTableInfo(tableId);
 	}
+
 	@RequestMapping(value = "/table/add")
-  @ResponseBody
-	public AjaxResult addTable(TableDto table){
-	  return formTableService.addTable(table);
+	@ResponseBody
+	public AjaxResult addTable(TableDto table) {
+		return formTableService.addTable(table);
 	}
 
 }
