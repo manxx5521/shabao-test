@@ -18,14 +18,18 @@ import com.xiaoshabao.baseframework.controller.AbstractController;
 import com.xiaoshabao.baseframework.enums.ErrorEnum;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
-import com.xiaoshabao.webframework.ui.dto.TemplateListData;
+import com.xiaoshabao.webframework.ui.component.FormConstants;
+import com.xiaoshabao.webframework.ui.dto.BillListDto;
 import com.xiaoshabao.webframework.ui.service.FormService;
+import com.xiaoshabao.webframework.ui.service.FormSessionService;
 
 @Controller
 @RequestMapping("/admin/ui")
 public class FormServiceController extends AbstractController {
 	@Resource(name = "formServiceImpl")
 	private FormService formService;
+	@Resource(name="formSessionService")
+	private FormSessionService FormSessionService;
 	/**
 	 * 带参数列表界面请求
 	 * @param model
@@ -34,8 +38,8 @@ public class FormServiceController extends AbstractController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/form/${templateId}/list")
-	public ModelAndView getList(ModelMap model,@PathVariable("templateId") String templateId,
+	@RequestMapping(value = "/form/${billId}/list")
+	public ModelAndView getList(ModelMap model,@PathVariable("billId") String billId,
 			HttpServletRequest request) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		Enumeration<String> paramnames = request.getParameterNames();
@@ -43,7 +47,8 @@ public class FormServiceController extends AbstractController {
 			String paramname = paramnames.nextElement();
 			params.put(paramname, request.getParameter(paramname));
 		}
-		TemplateListData data=formService.getList( templateId, params);
+		params.put(FormConstants.SESSION_TAG,FormSessionService.getSessionMap(request));//添加session信息
+		BillListDto data=formService.getList( billId, params);
 		model.put("data", data);
 //		model.put("reqParam", params);//请求参数
 		return new ModelAndView("/shabaotest/demo/listDemo",model);

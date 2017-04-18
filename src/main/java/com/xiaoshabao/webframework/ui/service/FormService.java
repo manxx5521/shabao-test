@@ -3,8 +3,8 @@ package com.xiaoshabao.webframework.ui.service;
 import java.util.Map;
 
 import com.xiaoshabao.webframework.dto.AjaxResult;
+import com.xiaoshabao.webframework.ui.dto.BillListDto;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
-import com.xiaoshabao.webframework.ui.dto.TemplateListData;
 /**
  * 表单服务
  */
@@ -12,11 +12,11 @@ public interface FormService {
 	/**
 	 * 获得list界面数据
 	 * @param engineType
-	 * @param elementId
+	 * @param billId
 	 * @param params
 	 * @return
 	 */
-	public TemplateListData getList(String templateId,Map<String, Object> params);
+	public BillListDto getList(String billId,Map<String, Object> params);
 	/**
 	 * 获得模版数据
 	 * @param templateId 模版id
