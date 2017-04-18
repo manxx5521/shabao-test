@@ -7,6 +7,10 @@ public class TemplateEntity {
 	private String templateId;
 	/** 模版名字 **/
 	private String templateName;
+	
+	private String remark;
+	
+	/**********************/
 	/** 模版描述 **/
 	private String templateDesc;
 	/** 模版引擎类型 **/
@@ -36,4 +40,11 @@ public class TemplateEntity {
 	public void setEngineType(String engineType) {
 		this.engineType = engineType;
 	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	
 }
