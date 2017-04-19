@@ -13,7 +13,7 @@ import com.xiaoshabao.webframework.component.TemplateEngine;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
 import com.xiaoshabao.webframework.ui.service.element.UIElement;
-import com.xiaoshabao.webframework.ui.service.impl.AbstractTemplateServiceImpl;
+import com.xiaoshabao.webframework.ui.service.impl.AbstractTemplateServiceImpl3;
 
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
@@ -22,7 +22,7 @@ import freemarker.template.TemplateNotFoundException;
  * 元素抽象类<br>
  * 添加表单元素时，继承的类
  */
-public abstract class AbstractUIElement extends AbstractTemplateServiceImpl implements UIElement {
+public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3 implements UIElement {
 	/** 传入到模版的session标识 **/
 	private final static String SESSION_TAG_STRING = "session";
 	/** def元素标识 **/

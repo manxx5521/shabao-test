@@ -11,7 +11,7 @@ import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.service.TemplateFactory;
 import com.xiaoshabao.webframework.ui.service.element.WebElement;
 
-public abstract class AbstractTemplateFactoryImpl extends AbstractTemplateServiceImpl implements TemplateFactory {
+public abstract class AbstractTemplateFactoryImpl extends AbstractTemplateServiceImpl3 implements TemplateFactory {
 	
 	//默认的表单AJAX响应
 	@Override

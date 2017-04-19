@@ -7,16 +7,29 @@ import org.slf4j.LoggerFactory;
 
 import com.xiaoshabao.baseframework.dao.BaseDao;
 
-public abstract class AbstractTemplateServiceImpl{
+/**
+ * 表单列表界面抽象类
+ */
+public class AbstractFormListServiceImpl {
 	
 	protected Logger logger;
 
 	@Resource(name = "mybatisBaseDao")
 	protected BaseDao baseDao;
 
-	public AbstractTemplateServiceImpl() {
+	public AbstractFormListServiceImpl() {
 		// 统一添加日志
 		logger = LoggerFactory.getLogger(getClass());
 	}
+	
+	/**
+	 * 获得模版引擎
+	 * @param listEngine 列表引擎
+	 * @return 引擎名字
+	 */
+	protected String getTemplateEngineType(String listEngine){
+		return "simpleTemplateService";//先默认
+	}
+	
 
 }

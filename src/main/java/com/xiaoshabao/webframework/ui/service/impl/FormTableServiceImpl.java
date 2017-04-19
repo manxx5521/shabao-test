@@ -23,7 +23,7 @@ import com.xiaoshabao.webframework.ui.service.FormTableService;
  * 表单服务
  */
 @Service("formTableService")
-public class FormTableServiceImpl extends AbstractTemplateServiceImpl implements FormTableService {
+public class FormTableServiceImpl extends AbstractTemplateServiceImpl3 implements FormTableService {
   
   private TableDao tableDao; 
 

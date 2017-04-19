@@ -12,27 +12,30 @@ import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
-import com.xiaoshabao.webframework.ui.dto.TemplateListData;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
+import com.xiaoshabao.webframework.ui.service.FormListService;
 import com.xiaoshabao.webframework.ui.service.FormService;
 import com.xiaoshabao.webframework.ui.service.TemplateFactory;
 /**
  * 表单服务
  */
 @Service("formServiceImpl")
-public class FormServiceImpl extends AbstractTemplateServiceImpl implements FormService {
-	
-	
+public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements FormService {
 	
 	//获得list界面数据
 	@Override
 	public BillListDto getList(String billId,Map<String, Object> params) {
-		List<BillListDto> billList=this.getData(BillListDto.class, billId);
+		List<BillListDto> billList=this.baseDao.getData(BillListDto.class, billId);
 		if(billList==null||billList.size()!=1){
 			logger.info("单据获取失败，未根据billId获得对应单据或者获得的方案数不为1，失败单据id为{}",billId);
 			throw new MsgErrorException("单据获取失败");
 		}
+		BillListDto billListDto=billList.get(0);
+		FormListService formListService=ApplicationContextUtil.getBean(billListDto.getList().getEngineType(), FormListService.class);
+		
+		
+		
 		TemplateEntity templateEntity=this.elementDao.getTemplateByid(billId);
 		if(templateEntity==null){
 			logger.info("模版渲染失败，未根据模版id获得模版，失败模版id为{}",billId);
