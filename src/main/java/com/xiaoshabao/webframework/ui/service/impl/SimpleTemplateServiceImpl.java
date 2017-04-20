@@ -11,8 +11,9 @@ public class SimpleTemplateServiceImpl extends AbstractTemplateServiceImpl
 	//获取模版数据
 	@Override
 	public TemplateData getTemplate(TemplateEntity template) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
+	
 
 }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
+import com.xiaoshabao.webframework.ui.dto.TemplateData;
 import com.xiaoshabao.webframework.ui.service.FormListService;
 import com.xiaoshabao.webframework.ui.service.FormTemplateService;
 
@@ -17,7 +18,7 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 	public BillListDto getBillList(BillListDto billListDto) {
 		String templateEngine=this.getTemplateEngineType(billListDto.getList().getEngineType());
 		FormTemplateService templateService=ApplicationContextUtil.getBean(templateEngine, FormTemplateService.class);
-		
+		TemplateData templateData=templateService.getTemplate(billListDto.getTemplate());
 		return null;
 	}
 

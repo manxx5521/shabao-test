@@ -32,7 +32,9 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements For
 			throw new MsgErrorException("单据获取失败");
 		}
 		BillListDto billListDto=billList.get(0);
+		
 		FormListService formListService=ApplicationContextUtil.getBean(billListDto.getList().getEngineType(), FormListService.class);
+		formListService.getBillList(billListDto);
 		
 		
 		

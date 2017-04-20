@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.entity.TemplatElementEntity">
+	<sql id="templatElementEntity"> 
+		td_ui_template_element.template_id,
+		td_ui_template_element.element_id,
+		td_ui_template_element.template_id,
+		td_ui_template_element.template_id,
+		td_ui_template_element.template_id,
+		td_ui_template_element.template_id,
+		td_ui_template_element.template_id,
+		td_ui_template_element.template_id,
+		td_ui_template_element.template_id,
+		td_ui_template_element.template_id,
+		
+	</sql>
+	<!--获得元素列表 -->
+	<select id="getTemplatElementEntity" parameterType="java.util.String"
+		resultType="com.xiaoshabao.webframework.ui.entity.TemplatElementEntity">
+		select
+			<include refid="templatElementEntity" />
+		from td_ui_template_element
+		where
+		template_id=#{templateId}
+	</select>
+</mapper>
