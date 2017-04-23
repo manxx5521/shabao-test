@@ -11,7 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.component.TemplateEngine;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
-import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
+import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
 import com.xiaoshabao.webframework.ui.service.element.UIElement;
 import com.xiaoshabao.webframework.ui.service.impl.AbstractTemplateServiceImpl3;
 
@@ -35,7 +35,7 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3 imp
 	}
 	//初始化数据
 	@Override
-	public final JSONObject initData(Map<String,Object> params,TemplatElementEntity tempalteElement,ElementEntity element){
+	public final JSONObject initData(Map<String,Object> params,TemplateElementEntity tempalteElement,ElementEntity element){
 		try {
 			logger.debug("开始解析元素{}",element.getElementId());
 			JSONObject paramJSON=null;
@@ -114,7 +114,7 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3 imp
 	}
 	//设置公共参数
 	@Override
-	public final void setPublicProperties(Map<String,Object> params,TemplatElementEntity tempalteElement,ElementEntity element){
+	public final void setPublicProperties(Map<String,Object> params,TemplateElementEntity tempalteElement,ElementEntity element){
 		
 	}
 	

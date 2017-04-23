@@ -2,7 +2,7 @@ package com.xiaoshabao.webframework.ui.dao;
 
 import java.util.List;
 
-import com.xiaoshabao.webframework.ui.entity.TableElement;
+import com.xiaoshabao.webframework.ui.entity.TableColumnEntity;
 import com.xiaoshabao.webframework.ui.entity.TableEntity;
 /**
  * 数据源相关
@@ -19,6 +19,6 @@ public interface TableDao {
    * @param table
    * @return
    */
-  public int addTableElements(List<TableElement> elements);
+  public int addTableElements(List<TableColumnEntity> elements);
 
 }

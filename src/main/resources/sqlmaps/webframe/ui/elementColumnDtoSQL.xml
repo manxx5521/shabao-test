@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.dto.ElementColumnDto">
+	<!--获得元素列表 -->
+	<select id="getElementDto" parameterType="com.xiaoshabao.webframework.ui.entity.TemplateEntity"
+		resultType="com.xiaoshabao.webframework.ui.dto.ElementColumnDto">
+		select
+			<include refid="com.xiaoshabao.webframework.ui.entity.TemplateElementEntity.templateElementColumns" />
+			<include refid="com.xiaoshabao.webframework.ui.entity.TableColumnEntity.tableColumnColumnsRef">
+    			<property name="prefix" value="column"/>
+    		</include>
+		from td_ui_template_element
+		inner join td_ui_table_column column
+		on td_ui_template_element.template_id=#{templateId}
+			and column.column_id=td_ui_template_element.column_id
+	</select>
+</mapper>

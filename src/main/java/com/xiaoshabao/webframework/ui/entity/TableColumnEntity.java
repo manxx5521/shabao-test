@@ -2,7 +2,8 @@ package com.xiaoshabao.webframework.ui.entity;
 
 import java.io.Serializable;
 
-public class TableElement implements Serializable {
+public class TableColumnEntity implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	private String tableId;

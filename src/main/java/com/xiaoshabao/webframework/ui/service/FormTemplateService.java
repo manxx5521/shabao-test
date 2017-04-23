@@ -1,5 +1,7 @@
 package com.xiaoshabao.webframework.ui.service;
 
+import java.util.Map;
+
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 
@@ -12,6 +14,6 @@ public interface FormTemplateService {
 	 * @param template
 	 * @return
 	 */
-	public TemplateData getTemplate(TemplateEntity template);
+	public TemplateData getTemplate(TemplateEntity template,Map<String, Object> params);
 
 }

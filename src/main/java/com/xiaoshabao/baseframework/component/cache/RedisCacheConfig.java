@@ -18,27 +18,26 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 @EnableCaching
 public class RedisCacheConfig extends CachingConfigurerSupport {
-  @Value("redis.host")
+  @Value("${redis.host}")
   private String host;
-  @Value("redis.port")
+  @Value("${redis.port}")
   private int port;
-  @Value("redis.password")
+  @Value("${redis.password}")
   private String password;
-  @Value("redis.maxIdle")
+  @Value("${redis.maxIdle}")
   private String maxIdle;
-  @Value("redis.minIdle")
+  @Value("${redis.minIdle}")
   private String minIdle;
-  @Value("redis.maxActive")
+  @Value("${redis.maxActive}")
   private String maxActive;
-  @Value("redis.maxWait")
+  @Value("${redis.maxWait}")
   private int maxWait;
-  @Value("redis.testOnBorrow")
-  private boolean testOnBorrow;
+  @Value("${redis.testOnBorrow}")
+  private boolean testOnBorrow=true;
 
   @Bean
   public JedisConnectionFactory redisConnectionFactory() {
     JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
-
     redisConnectionFactory.setHostName(host);
     redisConnectionFactory.setPort(port);
     if(StringUtils.isNotEmpty(password))

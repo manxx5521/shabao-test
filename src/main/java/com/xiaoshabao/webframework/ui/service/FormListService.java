@@ -1,5 +1,7 @@
 package com.xiaoshabao.webframework.ui.service;
 
+import java.util.Map;
+
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
 
 /**
@@ -14,6 +16,6 @@ public interface FormListService {
 	 * @param billListDto
 	 * @return
 	 */
-	public BillListDto getBillList(BillListDto billListDto);
+	public BillListDto getBillList(BillListDto billListDto,Map<String, Object> params);
 
 }

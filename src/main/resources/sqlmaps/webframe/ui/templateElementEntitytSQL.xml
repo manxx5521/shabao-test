@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaoshabao.webframework.ui.entity.TemplatElementEntity">
-	<sql id="templatElementEntity"> 
+<mapper namespace="com.xiaoshabao.webframework.ui.entity.TemplateElementEntity">
+	<sql id="templateElementColumns"> 
 		td_ui_template_element.template_id,
 		td_ui_template_element.element_id,
 		td_ui_template_element.template_id,
@@ -16,10 +16,10 @@
 		
 	</sql>
 	<!--获得元素列表 -->
-	<select id="getTemplatElementEntity" parameterType="java.util.String"
-		resultType="com.xiaoshabao.webframework.ui.entity.TemplatElementEntity">
+	<select id="getTemplateElementEntity" parameterType="java.lang.String"
+		resultType="com.xiaoshabao.webframework.ui.entity.TemplateElementEntity">
 		select
-			<include refid="templatElementEntity" />
+			<include refid="templateElementColumns" />
 		from td_ui_template_element
 		where
 		template_id=#{templateId}

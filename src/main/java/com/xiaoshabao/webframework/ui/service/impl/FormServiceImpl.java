@@ -34,7 +34,7 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements For
 		BillListDto billListDto=billList.get(0);
 		
 		FormListService formListService=ApplicationContextUtil.getBean(billListDto.getList().getEngineType(), FormListService.class);
-		formListService.getBillList(billListDto);
+		formListService.getBillList(billListDto,params);
 		
 		
 		

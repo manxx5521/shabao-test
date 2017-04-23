@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.entity.BillEntity">
+	<sql id="billColumns"> 
+		td_ui_bill.bill_id,td_ui_bill.bill_name,td_ui_bill.bill_class,td_ui_bill.order_no
+		,td_ui_bill.state
+	</sql>
+</mapper>

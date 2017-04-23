@@ -2,19 +2,19 @@ package com.xiaoshabao.webframework.ui.dto;
 
 import java.util.List;
 
-import com.xiaoshabao.webframework.ui.entity.TableElement;
+import com.xiaoshabao.webframework.ui.entity.TableColumnEntity;
 import com.xiaoshabao.webframework.ui.entity.TableEntity;
 
-public class TableDto extends TableEntity{
-  
-  private List<TableElement> tableElements;
+public class TableDto extends TableEntity {
 
-  public List<TableElement> getTableElements() {
-    return tableElements;
-  }
+	private List<TableColumnEntity> tableElements;
 
-  public void setTableElements(List<TableElement> tableElements) {
-    this.tableElements = tableElements;
-  }
-  
+	public List<TableColumnEntity> getTableElements() {
+		return tableElements;
+	}
+
+	public void setTableElements(List<TableColumnEntity> tableElements) {
+		this.tableElements = tableElements;
+	}
+
 }

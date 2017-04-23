@@ -1,5 +1,7 @@
 package com.xiaoshabao.webframework.ui.service.impl;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
@@ -15,10 +17,10 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 
 	// 获得list内容
 	@Override
-	public BillListDto getBillList(BillListDto billListDto) {
+	public BillListDto getBillList(BillListDto billListDto,Map<String, Object> params) {
 		String templateEngine=this.getTemplateEngineType(billListDto.getList().getEngineType());
 		FormTemplateService templateService=ApplicationContextUtil.getBean(templateEngine, FormTemplateService.class);
-		TemplateData templateData=templateService.getTemplate(billListDto.getTemplate());
+		TemplateData templateData=templateService.getTemplate(billListDto.getTemplate(),params);
 		return null;
 	}
 

@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaoshabao.webframework.ui.entity.BillEntity">
+<mapper namespace="com.xiaoshabao.webframework.ui.dto.BillListDto">
 	<!--获得biiId对应的list单据-->
 	<select id="getBillListDto" resultType="com.xiaoshabao.webframework.ui.dto.BillListDto">
-		select 
-			t.bill_id,t.bill_name,t.bill_class,t.order_no,t.state
-			,a.list_id 'list.list_id',a.list_name 'list.list_name'
-			,a.engine_type 'list.engine_type',a.bill_id 'list.bill_id'
-			,a.tmplate_id 'list.tmplate_id',a.report_id 'list.report_id'
-			,a.is_visible 'list.is_visible',a.order_no 'list.order_no'
-			,a.col_count 'list.col_count'
-			,b.tmplate_id 'template.tmplate_id',b.tmplate_name 'tmplate.tmplate_name'
-			,b.is_visible 'tempalte.is_visible',b.remark 'template.remark'
-			,n.report_id 'report.report_id',n.report_name 'report.report_name'
-    	from td_ui_bill t
-    	inner join td_ui_list a
-    	on t.bill_id=#{billId}
-    		and t.bill_id=a.bill_id
-    	left join td_ui_template b
-    		on a.tmplate_id=b.tmplate_id
-    	left join td_ui_report n
-    		on n.report_id=a.report_id
+    	select 
+			<include refid="com.xiaoshabao.webframework.ui.entity.BillEntity.billColumns" />,
+    		<include refid="com.xiaoshabao.webframework.ui.entity.TemplateEntity.templateColumnsRef">
+    			<property name="prefix" value="template"/>
+    		</include>,
+    		<include refid="com.xiaoshabao.webframework.ui.entity.ReportEntity.reportColumnsRef">
+    			<property name="prefix" value="report"/>
+    		</include>
+    	from td_ui_bill
+    	inner join td_ui_list list
+    	on td_ui_bill.bill_id=#{billId}
+    		and td_ui_bill.bill_id=list.bill_id
+    	left join td_ui_template template
+    		on list.template_id=template.template_id
+    	left join td_ui_report report
+    		on report.report_id=list.report_id
 	</select>
 </mapper>

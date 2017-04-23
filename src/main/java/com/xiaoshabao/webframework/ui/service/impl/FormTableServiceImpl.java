@@ -17,7 +17,7 @@ import com.xiaoshabao.baseframework.util.jdbc.SQLUtil;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.dao.TableDao;
 import com.xiaoshabao.webframework.ui.dto.TableDto;
-import com.xiaoshabao.webframework.ui.entity.TableElement;
+import com.xiaoshabao.webframework.ui.entity.TableColumnEntity;
 import com.xiaoshabao.webframework.ui.service.FormTableService;
 /**
  * 表单服务
@@ -43,7 +43,7 @@ public class FormTableServiceImpl extends AbstractTemplateServiceImpl3 implement
     if(i<1){
       throw new MsgErrorException("添加表信息失败！");
     }
-    List<TableElement> elements=getTableDesc(table.getTableId());
+    List<TableColumnEntity> elements=getTableDesc(table.getTableId());
     int size=elements.size();
     if(size>0){
       i=tableDao.addTableElements(elements);
@@ -61,11 +61,11 @@ public class FormTableServiceImpl extends AbstractTemplateServiceImpl3 implement
    * @param tableName
    * @return
    */
-  private List<TableElement> getTableDesc(String tableName) {
+  private List<TableColumnEntity> getTableDesc(String tableName) {
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    ArrayList<TableElement> results = new ArrayList<TableElement>();
+    ArrayList<TableColumnEntity> results = new ArrayList<TableColumnEntity>();
     String sql = "select * from " + tableName+ " where 1<>1";
     try {
       conn = JDBCUtil.getConnection();
@@ -73,7 +73,7 @@ public class FormTableServiceImpl extends AbstractTemplateServiceImpl3 implement
       rs = ps.executeQuery();
       ResultSetMetaData rsmd = rs.getMetaData();
       int column = rsmd.getColumnCount();
-      TableElement element = new TableElement();
+      TableColumnEntity element = new TableColumnEntity();
       for (int i = 0; i < column; i++) {
         element.setFieldCode(rsmd.getColumnName(i));
         element.setFieldName(rsmd.getColumnLabel(i));

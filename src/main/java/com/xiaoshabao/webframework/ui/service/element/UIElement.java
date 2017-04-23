@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
-import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
+import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
 
 public interface UIElement extends AbstractElement{
 	/**
@@ -24,7 +24,7 @@ public interface UIElement extends AbstractElement{
 	 * 设置公共参数
 	 * @param params
 	 */
-	public void setPublicProperties(Map<String,Object> params,TemplatElementEntity tempalteElement,ElementEntity element);
+	public void setPublicProperties(Map<String,Object> params,TemplateElementEntity tempalteElement,ElementEntity element);
 	
 	/**
 	 * 设置元素自定义参数

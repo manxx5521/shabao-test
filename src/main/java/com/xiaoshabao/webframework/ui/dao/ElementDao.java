@@ -3,7 +3,7 @@ package com.xiaoshabao.webframework.ui.dao;
 import java.util.List;
 
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
-import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
+import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 
 /**
@@ -21,7 +21,7 @@ public interface ElementDao {
 	 * @param templateId 模版id
 	 * @return
 	 */
-	public List<TemplatElementEntity> getTemplateElements(String templateId);
+	public List<TemplateElementEntity> getTemplateElements(String templateId);
 	/**
 	 * 根据id获取 元素
 	 * @param elementId

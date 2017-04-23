@@ -1,18 +1,17 @@
 package com.xiaoshabao.webframework.ui.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSONObject;
-import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.dao.BaseDao;
-import com.xiaoshabao.webframework.ui.entity.ElementEntity;
-import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
-import com.xiaoshabao.webframework.ui.service.element.UIElement;
+import com.xiaoshabao.webframework.ui.dto.ElementColumnDto;
+import com.xiaoshabao.webframework.ui.dto.TemplateData;
+import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 
 public abstract class AbstractTemplateServiceImpl{
 	
@@ -27,13 +26,13 @@ public abstract class AbstractTemplateServiceImpl{
 	}
 	
 	/**
-	 * 获得所有 TemplatElementEntity 集合
+	 * 获得所有 ElementDto 集合
 	 * @return
 	 */
-	public List<TemplatElementEntity> getTemplateElements(String templateId){
-		List<TemplatElementEntity> elementList = this.baseDao.getData(TemplatElementEntity.class, templateId);
+	public TemplateData getTemplateElements(TemplateEntity template,Map<String, Object> params){
+		List<ElementColumnDto> columnList = this.baseDao.getData(ElementColumnDto.class, template);
 		StringBuffer rs = new StringBuffer();
-		for (TemplatElementEntity te : elementList) {
+		for (ElementColumnDto column : columnList) {
 			/*ElementEntity element = this.elementDao.getElementById(te.getElementId());
 			String elementType = this.formEngineComponet.getElementType(element.getElementType());
 			if (elementType == null) {

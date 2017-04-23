@@ -2,25 +2,35 @@ package com.xiaoshabao.webframework.ui.entity;
 /**
  * 模版元素实体
  */
-public class TemplatElementEntity {
+public class TemplateElementEntity {
 	/** 模版id */
 	private String templateId;
 	/** 元素id */
 	private String elementId;
-	/** 表单类型 condition tab list等 */
-	private String formType;
-	/** 表单key元素名字 */
-	private String formKey;
 	/** 表单显示 */
 	private String label;
-	/** 表单个性参数 */
-	private String fromParams;
-	/** 描述 */
-	private String fromDesc;
+	
+	private String columnId;
+	
+	private String elementsParams;
+	
+	private String remark;
+	
 	/** 排序 */
 	private Integer orderNo;
 	/** 是否必填 **/
 	private Integer required;
+	
+//----------------------------------------
+	/** 表单类型 condition tab list等 */
+	private String formType;
+	/** 表单key元素名字 */
+	private String formKey;
+	
+	/** 表单个性参数 */
+	private String fromParams;
+	/** 描述 */
+	private String fromDesc;
 	/** 显示模版类型 */
 	private String viewType;
 	/** 只读模版 **/
@@ -94,5 +104,24 @@ public class TemplatElementEntity {
 	public void setReadType(String readType) {
 		this.readType = readType;
 	}
+	public String getColumnId() {
+		return columnId;
+	}
+	public void setColumnId(String columnId) {
+		this.columnId = columnId;
+	}
+	public String getElementsParams() {
+		return elementsParams;
+	}
+	public void setElementsParams(String elementsParams) {
+		this.elementsParams = elementsParams;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	
 	
 }

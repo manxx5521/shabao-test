@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.entity.TableColumnEntity">
+	<sql id="tableColumnColumnsRef"> 
+		${prefix}.column_id '${prefix}.column_id',${prefix}.table_id '${prefix}.table_id'
+		,${prefix}.field_code '${prefix}.field_code',${prefix}.field_name '${prefix}.field_name'
+		,${prefix}.field_type '${prefix}.field_type',${prefix}.field_length '${prefix}.field_length'
+		,${prefix}.field_type '${prefix}.field_type',${prefix}.field_length '${prefix}.field_length'
+		,${prefix}.field_decimal '${prefix}.field_decimal',${prefix}.is_key '${prefix}.is_key'
+		,${prefix}.is_null '${prefix}.is_null',${prefix}.is_ref '${prefix}.is_ref'
+		,${prefix}.ref_table '${prefix}.ref_table',${prefix}.ref_table_key '${prefix}.ref_table_key'
+		,${prefix}.ref_table_value '${prefix}.ref_table_value',${prefix}.ref_table_sql '${prefix}.ref_table_sql'
+		,${prefix}.remark '${prefix}.remark'
+	</sql>
+</mapper>

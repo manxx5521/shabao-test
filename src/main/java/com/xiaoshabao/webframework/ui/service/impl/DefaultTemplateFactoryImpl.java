@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
-import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
+import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
 import com.xiaoshabao.webframework.ui.service.element.UIElement;
 
 @Service("defaultTemplateFactoryImpl")
@@ -16,10 +16,10 @@ public class DefaultTemplateFactoryImpl extends AbstractTemplateFactoryImpl {
 
 	@Override
 	public String getTemplateElements(String templateId,Map<String,Object> params) {
-		List<TemplatElementEntity> elementList = this.elementDao
+		List<TemplateElementEntity> elementList = this.elementDao
 				.getTemplateElements(templateId);
 		StringBuffer rs = new StringBuffer();
-		for (TemplatElementEntity te : elementList) {
+		for (TemplateElementEntity te : elementList) {
 			ElementEntity element = this.elementDao.getElementById(te.getElementId());
 			String elementType = this.formEngineComponet.getElementType(element.getElementType());
 			if (elementType == null) {

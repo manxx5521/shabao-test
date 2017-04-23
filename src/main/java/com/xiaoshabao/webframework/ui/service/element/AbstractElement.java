@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
-import com.xiaoshabao.webframework.ui.entity.TemplatElementEntity;
+import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
 /**
  * element元素父类接口
  */
@@ -22,7 +22,7 @@ public interface AbstractElement {
 	 * @param params 参数
 	 * @param element 定义元素
 	 */
-	public JSONObject initData(Map<String,Object> params,TemplatElementEntity templateElement,ElementEntity element);
+	public JSONObject initData(Map<String,Object> params,TemplateElementEntity templateElement,ElementEntity element);
 
 	/**
 	 * 设置session参数

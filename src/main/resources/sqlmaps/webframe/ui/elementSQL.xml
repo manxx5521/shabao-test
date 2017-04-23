@@ -8,14 +8,14 @@
 		from td_ui_template 
 		where template_id=#{templateId}
 	</select>
-	<!--获得模版id获得关联-->
-	<select id="getTemplateElements" resultType="com.xiaoshabao.webframework.ui.entity.TemplatElementEntity">
+	<!-- 获得模版id获得关联 -->
+	<select id="getTemplateElements" resultType="com.xiaoshabao.webframework.ui.entity.TemplateElementEntity">
 		select template_id,element_id,form_type,form_key,label,form_params,form_desc,
 			order_no,required,view_type,read_type
 		from td_ui_template_element
 		where template_id=#{templateId}
 	</select>
-	<!--获得元素-->
+	<!-- 获得元素 -->
 	<select id="getElementById" resultType="com.xiaoshabao.webframework.ui.entity.ElementEntity">
 		select element_id,element_type,element_name,element_desc,params,session_tag,version
 			,view_template,read_template
