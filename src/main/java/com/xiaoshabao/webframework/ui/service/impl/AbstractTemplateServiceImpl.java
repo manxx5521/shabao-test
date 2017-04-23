@@ -33,6 +33,7 @@ public abstract class AbstractTemplateServiceImpl{
 		List<ElementColumnDto> columnList = this.baseDao.getData(ElementColumnDto.class, template);
 		StringBuffer rs = new StringBuffer();
 		for (ElementColumnDto column : columnList) {
+			
 			/*ElementEntity element = this.elementDao.getElementById(te.getElementId());
 			String elementType = this.formEngineComponet.getElementType(element.getElementType());
 			if (elementType == null) {
