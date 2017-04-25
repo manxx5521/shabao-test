@@ -1,14 +1,17 @@
 package com.xiaoshabao.webframework.ui.dto;
 
+import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TableColumnEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
 
 /**
  * 需要的元素属性
  */
-public class ElementColumnDto extends TemplateElementEntity{
-	
+public class ElementColumnDto extends TemplateElementEntity {
+
 	private TableColumnEntity column;
+
+	private ElementEntity element;
 
 	public TableColumnEntity getColumn() {
 		return column;
@@ -17,5 +20,13 @@ public class ElementColumnDto extends TemplateElementEntity{
 	public void setColumn(TableColumnEntity column) {
 		this.column = column;
 	}
-	
+
+	public ElementEntity getElement() {
+		return element;
+	}
+
+	public void setElement(ElementEntity element) {
+		this.element = element;
+	}
+
 }
