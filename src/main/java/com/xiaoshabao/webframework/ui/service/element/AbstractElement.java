@@ -10,6 +10,8 @@ import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
  */
 public interface AbstractElement {
 	
+	
+//------------------------
 	/**
 	 * 初始化数据
 	 * @param params 参数

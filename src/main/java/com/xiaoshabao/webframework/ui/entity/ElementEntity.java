@@ -15,12 +15,16 @@ public class ElementEntity {
 	private String params;
 	/** 版本 */
 	private Integer version;
-	/** 是否使用session参数 */
-	private Integer sessionTag;
+	
 	/** 显示模版 **/
 	private String viewTemplate;
 	/** 只读模版 */
 	private String readTemplate;
+	
+	
+//--------------------------------
+	/** 是否使用session参数 */
+	private Integer sessionTag;
 	
 	public String getElementId() {
 		return elementId;

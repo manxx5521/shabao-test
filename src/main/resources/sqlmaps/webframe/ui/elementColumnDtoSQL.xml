@@ -10,9 +10,14 @@
 			<include refid="com.xiaoshabao.webframework.ui.entity.TableColumnEntity.tableColumnColumnsRef">
     			<property name="prefix" value="column"/>
     		</include>
+    		<include refid="com.xiaoshabao.webframework.ui.entity.ElementEntity.elementColumnsRef">
+    			<property name="prefix" value="element"/>
+    		</include>
 		from td_ui_template_element
 		inner join td_ui_table_column column
-		on td_ui_template_element.template_id=#{templateId}
+			on td_ui_template_element.template_id=#{templateId}
 			and column.column_id=td_ui_template_element.column_id
+		inner join td_ui_element element
+			on td_ui_template_element.element_id=element.element_id
 	</select>
 </mapper>

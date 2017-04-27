@@ -52,4 +52,5 @@ public class DataTablesUIElement extends AbstractUIElement implements WebElement
 		return new AjaxResult(true,"刷新成功",list);
 	}
 
+
 }

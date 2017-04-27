@@ -7,6 +7,10 @@ import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
 
 public interface UIElement extends AbstractElement{
+	
+	public String validateData();
+	
+//-----------------------
 	/**
 	 * 无参数render
 	 */

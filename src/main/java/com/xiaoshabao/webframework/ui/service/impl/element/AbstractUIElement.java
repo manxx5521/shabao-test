@@ -23,11 +23,18 @@ import freemarker.template.TemplateNotFoundException;
  * 添加表单元素时，继承的类
  */
 public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3 implements UIElement {
+	
+	
+	@Override
+	public String validateData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+//------------------------
 	/** 传入到模版的session标识 **/
 	private final static String SESSION_TAG_STRING = "session";
 	/** def元素标识 **/
 	private final static String DEF_STRING="def";
-	
 	// 初始化数据
 	@Override
 	public final JSONObject initData(Map<String,Object> params,ElementEntity element) {
