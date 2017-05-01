@@ -11,7 +11,10 @@ public class ElementEntity {
 	private String elementType;
 	/** 描述 */
 	private String elementDesc;
-	/** 参数JSON形式 */
+	/** 参数JSON形式<br>
+	 * 参数中设置需要引用的脚本，header,viewHear,readHear。形式为 "header":["key1","key2","key3"]
+	 *  
+	 *  */
 	private String params;
 	/** 版本 */
 	private Integer version;

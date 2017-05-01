@@ -2,6 +2,7 @@ package com.xiaoshabao.webframework.ui.component;
 
 import java.util.Map;
 
+import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.component.SessionParams;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 
@@ -9,6 +10,33 @@ import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
  * 表单引擎组件(XML注入)
  */
 public class FormEngineComponet {
+	
+	/** 引擎类型 **/
+	private Map<String,String> elementSerivceType;
+	
+	/**
+	 * 获得元素服务类型
+	 * @param elementType 元素类型select等
+	 * @return
+	 */
+	public String getElementSerivceType(String elementType) {
+		String elementSerivce=  elementSerivceType.get(elementType);
+		if(elementSerivce==null){
+			throw new ServiceException("未能根据元素类型 "+engineType+" 获得服务类型");
+		}
+		return elementSerivce;
+	}
+	
+	public Map<String, String> getElementSerivceType() {
+		return elementSerivceType;
+	}
+	public void setElementSerivceType(Map<String, String> elementSerivceType) {
+		this.elementSerivceType = elementSerivceType;
+	}
+	
+	
+//	---------------------
+
 	/** 引擎类型 **/
 	private Map<String,String> engineType;
 	/** 元素类型 **/
@@ -21,6 +49,10 @@ public class FormEngineComponet {
 	private String defaultEngineType="default";
 	/**获得子项目session**/
 	private SessionParams sessionComponet;
+	
+	
+	
+	
 	
 	/**
 	 * 获得引擎类型

@@ -19,5 +19,6 @@
 			and column.column_id=td_ui_template_element.column_id
 		inner join td_ui_element element
 			on td_ui_template_element.element_id=element.element_id
+		where td_ui_template_element.is_used='1'
 	</select>
 </mapper>

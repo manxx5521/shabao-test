@@ -12,7 +12,7 @@ public class ElementColumnDto extends TemplateElementEntity {
 	private TableColumnEntity column;
 
 	private ElementEntity element;
-
+	
 	public TableColumnEntity getColumn() {
 		return column;
 	}
@@ -28,5 +28,6 @@ public class ElementColumnDto extends TemplateElementEntity {
 	public void setElement(ElementEntity element) {
 		this.element = element;
 	}
+
 
 }

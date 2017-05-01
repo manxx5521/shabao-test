@@ -83,6 +83,14 @@
 	</bean>
 	<!--表单引擎设置-->
 	<bean id="formEngineComponet" class="com.xiaoshabao.webframework.ui.component.FormEngineComponet">
+		<property name="elementSerivceType">
+			<map>
+				<entry key="default" value="defaultUIElement" />
+				<entry key="select2" value="selectUIElement" />
+				<entry key="list" value="dataTablesUIElement" />
+			</map>	
+		</property>
+		
 		<property name="sessionComponet">
 			<ref bean="sessionParams" />
 		</property>

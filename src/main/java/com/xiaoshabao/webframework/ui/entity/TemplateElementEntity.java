@@ -12,7 +12,17 @@ public class TemplateElementEntity {
 	
 	private String columnId;
 	
-	private String elementsParams;
+	private String elementParams;
+	/** 最大长度 */
+	private Integer maxLength;
+	/** 最小长度 */
+	private Integer minLength;
+	/** 是否使用 */
+	private Boolean isUsed;
+	/** 是否只读*/
+	private Boolean isReadOnly;
+	/** 是否显示 */
+	private Boolean isDisplay;
 	
 	private String remark;
 	
@@ -110,11 +120,11 @@ public class TemplateElementEntity {
 	public void setColumnId(String columnId) {
 		this.columnId = columnId;
 	}
-	public String getElementsParams() {
-		return elementsParams;
+	public String getElementParams() {
+		return elementParams;
 	}
-	public void setElementsParams(String elementsParams) {
-		this.elementsParams = elementsParams;
+	public void setElementParams(String elementParams) {
+		this.elementParams = elementParams;
 	}
 	public String getRemark() {
 		return remark;
@@ -122,6 +132,35 @@ public class TemplateElementEntity {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
+	public Integer getMaxLength() {
+		return maxLength;
+	}
+	public void setMaxLength(Integer maxLength) {
+		this.maxLength = maxLength;
+	}
+	public Integer getMinLength() {
+		return minLength;
+	}
+	public void setMinLength(Integer minLength) {
+		this.minLength = minLength;
+	}
+	public Boolean getIsUsed() {
+		return isUsed;
+	}
+	public void setIsUsed(Boolean isUsed) {
+		this.isUsed = isUsed;
+	}
+	public Boolean getIsReadOnly() {
+		return isReadOnly;
+	}
+	public void setIsReadOnly(Boolean isReadOnly) {
+		this.isReadOnly = isReadOnly;
+	}
+	public Boolean getIsDisplay() {
+		return isDisplay;
+	}
+	public void setIsDisplay(Boolean isDisplay) {
+		this.isDisplay = isDisplay;
+	}
 	
 }

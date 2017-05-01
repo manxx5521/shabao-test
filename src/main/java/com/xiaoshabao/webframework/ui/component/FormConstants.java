@@ -8,5 +8,20 @@ public class FormConstants {
 	
 	public final static String ELEMENT_FIELD_CODE="fieldCode";
 	public final static String ELEMENT_LABEL="label";
+	
+	/** 元素模版-展示 **/
+	public final static String TEMPLATE_VIEW="viewTemplate";
+	/** 元素模版-只读 **/
+	public final static String TEMPLATE_READ="readTemplate";
+	
+	
+	/** 头部引用字符串，包括全部模版 **/
+	public final static String HEADER_STR_ALL="header";
+	/** 头部引用字符串，展现模版 **/
+	public final static String HEADER_STR_VIEW="viewHear";
+	/** 头部引用字符串，只读模版 **/
+	public final static String HEADER_STR_READ="readHear";
+	
+	
 
 }

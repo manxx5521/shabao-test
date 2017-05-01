@@ -14,12 +14,12 @@ public class SimpleTemplateServiceImpl extends AbstractTemplateServiceImpl
 		implements FormTemplateService {
 	//获取模版数据
 	@Override
-	public TemplateData getTemplate(TemplateEntity template,Map<String, Object> params) {
+	public TemplateData getTemplate(TemplateEntity template,Map<String, Object> data) {
 		if(template==null||StringUtils.isEmpty(template.getTemplateId())){
 			logger.error("未能找到对应模版,templateId={}",template.getTemplateId());
 			throw new MsgErrorException("未能找到对应模版");
 		}
-		this.getTemplateElements(template,params);
+		this.getTemplateElements(template,data);
 		return null;
 	}
 	

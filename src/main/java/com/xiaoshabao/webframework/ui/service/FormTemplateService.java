@@ -14,6 +14,6 @@ public interface FormTemplateService {
 	 * @param template
 	 * @return
 	 */
-	public TemplateData getTemplate(TemplateEntity template,Map<String, Object> params);
+	public TemplateData getTemplate(TemplateEntity template,Map<String, Object> data);
 
 }
