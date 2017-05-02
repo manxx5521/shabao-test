@@ -42,23 +42,29 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3
 			Map<String, Object> data, Map<String, Object> elementParams) {
 		// 添加共有参数处理（默认值的处理等）
 
+		logger.debug("开始获得{}元素的自定义参数", elementDto.getElementId());
 		getElementParams(elementDto, data, elementParams);
+		logger.debug("结束获得{}元素的自定义参数", elementDto.getElementId());
 	}
 
-	/*
-	 * 获得元素参数（个性化参数，具体子类重写）
+	/**
+	 * 获得元素个性化参数
+	 * <p>
+	 * 个性化参数，具体子类重写 <br>
+	 * 返回值放到elementParams中
+	 * </p>
 	 */
 	protected void getElementParams(ElementColumnDto elementDto,
 			Map<String, Object> data, Map<String, Object> elementParams) {
 		// 无默认实现，有需要的重写此参数
 	}
-	
+
 	/*
 	 * render模版
 	 */
 	@Override
-	public final String render(ElementEntity element, Map<String, Object> params,
-			boolean isReadOnly) {
+	public final String render(ElementEntity element,
+			Map<String, Object> params, boolean isReadOnly) {
 		String templateName = null;
 		String templateContent = null;
 		try {
@@ -98,7 +104,8 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3
 		} catch (Exception e) {
 			this.getReaderExcepiton("模版解析未知异常", params, templateName, e);
 		}
-		logger.debug("加载模版元素{},类型{}时出错，未能正常解析返回空", element.getElementId(),element.getElementType());
+		logger.debug("加载模版元素{},类型{}时出错，未能正常解析返回空", element.getElementId(),
+				element.getElementType());
 		return "";
 	}
 
@@ -194,8 +201,6 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3
 		}
 		return "";
 	}
-
-	
 
 	/** 打印reader异常信息 **/
 	private void getReaderExcepiton(String message, Map<String, Object> params,

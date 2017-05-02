@@ -22,6 +22,11 @@ public class FormConstants {
 	/** 头部引用字符串，只读模版 **/
 	public final static String HEADER_STR_READ="readHear";
 	
+	/** 字段属性key **/
+	public final static int FIELD_ATTR_KEY=1;
+	/** 字段属性value **/
+	public final static int FIELD_ATTR_VALUE=2;
+	
 	
 
 }

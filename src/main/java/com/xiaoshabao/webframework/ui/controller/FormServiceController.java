@@ -19,6 +19,7 @@ import com.xiaoshabao.baseframework.enums.ErrorEnum;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.component.FormConstants;
+import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
 import com.xiaoshabao.webframework.ui.service.FormService;
 import com.xiaoshabao.webframework.ui.service.FormSessionService;
@@ -28,8 +29,16 @@ import com.xiaoshabao.webframework.ui.service.FormSessionService;
 public class FormServiceController extends AbstractController {
 	@Resource(name = "formServiceImpl")
 	private FormService formService;
-	@Resource(name="formSessionService")
-	private FormSessionService FormSessionService;
+	@Resource(name = "formEngineComponet")
+	FormEngineComponet formEngineComponet;
+	
+	/**
+	 * 获得sessionService
+	 * @return
+	 */
+	public FormSessionService getFormSessionService(){
+		return formEngineComponet.getFormSessionService();
+	}
 	/**
 	 * 带参数列表界面请求
 	 * @param model
@@ -47,7 +56,7 @@ public class FormServiceController extends AbstractController {
 			String paramname = paramnames.nextElement();
 			params.put(paramname, request.getParameter(paramname));
 		}
-		params.put(FormConstants.SESSION_TAG,FormSessionService.getSessionMap(request));//添加session信息
+		params.put(FormConstants.SESSION_TAG,this.getFormSessionService().getSessionMap(request));//添加session信息
 		BillListDto data=formService.getList( billId, params);
 		model.put("data", data);
 //		model.put("reqParam", params);//请求参数

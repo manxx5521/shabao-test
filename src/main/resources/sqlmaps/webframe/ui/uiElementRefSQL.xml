@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="uiElementRefSQL">
+	<!--获得select参数-->
+	<select id="getSelectElementDto" resultType="map">
+		SELECT #{ref_table_id} id,#{ref_table_text} text
+		FROM #{ref_table_name} 
+	</select>
+</mapper>

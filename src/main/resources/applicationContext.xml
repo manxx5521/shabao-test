@@ -90,6 +90,11 @@
 				<entry key="list" value="dataTablesUIElement" />
 			</map>	
 		</property>
+		<property name="formSessionService">
+			<ref bean="formSessionServiceImpl" />
+		</property>
+		
+		
 		
 		<property name="sessionComponet">
 			<ref bean="sessionParams" />

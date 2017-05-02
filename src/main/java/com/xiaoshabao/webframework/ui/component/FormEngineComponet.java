@@ -5,6 +5,7 @@ import java.util.Map;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.component.SessionParams;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
+import com.xiaoshabao.webframework.ui.service.FormSessionService;
 
 /**
  * 表单引擎组件(XML注入)
@@ -13,6 +14,8 @@ public class FormEngineComponet {
 	
 	/** 引擎类型 **/
 	private Map<String,String> elementSerivceType;
+	/** session服务 **/
+	private FormSessionService formSessionService;
 	
 	/**
 	 * 获得元素服务类型
@@ -36,6 +39,17 @@ public class FormEngineComponet {
 	
 	
 //	---------------------
+
+	public FormSessionService getFormSessionService() {
+		return formSessionService;
+	}
+
+	public void setFormSessionService(FormSessionService formSessionService) {
+		this.formSessionService = formSessionService;
+	}
+
+
+
 
 	/** 引擎类型 **/
 	private Map<String,String> engineType;

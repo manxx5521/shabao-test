@@ -3,22 +3,20 @@ package com.xiaoshabao.webframework.ui.entity;
 import java.io.Serializable;
 
 public class TableColumnEntity implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private String tableId;
 	private String fieldCode;
 	private String fieldName;
 	private Integer fieldType;
+	private Integer fieldAttr;
 	private Integer fieldLength;
 	private Integer fieldDecimal;
 	private Integer isKey;
 	private Integer isNull;
-	private Integer isRef;
+	private boolean isRef;
 	private String refTable;
-	private String refTableKey;
-	private String refTableValue;
-	private String refTableSql;
 	private String remark;
 
 	public String getTableId() {
@@ -77,11 +75,11 @@ public class TableColumnEntity implements Serializable {
 		this.isNull = isNull;
 	}
 
-	public Integer getIsRef() {
+	public boolean isRef() {
 		return isRef;
 	}
 
-	public void setIsRef(Integer isRef) {
+	public void setRef(boolean isRef) {
 		this.isRef = isRef;
 	}
 
@@ -91,30 +89,6 @@ public class TableColumnEntity implements Serializable {
 
 	public void setRefTable(String refTable) {
 		this.refTable = refTable;
-	}
-
-	public String getRefTableKey() {
-		return refTableKey;
-	}
-
-	public void setRefTableKey(String refTableKey) {
-		this.refTableKey = refTableKey;
-	}
-
-	public String getRefTableValue() {
-		return refTableValue;
-	}
-
-	public void setRefTableValue(String refTableValue) {
-		this.refTableValue = refTableValue;
-	}
-
-	public String getRefTableSql() {
-		return refTableSql;
-	}
-
-	public void setRefTableSql(String refTableSql) {
-		this.refTableSql = refTableSql;
 	}
 
 	public String getRemark() {
@@ -133,8 +107,12 @@ public class TableColumnEntity implements Serializable {
 		this.fieldLength = fieldLength;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Integer getFieldAttr() {
+		return fieldAttr;
+	}
+
+	public void setFieldAttr(Integer fieldAttr) {
+		this.fieldAttr = fieldAttr;
 	}
 
 }
