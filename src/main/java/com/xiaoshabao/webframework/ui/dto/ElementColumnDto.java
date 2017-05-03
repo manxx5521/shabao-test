@@ -9,16 +9,16 @@ import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
  */
 public class ElementColumnDto extends TemplateElementEntity {
 
-	private TableColumnEntity column;
+	private TableColumnEntity tableColumn;
 
 	private ElementEntity element;
 	
-	public TableColumnEntity getColumn() {
-		return column;
+	public TableColumnEntity getTableColumn() {
+		return tableColumn;
 	}
 
-	public void setColumn(TableColumnEntity column) {
-		this.column = column;
+	public void setTableColumn(TableColumnEntity tableColumn) {
+		this.tableColumn = tableColumn;
 	}
 
 	public ElementEntity getElement() {

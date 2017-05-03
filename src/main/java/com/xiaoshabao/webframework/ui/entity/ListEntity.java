@@ -5,7 +5,7 @@ package com.xiaoshabao.webframework.ui.entity;
 public class ListEntity {
 	private String listId;
 	private String listName;
-	private String engineType;
+	private String listEngine;
 	private String billId;
 	private String templateId;
 	private String reportId;
@@ -24,12 +24,7 @@ public class ListEntity {
 	public void setListName(String listName) {
 		this.listName = listName;
 	}
-	public String getEngineType() {
-		return engineType;
-	}
-	public void setEngineType(String engineType) {
-		this.engineType = engineType;
-	}
+	
 	public String getBillId() {
 		return billId;
 	}
@@ -66,4 +61,11 @@ public class ListEntity {
 	public void setColCount(Integer colCount) {
 		this.colCount = colCount;
 	}
+	public String getListEngine() {
+		return listEngine;
+	}
+	public void setListEngine(String listEngine) {
+		this.listEngine = listEngine;
+	}
+	
 }

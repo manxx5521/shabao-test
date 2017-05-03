@@ -4,9 +4,8 @@
 <mapper namespace="com.xiaoshabao.webframework.ui.entity.ListEntity">
 	<sql id="listColumnsRef"> 
 		${prefix}.list_id '${prefix}.list_id',${prefix}.list_name '${prefix}.list_name'
-		,${prefix}.engine_type '${prefix}.engine_type',${prefix}.bill_id '${prefix}.bill_id'
-		,${prefix}.tmplate_id '${prefix}.tmplate_id',${prefix}.report_id '${prefix}.report_id'
+		,${prefix}.list_engine '${prefix}.list_engine',${prefix}.bill_id '${prefix}.bill_id'
+		,${prefix}.template_id '${prefix}.template_id',${prefix}.report_id '${prefix}.report_id'
 		,${prefix}.is_visible '${prefix}.is_visible',${prefix}.order_no '${prefix}.order_no'
-		,${prefix}.col_count '${prefix}.col_count'
 	</sql>
 </mapper>

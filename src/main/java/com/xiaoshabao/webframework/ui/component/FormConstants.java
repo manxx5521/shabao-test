@@ -8,6 +8,7 @@ public class FormConstants {
 	
 	public final static String ELEMENT_FIELD_CODE="fieldCode";
 	public final static String ELEMENT_LABEL="label";
+	public final static String ELEMENT_VALUE="value";
 	
 	/** 元素模版-展示 **/
 	public final static String TEMPLATE_VIEW="viewTemplate";

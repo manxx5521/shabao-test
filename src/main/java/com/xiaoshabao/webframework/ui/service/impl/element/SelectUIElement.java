@@ -34,12 +34,12 @@ public class SelectUIElement extends AbstractUIElement implements WebElement{
 	@Override
 	protected void getElementParams(ElementColumnDto elementDto,
 			Map<String, Object> data, Map<String, Object> elementParams) {
-		if(!elementDto.getColumn().isRef()){
+		if(!elementDto.getTableColumn().isRef()){
 			logger.error("元素{}渲染错误，不是一个引用",elementDto.getElementId());
 			throw new MsgErrorException("元素渲染错误");
 		}
 		
-		String tableName=elementDto.getColumn().getRefTable();
+		String tableName=elementDto.getTableColumn().getRefTable();
 		 List<TableColumnEntity> tableColumns=tableColumnService.getTableColumn(tableName);
 		 String columnId=null;
 		 String columnText=null;
@@ -66,7 +66,7 @@ public class SelectUIElement extends AbstractUIElement implements WebElement{
 		 
 		 List<SelectElementDto> selectList=this.baseDao.getData(SelectElementDto.class, elementParams);
 		 
-		 elementParams.put("list", selectList);
+		 elementParams.put("dataList", selectList);
 	}
 
 	//web数据AJAX响应

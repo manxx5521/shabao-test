@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.webframework.ui.service.FormSessionService;
-@Service("formSessionService")
+@Service("formSessionServiceImpl")
 public class FormSessionServiceImpl implements FormSessionService {
 
 	@Override

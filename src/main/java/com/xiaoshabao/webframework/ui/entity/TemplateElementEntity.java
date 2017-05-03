@@ -13,6 +13,10 @@ public class TemplateElementEntity {
 	private String columnId;
 	
 	private String elementParams;
+	/** 默认值 **/
+	private String defaultValue;
+	/** 是否必填 **/
+	private Integer required;
 	/** 最大长度 */
 	private Integer maxLength;
 	/** 最小长度 */
@@ -28,8 +32,7 @@ public class TemplateElementEntity {
 	
 	/** 排序 */
 	private Integer orderNo;
-	/** 是否必填 **/
-	private Integer required;
+	
 	
 //----------------------------------------
 	/** 表单类型 condition tab list等 */
@@ -162,5 +165,13 @@ public class TemplateElementEntity {
 	public void setIsDisplay(Boolean isDisplay) {
 		this.isDisplay = isDisplay;
 	}
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+	
+	
 	
 }

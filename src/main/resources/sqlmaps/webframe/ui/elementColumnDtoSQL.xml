@@ -3,20 +3,20 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.webframework.ui.dto.ElementColumnDto">
 	<!--获得元素列表 -->
-	<select id="getElementDto" parameterType="com.xiaoshabao.webframework.ui.entity.TemplateEntity"
+	<select id="getElementColumnDto" parameterType="com.xiaoshabao.webframework.ui.entity.TemplateEntity"
 		resultType="com.xiaoshabao.webframework.ui.dto.ElementColumnDto">
 		select
-			<include refid="com.xiaoshabao.webframework.ui.entity.TemplateElementEntity.templateElementColumns" />
+			<include refid="com.xiaoshabao.webframework.ui.entity.TemplateElementEntity.templateElementColumns" />,
 			<include refid="com.xiaoshabao.webframework.ui.entity.TableColumnEntity.tableColumnColumnsRef">
-    			<property name="prefix" value="column"/>
-    		</include>
+    			<property name="prefix" value="tableColumn"/>
+    		</include>,
     		<include refid="com.xiaoshabao.webframework.ui.entity.ElementEntity.elementColumnsRef">
     			<property name="prefix" value="element"/>
     		</include>
 		from td_ui_template_element
-		inner join td_ui_table_column column
+		inner join td_ui_table_column tableColumn
 			on td_ui_template_element.template_id=#{templateId}
-			and column.column_id=td_ui_template_element.column_id
+			and tableColumn.column_id=td_ui_template_element.column_id
 		inner join td_ui_element element
 			on td_ui_template_element.element_id=element.element_id
 		where td_ui_template_element.is_used='1'

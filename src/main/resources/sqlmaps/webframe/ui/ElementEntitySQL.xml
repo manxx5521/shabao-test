@@ -9,7 +9,7 @@
 		,td_ui_element.view_template,td_ui_element.read_template
 	</sql>
 	<sql id="elementColumnsRef"> 
-		${prefix}.element_id '${prefix}.element_id',${prefix}.element_type '${prefix}..element_type'
+		${prefix}.element_id '${prefix}.element_id',${prefix}.element_type '${prefix}.element_type'
 		,${prefix}.element_name '${prefix}.element_name',${prefix}.params '${prefix}.params'
 		,${prefix}.version '${prefix}.version',${prefix}.order_no '${prefix}.order_no'
 		,${prefix}.view_template '${prefix}.view_template',${prefix}.read_template '${prefix}.read_template'

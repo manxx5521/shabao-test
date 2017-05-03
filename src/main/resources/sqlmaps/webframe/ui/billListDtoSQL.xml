@@ -6,6 +6,9 @@
 	<select id="getBillListDto" resultType="com.xiaoshabao.webframework.ui.dto.BillListDto">
     	select 
 			<include refid="com.xiaoshabao.webframework.ui.entity.BillEntity.billColumns" />,
+			<include refid="com.xiaoshabao.webframework.ui.entity.ListEntity.listColumnsRef">
+    			<property name="prefix" value="list"/>
+    		</include>,
     		<include refid="com.xiaoshabao.webframework.ui.entity.TemplateEntity.templateColumnsRef">
     			<property name="prefix" value="template"/>
     		</include>,

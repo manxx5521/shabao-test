@@ -33,7 +33,7 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements For
 		}
 		BillListDto billListDto=billList.get(0);
 		
-		FormListService formListService=ApplicationContextUtil.getBean(billListDto.getList().getEngineType(), FormListService.class);
+		FormListService formListService=ApplicationContextUtil.getBean(billListDto.getList().getListEngine(), FormListService.class);
 		formListService.getBillList(billListDto,params);
 		
 		
@@ -56,6 +56,15 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements For
 		return templateData;*/
 		return null;
 	}
+	
+	/**
+	 * 设置引擎
+	 * @param billListDto
+	 */
+	protected void setEngineType(BillListDto billListDto){
+		
+	}
+	//-------------------------------
 	
 	
 	// 获得模版数据

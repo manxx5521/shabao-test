@@ -29,8 +29,8 @@ public abstract class AbstractTemplateServiceImpl {
 
 	@Resource(name = "mybatisBaseDao")
 	protected BaseDao baseDao;
-	
-	@Resource(name="formEngineComponet")
+
+	@Resource(name = "formEngineComponet")
 	protected FormEngineComponet formEngineComponet;
 
 	public AbstractTemplateServiceImpl() {
@@ -69,10 +69,12 @@ public abstract class AbstractTemplateServiceImpl {
 
 			// 设置header
 			getElementHeader(result, elementParams, isReadOnly);
-		
-			String elementServiceType=formEngineComponet.getElementSerivceType(elementDto
-					.getElement().getElementType());
-			UIElement element = ApplicationContextUtil.getBean(elementServiceType, UIElement.class);
+
+			String elementServiceType = formEngineComponet
+					.getElementSerivceType(elementDto.getElement()
+							.getElementType());
+			UIElement element = ApplicationContextUtil.getBean(
+					elementServiceType, UIElement.class);
 			element.getCustomParams(elementDto, data, elementParams);// 获得元素自定义值等
 
 			elementParams.putAll(data);
@@ -190,9 +192,14 @@ public abstract class AbstractTemplateServiceImpl {
 	 */
 	protected Map<String, Object> setPublicProperties(
 			Map<String, Object> params, ElementColumnDto column) {
-		params.put(FormConstants.ELEMENT_FIELD_CODE, column.getColumn()
+		params.put(FormConstants.ELEMENT_FIELD_CODE, column.getTableColumn()
 				.getFieldCode());
 		params.put(FormConstants.ELEMENT_LABEL, column.getLabel());
+		String defalutValue = column.getDefaultValue();
+		if (StringUtils.isNotEmpty(defalutValue)) {
+			params.put(FormConstants.ELEMENT_VALUE, column.getLabel());
+		}
+
 		return params;
 	}
 
@@ -218,13 +225,13 @@ public abstract class AbstractTemplateServiceImpl {
 		}
 
 		// 转换成set
-		if (obj == null && obj instanceof JSONArray) {
-			JSONArray headers=(JSONArray) obj;
-			if(headers.size()<1){
+		if (obj != null && obj instanceof JSONArray) {
+			JSONArray headers = (JSONArray) obj;
+			if (headers.size() < 1) {
 				return;
 			}
-			Set<String> header=templateData.getHeader();
-			for(int i=0;i<headers.size();i++){
+			Set<String> header = templateData.getHeader();
+			for (int i = 0; i < headers.size(); i++) {
 				header.add(headers.get(0).toString());
 			}
 		}

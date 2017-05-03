@@ -2,6 +2,8 @@ package com.xiaoshabao.webframework.ui.service.impl;
 
 import static org.junit.Assert.fail;
 
+import java.util.HashMap;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -18,7 +20,7 @@ public class FormServiceImplTest extends SpringTest{
 	@Test
 	public void testGetList() {
 		try {
-			BillListDto billList=this.formService.getList("demo0001", null);
+			BillListDto billList=this.formService.getList("demo0001", new HashMap<String, Object>());
 			System.out.println(billList.getBillId());
 		} catch (Exception e) {
 			e.printStackTrace();

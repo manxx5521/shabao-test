@@ -4,16 +4,19 @@
 <mapper namespace="com.xiaoshabao.webframework.ui.entity.TemplateElementEntity">
 	<sql id="templateElementColumns"> 
 		td_ui_template_element.template_id,
+		td_ui_template_element.column_id,
 		td_ui_template_element.element_id,
-		td_ui_template_element.template_id,
-		td_ui_template_element.template_id,
-		td_ui_template_element.template_id,
-		td_ui_template_element.template_id,
-		td_ui_template_element.template_id,
-		td_ui_template_element.template_id,
-		td_ui_template_element.template_id,
-		td_ui_template_element.template_id,
-		
+		td_ui_template_element.label,
+		td_ui_template_element.element_params,
+		td_ui_template_element.default_value,
+		td_ui_template_element.required,
+		td_ui_template_element.max_length,
+		td_ui_template_element.min_length,
+		td_ui_template_element.is_used,
+		td_ui_template_element.is_read_only,
+		td_ui_template_element.is_display,
+		td_ui_template_element.remark,
+		td_ui_template_element.order_no
 	</sql>
 	<!--获得元素列表 -->
 	<select id="getTemplateElementEntity" parameterType="java.lang.String"

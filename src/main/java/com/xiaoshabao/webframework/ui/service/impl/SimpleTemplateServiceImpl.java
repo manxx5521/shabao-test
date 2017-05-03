@@ -19,8 +19,7 @@ public class SimpleTemplateServiceImpl extends AbstractTemplateServiceImpl
 			logger.error("未能找到对应模版,templateId={}",template.getTemplateId());
 			throw new MsgErrorException("未能找到对应模版");
 		}
-		this.getTemplateElements(template,data);
-		return null;
+		return this.getTemplateElements(template,data);
 	}
 	
 

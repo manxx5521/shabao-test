@@ -86,6 +86,10 @@
 		<property name="elementSerivceType">
 			<map>
 				<entry key="default" value="defaultUIElement" />
+				<entry key="text" value="defaultUIElement" />
+				<entry key="select" value="selectUIElement" />
+				
+				
 				<entry key="select2" value="selectUIElement" />
 				<entry key="list" value="dataTablesUIElement" />
 			</map>	
