@@ -5,11 +5,11 @@
         <#if dataList??>
   			<#list dataList as list>
   				<#if value?? && ${list.id}==value>
-  			<input id="${fieldCode}" class="form-control" value="${list.text}" readonly="readonly" />
+  			<input type="text" id="${fieldCode}" class="form-control" value="${list.text}" readonly="readonly" />
   				</#if>
   			</#list>
   		</#if>
-        	<input id="${fieldCode}_val" name="${fieldCode}" class="form-control" style="display:none;" <#if value?? >value="${value}"</#if> readonly="readonly" />
+        	<input type="text" id="${fieldCode}_val" name="${fieldCode}" class="form-control" style="display:none;" <#if value?? >value="${value}"</#if> readonly="readonly" />
         </div>
     </div>
 </div>
