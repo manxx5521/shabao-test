@@ -33,13 +33,6 @@ public class FormServiceController extends AbstractController {
 	FormEngineComponet formEngineComponet;
 	
 	/**
-	 * 获得sessionService
-	 * @return
-	 */
-	public FormSessionService getFormSessionService(){
-		return formEngineComponet.getFormSessionService();
-	}
-	/**
 	 * 带参数列表界面请求
 	 * @param model
 	 * @param engineType 引擎类型
@@ -50,18 +43,47 @@ public class FormServiceController extends AbstractController {
 	@RequestMapping(value = "/form/${billId}/list")
 	public ModelAndView getList(ModelMap model,@PathVariable("billId") String billId,
 			HttpServletRequest request) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		Enumeration<String> paramnames = request.getParameterNames();
-		while (paramnames.hasMoreElements()) {
-			String paramname = paramnames.nextElement();
-			params.put(paramname, request.getParameter(paramname));
-		}
-		params.put(FormConstants.SESSION_TAG,this.getFormSessionService().getSessionMap(request));//添加session信息
+	  Map<String, Object> params=getRequestParams(request);
 		BillListDto data=formService.getList( billId, params);
 		model.put("data", data);
 //		model.put("reqParam", params);//请求参数
 		return new ModelAndView("/shabaotest/demo/listDemo",model);
 	}
+	
+	/**
+	 * 获得前台传过来的参数
+	 */
+	private Map<String, Object> getRequestParams(HttpServletRequest request){
+	  Map<String, Object> params = new HashMap<String, Object>();
+    Enumeration<String> paramnames = request.getParameterNames();
+    while (paramnames.hasMoreElements()) {
+      String paramname = paramnames.nextElement();
+      params.put(paramname, request.getParameter(paramname));
+    }
+    
+    //添加session信息
+    params.put(FormConstants.SESSION_TAG,formEngineComponet.getFormSessionService().getSessionMap(request));
+    
+    return params;
+	}
+  
+	/**
+	 * 查询列表
+	 * @param billId
+	 * @param request
+	 * @return
+	 */
+	
+  @RequestMapping(value = "/form/${billId}/query")
+  @ResponseBody
+  public AjaxResult queryList(@PathVariable("billId") String billId,
+      HttpServletRequest request) {
+    Map<String, Object> params=getRequestParams(request);
+    return null;
+  }
+	
+	
+//	-----------------------
 
 	@RequestMapping(value = "/{engineType}/ajax/{elementId}")
 	@ResponseBody

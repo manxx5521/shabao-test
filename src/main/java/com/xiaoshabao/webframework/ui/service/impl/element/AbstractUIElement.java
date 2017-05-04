@@ -28,7 +28,15 @@ import freemarker.template.TemplateNotFoundException;
  */
 public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3
 		implements UIElement {
-	// 验证前台数据是否正确
+//
+// @Override
+ public Object getCustomValue(Map<String, Object> data,Map<String, Object> elementParams,
+   String fieldCode, Object value) {
+   // 默认返回正常value不做任何处理
+   return value;
+ }
+  
+  // 验证前台数据是否正确
 	@Override
 	public FormValidateInfo validateData(Map<String, Object> data,
 			ElementColumnDto elementDto, Map<String, Object> elementParams) {

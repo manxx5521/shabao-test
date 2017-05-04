@@ -9,6 +9,7 @@ public class ListEntity {
 	private String billId;
 	private String templateId;
 	private String reportId;
+	private boolean isQuery;
 	private Integer isVisible;
 	private Integer orderNo;
 	private Integer colCount;
@@ -67,5 +68,11 @@ public class ListEntity {
 	public void setListEngine(String listEngine) {
 		this.listEngine = listEngine;
 	}
+  public boolean isQuery() {
+    return isQuery;
+  }
+  public void setQuery(boolean isQuery) {
+    this.isQuery = isQuery;
+  }
 	
 }

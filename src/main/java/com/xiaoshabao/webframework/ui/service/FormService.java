@@ -17,6 +17,17 @@ public interface FormService {
 	 * @return
 	 */
 	public BillListDto getList(String billId,Map<String, Object> params);
+	
+	/**
+	 * 查询列表
+	 * @param billId
+	 * @param params
+	 * @return
+	 */
+  public AjaxResult queryList(String billId,Map<String, Object> params);
+  
+  
+//  -------------------------------
 	/**
 	 * 获得模版数据
 	 * @param templateId 模版id

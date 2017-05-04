@@ -57,13 +57,14 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements For
 		return null;
 	}
 	
-	/**
-	 * 设置引擎
-	 * @param billListDto
+	/*
+	 * 查询列表
 	 */
-	protected void setEngineType(BillListDto billListDto){
-		
-	}
+	@Override
+  public AjaxResult queryList(String billId, Map<String, Object> params) {
+    // TODO Auto-generated method stub
+    return null;
+  }
 	//-------------------------------
 	
 	
@@ -108,5 +109,7 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements For
 		TemplateFactory templateFactory=ApplicationContextUtil.getBean(engineType, TemplateFactory.class);
 		return templateFactory.getElementResponse(element, params);
 	}
+
+  
 
 }

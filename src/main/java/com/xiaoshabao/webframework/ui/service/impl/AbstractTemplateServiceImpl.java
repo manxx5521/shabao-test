@@ -39,12 +39,14 @@ public abstract class AbstractTemplateServiceImpl {
 	}
 
 	/**
-	 * 获得所有 ElementDto 集合
-	 * 
+	 * 获得所有 模版数据
+	 * @param template
+	 * @param data
+	 * @param isLoadWhere 是否默认加载where条件
 	 * @return
 	 */
 	public final TemplateData getTemplateElements(TemplateEntity template,
-			Map<String, Object> data) {
+			Map<String, Object> data,boolean isLoadWhere) {
 		logger.debug("开始处理模版{}", template.getTemplateId());
 		TemplateData result = new TemplateData(false);
 		List<ElementColumnDto> columnList = getTemplateElementData(template);
@@ -55,6 +57,8 @@ public abstract class AbstractTemplateServiceImpl {
 			return result;
 		}
 		StringBuffer rs = new StringBuffer();
+		StringBuffer whereSQL = new StringBuffer();
+		
 		for (ElementColumnDto elementDto : columnList) {
 			logger.debug("处理模版元素{}", elementDto.getElementId());
 			// 预处理元素参数
@@ -62,7 +66,7 @@ public abstract class AbstractTemplateServiceImpl {
 					elementDto.getElementId(), elementDto.getElementParams(),
 					elementDto.getElement().getParams());
 
-			setPublicProperties(elementParams, elementDto);
+			setPublicProperties(data,elementParams, elementDto);
 
 			// 是否只读模版
 			boolean isReadOnly = elementDto.getIsReadOnly();
@@ -73,18 +77,45 @@ public abstract class AbstractTemplateServiceImpl {
 			String elementServiceType = formEngineComponet
 					.getElementSerivceType(elementDto.getElement()
 							.getElementType());
+			
 			UIElement element = ApplicationContextUtil.getBean(
 					elementServiceType, UIElement.class);
-			element.getCustomParams(elementDto, data, elementParams);// 获得元素自定义值等
+			
+			//设置元素自定义值
+			String fieldCode=elementDto.getTableColumn().getFieldCode();
+			Object value=element.getCustomValue(data, elementParams, fieldCode, data.get(fieldCode));
+			data.put(fieldCode, value);
+			elementParams.put(FormConstants.ELEMENT_VALUE, value);
+			
+			// 获得元素自定义值等
+			element.getCustomParams(elementDto, data, elementParams);
 
 			elementParams.putAll(data);
 			rs.append(element.render(elementDto.getElement(), elementParams,
 					isReadOnly));
+			if(isLoadWhere){
+			  appendWhereSql(whereSQL,elementDto.getTableColumn().getFieldCode(),data);
+			}
 			logger.debug("模版元素{}处理完成", elementDto.getElementId());
 		}
 		result.setSuccess(true);
 		result.setContentHtml(rs.toString());
+		if(isLoadWhere){
+		  result.setWhereSql(whereSQL.toString());;
+    }
 		return result;
+	}
+	
+	protected void appendWhereSql(StringBuffer whereSQL,String fieldCode,Map<String,Object> data){
+	  String value=data.get(fieldCode).toString();
+	  if(StringUtils.isEmpty(value)){
+	    return;
+	  }
+	  whereSQL.append(" AND ");
+	  whereSQL.append(fieldCode);
+	  whereSQL.append("=#{");
+	  whereSQL.append(value);
+	  whereSQL.append("}# ");
 	}
 
 	/**
@@ -190,15 +221,21 @@ public abstract class AbstractTemplateServiceImpl {
 	 * @param column
 	 * @return
 	 */
-	protected Map<String, Object> setPublicProperties(
-			Map<String, Object> params, ElementColumnDto column) {
-		params.put(FormConstants.ELEMENT_FIELD_CODE, column.getTableColumn()
-				.getFieldCode());
-		params.put(FormConstants.ELEMENT_LABEL, column.getLabel());
-		String defalutValue = column.getDefaultValue();
-		if (StringUtils.isNotEmpty(defalutValue)) {
-			params.put(FormConstants.ELEMENT_VALUE, column.getLabel());
+	protected Map<String, Object> setPublicProperties(Map<String, Object> data,
+			Map<String, Object> params, ElementColumnDto elementDto) {
+	  
+	  String fieldCode=elementDto.getTableColumn().getFieldCode();
+	  
+		params.put(FormConstants.ELEMENT_FIELD_CODE, fieldCode);
+		params.put(FormConstants.ELEMENT_LABEL, elementDto.getLabel());
+		
+		//设置值
+		Object value=data.get(fieldCode);
+		if(value==null){
+		  value=elementDto.getDefaultValue();
+		  data.put(fieldCode, value);//反写到数据
 		}
+		params.put(FormConstants.ELEMENT_VALUE, value);
 
 		return params;
 	}
@@ -236,5 +273,18 @@ public abstract class AbstractTemplateServiceImpl {
 			}
 		}
 	}
+	
+	
+  public String getQueryWhereSQL(List<ElementColumnDto> elementList, Map<String, Object> data) {
+    StringBuilder sql=new StringBuilder();
+    FormValidateInfo validate;
+    for(ElementColumnDto elementDto:elementList){
+     /* validate=this.validatePublicParams(elementDto, element, data, elementParams);
+      if(!validate.isSuccess()){
+        
+      }*/
+    }
+    return null;
+  }
 
 }

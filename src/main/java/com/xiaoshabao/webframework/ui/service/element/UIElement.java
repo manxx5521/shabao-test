@@ -9,6 +9,18 @@ import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
 
 public interface UIElement extends AbstractElement {
+  /**
+   * 获得元素特殊值
+   * <p>解决元素在保存时可能使用了特殊字符串的问题</p>
+   * @Title: getCustomValue     
+   * @Description: TODO    
+   * @param data
+   * @param fieldCode
+   * @param value 是保存到数据库的值
+   * @return
+   */
+  public Object getCustomValue(Map<String, Object> data,Map<String, Object> elementParams,
+    String fieldCode, Object value);
 
 	/**
 	 * 验证前台数据是否正确(元素的特殊验证)

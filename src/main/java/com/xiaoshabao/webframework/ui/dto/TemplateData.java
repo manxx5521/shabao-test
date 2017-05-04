@@ -1,6 +1,7 @@
 package com.xiaoshabao.webframework.ui.dto;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,6 +19,9 @@ public class TemplateData {
 	 * 头部引用
 	 */
 	private Set<String> header=new HashSet<String>();
+	
+	private String whereSql;
+	
 
 	// -------------------
 	/** 生成的html代码 */
@@ -69,5 +73,14 @@ public class TemplateData {
 	public Set<String> getHeader() {
 		return header;
 	}
+
+  public String getWhereSql() {
+    return whereSql;
+  }
+
+  public void setWhereSql(String whereSql) {
+    this.whereSql = whereSql;
+  }
+
 
 }
