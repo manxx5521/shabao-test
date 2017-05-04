@@ -8,22 +8,44 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
+import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.baseframework.util.jdbc.JDBCUtil;
 import com.xiaoshabao.baseframework.util.jdbc.SQLUtil;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.dao.TableDao;
 import com.xiaoshabao.webframework.ui.dto.TableDto;
 import com.xiaoshabao.webframework.ui.entity.TableColumnEntity;
+import com.xiaoshabao.webframework.ui.entity.TableEntity;
 import com.xiaoshabao.webframework.ui.service.FormTableService;
 /**
  * 表单服务
  */
 @Service("formTableService")
 public class FormTableServiceImpl extends AbstractTemplateServiceImpl3 implements FormTableService {
+	
+	/*
+	 * 获得表信息
+	 */
+	@Override
+	public TableEntity getTable(String tableId) {
+		if(StringUtils.isEmpty(tableId)){
+			throw new ServiceException("获得数据表信息时，数据源tableId传入为空");
+		}
+		TableEntity table= this.baseDao.getDataSingle(TableEntity.class, tableId);
+		if(table==null){
+			throw new ServiceException("数据表"+tableId+"获得错误，返回空");
+		}
+		return table;
+	}
+	
+	
+	
+//	----------------------------------
   
   private TableDao tableDao; 
 
@@ -93,6 +115,8 @@ public class FormTableServiceImpl extends AbstractTemplateServiceImpl3 implement
     }
     return results;
   }
+
+
 
   
 }

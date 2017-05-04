@@ -16,6 +16,8 @@ import com.xiaoshabao.webframework.ui.component.FormConstants;
 import com.xiaoshabao.webframework.ui.dto.ElementColumnDto;
 import com.xiaoshabao.webframework.ui.dto.SelectResultDto;
 import com.xiaoshabao.webframework.ui.entity.TableColumnEntity;
+import com.xiaoshabao.webframework.ui.entity.TableEntity;
+import com.xiaoshabao.webframework.ui.service.FormTableService;
 import com.xiaoshabao.webframework.ui.service.TableColumnService;
 import com.xiaoshabao.webframework.ui.service.element.WebElement;
 import com.xiaoshabao.webframework.ui.service.impl.element.def.SelectElementDef;
@@ -29,6 +31,8 @@ public class SelectUIElement extends AbstractUIElement implements WebElement{
 	
 	@Resource(name="tableColumnService")
 	private TableColumnService tableColumnService;
+	@Resource(name="formTableService")
+	private FormTableService formTableService;
 	
 	//render时的参数
 	@Override
@@ -39,8 +43,9 @@ public class SelectUIElement extends AbstractUIElement implements WebElement{
 			throw new MsgErrorException("元素渲染错误");
 		}
 		
-		String tableName=elementDto.getTableColumn().getRefTable();
-		 List<TableColumnEntity> tableColumns=tableColumnService.getTableColumn(tableName);
+		String tableId=elementDto.getTableColumn().getRefTable();
+		 List<TableColumnEntity> tableColumns=tableColumnService.getTableColumn(tableId);
+		 TableEntity table=formTableService.getTable(tableId);
 		 String columnId=null;
 		 String columnText=null;
 		 for(TableColumnEntity column:tableColumns){
@@ -57,10 +62,10 @@ public class SelectUIElement extends AbstractUIElement implements WebElement{
 		 
 		 if(columnId==null||columnText==null){
 			 logger.error("元素{}数据源{}配置错误，未配置下拉列表所需的列属性",
-					 elementDto.getElementId(),tableName);
+					 elementDto.getElementId(),tableId);
 			 throw new MsgErrorException("数据源配置错误");
 		 }
-		 elementParams.put("ref_table_name", tableName);
+		 elementParams.put("ref_table_name", table.getTableName());
 		 elementParams.put("ref_table_id", columnId);
 		 elementParams.put("ref_table_text", columnText);
 		 

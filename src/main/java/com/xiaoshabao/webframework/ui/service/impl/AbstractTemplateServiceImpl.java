@@ -226,6 +226,8 @@ public abstract class AbstractTemplateServiceImpl {
 	  
 	  String fieldCode=elementDto.getTableColumn().getFieldCode();
 	  
+		params.put(FormConstants.ELEMENT_TEMPLATE_ID, elementDto.getTemplateId());
+		params.put(FormConstants.ELEMENT_ELEMENT_ID, elementDto.getElementId());
 		params.put(FormConstants.ELEMENT_FIELD_CODE, fieldCode);
 		params.put(FormConstants.ELEMENT_LABEL, elementDto.getLabel());
 		

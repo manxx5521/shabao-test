@@ -4,7 +4,7 @@
 <mapper namespace="uiElementRefSQL">
 	<!--获得select参数-->
 	<select id="getSelectElementDto" resultType="map">
-		SELECT #{ref_table_id} id,#{ref_table_text} text
-		FROM #{ref_table_name} 
+		SELECT ${ref_table_id} 'id',${ref_table_text} 'text'
+		FROM ${ref_table_name} 
 	</select>
 </mapper>

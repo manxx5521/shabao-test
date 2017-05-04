@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.entity.TableEntity">
+	<sql id="tableColumns"> 
+		td_ui_table.table_id
+		,td_ui_table.display_name
+		,td_ui_table.table_name
+		,td_ui_table.table_type
+		,td_ui_table.remark
+	</sql>
+	<select id="oneTableEntity" resultType="com.xiaoshabao.webframework.ui.entity.TableEntity">
+    	select 
+			<include refid="tableColumns" />
+    	from td_ui_table
+    	<where>
+			table_id=#{tableId}
+	  	</where>
+	</select>
+</mapper>

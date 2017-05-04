@@ -116,8 +116,19 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3
 				element.getElementType());
 		return "";
 	}
+	/** 打印reader异常信息 **/
+	private void getReaderExcepiton(String message, Map<String, Object> params,
+			String templateTypeName, Object e) {
+		logger.error("render异常,{};模版类型{},参数template {}, element {}", message,
+				templateTypeName, params.get(FormConstants.ELEMENT_TEMPLATE_ID).toString(), params
+						.get(FormConstants.ELEMENT_TEMPLATE_ID).toString(), e);
+	}
 
-	// ------------------------
+	
+	
+	
+	
+	// -------------------------------------------------------------
 	/** 传入到模版的session标识 **/
 	private final static String SESSION_TAG_STRING = "session";
 	/** def元素标识 **/
@@ -210,14 +221,7 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3
 		return "";
 	}
 
-	/** 打印reader异常信息 **/
-	private void getReaderExcepiton(String message, Map<String, Object> params,
-			String templateTypeName, Object e) {
-		logger.error("render异常,{};模版类型{},参数template {}, element {}", message,
-				templateTypeName, params.get("templateId").toString(), params
-						.get("elementId").toString(), e);
-	}
-
+	
 	// 设置公共参数
 	@Override
 	public final void setPublicProperties(Map<String, Object> params,

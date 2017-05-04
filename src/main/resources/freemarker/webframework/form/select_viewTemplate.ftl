@@ -5,7 +5,7 @@
             <select id="${fieldCode}" name="${fieldCode}" class="form-control">
             <#if dataList??>
   			<#list dataList as list>
-  				<#if value?? && ${list.id}==value>
+  				<#if value?? && list.id==value>
   				<option value="${list.id}" selected="selected">${list.text}</option>
   				<#else>
   				<option value="${list.id}">${list.text}</option>
