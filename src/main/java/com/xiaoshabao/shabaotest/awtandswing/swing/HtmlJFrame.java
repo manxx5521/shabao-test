@@ -1,24 +1,39 @@
 package com.xiaoshabao.shabaotest.awtandswing.swing;
 
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import java.text.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
 
 public class HtmlJFrame extends JFrame implements ActionListener,javax.swing.event.ChangeListener{
 	
 	private static final long serialVersionUID = -7141249877382533447L;
 	
 	private URL urls[];  //URL对象数组
-	@SuppressWarnings("rawtypes")
 	private JComboBox combobox_url;  //组合框，输入或选择URL地址
 	private JTextField text_attribute;    //文本行，显示文件属性
 	private JTabbedPane tab;  //选项卡窗格，每页显示一个文件
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public HtmlJFrame(){
 		super("查看原文档");
 		setBounds(300,240,640,480);
