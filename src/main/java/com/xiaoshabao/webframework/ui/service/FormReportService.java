@@ -2,8 +2,9 @@ package com.xiaoshabao.webframework.ui.service;
 
 import java.util.Map;
 
-import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
+import com.xiaoshabao.webframework.ui.dto.ReportData;
+import com.xiaoshabao.webframework.ui.entity.ReportEntity;
 
 /**
  * 简单列表引擎
@@ -13,10 +14,10 @@ import com.xiaoshabao.webframework.ui.dto.BillListDto;
  */
 public interface FormReportService {
 	/**
-	 * 获得list内容
+	 * 获得Report内容
 	 * @param billListDto
 	 * @return
 	 */
-	public BillListData getBillList(BillListDto billListDto,Map<String, Object> params);
+	public ReportData getReportData(ReportEntity report,Map<String, Object> data);
 
 }

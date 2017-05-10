@@ -8,13 +8,10 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
-import com.xiaoshabao.baseframework.dao.BaseDao;
 import com.xiaoshabao.webframework.ui.component.FormConstants;
 import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.dto.ElementColumnDto;
@@ -23,20 +20,10 @@ import com.xiaoshabao.webframework.ui.dto.TemplateData;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 import com.xiaoshabao.webframework.ui.service.element.UIElement;
 
-public abstract class AbstractTemplateServiceImpl {
-
-	protected Logger logger;
-
-	@Resource(name = "mybatisBaseDao")
-	protected BaseDao baseDao;
+public abstract class AbstractTemplateServiceImpl extends AbstractFromServiceImpl {
 
 	@Resource(name = "formEngineComponet")
 	protected FormEngineComponet formEngineComponet;
-
-	public AbstractTemplateServiceImpl() {
-		// 统一添加日志
-		logger = LoggerFactory.getLogger(getClass());
-	}
 
 	/**
 	 * 获得所有 模版数据

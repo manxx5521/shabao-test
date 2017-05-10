@@ -38,7 +38,7 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements For
 		
 		
 		
-		TemplateEntity templateEntity=this.elementDao.getTemplateByid(billId);
+		/*TemplateEntity templateEntity=this.elementDao.getTemplateByid(billId);
 		if(templateEntity==null){
 			logger.info("模版渲染失败，未根据模版id获得模版，失败模版id为{}",billId);
 			throw new MsgErrorException("模版渲染失败");
@@ -49,7 +49,7 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements For
 			return null;
 		}
 		TemplateFactory templateFactory=ApplicationContextUtil.getBean(engineType, TemplateFactory.class);
-		TemplateData templateData=new TemplateData();
+		TemplateData templateData=new TemplateData();*/
 		/*Map<String, Object> params=new HashMap<String, Object>();
 		this.formEngineComponet.putTemplateData(params, templateEntity);
 		templateData.setHtml(templateFactory.getTemplateElements(templateId,params));

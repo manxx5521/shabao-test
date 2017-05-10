@@ -5,8 +5,8 @@ import com.xiaoshabao.webframework.ui.entity.ListEntity;
 import com.xiaoshabao.webframework.ui.entity.ReportEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 
-public class BillListDto extends BillEntity{
 	
+public class BillListDto extends BillEntity{
 	private ListEntity list;
 	
 	private TemplateEntity template;

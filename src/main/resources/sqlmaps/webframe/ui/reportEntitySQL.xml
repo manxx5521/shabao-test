@@ -3,6 +3,11 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.webframework.ui.entity.ReportEntity">
 	<sql id="reportColumnsRef"> 
-		${prefix}.report_id '${prefix}.report_id',${prefix}.report_name '${prefix}.report_name'
+		${prefix}.report_id '${prefix}.report_id'
+		,${prefix}.table_id '${prefix}.table_id'
+		,${prefix}.report_name '${prefix}.report_name'
+		,${prefix}.report_engine '${prefix}.report_engine'
+		,${prefix}.is_sum_row '${prefix}.is_sum_row'
+		,${prefix}.row_num '${prefix}.row_num'
 	</sql>
 </mapper>

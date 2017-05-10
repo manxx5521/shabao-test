@@ -22,13 +22,14 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 	// 获得list内容
 	@Override
 	public BillListData getBillList(BillListDto billListDto,Map<String, Object> data) {
-		BillListData result=new BillListData(); 
+		BillListData result=new BillListData();
+		//获得模版内容
 		String templateEngine=this.getTemplateEngineType(billListDto.getTemplate().getEngineType());
 		FormTemplateService templateService=ApplicationContextUtil.getBean(templateEngine, FormTemplateService.class);
 		boolean isLoadWhere=false;
 		if(billListDto.getList().isQuery()){
 		  isLoadWhere=true;
-    }
+		}
 		TemplateData templateData=templateService.getTemplate(billListDto.getTemplate(),data,isLoadWhere);
 		if(!templateData.isSuccess()){
 			throw new MsgErrorException(templateData.getMessage()==null?"模版渲染错误":templateData.getMessage());
@@ -37,6 +38,7 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 		Set<String> header=templateData.getHeader();
 		result.setTemplateHtml(templateData.getContentHtml());
 		
+		//获得report内容
 		
 
 		//解析头部引用
