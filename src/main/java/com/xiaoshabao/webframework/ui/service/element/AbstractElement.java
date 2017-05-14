@@ -10,6 +10,15 @@ import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
  */
 public interface AbstractElement {
 	
+	/**
+	 * 获得元素参数
+	 * <p>将文本JSON转换成Map,返回个JSONObject的父类</p>
+	 * @param elementParams 元素JSON文本
+	 * @param extParams	扩转JSON文本
+	 * @return 不为空的结果
+	 */
+	public Map<String,Object> getElementParams(String elementParams,String extParams);
+	
 	
 //------------------------
 	/**

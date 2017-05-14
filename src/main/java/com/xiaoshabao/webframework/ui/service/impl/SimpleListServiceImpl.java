@@ -9,8 +9,10 @@ import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
+import com.xiaoshabao.webframework.ui.dto.ReportData;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
 import com.xiaoshabao.webframework.ui.service.FormListService;
+import com.xiaoshabao.webframework.ui.service.FormReportService;
 import com.xiaoshabao.webframework.ui.service.FormTemplateService;
 import com.xiaoshabao.webframework.util.ResourceManager;
 
@@ -39,7 +41,14 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 		result.setTemplateHtml(templateData.getContentHtml());
 		
 		//获得report内容
+		//获得report引擎类型
+		String reportEngine=this.getReportEngineType(billListDto.getTemplate().getEngineType());
+		FormReportService reportService=ApplicationContextUtil.getBean(reportEngine, FormReportService.class);
+		ReportData reportData=reportService.getReportData(billListDto.getReport(), data);
 		
+		header.addAll(reportData.getHeader());//添加report需要的引用
+		result.setReportHtml(reportData.getReportHtml());
+		result.setReportScript(reportData.getReportScript());
 
 		//解析头部引用
 		String[] headers=this.getHeaderHtml(header);

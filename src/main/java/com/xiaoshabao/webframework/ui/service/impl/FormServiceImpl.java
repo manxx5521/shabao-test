@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
+import com.xiaoshabao.webframework.ui.dao.ElementDao;
+import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
@@ -21,11 +24,11 @@ import com.xiaoshabao.webframework.ui.service.TemplateFactory;
  * 表单服务
  */
 @Service("formServiceImpl")
-public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements FormService {
+public class FormServiceImpl extends AbstractFromServiceImpl implements FormService {
 	
 	//获得list界面数据
 	@Override
-	public BillListDto getList(String billId,Map<String, Object> params) {
+	public BillListData getList(String billId,Map<String, Object> params) {
 		List<BillListDto> billList=this.baseDao.getData(BillListDto.class, billId);
 		if(billList==null||billList.size()!=1){
 			logger.info("单据获取失败，未根据billId获得对应单据或者获得的方案数不为1，失败单据id为{}",billId);
@@ -34,27 +37,8 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements For
 		BillListDto billListDto=billList.get(0);
 		
 		FormListService formListService=ApplicationContextUtil.getBean(billListDto.getList().getListEngine(), FormListService.class);
-		formListService.getBillList(billListDto,params);
-		
-		
-		
-		/*TemplateEntity templateEntity=this.elementDao.getTemplateByid(billId);
-		if(templateEntity==null){
-			logger.info("模版渲染失败，未根据模版id获得模版，失败模版id为{}",billId);
-			throw new MsgErrorException("模版渲染失败");
-		}
-		String engineType=formEngineComponet.getEngineType(templateEntity.getEngineType());
-		if(StringUtils.isEmpty(engineType)){
-			logger.info("模版渲染失败，未摸得渲染引擎类型，失败模版id为{}",billId);
-			return null;
-		}
-		TemplateFactory templateFactory=ApplicationContextUtil.getBean(engineType, TemplateFactory.class);
-		TemplateData templateData=new TemplateData();*/
-		/*Map<String, Object> params=new HashMap<String, Object>();
-		this.formEngineComponet.putTemplateData(params, templateEntity);
-		templateData.setHtml(templateFactory.getTemplateElements(templateId,params));
-		return templateData;*/
-		return null;
+		BillListData billListData=formListService.getBillList(billListDto,params);
+		return billListData;
 	}
 	
 	/*
@@ -67,6 +51,8 @@ public class FormServiceImpl extends AbstractTemplateServiceImpl3 implements For
   }
 	//-------------------------------
 	
+	@Autowired
+	protected ElementDao elementDao;
 	
 	// 获得模版数据
 	@Override

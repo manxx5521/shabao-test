@@ -7,7 +7,7 @@
 		td_ui_template_element.column_id,
 		td_ui_template_element.element_id,
 		td_ui_template_element.label,
-		td_ui_template_element.element_params,
+		td_ui_template_element.ext_params,
 		td_ui_template_element.default_value,
 		td_ui_template_element.required,
 		td_ui_template_element.max_length,

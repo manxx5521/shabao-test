@@ -18,6 +18,15 @@ public class BillListData {
 	 */
 	private String templateHtml;
 	
+	/**
+	 * reprot代码
+	 */
+	private String reportHtml;
+	/**
+	 * report脚本
+	 */
+	private String reportScript;
+	
 	public String getHeaderJS() {
 		return headerJS;
 	}
@@ -36,5 +45,18 @@ public class BillListData {
 	public void setTemplateHtml(String templateHtml) {
 		this.templateHtml = templateHtml;
 	}
+	public String getReportHtml() {
+		return reportHtml;
+	}
+	public void setReportHtml(String reportHtml) {
+		this.reportHtml = reportHtml;
+	}
+	public String getReportScript() {
+		return reportScript;
+	}
+	public void setReportScript(String reportScript) {
+		this.reportScript = reportScript;
+	}
+	
 
 }

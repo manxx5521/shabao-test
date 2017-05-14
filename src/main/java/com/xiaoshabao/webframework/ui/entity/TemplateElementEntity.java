@@ -12,7 +12,7 @@ public class TemplateElementEntity {
 	
 	private String columnId;
 	
-	private String elementParams;
+	private String extParams;
 	/** 默认值 **/
 	private String defaultValue;
 	/** 是否必填 **/
@@ -123,11 +123,12 @@ public class TemplateElementEntity {
 	public void setColumnId(String columnId) {
 		this.columnId = columnId;
 	}
-	public String getElementParams() {
-		return elementParams;
+	
+	public String getExtParams() {
+		return extParams;
 	}
-	public void setElementParams(String elementParams) {
-		this.elementParams = elementParams;
+	public void setExtParams(String extParams) {
+		this.extParams = extParams;
 	}
 	public String getRemark() {
 		return remark;

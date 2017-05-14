@@ -20,7 +20,7 @@ import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.component.FormConstants;
 import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
-import com.xiaoshabao.webframework.ui.dto.BillListDto;
+import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.service.FormService;
 
 @Controller
@@ -43,7 +43,7 @@ public class FormServiceController extends AbstractController {
 	public ModelAndView getList(ModelMap model,@PathVariable("billId") String billId,
 			HttpServletRequest request) {
 	  Map<String, Object> params=getRequestParams(request);
-		BillListDto data=formService.getList( billId, params);
+		BillListData data=formService.getList( billId, params);
 		model.put("data", data);
 //		model.put("reqParam", params);//请求参数
 		return new ModelAndView("/shabaotest/demo/listDemo",model);

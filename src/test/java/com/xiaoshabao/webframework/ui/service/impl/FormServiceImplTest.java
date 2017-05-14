@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import util.SpringTest;
 
-import com.xiaoshabao.webframework.ui.dto.BillListDto;
+import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.service.FormService;
 
 public class FormServiceImplTest extends SpringTest{
@@ -20,8 +20,8 @@ public class FormServiceImplTest extends SpringTest{
 	@Test
 	public void testGetList() {
 		try {
-			BillListDto billList=this.formService.getList("demo0001", new HashMap<String, Object>());
-			System.out.println(billList.getBillId());
+			BillListData billList=this.formService.getList("demo0001", new HashMap<String, Object>());
+			System.out.println(billList.getTemplateHtml());
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Not yet implemented");

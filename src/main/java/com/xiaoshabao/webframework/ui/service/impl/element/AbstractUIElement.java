@@ -16,7 +16,7 @@ import com.xiaoshabao.webframework.ui.dto.FormValidateInfo;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
 import com.xiaoshabao.webframework.ui.service.element.UIElement;
-import com.xiaoshabao.webframework.ui.service.impl.AbstractTemplateServiceImpl3;
+import com.xiaoshabao.webframework.ui.service.impl.AbstractFromServiceImpl;
 
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
@@ -26,17 +26,45 @@ import freemarker.template.TemplateNotFoundException;
  * 元素抽象类<br>
  * 添加表单元素时，继承的类
  */
-public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3
+public abstract class AbstractUIElement extends AbstractFromServiceImpl
 		implements UIElement {
-//
-// @Override
- public Object getCustomValue(Map<String, Object> data,Map<String, Object> elementParams,
-   String fieldCode, Object value) {
-   // 默认返回正常value不做任何处理
-   return value;
- }
-  
-  // 验证前台数据是否正确
+	/*
+	 * 获得元素参数
+	 * <p>将文本JSON转换成Map,返回个JSONObject的父类</p>
+	 */
+	@Override
+	public final Map<String, Object> getElementParams(String elementParams,
+			String extParams) {
+		JSONObject json = null;
+		if (StringUtils.isNotEmpty(elementParams)) {
+			json = JSONObject.parseObject(elementParams);
+		}
+		if (StringUtils.isNotEmpty(extParams)) {
+			if (json == null) {
+				json = JSONObject.parseObject(extParams);
+			} else {
+				JSONObject extJson = JSONObject.parseObject(extParams);
+				if (!extJson.isEmpty()) {
+					json.putAll(extJson);
+				}
+			}
+		}
+		
+		if(json==null){
+			json=JSONObject.parseObject("{}");;
+		}
+		return json;
+	}
+
+	//
+	// @Override
+	public Object getCustomValue(Map<String, Object> data,
+			Map<String, Object> elementParams, String fieldCode, Object value) {
+		// 默认返回正常value不做任何处理
+		return value;
+	}
+
+	// 验证前台数据是否正确
 	@Override
 	public FormValidateInfo validateData(Map<String, Object> data,
 			ElementColumnDto elementDto, Map<String, Object> elementParams) {
@@ -116,18 +144,16 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3
 				element.getElementType());
 		return "";
 	}
+
 	/** 打印reader异常信息 **/
 	private void getReaderExcepiton(String message, Map<String, Object> params,
 			String templateTypeName, Object e) {
 		logger.error("render异常,{};模版类型{},参数template {}, element {}", message,
-				templateTypeName, params.get(FormConstants.ELEMENT_TEMPLATE_ID).toString(), params
-						.get(FormConstants.ELEMENT_TEMPLATE_ID).toString(), e);
+				templateTypeName, params.get(FormConstants.ELEMENT_TEMPLATE_ID)
+						.toString(),
+				params.get(FormConstants.ELEMENT_TEMPLATE_ID).toString(), e);
 	}
 
-	
-	
-	
-	
 	// -------------------------------------------------------------
 	/** 传入到模版的session标识 **/
 	private final static String SESSION_TAG_STRING = "session";
@@ -221,7 +247,6 @@ public abstract class AbstractUIElement extends AbstractTemplateServiceImpl3
 		return "";
 	}
 
-	
 	// 设置公共参数
 	@Override
 	public final void setPublicProperties(Map<String, Object> params,

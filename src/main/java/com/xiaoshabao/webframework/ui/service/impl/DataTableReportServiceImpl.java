@@ -8,13 +8,16 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.exception.ServiceException;
+import com.xiaoshabao.webframework.component.TemplateEngine;
 import com.xiaoshabao.webframework.ui.dto.ReportColumnDto;
 import com.xiaoshabao.webframework.ui.dto.ReportData;
 import com.xiaoshabao.webframework.ui.entity.ReportEntity;
 import com.xiaoshabao.webframework.ui.entity.TableEntity;
 import com.xiaoshabao.webframework.ui.service.FormReportService;
 import com.xiaoshabao.webframework.ui.service.FormTableService;
+import com.xiaoshabao.webframework.ui.service.element.ReportElement;
 
 @Service("dataTableReportService")
 public class DataTableReportServiceImpl extends AbstractReportServiceImpl
@@ -37,14 +40,61 @@ public class DataTableReportServiceImpl extends AbstractReportServiceImpl
 		List<ReportColumnDto> reportColumns=getReportColumns(report.getReportId());
 		
 		List<String> title=new ArrayList<String>();
-		StringBuilder sql=new StringBuilder();
-		sql.append("SELECT ");
+		List<String> displayColumn=new ArrayList<String>();
+		StringBuilder selectSql=new StringBuilder();
+		StringBuilder formSql=new StringBuilder();
+		selectSql.append("SELECT 1");
+		formSql.append(table.getTableName());
+		formSql.append(" ");
 		
 		for(ReportColumnDto reportColumn: reportColumns){
+			String elementServiceType = formEngineComponet
+					.getElementSerivceType(reportColumn.getElement()
+							.getElementType());
+
+			ReportElement element = ApplicationContextUtil.getBean(
+					elementServiceType, ReportElement.class);
+			Map<String, Object> params=element.getElementParams(reportColumn.getElement().getParams(), reportColumn.getExtParams());
+			String[] reprotSql=element.getReportSql(reportColumn, table.getTableName(), params);
 			
+			selectSql.append(",");
+			selectSql.append(reprotSql[0]);
+			
+			formSql.append(reprotSql[2]);
+			formSql.append(" ");
+			
+			if(reportColumn.isDisplay()){
+				title.add(reportColumn.getTitle());//头部标题
+				displayColumn.add(reprotSql[1]);
+			}
 		}
 		
-		return null;
+		//返回结果
+		ReportData result=new ReportData();
+		//添加script引用
+		result.getHeader().add("dataTables");
+		
+		data.put("titleList", title);
+		data.put("columnList", displayColumn);
+		data.put("dataTablesName", "dataTables-"+report.getReportId());
+		String reportHtml=null;
+		String reportScript=null;
+		String renderTempalte=null;
+		//获得html
+		try {
+			renderTempalte="/webframework/form/dataTablesSimple.ftl";
+			reportHtml= TemplateEngine.renderTemplate(renderTempalte, data);
+			
+			renderTempalte="/webframework/form/dataTablesSimpleScript.ftl";
+			reportScript= TemplateEngine.renderTemplate(renderTempalte, data);
+		}catch (Exception e) {
+			logger.error("解析report的html时，错误。解析的reportId为{},解析的模版为{}",report.getReportId(),renderTempalte,e);
+			reportHtml="";
+			reportScript="";
+		}
+		result.setReportHtml(reportHtml);
+		result.setReportScript(reportScript);
+		return result;
 	}
 	
 	/**

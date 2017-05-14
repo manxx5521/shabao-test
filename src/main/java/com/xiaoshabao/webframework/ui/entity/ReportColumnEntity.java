@@ -3,11 +3,13 @@ package com.xiaoshabao.webframework.ui.entity;
 public class ReportColumnEntity {
 	private String reportId;
 	private String columnId;
+	private String elementId;
 	private String title;
 	private String titleGroup1;
 	private String titleGroup2;
 	private String titleGroup3;
 	private String titleGroup4;
+	private String extParams;
 	private boolean isDisplay;
 	private boolean isUsed;
 	private Integer orderNo;
@@ -72,5 +74,18 @@ public class ReportColumnEntity {
 	public void setOrderNo(Integer orderNo) {
 		this.orderNo = orderNo;
 	}
+	public String getElementId() {
+		return elementId;
+	}
+	public void setElementId(String elementId) {
+		this.elementId = elementId;
+	}
+	public String getExtParams() {
+		return extParams;
+	}
+	public void setExtParams(String extParams) {
+		this.extParams = extParams;
+	}
+	
 	
 }

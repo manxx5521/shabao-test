@@ -3,7 +3,7 @@ package com.xiaoshabao.webframework.ui.service;
 import java.util.Map;
 
 import com.xiaoshabao.webframework.dto.AjaxResult;
-import com.xiaoshabao.webframework.ui.dto.BillListDto;
+import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
 /**
  * 表单服务
@@ -16,7 +16,7 @@ public interface FormService {
 	 * @param params
 	 * @return
 	 */
-	public BillListDto getList(String billId,Map<String, Object> params);
+	public BillListData getList(String billId,Map<String, Object> params);
 	
 	/**
 	 * 查询列表

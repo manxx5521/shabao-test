@@ -10,10 +10,15 @@
 			<include refid="com.xiaoshabao.webframework.ui.entity.TableColumnEntity.tableColumnColumnsRef">
     			<property name="prefix" value="tableColumn"/>
     		</include>,
+    		<include refid="com.xiaoshabao.webframework.ui.entity.ElementEntity.elementColumnsRef">
+    			<property name="prefix" value="element"/>
+    		</include>
 		from td_ui_report_column
 		inner join td_ui_table_column tableColumn
-			on td_ui_report_column.table_id=#{tableId}
+			on td_ui_report_column.report_id=#{reportId}
 			and tableColumn.column_id=td_ui_report_column.column_id
+		inner join td_ui_element element
+			on td_ui_report_column.element_id=element.element_id
 		where td_ui_report_column.is_used='1'
 	</select>
 </mapper>

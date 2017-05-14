@@ -80,6 +80,9 @@ public class FastJSONTest {
 		String name=json.getString("name");
 		System.out.println(name==null?"this is null":name);//当没有值时输出null
 		
+		
+		json=JSONObject.parseObject("{}");
+		
 	}
 
 	@Test

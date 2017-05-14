@@ -12,7 +12,7 @@ import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xiaoshabao.wechat.component.ContextHolderWechat;
+import com.xiaoshabao.webframework.component.ContextHolderUtils;
 
 public class ResourceUtil {
 	private static Logger logger = LoggerFactory
@@ -35,7 +35,7 @@ public class ResourceUtil {
 	 * @throws Exception 
 	 */
 	public static void initConfig(String name,String type) throws Exception {
-		String contextPath = ContextHolderWechat.getSession().getServletContext().getContextPath();
+		String contextPath = ContextHolderUtils.getSession().getServletContext().getContextPath();
 		if(StringUtils.isEmpty(type)){
 			type="1";
 		}

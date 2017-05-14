@@ -8,7 +8,7 @@ public class ReportData {
 	
 	private String reportHtml;
 	
-	private String reportJS;
+	private String reportScript;
 	
 	/**
 	 * 头部引用
@@ -23,12 +23,12 @@ public class ReportData {
 		this.reportHtml = reportHtml;
 	}
 
-	public String getReportJS() {
-		return reportJS;
+	public String getReportScript() {
+		return reportScript;
 	}
 
-	public void setReportJS(String reportJS) {
-		this.reportJS = reportJS;
+	public void setReportScript(String reportScript) {
+		this.reportScript = reportScript;
 	}
 
 	public Set<String> getHeader() {

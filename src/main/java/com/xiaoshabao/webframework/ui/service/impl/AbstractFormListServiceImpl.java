@@ -31,5 +31,14 @@ public class AbstractFormListServiceImpl {
 		return "simpleTemplateService";//先默认
 	}
 	
+	/**
+	 * 获得report引擎
+	 * @param listEngine 列表引擎
+	 * @return 引擎名字
+	 */
+	protected String getReportEngineType(String listEngine){
+		return "dataTableReportService";//先默认
+	}
+	
 
 }
