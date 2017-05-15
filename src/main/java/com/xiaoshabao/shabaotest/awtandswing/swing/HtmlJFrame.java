@@ -25,7 +25,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
-
+@SuppressWarnings("rawtypes")
 public class HtmlJFrame extends JFrame implements ActionListener,javax.swing.event.ChangeListener{
 	
 	private static final long serialVersionUID = -7141249877382533447L;
@@ -34,6 +34,7 @@ public class HtmlJFrame extends JFrame implements ActionListener,javax.swing.eve
 	private JComboBox combobox_url;  //组合框，输入或选择URL地址
 	private JTextField text_attribute;    //文本行，显示文件属性
 	private JTabbedPane tab;  //选项卡窗格，每页显示一个文件
+	@SuppressWarnings("unchecked")
 	public HtmlJFrame(){
 		super("查看原文档");
 		setBounds(300,240,640,480);

@@ -10,6 +10,7 @@ public enum DaoEnum {
 	EXISTS("exists","存在"),
 	GETDATA("get","获得所有数据"),
 	GETONE("one","获得单挑数据"),
+	GETBYID("getByid","根据id获得数据（这个不按前缀方式,按getUserById）"),
 	PAGINGQUERY("getPaging","获得分页数据");
 	
 	/**

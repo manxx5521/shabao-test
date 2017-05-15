@@ -44,6 +44,11 @@ public interface BaseDao {
 	 * 通过sqlid获取数据
 	 */
 	public <T> List<T> getData(String sqlid, Object param);
+	
+	/**
+	 * 通过id获取数据
+	 */
+	public <T> T getDataById(Class<T> clasz, String id);
 
 	/**
 	 * 通过实体T 和参数获得唯一记录<br/>

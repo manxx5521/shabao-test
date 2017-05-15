@@ -17,7 +17,9 @@ import com.xiaoshabao.webframework.ui.dto.FormValidateInfo;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 import com.xiaoshabao.webframework.ui.service.element.UIElement;
-
+/*
+ * 模版要修改，修改后，只取数据表默认值
+ */
 public abstract class AbstractTemplateServiceImpl extends
 		AbstractFromServiceImpl {
 

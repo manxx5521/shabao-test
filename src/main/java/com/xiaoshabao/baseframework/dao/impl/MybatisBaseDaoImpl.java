@@ -15,6 +15,7 @@ import com.xiaoshabao.baseframework.enums.DaoEnum;
 
 /**
  * 通用的数据库操作组件
+ * 
  * @param <T>
  * @param <P>
  */
@@ -74,6 +75,12 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	}
 
 	@Override
+	public <T> T getDataById(Class<T> clazz, String id) {
+		return this.getSqlSession().selectOne(
+				"get" + clazz.getSimpleName() + "ById", id);
+	}
+
+	@Override
 	public <T> T getDataSingle(Class<T> clazz, Object param) {
 		return this.getSqlSession().selectOne(
 				DaoEnum.GETONE.getVlaue() + clazz.getSimpleName(), param);
@@ -85,9 +92,11 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	}
 
 	@Override
-	public <T, P extends PagingParams> List<T> getDataPaging(Class<T> clazz,P pageParams) {
+	public <T, P extends PagingParams> List<T> getDataPaging(Class<T> clazz,
+			P pageParams) {
 		return this.getSqlSession().<T> selectList(
-				DaoEnum.PAGINGQUERY.getVlaue() + clazz.getSimpleName(), pageParams);
+				DaoEnum.PAGINGQUERY.getVlaue() + clazz.getSimpleName(),
+				pageParams);
 	}
 
 	@Override

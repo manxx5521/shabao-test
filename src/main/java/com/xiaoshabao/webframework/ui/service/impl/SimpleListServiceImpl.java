@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
 import com.xiaoshabao.webframework.ui.dto.ReportData;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
+import com.xiaoshabao.webframework.ui.entity.ListEntity;
 import com.xiaoshabao.webframework.ui.service.FormListService;
 import com.xiaoshabao.webframework.ui.service.FormReportService;
 import com.xiaoshabao.webframework.ui.service.FormTemplateService;
@@ -72,6 +74,16 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 			}
 		}
 		return new String[]{css.toString(),js.toString()};
+	}
+	
+	
+	/*
+	 * 查询列表
+	 */
+	@Override
+	public AjaxResult queryList(String billId,ListEntity listEntity, Map<String, Object> data) {
+		
+		return null;
 	}
 
 }

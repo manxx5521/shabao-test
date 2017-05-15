@@ -16,7 +16,7 @@ public interface FormService {
 	 * @param params
 	 * @return
 	 */
-	public BillListData getList(String billId,Map<String, Object> params);
+	public BillListData getList(String billId,Map<String, Object> data);
 	
 	/**
 	 * 查询列表
@@ -24,7 +24,7 @@ public interface FormService {
 	 * @param params
 	 * @return
 	 */
-  public AjaxResult queryList(String billId,Map<String, Object> params);
+  public AjaxResult queryList(String billId,Map<String, Object> data);
   
   
 //  -------------------------------

@@ -1,12 +1,15 @@
 $(document).ready(function() {
     $('.${dataTablesName}').dataTable( {
         "processing": true,
-        "serverSide": true,
+        "serverSide": true,//服务模式
         "columns":[
             <#list titleList as column>
             {data:'${column}'}<#if column_has_next>,</#if>
   			</#list>
         ],
-        "ajax": "../resources/server_processing_custom.php"
+        "ajax": {
+        	"url": "../query",
+        	"type": "POST"
+    	}
     } );
 } );

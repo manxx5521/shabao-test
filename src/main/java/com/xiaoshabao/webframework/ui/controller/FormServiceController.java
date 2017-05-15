@@ -21,6 +21,7 @@ import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.component.FormConstants;
 import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
+import com.xiaoshabao.webframework.ui.dto.DataTablesParams;
 import com.xiaoshabao.webframework.ui.service.FormService;
 
 @Controller
@@ -72,13 +73,12 @@ public class FormServiceController extends AbstractController {
 	 * @param request
 	 * @return
 	 */
-	
   @RequestMapping(value = "/form/${billId}/query")
   @ResponseBody
   public AjaxResult queryList(@PathVariable("billId") String billId,
       HttpServletRequest request) {
-    Map<String, Object> params=getRequestParams(request);
-    return null;
+    Map<String, Object> data=getRequestParams(request);
+    return formService.queryList(billId, data);
   }
 	
 	
