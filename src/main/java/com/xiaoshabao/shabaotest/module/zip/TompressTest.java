@@ -35,7 +35,7 @@ public class TompressTest {
     String saveFileDir = "D:\\test\\";
 
     //解压方法（网上的方法）
-    unzip1(zipFilePath, saveFileDir);
+    unzip(zipFilePath, saveFileDir);
   }
   /** 
    * 把zip文件解压到指定的文件夹 
