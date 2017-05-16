@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson.JSONArray;
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
+import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.webframework.ui.component.FormConstants;
 import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.dto.ElementColumnDto;
@@ -39,7 +40,7 @@ public abstract class AbstractTemplateServiceImpl extends
 			Map<String, Object> data, boolean isLoadWhere) {
 		logger.debug("开始处理模版{}", template.getTemplateId());
 		TemplateData result = new TemplateData(false);
-		List<ElementColumnDto> columnList = getTemplateElementData(template);
+		List<ElementColumnDto> columnList = getTemplateElementData(template.getTemplateId());
 
 		if (columnList == null) {
 			logger.info("模版{} 未获得任何元素", template.getTemplateId());
@@ -120,8 +121,8 @@ public abstract class AbstractTemplateServiceImpl extends
 	 * @return
 	 */
 	protected List<ElementColumnDto> getTemplateElementData(
-			TemplateEntity template) {
-		return this.baseDao.getData(ElementColumnDto.class, template);
+	  String templateId) {
+		return this.baseDao.getData(ElementColumnDto.class, templateId);
 	}
 
 	/**
@@ -135,7 +136,7 @@ public abstract class AbstractTemplateServiceImpl extends
 	 * @param params
 	 * @return
 	 */
-	protected final FormValidateInfo validatePublicParams(
+	protected final FormValidateInfo validateDataAll(
 			ElementColumnDto elementDto, UIElement element,
 			Map<String, Object> data, Map<String, Object> elementParams) {
 		FormValidateInfo result = null;
@@ -244,19 +245,68 @@ public abstract class AbstractTemplateServiceImpl extends
 		}
 	}
 
-	public String getQueryWhereSQL(List<ElementColumnDto> elementList,
-			Map<String, Object> data) {
-		StringBuilder sql = new StringBuilder();
-		FormValidateInfo validate;
-		for (ElementColumnDto elementDto : elementList) {
-			/*
-			 * validate=this.validatePublicParams(elementDto, element, data,
-			 * elementParams); if(!validate.isSuccess()){
-			 * 
-			 * }
-			 */
-		}
-		return null;
+	/**
+	 * 获得查询sql
+	 * @param templateId
+	 * @return
+	 */
+	public String getTemplateQuerySQL(String templateId,Map<String, Object> data) {
+	  logger.debug("start-→开始组装“条件区”查询数据sql。模版{}",templateId);
+	  
+	  List<ElementColumnDto> columnList = getTemplateElementData(templateId);
+	  StringBuffer sql = new StringBuffer("1=1 ");
+	  
+    if (columnList == null) {
+      logger.info("查询数据时，条件区模版{} 未获得任何元素", templateId);
+      return sql.toString();
+    }
+    
+    for (ElementColumnDto elementDto : columnList) {
+      logger.debug("处理模版元素{}", elementDto.getElementId());
+
+      String elementServiceType = formEngineComponet
+          .getElementSerivceType(elementDto.getElement()
+              .getElementType());
+
+      UIElement element = ApplicationContextUtil.getBean(
+          elementServiceType, UIElement.class);
+
+      // 预处理元素参数
+      Map<String, Object> elementParams = element.getElementParams(
+          elementDto.getElement().getParams(),
+          elementDto.getExtParams());
+
+      //验证参数
+      FormValidateInfo validateInfo=validateDataAll(elementDto, element, data, elementParams);
+      if(!validateInfo.isSuccess()){
+        throw new MsgErrorException(String.format("%s %s",elementDto.getLabel(),
+            validateInfo.getMessage()==null?"未能验证通过":validateInfo.getMessage()));
+      }
+      
+      //添加sql
+      addSqlBySqlMapper(sql,elementDto.getTableColumn().getFieldCode());
+      
+      logger.debug("模版元素{}处理完成", elementDto.getElementId());
+    }
+    
+    logger.debug("end-→结束组装“条件区”查询数据sql。模版{}",templateId);
+    return sql.toString();
+	}
+	
+	/**
+	 * 添加脚本自定义sql
+	 * @param sql
+	 * @param column
+	 */
+	protected void addSqlBySqlMapper(StringBuffer sql,String column){
+//	    String sql1=  "<if test=\"usertype != null\">usertype = #{usertype}</if>";
+	  sql.append(" <if test=\"");
+	  sql.append(column);
+	  sql.append("!= null\"> and");
+	  sql.append(column);
+	  sql.append("=#{");
+	  sql.append(column);
+	  sql.append("}</if> ");
 	}
 
 }

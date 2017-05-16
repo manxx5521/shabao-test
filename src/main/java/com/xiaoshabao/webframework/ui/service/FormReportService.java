@@ -18,5 +18,12 @@ public interface FormReportService {
 	 * @return
 	 */
 	public ReportData getReportData(ReportEntity report,Map<String, Object> data);
+	
+	/**
+   * 获得Report查询SQL
+   * @param tableId
+   * @return
+   */
+  public String getReportQuerySql(String reportId,Map<String, Object> data);
 
 }
