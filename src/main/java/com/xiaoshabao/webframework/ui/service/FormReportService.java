@@ -21,9 +21,11 @@ public interface FormReportService {
 	
 	/**
    * 获得Report查询SQL
+   * <P>返回三个值{selectSql,fromSql,tableName}
+   * </P>
    * @param tableId
-   * @return
+   * @return {查询SQL，数据表关联SQL，主表名}
    */
-  public String getReportQuerySql(String reportId,Map<String, Object> data);
+  public String[] getReportQuerySql(String reportId,Map<String, Object> data);
 
 }

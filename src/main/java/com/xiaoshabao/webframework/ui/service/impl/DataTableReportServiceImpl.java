@@ -115,7 +115,7 @@ public class DataTableReportServiceImpl extends AbstractReportServiceImpl
 	}
 
   @Override
-  public String getReportQuerySql(String reportId, Map<String, Object> data) {
+  public String[] getReportQuerySql(String reportId, Map<String, Object> data) {
     logger.debug("start-→开始组装“数据区”查询那数据sql。数据reportId:{}",reportId);
     
     ReportEntity reportEntity=this.baseDao.getDataById(ReportEntity.class, reportId);
@@ -124,10 +124,10 @@ public class DataTableReportServiceImpl extends AbstractReportServiceImpl
     List<ReportColumnDto> reportColumns=getReportColumns(tableId);
     
     StringBuilder selectSql=new StringBuilder();
-    StringBuilder formSql=new StringBuilder();
+    StringBuilder fromSql=new StringBuilder();
     selectSql.append("SELECT 1");
-    formSql.append(table.getTableName());
-    formSql.append(" ");
+    fromSql.append(table.getTableName());
+    fromSql.append(" ");
     
     for(ReportColumnDto reportColumn: reportColumns){
       String elementServiceType = formEngineComponet
@@ -143,15 +143,12 @@ public class DataTableReportServiceImpl extends AbstractReportServiceImpl
       selectSql.append(",");
       selectSql.append(reprotSql[0]);
       
-      formSql.append(reprotSql[2]);
-      formSql.append(" ");
+      fromSql.append(reprotSql[2]);
+      fromSql.append(" ");
     }
     
-    selectSql.append(" ");
-    selectSql.append(formSql);
-    
     logger.debug("end-→结束组装“数据区”查询那数据sql。数据reportId:{}",tableId);
-    return selectSql.toString();
+    return new String[]{selectSql.toString(),fromSql.toString(),table.getTableName()};
   }
 
 	

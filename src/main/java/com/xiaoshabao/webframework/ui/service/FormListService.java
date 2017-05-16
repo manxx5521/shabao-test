@@ -22,6 +22,7 @@ public interface FormListService {
 	public BillListData getBillList(BillListDto billListDto,Map<String, Object> params);
 	/**
 	 * 查询列表数据
+	 * <p>data中会带有{@link com.xiaoshabao.webframework.ui.dto.DataTablesParams}中的参数</p>
 	 * @param billId
 	 * @param listEntity
 	 * @param data

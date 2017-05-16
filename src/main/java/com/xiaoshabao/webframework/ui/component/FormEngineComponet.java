@@ -37,9 +37,6 @@ public class FormEngineComponet {
 		this.elementSerivceType = elementSerivceType;
 	}
 	
-	
-//	---------------------
-
 	public FormSessionService getFormSessionService() {
 		return formSessionService;
 	}
@@ -47,6 +44,9 @@ public class FormEngineComponet {
 	public void setFormSessionService(FormSessionService formSessionService) {
 		this.formSessionService = formSessionService;
 	}
+//	---------------------
+
+	
 
 
 
