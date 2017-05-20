@@ -18,7 +18,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 /**
- * freemarker 模版引擎
+ * freeMarker 模版引擎
  */
 @Component("templateEngine")
 public class TemplateEngine {
@@ -38,11 +38,11 @@ public class TemplateEngine {
 	}
 	
 	/**
-	 * 渲染模板
+	 * 渲染模板(传入字符串进行解析)
 	 * @param key 模版id
 	 * @param template 模版字符串文件
 	 * @param params 参数
-	 * @return
+	 * @return 解析后的文本
 	 * @throws TemplateException 
 	 * @throws IOException 
 	 * @throws ParseException 
@@ -59,10 +59,10 @@ public class TemplateEngine {
 	}
 	
 	/**
-	 * 渲染模板,从模版配置文件加载
+	 * 渲染模板（从模版配置文件加载）
 	 * @param name 文件名，可以带路径
 	 * @param params 参数
-	 * @return
+	 * @return 解析后的文本
 	 * @throws TemplateException 
 	 * @throws IOException 
 	 * @throws ParseException 
@@ -76,24 +76,23 @@ public class TemplateEngine {
 	}
 	
 	/**
-	 * 引擎渲染
+	 * 模版执行（具体执行freeMarker模版）
 	 * @param name 模版名
 	 * @param params 参数
-	 * @return
+	 * @return 解析后的文本
 	 * @throws IOException 模版读取异常
 	 * @throws ParseException 解析异常
 	 * @throws MalformedTemplateNameException 
 	 * @throws TemplateNotFoundException  模版未发现
 	 * @throws TemplateException 
 	 */
-	public static String processTemplate(String name, Object params)
+	private static String processTemplate(String name, Object params)
 			throws TemplateNotFoundException, MalformedTemplateNameException,
 			ParseException, IOException, TemplateException {
 		Template template = templateConfig.getTemplate(name);
 		StringWriter out = new StringWriter();
 		template.process(params, out);
 		return out.toString();
-
 	}
 
 }
