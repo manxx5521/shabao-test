@@ -16,6 +16,7 @@ import freemarker.template.Configuration;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.TemplateModel;
 import freemarker.template.TemplateNotFoundException;
 /**
  * freeMarker 模版引擎
@@ -35,6 +36,16 @@ public class TemplateEngine {
 		MultiTemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] {loader, deftemplatedir});
 		templateConfig.setDefaultEncoding("UTF-8");
 		templateConfig.setTemplateLoader(mtl);
+		
+	}
+	
+	/**
+	 * 设置公共变量，比如自定义指令
+	 * @param name
+	 * @param tm
+	 */
+	public static void setSharedVariable(String name, TemplateModel tm){
+		templateConfig.setSharedVariable(name, tm);
 	}
 	
 	/**

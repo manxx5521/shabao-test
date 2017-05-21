@@ -1,8 +1,7 @@
 package com.xiaoshabao.webframework.component;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,6 +40,12 @@ public class TemplateEngineTest {
 			dataMap.put("java", "你好java");
 			dataMap.put("javascript", "你好javascript");
 			params.put("dataMap", dataMap);
+			
+			//添加自定义函数sort_int
+			params.put("sort_int", new FreemarkerSortMethod());
+			
+			//设置自定义指令
+			TemplateEngine.setSharedVariable("role", new FreemarkerRoleDirectiveModel());
 			
 			String result=TemplateEngine.renderTemplate("examplet.ftl", params);
 			System.out.println(result);
