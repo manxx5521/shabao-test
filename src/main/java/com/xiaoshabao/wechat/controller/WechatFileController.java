@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xiaoshabao.baseframework.controller.AbstractController;
 import com.xiaoshabao.webframework.component.ContextHolderUtils;
+import com.xiaoshabao.webframework.controller.AbstractController;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.api.wxmedia.MediaAPI;
-import com.xiaoshabao.wechat.component.TokenManager;
 import com.xiaoshabao.wechat.component.ContextHolderWechat;
+import com.xiaoshabao.wechat.component.TokenManager;
 
 @Controller
 @RequestMapping("/wechat")

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xiaoshabao.baseframework.controller.AbstractController;
+import com.xiaoshabao.webframework.controller.AbstractController;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.dto.TableDto;
 import com.xiaoshabao.webframework.ui.service.FormTableService;

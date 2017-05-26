@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.xiaoshabao.baseframework.component.SysConfig;
-import com.xiaoshabao.baseframework.controller.AbstractController;
 /**
  * 文件上传操作
  */

@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
-import com.xiaoshabao.baseframework.controller.AbstractController;
 import com.xiaoshabao.baseframework.exception.DaoException;
 import com.xiaoshabao.system.component.ContextHolderSystem;
 import com.xiaoshabao.system.entity.MenuEntity;
 import com.xiaoshabao.system.service.IndexService;
+import com.xiaoshabao.webframework.controller.AbstractController;
 
 /**
  * 主页

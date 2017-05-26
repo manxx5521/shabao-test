@@ -11,7 +11,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.baidu.ueditor.ActionEnter;
-import com.xiaoshabao.baseframework.controller.AbstractController;
 
 @Controller
 @RequestMapping(value="/ueditor")

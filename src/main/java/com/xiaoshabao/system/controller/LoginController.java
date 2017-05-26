@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xiaoshabao.baseframework.controller.AbstractController;
 import com.xiaoshabao.system.service.LoginService;
+import com.xiaoshabao.webframework.controller.AbstractController;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 
 /**

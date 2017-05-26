@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xiaoshabao.baseframework.controller.AbstractController;
 import com.xiaoshabao.baseframework.exception.DaoException;
 import com.xiaoshabao.baseframework.exception.ServiceException;
+import com.xiaoshabao.webframework.controller.AbstractController;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.wechat.dto.ArticleDetailDto;
 import com.xiaoshabao.wechat.dto.ArticleInfoDto;
