@@ -250,7 +250,7 @@ public abstract class AbstractTemplateServiceImpl extends
 	 * @param templateId
 	 * @return
 	 */
-	public String getTemplateQuerySQL(String templateId,Map<String, Object> data) {
+	public String getTemplateQuerySQL(String tableName,String templateId,Map<String, Object> data) {
 	  logger.debug("start-→开始组装“条件区”查询数据sql。模版{}",templateId);
 	  
 	  List<ElementColumnDto> columnList = getTemplateElementData(templateId);
@@ -262,7 +262,7 @@ public abstract class AbstractTemplateServiceImpl extends
     }
     
     for (ElementColumnDto elementDto : columnList) {
-      logger.debug("处理模版元素{}", elementDto.getElementId());
+      logger.debug("处理模版元素{}:{}", elementDto.getElementId(),elementDto.getLabel());
 
       String elementServiceType = formEngineComponet
           .getElementSerivceType(elementDto.getElement()
@@ -284,7 +284,7 @@ public abstract class AbstractTemplateServiceImpl extends
       }
       
       //添加sql
-      addSqlBySqlMapper(sql,elementDto.getTableColumn().getFieldCode());
+      addSqlBySqlMapper(tableName,sql,elementDto.getTableColumn().getFieldCode());
       
       logger.debug("模版元素{}处理完成", elementDto.getElementId());
     }
@@ -298,15 +298,19 @@ public abstract class AbstractTemplateServiceImpl extends
 	 * @param sql
 	 * @param column
 	 */
-	protected void addSqlBySqlMapper(StringBuffer sql,String column){
+	protected void addSqlBySqlMapper(final String tableName,StringBuffer sql,String column){
 //	    String sql1=  "<if test=\"usertype != null\">usertype = #{usertype}</if>";
-	  sql.append(" <if test=\"");
+	  sql.append("\n <if test=\"");
 	  sql.append(column);
-	  sql.append("!= null\"> and");
+	  sql.append(" !=null and ");
+	  sql.append(column);
+	  sql.append(" !='' \"> and ");
+	  sql.append(tableName);
+	  sql.append(".");
 	  sql.append(column);
 	  sql.append("=#{");
 	  sql.append(column);
-	  sql.append("}</if> ");
+	  sql.append("} </if> ");
 	}
 
 }

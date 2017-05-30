@@ -3,6 +3,7 @@ package com.xiaoshabao.webframework.ui.service.impl;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,6 +11,7 @@ import org.junit.Test;
 
 import util.SpringTest;
 
+import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.service.FormService;
 
@@ -28,6 +30,24 @@ public class FormServiceImplTest extends SpringTest{
 		}
 		
 	}
+	
+	
+	@Test
+	public void testQueryList() {
+		try {
+			Map<String,Object> params=new HashMap<String,Object>();
+			params.put("start", 0);
+			params.put("length", 10);
+			AjaxResult result=this.formService.queryList("dlist001", params);
+			System.out.println(result.isSuccess());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Not yet implemented");
+		}
+		
+	}
+	
+	
 	@Test
 	public void testGetTemplateData() {
 		try {

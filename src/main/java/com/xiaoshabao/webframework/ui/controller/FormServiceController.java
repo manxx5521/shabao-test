@@ -39,14 +39,14 @@ public class FormServiceController extends AbstractController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/form/${billId}/list")
+	@RequestMapping(value = "/form/{billId}/list")
 	public ModelAndView getList(ModelMap model,@PathVariable("billId") String billId,
 			HttpServletRequest request) {
 	  Map<String, Object> params=getRequestParams(request);
 		BillListData data=formService.getList( billId, params);
 		model.put("data", data);
 //		model.put("reqParam", params);//请求参数
-		return new ModelAndView("/shabaotest/demo/listDemo",model);
+		return new ModelAndView("/webframe/ui/"+data.getPagePath(),model);
 	}
 	
 	/**
@@ -68,17 +68,32 @@ public class FormServiceController extends AbstractController {
   
 	/**
 	 * 查询列表
+	 * 
 	 * @param billId
 	 * @param request
 	 * @return
 	 */
-  @RequestMapping(value = "/form/${billId}/query")
-  @ResponseBody
-  public AjaxResult queryList(@PathVariable("billId") String billId,
-      HttpServletRequest request) {
-    Map<String, Object> data=getRequestParams(request);
-    return formService.queryList(billId, data);
-  }
+	@RequestMapping(value = "/form/{billId}/query")
+	@ResponseBody
+	public AjaxResult queryList(@PathVariable("billId") String billId,
+			HttpServletRequest request) {
+		Map<String, Object> data = getRequestParams(request);
+		return formService.queryList(billId, data);
+	}
+  
+	/**
+	 * 列表界面按钮功能操作
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/form/{billId}/list/{buttonId}/function")
+	@ResponseBody
+	public AjaxResult doButtonList(@PathVariable("billId") String billId,
+			@PathVariable("buttonId") String buttonId,
+			HttpServletRequest request) {
+		Map<String, Object> data = getRequestParams(request);
+		return formService.doButtonList(buttonId, data);
+	}
 	
 	
 //	-----------------------

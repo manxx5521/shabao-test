@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.dto.ButtonDto">
+	<select id="getButtonDtoById" resultType="com.xiaoshabao.webframework.ui.dto.ButtonDto">
+		select
+			<include refid="com.xiaoshabao.webframework.ui.entity.ButtonEntity.buttonColumns" />,
+			<include refid="com.xiaoshabao.webframework.ui.entity.ButtonImageEntity.buttonImageColumnsRef">
+    			<property name="prefix" value="buttonImage"/>
+    		</include>
+		from td_ui_button
+		left join td_ui_button_image buttonImage
+		on td_ui_button.image_id = buttonImage.image_id
+		where td_ui_button.button_id=#{id}
+	</select>
+	
+	
+	<select id="getListButtonDto" resultType="com.xiaoshabao.webframework.ui.dto.ButtonDto">
+		select
+			<include refid="com.xiaoshabao.webframework.ui.entity.ButtonEntity.buttonColumns" />,
+			<include refid="com.xiaoshabao.webframework.ui.entity.ButtonImageEntity.buttonImageColumnsRef">
+    			<property name="prefix" value="buttonImage"/>
+    		</include>
+		from td_ui_button
+		inner join td_ui_list_button a
+			on a.button_id=td_ui_button.button_id
+		left join td_ui_button_image buttonImage
+			on td_ui_button.image_id = buttonImage.image_id
+		where a.list_id=#{listId}
+	</select>
+</mapper>

@@ -14,13 +14,16 @@ import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.dao.ElementDao;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
+import com.xiaoshabao.webframework.ui.dto.ButtonDto;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
+import com.xiaoshabao.webframework.ui.entity.ButtonEnum;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.ListEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 import com.xiaoshabao.webframework.ui.service.FormListService;
 import com.xiaoshabao.webframework.ui.service.FormService;
 import com.xiaoshabao.webframework.ui.service.TemplateFactory;
+import com.xiaoshabao.webframework.ui.service.button.ButtonFunction;
 
 /**
  * 表单服务
@@ -39,6 +42,12 @@ public class FormServiceImpl extends AbstractFromServiceImpl implements
 				billListDto.getList().getListEngine(), FormListService.class);
 		BillListData billListData = formListService.getBillList(billListDto,
 				data);
+		//设置单据统一属性
+		billListData.setTitle(billListDto.getBillName());
+		
+		//添加按钮
+		List<ButtonDto> buttons=this.baseDao.getData("getListButtonDto", billListDto.getList());
+		billListData.setButtons(buttons);
 		return billListData;
 	}
 
@@ -57,6 +66,7 @@ public class FormServiceImpl extends AbstractFromServiceImpl implements
 
 	/**
 	 * 根据billId获得列表界面信息
+	 * <p>可能的话，可以进行缓存</p>
 	 * @param billId
 	 * @param data
 	 * @return
@@ -71,7 +81,39 @@ public class FormServiceImpl extends AbstractFromServiceImpl implements
 		BillListDto billListDto = billList.get(0);
 		return billListDto;
 	}
-	// -------------------------------
+	
+	/*
+	 * 列表界面按钮功能操作
+	 */
+	@Override
+	public AjaxResult doButtonList(String buttonId, Map<String, Object> data) {
+		AjaxResult result=new AjaxResult();
+		ButtonDto buttonDto=this.baseDao.getDataById(ButtonDto.class, buttonId);
+		
+		if(buttonDto==null){
+			logger.error("按钮{}无法在数据库中查询到。",buttonId);
+			return result.setErrorInfo("按钮操作错误（不存在）");
+		}
+		
+		ButtonFunction buttonFunction=ApplicationContextUtil.getBean("buttonService_"+buttonDto.getButtonValue(), ButtonFunction.class);
+		Object exeResult=buttonFunction.execute(buttonDto, ButtonEnum.LIST);
+		result.setData(exeResult);
+		result.setSuccess(true);
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// ----------------------------------------------
 
 	@Autowired
 	protected ElementDao elementDao;
@@ -124,5 +166,6 @@ public class FormServiceImpl extends AbstractFromServiceImpl implements
 				engineType, TemplateFactory.class);
 		return templateFactory.getElementResponse(element, params);
 	}
+
 
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.entity.ButtonImageEntity">
+	<sql id="buttonImageColumns"> 
+		td_ui_button_image.image_id
+		,td_ui_button_image.image_name
+		,td_ui_button_image.image_desc
+		,td_ui_button_image.file_class
+		,td_ui_button_image.file_path
+		,td_ui_button_image.is_used
+		,td_ui_button_image.order_no
+	</sql>
+	<sql id="buttonImageColumnsRef"> 
+		${prefix}.image_id '${prefix}.image_id'
+		,${prefix}.image_name '${prefix}.image_name'
+		,${prefix}.image_desc '${prefix}.image_desc'
+		,${prefix}.file_class '${prefix}.file_class'
+		,${prefix}.file_path '${prefix}.file_path'
+		,${prefix}.is_used '${prefix}.is_used'
+		,${prefix}.order_no '${prefix}.order_no'
+	</sql>
+</mapper>

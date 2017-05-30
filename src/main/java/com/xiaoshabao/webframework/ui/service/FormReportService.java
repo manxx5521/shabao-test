@@ -3,6 +3,7 @@ package com.xiaoshabao.webframework.ui.service;
 import java.util.Map;
 
 import com.xiaoshabao.webframework.ui.dto.ReportData;
+import com.xiaoshabao.webframework.ui.entity.ListEntity;
 import com.xiaoshabao.webframework.ui.entity.ReportEntity;
 
 /**
@@ -17,7 +18,7 @@ public interface FormReportService {
 	 * @param billListDto
 	 * @return
 	 */
-	public ReportData getReportData(ReportEntity report,Map<String, Object> data);
+	public ReportData getReportData(ListEntity listEntity,ReportEntity report,Map<String, Object> data);
 	
 	/**
    * 获得Report查询SQL

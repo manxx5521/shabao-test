@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
+import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
 import com.xiaoshabao.webframework.ui.dto.DataTablesResult;
@@ -18,6 +21,7 @@ import com.xiaoshabao.webframework.ui.dto.TemplateData;
 import com.xiaoshabao.webframework.ui.entity.ListEntity;
 import com.xiaoshabao.webframework.ui.service.FormListService;
 import com.xiaoshabao.webframework.ui.service.FormReportService;
+import com.xiaoshabao.webframework.ui.service.FormTableService;
 import com.xiaoshabao.webframework.ui.service.FormTemplateService;
 import com.xiaoshabao.webframework.util.ResourceManager;
 
@@ -25,6 +29,12 @@ import com.xiaoshabao.webframework.util.ResourceManager;
 @Service("simpleListService")
 public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 		implements FormListService {
+	
+	@Resource(name="formEngineComponet")
+	protected FormEngineComponet formEngineComponet;
+	
+	@Resource(name="formTableService")
+	private FormTableService formTableService;
 
 	// 获得list内容
 	@Override
@@ -57,7 +67,7 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 				.getListEngine());
 		FormReportService reportService = ApplicationContextUtil.getBean(
 				reportEngine, FormReportService.class);
-		ReportData reportData = reportService.getReportData(
+		ReportData reportData = reportService.getReportData(billListDto.getList(),
 				billListDto.getReport(), data);
 
 		header.addAll(reportData.getHeader());// 添加report需要的引用
@@ -67,7 +77,9 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 		// 解析头部引用
 		String[] headers = this.getHeaderHtml(header);
 		result.setHeaderCSS(headers[0]);
-		result.setHeaderJS(headers[1]);
+		result.setHeaderScript(headers[1]);
+		result.setHeaderBeforeScript(headers[2]);
+		result.setPagePath("simpleList");
 		return result;
 	}
 
@@ -75,19 +87,31 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 	 * 获得头部引用
 	 * 
 	 * @param header
-	 * @return [css,js]两类
+	 * @return [css,js,beforeJS]两类
 	 */
 	public String[] getHeaderHtml(Set<String> header) {
 		StringBuilder css = new StringBuilder();
 		StringBuilder js = new StringBuilder();
+		StringBuilder beforeScript = new StringBuilder();
+		ResourceManager manager = ResourceManager.getInstance();
+		//引入需要的公共资源
+		for (String id : formEngineComponet.getCommonResource()) {
+			css.append(manager.getCssTag(id));
+			js.append(manager.getJSTag(id));
+		}
+		for (String id :formEngineComponet.getBeforeScript()) {
+			beforeScript.append(manager.getJSTag(id));
+		}
+		
+		//引入自定义资源
 		if (header != null && header.size() > 0) {
-			ResourceManager manager = ResourceManager.getInstance();
+			
 			for (String id : header) {
 				css.append(manager.getCssTag(id));
 				js.append(manager.getJSTag(id));
 			}
 		}
-		return new String[] { css.toString(), js.toString() };
+		return new String[] { css.toString(), js.toString(),beforeScript.toString() };
 	}
 
 	/*
@@ -97,14 +121,7 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 	@Override
 	public AjaxResult queryList(String billId, ListEntity listEntity,
 			Map<String, Object> data) {
-		// 查询条件区
-		String templateEngine = this.getTemplateEngineType(listEntity
-				.getListEngine());
-		FormTemplateService templateService = ApplicationContextUtil.getBean(
-				templateEngine, FormTemplateService.class);
-		String whereSql = templateService.getTemplateQuerySQL(
-				listEntity.getTemplateId(), data);
-
+		
 		// 获得report引擎类型
 		String reportEngine = this.getReportEngineType(listEntity
 				.getListEngine());
@@ -113,41 +130,57 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 		String[] reportSql = reportService.getReportQuerySql(
 				listEntity.getReportId(), data);
 		
+		// 查询条件区
+		String templateEngine = this.getTemplateEngineType(listEntity
+				.getListEngine());
+		FormTemplateService templateService = ApplicationContextUtil.getBean(
+				templateEngine, FormTemplateService.class);
+		String whereSql = templateService.getTemplateQuerySQL(reportSql[2],
+				listEntity.getTemplateId(), data);
+
 		//计算总计记录数
-		String countSql="SELECT COUNT(1) COUNT "+reportSql[1]+whereSql;
-		Map<String,Object> countResult=this.baseDao.getSqlMapper().selectOne(countSql, data);
+		StringBuilder countSql=new StringBuilder("<script> SELECT COUNT(1) COUNT FROM ");
+		countSql.append(reportSql[1]);
+		countSql.append(" WHERE ");
+		countSql.append(whereSql);
+		countSql.append(" </script>");
+		Map<String,Object> countResult=this.baseDao.getSqlMapper().selectOne(countSql.toString(), data);
 		Object count=countResult.get("COUNT");
 		
 		//查询值
 		List<Map<String, Object>> list = null;
-		if(count==null||(Integer)count>0){
+		if(count==null||(Long)count<0){
 			//没有值直接返回空记录
 			list=new ArrayList<Map<String,Object>>();
 			count=Integer.valueOf(0);
 		}else{
 			//正常查询值
-			Integer start=(Integer) data.get("start");
-			Integer length=(Integer) data.get("length");
+			Integer start=Integer.valueOf(data.get("start").toString()) ;
+			Integer length=Integer.valueOf(data.get("length").toString()) ;
 			
-			StringBuilder sql=new StringBuilder(" SELECT * FROM (SELECT ROW_.*, ROWNUM ROWNUM_ FROM (");
+			StringBuilder sql=new StringBuilder("<script> ");
 			
 			sql.append(reportSql[0]);
+			sql.append("\n FROM ");
 			sql.append(reportSql[1]);
+			sql.append("\n WHERE ");
 			sql.append(whereSql);
 			
-			sql.append(" ) ROW_ WHERE ROWNUM <=");
-			sql.append(start*length);
-			sql.append(" ) WHERE ROWNUM_ >");
-			sql.append((start-1)*length);
+			sql.append("\n limit ");
+			sql.append(start);
+			sql.append(",");
+			sql.append(length);
+			sql.append(" </script>");
 			
 			list = this.baseDao.getSqlMapper().selectList(sql.toString(),data);
 		}
 		
 		//返回结果
 		DataTablesResult result=new DataTablesResult();
-		Integer draw=(Integer) data.get("draw");
+		result.setSuccess(true);
+		Integer draw=Integer.valueOf(data.get("draw").toString());
 		result.setDraw(draw);
-		result.setRecordsTotal((Integer)count);
+		result.setRecordsTotal((Long)count);
 		result.setRecordsFiltered(list.size());
 		result.setData(list);
 		return result;

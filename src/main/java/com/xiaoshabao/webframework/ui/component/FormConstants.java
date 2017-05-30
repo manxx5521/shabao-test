@@ -1,4 +1,6 @@
 package com.xiaoshabao.webframework.ui.component;
+
+
 /**
  * 静态变量存储
  */
@@ -29,7 +31,6 @@ public class FormConstants {
 	public final static int FIELD_ATTR_KEY=1;
 	/** 字段属性value **/
 	public final static int FIELD_ATTR_VALUE=2;
-	
 	
 
 }

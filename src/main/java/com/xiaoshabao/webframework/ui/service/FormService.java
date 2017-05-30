@@ -26,6 +26,14 @@ public interface FormService {
 	 */
   public AjaxResult queryList(String billId,Map<String, Object> data);
   
+  /**
+	 * 列表界面按钮功能操作
+	 * @param buttonId
+	 * @param params
+	 * @return
+	 */
+public AjaxResult doButtonList(String buttonId,Map<String, Object> data);
+  
   
 //  -------------------------------
 	/**

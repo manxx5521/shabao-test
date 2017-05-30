@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.entity.ButtonEntity">
+	<sql id="buttonColumns"> 
+		td_ui_button.button_id
+		,td_ui_button.button_name
+		,td_ui_button.button_value
+		,td_ui_button.button_type
+		,td_ui_button.image_id
+		,td_ui_button.button_frame
+		,td_ui_button.order_no
+		,td_ui_button.is_used
+	</sql>
+	<sql id="buttonColumnsRef"> 
+		${prefix}.button_id '${prefix}.button_id'
+		,${prefix}.button_name '${prefix}.button_name'
+		,${prefix}.button_value '${prefix}.button_value'
+		,${prefix}.button_type '${prefix}.button_type'
+		,${prefix}.image_id '${prefix}.image_id'
+		,${prefix}.button_frame '${prefix}.button_frame'
+		,${prefix}.order_no '${prefix}.order_no'
+		,${prefix}.is_used '${prefix}.is_used'
+	</sql>
+	
+</mapper>

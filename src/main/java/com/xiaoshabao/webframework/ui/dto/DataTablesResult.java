@@ -1,6 +1,7 @@
 package com.xiaoshabao.webframework.ui.dto;
 
 import java.util.List;
+import java.util.Map;
 
 import com.xiaoshabao.webframework.dto.AjaxResult;
 
@@ -20,7 +21,7 @@ public class DataTablesResult extends AjaxResult{
 	 * 总共记录数(必要)
 	 * <p>即没有过滤的记录数（数据库里总共记录数）</p>
 	 */
-	private Integer recordsTotal;
+	private Long recordsTotal;
 	
 	/**
 	 * 过滤后的记录数(必要)
@@ -31,21 +32,22 @@ public class DataTablesResult extends AjaxResult{
 	/**
 	 * 表中中需要显示的数据（必要）
 	 */
-	private List<Object> data;
+	private List<Map<String, Object>> data;
 	/**
 	 * 友好错误提示（可选）
 	 */
 	private String error;
+	
 	public Integer getDraw() {
 		return draw;
 	}
 	public void setDraw(Integer draw) {
 		this.draw = draw;
 	}
-	public Integer getRecordsTotal() {
+	public Long getRecordsTotal() {
 		return recordsTotal;
 	}
-	public void setRecordsTotal(Integer recordsTotal) {
+	public void setRecordsTotal(Long recordsTotal) {
 		this.recordsTotal = recordsTotal;
 	}
 	public Integer getRecordsFiltered() {
@@ -54,10 +56,11 @@ public class DataTablesResult extends AjaxResult{
 	public void setRecordsFiltered(Integer recordsFiltered) {
 		this.recordsFiltered = recordsFiltered;
 	}
-	public List<Object> getData() {
+	
+	public List<Map<String, Object>> getData() {
 		return data;
 	}
-	public void setData(List<Object> data) {
+	public void setData(List<Map<String, Object>> data) {
 		this.data = data;
 	}
 	public String getError() {

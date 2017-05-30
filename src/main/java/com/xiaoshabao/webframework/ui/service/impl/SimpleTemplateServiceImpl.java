@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
+import com.xiaoshabao.webframework.ui.entity.TableEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 import com.xiaoshabao.webframework.ui.service.FormTemplateService;
 @Service("simpleTemplateService")
@@ -23,8 +24,8 @@ public class SimpleTemplateServiceImpl extends AbstractTemplateServiceImpl
 	}
 	
 	 @Override
-	 public String getTemplateQuerySQL(String templateId,Map<String, Object> data) {
-	    return super.getTemplateQuerySQL(templateId, data);
+	 public String getTemplateQuerySQL(String tableName,String templateId,Map<String, Object> data) {
+	    return super.getTemplateQuerySQL(tableName,templateId, data);
 	 }
 
 

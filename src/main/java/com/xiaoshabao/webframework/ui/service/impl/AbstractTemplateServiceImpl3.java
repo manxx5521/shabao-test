@@ -12,7 +12,6 @@ public abstract class AbstractTemplateServiceImpl3 extends AbstractServiceImpl{
 	
 	
 	@Resource(name="formEngineComponet")
-	
 	protected FormEngineComponet formEngineComponet;
 	
 	@Autowired

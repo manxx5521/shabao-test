@@ -13,6 +13,7 @@ import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.component.TemplateEngine;
 import com.xiaoshabao.webframework.ui.dto.ReportColumnDto;
 import com.xiaoshabao.webframework.ui.dto.ReportData;
+import com.xiaoshabao.webframework.ui.entity.ListEntity;
 import com.xiaoshabao.webframework.ui.entity.ReportEntity;
 import com.xiaoshabao.webframework.ui.entity.TableEntity;
 import com.xiaoshabao.webframework.ui.service.FormReportService;
@@ -29,7 +30,7 @@ public class DataTableReportServiceImpl extends AbstractReportServiceImpl
 	 * 获得Report内容
 	 */
 	@Override
-	public ReportData getReportData(ReportEntity report,
+	public ReportData getReportData(ListEntity listEntity,ReportEntity report,
 			Map<String, Object> data) {
 		if(report==null){
 			throw new ServiceException("未能正常获得report");
@@ -77,6 +78,7 @@ public class DataTableReportServiceImpl extends AbstractReportServiceImpl
 		data.put("titleList", title);
 		data.put("columnList", displayColumn);
 		data.put("dataTablesName", "dataTables-"+report.getReportId());
+		data.put("dataTablesQueryListId", listEntity.getListId());
 		String reportHtml=null;
 		String reportScript=null;
 		String renderTempalte=null;

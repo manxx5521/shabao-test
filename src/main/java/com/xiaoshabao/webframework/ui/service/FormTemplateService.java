@@ -3,6 +3,7 @@ package com.xiaoshabao.webframework.ui.service;
 import java.util.Map;
 
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
+import com.xiaoshabao.webframework.ui.entity.TableEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 
 /**
@@ -21,6 +22,6 @@ public interface FormTemplateService {
 	 * 获查询条件模版
 	 * @return
 	 */
-  public String getTemplateQuerySQL(String templateId,Map<String, Object> data);
+  public String getTemplateQuerySQL(String tableName,String templateId,Map<String, Object> data);
 
 }

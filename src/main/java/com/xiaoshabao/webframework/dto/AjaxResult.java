@@ -11,15 +11,15 @@ public class AjaxResult {
 	/**
 	 * 结果是否成功
 	 */
-	private boolean success;
+	protected boolean success;
 	/**
 	 * 成功后返回数据
 	 */
-	private Object data;
+	protected Object data;
 	/**
 	 * 返回信息
 	 */
-	private String message;
+	protected String message;
 	
 	public AjaxResult() {
 	}
@@ -90,27 +90,45 @@ public class AjaxResult {
 		this.success = result.isSuccess();
 		this.message = result.getMessage();
 	}
-
+	/**
+	 * 设置成功信息
+	 * @param message
+	 * @return 返回当前类
+	 */
+	public AjaxResult setSuccessInfo(String message){
+		this.success=true;
+		this.message=message;
+		return this;
+	}
+	/**
+	 * 设置错误信息
+	 * @param message
+	 * @return 返回当前类
+	 */
+	public AjaxResult setErrorInfo(String message){
+		this.success=false;
+		this.message=message;
+		return this;
+	}
+	
+	
 	public boolean isSuccess() {
 		return success;
 	}
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
 	public Object getData() {
 		return data;
 	}
-
 	public void setData(Object data) {
 		this.data = data;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 }
