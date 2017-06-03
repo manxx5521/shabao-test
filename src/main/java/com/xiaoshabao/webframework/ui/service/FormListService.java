@@ -28,6 +28,6 @@ public interface FormListService {
 	 * @param data
 	 * @return
 	 */
-	public AjaxResult queryList(String billId,ListEntity listEntity, Map<String, Object> data);
+	public AjaxResult queryList(String listId,ListEntity listEntity, Map<String, Object> data);
 
 }

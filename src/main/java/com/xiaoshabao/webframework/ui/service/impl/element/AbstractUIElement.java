@@ -16,7 +16,7 @@ import com.xiaoshabao.webframework.ui.dto.FormValidateInfo;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateElementEntity;
 import com.xiaoshabao.webframework.ui.service.element.UIElement;
-import com.xiaoshabao.webframework.ui.service.impl.AbstractFromServiceImpl;
+import com.xiaoshabao.webframework.ui.service.impl.AbstractFormServiceImpl;
 
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
@@ -26,7 +26,7 @@ import freemarker.template.TemplateNotFoundException;
  * 元素抽象类<br>
  * 添加表单元素时，继承的类
  */
-public abstract class AbstractUIElement extends AbstractFromServiceImpl
+public abstract class AbstractUIElement extends AbstractFormServiceImpl
 		implements UIElement {
 	/*
 	 * 获得元素参数

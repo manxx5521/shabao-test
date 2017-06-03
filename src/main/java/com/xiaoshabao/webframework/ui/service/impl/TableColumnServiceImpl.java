@@ -10,7 +10,7 @@ import com.xiaoshabao.webframework.ui.entity.TableColumnEntity;
 import com.xiaoshabao.webframework.ui.service.TableColumnService;
 
 @Service("tableColumnService")
-public class TableColumnServiceImpl extends AbstractFromServiceImpl implements TableColumnService {
+public class TableColumnServiceImpl extends AbstractFormServiceImpl implements TableColumnService {
 	/*
 	 * 根据id获得数据列集合
 	 */

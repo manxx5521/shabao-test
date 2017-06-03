@@ -22,7 +22,7 @@ import com.xiaoshabao.webframework.ui.service.element.UIElement;
  * 模版要修改，修改后，只取数据表默认值
  */
 public abstract class AbstractTemplateServiceImpl extends
-		AbstractFromServiceImpl {
+		AbstractFormServiceImpl {
 
 	@Resource(name = "formEngineComponet")
 	protected FormEngineComponet formEngineComponet;

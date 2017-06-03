@@ -21,6 +21,7 @@ import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.component.FormConstants;
 import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
+import com.xiaoshabao.webframework.ui.dto.BillViewData;
 import com.xiaoshabao.webframework.ui.service.FormService;
 
 @Controller
@@ -68,17 +69,16 @@ public class FormServiceController extends AbstractController {
   
 	/**
 	 * 查询列表
-	 * 
-	 * @param billId
+	 * @param listId 视图id
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/form/{billId}/query")
+	@RequestMapping(value = "/form/{listId}/query")
 	@ResponseBody
-	public AjaxResult queryList(@PathVariable("billId") String billId,
+	public AjaxResult queryList(@PathVariable("listId") String listId,
 			HttpServletRequest request) {
 		Map<String, Object> data = getRequestParams(request);
-		return formService.queryList(billId, data);
+		return formService.queryList(listId, data);
 	}
   
 	/**
@@ -93,6 +93,23 @@ public class FormServiceController extends AbstractController {
 			HttpServletRequest request) {
 		Map<String, Object> data = getRequestParams(request);
 		return formService.doButtonList(buttonId, data);
+	}
+	
+	/**
+	 * 带参数视图界面请求
+	 * @param model
+	 * @param templateId
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/form/{billId}/add")
+	public ModelAndView getView(ModelMap model,@PathVariable("billId") String billId,
+			HttpServletRequest request) {
+		Map<String, Object> params=getRequestParams(request);
+		BillViewData data=formService.getView( billId, params);
+		model.put("data", data);
+//		model.put("reqParam", params);//请求参数
+		return new ModelAndView("/webframe/ui/"+data.getPagePath(),model);
 	}
 	
 	

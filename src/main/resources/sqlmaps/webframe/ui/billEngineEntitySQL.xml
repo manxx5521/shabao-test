@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.entity.BillEngineEntity">
+	<sql id="billEngineColumns"> 
+		td_ui_bill_engine.bill_engine
+		,td_ui_bill_engine.bill_engine_name
+		,td_ui_bill_engine.list_engine
+		,td_ui_bill_engine.view_engine
+		,td_ui_bill_engine.order_no
+		,td_ui_bill_engine.is_used
+	</sql>
+	
+	<sql id="billEngineColumnsRef"> 
+		${prefix}.bill_engine '${prefix}.bill_engine'
+		,${prefix}.bill_engine_name '${prefix}.bill_engine_name'
+		,${prefix}.list_engine '${prefix}.list_engine'
+		,${prefix}.view_engine '${prefix}.view_engine'
+		,${prefix}.order_no '${prefix}.order_no'
+		,${prefix}.is_used '${prefix}.is_used'
+	</sql>
+	
+	<select id="getBillEngineEntityById" resultType="com.xiaoshabao.webframework.ui.entity.BillEngineEntity">
+		select
+			<include refid="billEngineColumns" />
+		from td_ui_bill_engine
+		where td_ui_bill_engine.bill_engine=#{id}
+	</select>
+</mapper>

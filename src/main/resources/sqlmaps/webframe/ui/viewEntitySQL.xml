@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.entity.ViewEntity">
+	<sql id="viewColumns"> 
+		td_ui_view.view_id
+		,td_ui_view.view_name
+		,td_ui_view.bill_id
+		,td_ui_view.view_position
+		,td_ui_view.view_type
+		,td_ui_view.view_ext_id
+		,td_ui_view.order_no
+	</sql>
+	<sql id="viewColumnsRef"> 
+		${prefix}.view_id '${prefix}.view_id'
+		,${prefix}.view_name '${prefix}.view_name'
+		,${prefix}.bill_id '${prefix}.bill_id'
+		,${prefix}.view_position '${prefix}.view_position'
+		,${prefix}.view_type '${prefix}.view_type'
+		,${prefix}.view_ext_id '${prefix}.view_ext_id'
+		,${prefix}.order_no '${prefix}.order_no'
+	</sql>
+	
+	<select id="getViewEntity" resultType="com.xiaoshabao.webframework.ui.entity.ViewEntity">
+		select
+			<include refid="viewColumns" />
+		from td_ui_view
+		where td_ui_view.bill_id=#{billId}
+		order by order_no
+	</select>
+	
+</mapper>

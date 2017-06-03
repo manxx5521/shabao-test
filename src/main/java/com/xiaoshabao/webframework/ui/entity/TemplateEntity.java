@@ -8,6 +8,9 @@ public class TemplateEntity {
 	/** 模版名字 **/
 	private String templateName;
 	
+	/**模版引擎类型*/
+	private String templateEngine;
+	
 	private String remark;
 	
 	/**********************/
@@ -45,6 +48,12 @@ public class TemplateEntity {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getTemplateEngine() {
+		return templateEngine;
+	}
+	public void setTemplateEngine(String templateEngine) {
+		this.templateEngine = templateEngine;
 	}
 	
 }

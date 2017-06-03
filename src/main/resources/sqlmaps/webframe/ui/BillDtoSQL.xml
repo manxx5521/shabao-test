@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.dto.BillDto">
+	<!--获得biiId对应的单据信息-->
+	<select id="getBillDtoById" resultType="com.xiaoshabao.webframework.ui.dto.BillDto">
+    	select 
+			<include refid="com.xiaoshabao.webframework.ui.entity.BillEntity.billColumns" />,
+			<include refid="com.xiaoshabao.webframework.ui.entity.BillEngineEntity.billEngineColumnsRef">
+    			<property name="prefix" value="billEngineEntity"/>
+    		</include>
+    	from td_ui_bill
+    	left join td_ui_bill_engine billEngineEntity
+    	on td_ui_bill.bill_engine=billEngineEntity.bill_engine
+    	where td_ui_bill.bill_id=#{billId}
+	</select>
+</mapper>

@@ -5,7 +5,6 @@
 	<!--获得biiId对应的list单据-->
 	<select id="getBillListDto" resultType="com.xiaoshabao.webframework.ui.dto.BillListDto">
     	select 
-			<include refid="com.xiaoshabao.webframework.ui.entity.BillEntity.billColumns" />,
 			<include refid="com.xiaoshabao.webframework.ui.entity.ListEntity.listColumnsRef">
     			<property name="prefix" value="list"/>
     		</include>,
@@ -15,13 +14,11 @@
     		<include refid="com.xiaoshabao.webframework.ui.entity.ReportEntity.reportColumnsRef">
     			<property name="prefix" value="report"/>
     		</include>
-    	from td_ui_bill
-    	inner join td_ui_list list
-    	on td_ui_bill.bill_id=#{billId}
-    		and td_ui_bill.bill_id=list.bill_id
+    	from td_ui_list list
     	left join td_ui_template template
     		on list.template_id=template.template_id
     	left join td_ui_report report
     		on report.report_id=list.report_id
+    	where list.bill_id=#{billId}
 	</select>
 </mapper>

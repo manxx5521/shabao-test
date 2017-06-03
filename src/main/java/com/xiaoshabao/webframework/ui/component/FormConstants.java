@@ -19,6 +19,11 @@ public class FormConstants {
 	/** 元素模版-只读 **/
 	public final static String TEMPLATE_READ="readTemplate";
 	
+	/** 引擎类型-表单 **/
+	public final static Integer ENGINE_TYPE_TEMPLATE=1;
+	/** 引擎类型-表型 **/
+	public final static Integer ENGINE_TYPE_REPORT=2;
+	
 	
 	/** 头部引用字符串，包括全部模版 **/
 	public final static String HEADER_STR_ALL="header";

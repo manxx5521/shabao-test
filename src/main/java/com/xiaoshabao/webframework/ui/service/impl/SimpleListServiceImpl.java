@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
-import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
 import com.xiaoshabao.webframework.ui.dto.DataTablesResult;
@@ -23,18 +22,17 @@ import com.xiaoshabao.webframework.ui.service.FormListService;
 import com.xiaoshabao.webframework.ui.service.FormReportService;
 import com.xiaoshabao.webframework.ui.service.FormTableService;
 import com.xiaoshabao.webframework.ui.service.FormTemplateService;
-import com.xiaoshabao.webframework.util.ResourceManager;
 
 //简单列表引擎
 @Service("simpleListService")
 public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 		implements FormListService {
 	
-	@Resource(name="formEngineComponet")
-	protected FormEngineComponet formEngineComponet;
-	
 	@Resource(name="formTableService")
 	private FormTableService formTableService;
+	
+	private final static String REPORT_ENGINE="dataTableReportService";
+	private final static String TEMPLATE_ENGINE="simpleTemplateService";
 
 	// 获得list内容
 	@Override
@@ -42,8 +40,9 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 			Map<String, Object> data) {
 		BillListData result = new BillListData();
 		// 获得模版内容
-		String templateEngine = this.getTemplateEngineType(billListDto
-				.getList().getListEngine());
+		/*String templateEngine = this.getTemplateEngineType(billListDto
+				.getList().getListEngine());*/
+		String templateEngine=billListDto.getTemplate().getTemplateEngine();
 		FormTemplateService templateService = ApplicationContextUtil.getBean(
 				templateEngine, FormTemplateService.class);
 		boolean isLoadWhere = false;
@@ -62,11 +61,8 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 		result.setTemplateHtml(templateData.getContentHtml());
 
 		// 获得report内容
-		// 获得report引擎类型
-		String reportEngine = this.getReportEngineType(billListDto.getList()
-				.getListEngine());
 		FormReportService reportService = ApplicationContextUtil.getBean(
-				reportEngine, FormReportService.class);
+				REPORT_ENGINE, FormReportService.class);
 		ReportData reportData = reportService.getReportData(billListDto.getList(),
 				billListDto.getReport(), data);
 
@@ -83,58 +79,23 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 		return result;
 	}
 
-	/**
-	 * 获得头部引用
-	 * 
-	 * @param header
-	 * @return [css,js,beforeJS]两类
-	 */
-	public String[] getHeaderHtml(Set<String> header) {
-		StringBuilder css = new StringBuilder();
-		StringBuilder js = new StringBuilder();
-		StringBuilder beforeScript = new StringBuilder();
-		ResourceManager manager = ResourceManager.getInstance();
-		//引入需要的公共资源
-		for (String id : formEngineComponet.getCommonResource()) {
-			css.append(manager.getCssTag(id));
-			js.append(manager.getJSTag(id));
-		}
-		for (String id :formEngineComponet.getBeforeScript()) {
-			beforeScript.append(manager.getJSTag(id));
-		}
-		
-		//引入自定义资源
-		if (header != null && header.size() > 0) {
-			
-			for (String id : header) {
-				css.append(manager.getCssTag(id));
-				js.append(manager.getJSTag(id));
-			}
-		}
-		return new String[] { css.toString(), js.toString(),beforeScript.toString() };
-	}
-
 	/*
 	 * 查询列表
 	 * <p>data中会带有{@link com.xiaoshabao.webframework.ui.dto.DataTablesParams}中的参数</p>
 	 */
 	@Override
-	public AjaxResult queryList(String billId, ListEntity listEntity,
+	public AjaxResult queryList(String listId, ListEntity listEntity,
 			Map<String, Object> data) {
 		
 		// 获得report引擎类型
-		String reportEngine = this.getReportEngineType(listEntity
-				.getListEngine());
 		FormReportService reportService = ApplicationContextUtil.getBean(
-				reportEngine, FormReportService.class);
+				REPORT_ENGINE, FormReportService.class);
 		String[] reportSql = reportService.getReportQuerySql(
 				listEntity.getReportId(), data);
 		
 		// 查询条件区
-		String templateEngine = this.getTemplateEngineType(listEntity
-				.getListEngine());
 		FormTemplateService templateService = ApplicationContextUtil.getBean(
-				templateEngine, FormTemplateService.class);
+				TEMPLATE_ENGINE, FormTemplateService.class);
 		String whereSql = templateService.getTemplateQuerySQL(reportSql[2],
 				listEntity.getTemplateId(), data);
 

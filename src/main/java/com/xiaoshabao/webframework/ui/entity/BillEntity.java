@@ -6,6 +6,7 @@ public class BillEntity {
 	private String billId;
 	private String billName;
 	private String billClass;
+	private String billEngine;
 	private Integer orderNo;
 	private Integer state;
 	public String getBillId() {
@@ -37,6 +38,12 @@ public class BillEntity {
 	}
 	public void setState(Integer state) {
 		this.state = state;
+	}
+	public String getBillEngine() {
+		return billEngine;
+	}
+	public void setBillEngine(String billEngine) {
+		this.billEngine = billEngine;
 	}
 	
 }

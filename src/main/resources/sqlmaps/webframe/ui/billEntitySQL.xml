@@ -6,4 +6,11 @@
 		td_ui_bill.bill_id,td_ui_bill.bill_name,td_ui_bill.bill_class,td_ui_bill.order_no
 		,td_ui_bill.state
 	</sql>
+	
+	<select id="getBillEntityById" resultType="com.xiaoshabao.webframework.ui.entity.BillEntity">
+		select
+			<include refid="billColumns" />
+		from td_ui_bill
+		where td_ui_bill.bill_id=#{id}
+	</select>
 </mapper>

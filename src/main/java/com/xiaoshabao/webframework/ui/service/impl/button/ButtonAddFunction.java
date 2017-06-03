@@ -14,8 +14,9 @@ public class ButtonAddFunction extends AbstractButtonFunction{
 
 	@Override
 	protected ButtonFunctionResult executeList(ButtonDto buttonDto) {
-		// TODO Auto-generated method stub
-		return null;
+		ButtonFunctionResult result=new ButtonFunctionResult();
+		result.setScript("window.location.href ='./add'");
+		return result;
 	}
 
 	@Override

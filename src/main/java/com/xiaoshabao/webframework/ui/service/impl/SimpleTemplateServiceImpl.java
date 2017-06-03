@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
-import com.xiaoshabao.webframework.ui.entity.TableEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 import com.xiaoshabao.webframework.ui.service.FormTemplateService;
 @Service("simpleTemplateService")

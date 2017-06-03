@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE>
-<html lang="zh-CN">
+<%@page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>${data.title}</title>
+	<title>视图</title>
 	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 	<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt"%>
@@ -22,23 +22,23 @@
 	<base target="_blank">
 </head>
 <body class="gray-bg">
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
+	<div class="wrapper wrapper-content  animated fadeInRight">
+		<div class="row">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>${data.title} <small>查询</small></h5>
+                        <h5>用户添加</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_data_tables.html#">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
                                 <i class="fa fa-wrench"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a href="table_data_tables.html#">选项1</a>
+                                <li><a href="form_basic.html#">选项1</a>
                                 </li>
-                                <li><a href="table_data_tables.html#">选项2</a>
+                                <li><a href="form_basic.html#">选项2</a>
                                 </li>
                             </ul>
                             <a class="close-link">
@@ -47,42 +47,29 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                    	<form id ="form1" class="form-horizontal form-label-left" action="./list" target="_self">
-                    		<div class="row search">
+                        <form id ="form1" class="form-horizontal form-label-left" action="./list" target="_self">
+                    		<div class="row">
                     			<div class="col-md-12 col-sm-12 col-xs-12">
-                    				<!-- 
-                    				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-		                                <div class="form-group">
-		                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">帐号：</label>
-		                                    <div class="col-md-8 col-sm-8 col-xs-12">
-		                                        <select id="accountId" name="accountId"></select>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                             -->
 		                             ${data.templateHtml}
-		                            <button class="btn btn-primary col-sm-offset-11" type="button">执行查询</button>
                             	</div>
                             </div>
                     	</form>
-						<div class="">
-						<c:forEach var="r" items="${data.buttons}" varStatus="idx">
-							<c:if test="${r.buttonValue!='BUTTON_QUERY'}">
-								<a href="javascript:void(0);" onclick="clickButton('${r.buttonId}')" class="btn btn-primary btn-sm"> ${r.displayName}</a>
-						　　</c:if>
-                            
-                        </c:forEach>
-                        </div>
-                        ${data.reportHtml}
+                        <div class="form-group">
+                           <div class="col-sm-4 col-sm-offset-2">
+                           <c:forEach var="r" items="${data.buttons}" varStatus="idx">
+								<button class="btn btn-primary" onclick="clickButton('${r.buttonId}')" type="button">${r.displayName}</button>
+                        	</c:forEach>
+                                
+                           </div>
+                       </div>
+                       <div class="row"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    ${data.headerScript}
+	</div>
+	${data.headerScript}
     <script>
-    	${data.reportScript}
-		
     	function clickButton(buttonId){
     		$.ajax({
 				  type: 'POST',
@@ -91,8 +78,8 @@
 				  dataType:'json',
 				  success: function(result){
 					  if(result.success){
-						  if(!!result.data.script){
-							  eval(result.data.script);//优先执行脚本
+						  if(!!result.script){
+							  eval(result.script);//优先执行脚本
 						  }else if(!!result.message){
 							 cbox.info(result.message);
 						  }
@@ -106,5 +93,4 @@
     	}
     </script>
 </body>
-
 </html>

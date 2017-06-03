@@ -2,8 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.webframework.ui.entity.TemplateEntity">
-	<sql id="templateColumnsRef"> 
-		${prefix}.template_id '${prefix}.template_id',${prefix}.template_name '${prefix}.template_name'
-		,${prefix}.is_visible '${prefix}.is_visible',${prefix}.remark '${prefix}.remark'
+	<sql id="templateColumns"> 
+		td_ui_template.template_id
+		,td_ui_template.template_name
+		,td_ui_template.template_engine
+		,td_ui_template.is_visible
+		,td_ui_template.remark
 	</sql>
+	<sql id="templateColumnsRef"> 
+		${prefix}.template_id '${prefix}.template_id'
+		,${prefix}.template_name '${prefix}.template_name'
+		,${prefix}.template_engine '${prefix}.template_engine'
+		,${prefix}.is_visible '${prefix}.is_visible'
+		,${prefix}.remark '${prefix}.remark'
+	</sql>
+	
+	<select id="getTemplateEntityById" resultType="com.xiaoshabao.webframework.ui.entity.TemplateEntity">
+		select
+			<include refid="templateColumns" />
+		from td_ui_template
+		where td_ui_template.template_id=#{id}
+	</select>
 </mapper>

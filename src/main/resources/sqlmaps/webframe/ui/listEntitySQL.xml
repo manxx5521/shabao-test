@@ -5,7 +5,6 @@
 	<sql id="listColumns"> 
 		td_ui_list.list_id
 		,td_ui_list.list_name
-		,td_ui_list.list_engine
 		,td_ui_list.bill_id
 		,td_ui_list.template_id
 		,td_ui_list.report_id
@@ -14,7 +13,7 @@
 	</sql>
 	<sql id="listColumnsRef"> 
 		${prefix}.list_id '${prefix}.list_id',${prefix}.list_name '${prefix}.list_name'
-		,${prefix}.list_engine '${prefix}.list_engine',${prefix}.bill_id '${prefix}.bill_id'
+		,${prefix}.bill_id '${prefix}.bill_id'
 		,${prefix}.template_id '${prefix}.template_id',${prefix}.report_id '${prefix}.report_id'
 		,${prefix}.is_visible '${prefix}.is_visible',${prefix}.order_no '${prefix}.order_no'
 	</sql>

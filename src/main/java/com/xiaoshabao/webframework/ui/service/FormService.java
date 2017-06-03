@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
+import com.xiaoshabao.webframework.ui.dto.BillViewData;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
 /**
  * 表单服务
@@ -11,9 +12,8 @@ import com.xiaoshabao.webframework.ui.dto.TemplateData;
 public interface FormService {
 	/**
 	 * 获得list界面数据
-	 * @param engineType
 	 * @param billId
-	 * @param params
+	 * @param data
 	 * @return
 	 */
 	public BillListData getList(String billId,Map<String, Object> data);
@@ -21,18 +21,27 @@ public interface FormService {
 	/**
 	 * 查询列表
 	 * @param billId
-	 * @param params
+	 * @param data
 	 * @return
 	 */
-  public AjaxResult queryList(String billId,Map<String, Object> data);
+  public AjaxResult queryList(String listId,Map<String, Object> data);
   
-  /**
+	/**
 	 * 列表界面按钮功能操作
+	 * 
 	 * @param buttonId
-	 * @param params
+	 * @param data
 	 * @return
 	 */
-public AjaxResult doButtonList(String buttonId,Map<String, Object> data);
+	public AjaxResult doButtonList(String buttonId, Map<String, Object> data);
+
+	/**
+	 * 获得view界面数据
+	 * @param billId
+	 * @param data
+	 * @return
+	 */
+	public BillViewData getView(String billId, Map<String, Object> data);
   
   
 //  -------------------------------

@@ -1,7 +1,5 @@
 package com.xiaoshabao.webframework.ui.component;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.xiaoshabao.baseframework.exception.ServiceException;
@@ -18,22 +16,6 @@ public class FormEngineComponet {
 	private Map<String,String> elementSerivceType;
 	/** session服务 **/
 	private FormSessionService formSessionService;
-	
-	/**
-	 * 需要引入的公用资源(包括在所有资源)
-	 */
-	protected final static List<String> COMMON_RESOURCE=new ArrayList<String>(); 
-	/**
-	 * 需要提前引入的脚本资源
-	 */
-	protected final static List<String> BEFORE_SCRIPT=new ArrayList<String>(); 
-	
-	static{
-		BEFORE_SCRIPT.add("jquery");
-		COMMON_RESOURCE.add("bootstrap");
-		COMMON_RESOURCE.add("system");
-		COMMON_RESOURCE.add("bootbox");
-	}
 	
 	/**
 	 * 获得元素服务类型
@@ -63,19 +45,8 @@ public class FormEngineComponet {
 		this.formSessionService = formSessionService;
 	}
 	
-	/**
-	 * 获得需要引入的公用资源(包括在所有资源)
-	 */
-	public List<String> getCommonResource() {
-		return COMMON_RESOURCE;
-	}
-	/**
-	 * 获得需要提前引入的脚本资源
-	 */
-	public List<String> getBeforeScript() {
-		return BEFORE_SCRIPT;
-	}
 	
+
 	
 	
 	
@@ -84,6 +55,14 @@ public class FormEngineComponet {
 //	---------------------
 
 	
+
+
+
+
+	
+
+
+
 
 
 

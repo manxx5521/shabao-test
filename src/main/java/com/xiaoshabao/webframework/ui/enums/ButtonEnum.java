@@ -1,4 +1,4 @@
-package com.xiaoshabao.webframework.ui.entity;
+package com.xiaoshabao.webframework.ui.enums;
 
 /**
  * 按钮视图
@@ -23,16 +23,8 @@ public enum ButtonEnum {
 		return index;
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
-	}
-
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 }

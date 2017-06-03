@@ -2,7 +2,7 @@ package com.xiaoshabao.webframework.ui.service.button;
 
 import com.xiaoshabao.webframework.ui.dto.ButtonDto;
 import com.xiaoshabao.webframework.ui.dto.ButtonFunctionResult;
-import com.xiaoshabao.webframework.ui.entity.ButtonEnum;
+import com.xiaoshabao.webframework.ui.enums.ButtonEnum;
 
 /**
  * 按钮功能接口

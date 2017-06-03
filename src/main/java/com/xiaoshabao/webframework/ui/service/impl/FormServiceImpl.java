@@ -12,16 +12,19 @@ import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.dao.ElementDao;
+import com.xiaoshabao.webframework.ui.dto.BillDto;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
+import com.xiaoshabao.webframework.ui.dto.BillViewData;
 import com.xiaoshabao.webframework.ui.dto.ButtonDto;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
-import com.xiaoshabao.webframework.ui.entity.ButtonEnum;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.ListEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
+import com.xiaoshabao.webframework.ui.enums.ButtonEnum;
 import com.xiaoshabao.webframework.ui.service.FormListService;
 import com.xiaoshabao.webframework.ui.service.FormService;
+import com.xiaoshabao.webframework.ui.service.FormViewService;
 import com.xiaoshabao.webframework.ui.service.TemplateFactory;
 import com.xiaoshabao.webframework.ui.service.button.ButtonFunction;
 
@@ -29,21 +32,25 @@ import com.xiaoshabao.webframework.ui.service.button.ButtonFunction;
  * 表单服务
  */
 @Service("formServiceImpl")
-public class FormServiceImpl extends AbstractFromServiceImpl implements
+public class FormServiceImpl extends AbstractFormServiceImpl implements
 		FormService {
 
 	// 获得list界面数据
 	@Override
 	public BillListData getList(String billId, Map<String, Object> data) {
+		
+		BillDto billDto=getBillDtoById(billId);
+		
 		BillListDto billListDto = getBillListDto(billId,data);
+		billListDto.setBillEntity(billDto);
 
 		//选定处理列表界面的引擎
 		FormListService formListService = ApplicationContextUtil.getBean(
-				billListDto.getList().getListEngine(), FormListService.class);
+				billDto.getBillEngineEntity().getListEngine(), FormListService.class);
 		BillListData billListData = formListService.getBillList(billListDto,
 				data);
 		//设置单据统一属性
-		billListData.setTitle(billListDto.getBillName());
+		billListData.setTitle(billDto.getBillName());
 		
 		//添加按钮
 		List<ButtonDto> buttons=this.baseDao.getData("getListButtonDto", billListDto.getList());
@@ -55,32 +62,19 @@ public class FormServiceImpl extends AbstractFromServiceImpl implements
 	 * 查询列表
 	 */
 	@Override
-	public AjaxResult queryList(String billId, Map<String, Object> data) {
-		ListEntity listEntity=this.baseDao.getDataById(ListEntity.class, billId);
+	public AjaxResult queryList(String listId, Map<String, Object> data) {
+		
+		ListEntity listEntity=this.baseDao.getDataById(ListEntity.class, listId);
+		
+		BillDto billDto=getBillDtoById(listEntity.getBillId());
 		
 		//选定处理列表界面的引擎
 		FormListService formListService = ApplicationContextUtil.getBean(
-				listEntity.getListEngine(), FormListService.class);
-		return formListService.queryList(billId, listEntity, data);
+				billDto.getBillEngineEntity().getListEngine(), FormListService.class);
+		return formListService.queryList(listId, listEntity, data);
 	}
 
-	/**
-	 * 根据billId获得列表界面信息
-	 * <p>可能的话，可以进行缓存</p>
-	 * @param billId
-	 * @param data
-	 * @return
-	 */
-	private BillListDto getBillListDto(String billId, Map<String, Object> data){
-		List<BillListDto> billList = this.baseDao.getData(BillListDto.class,
-				billId);
-		if (billList == null || billList.size() != 1) {
-			logger.info("单据获取失败，未根据billId获得对应单据或者获得的方案数不为1，失败单据id为{}", billId);
-			throw new MsgErrorException("单据获取失败");
-		}
-		BillListDto billListDto = billList.get(0);
-		return billListDto;
-	}
+	
 	
 	/*
 	 * 列表界面按钮功能操作
@@ -102,7 +96,55 @@ public class FormServiceImpl extends AbstractFromServiceImpl implements
 		return result;
 	}
 	
+	/*
+	 * 获得view界面数据
+	 */
+	@Override
+	public BillViewData getView(String billId, Map<String, Object> data) {
+		
+		BillDto billDto=getBillDtoById(billId);
+		
+		FormViewService formViewService=ApplicationContextUtil.getBean(billDto.getBillEngineEntity().getViewEngine(), FormViewService.class);
+		
+		return formViewService.getView(billDto, data);
+	}
 	
+	
+	/**
+	 * 根据billId获得列表界面信息
+	 * <p>可能的话，可以进行缓存</p>
+	 * @param billId
+	 * @param data
+	 * @return
+	 */
+	private BillListDto getBillListDto(String billId, Map<String, Object> data){
+		List<BillListDto> billList = this.baseDao.getData(BillListDto.class,
+				billId);
+		if (billList == null || billList.size() != 1) {
+			logger.info("单据获取失败，未根据billId获得对应单据或者获得的方案数不为1，失败单据id为{}", billId);
+			throw new MsgErrorException("单据获取失败");
+		}
+		BillListDto billListDto = billList.get(0);
+		return billListDto;
+	}
+	
+	/**
+	 * 根据id获得bill相关信息（缓存）
+	 * <p>返回一个正确的结果。</p>
+	 * @return
+	 */
+	private BillDto getBillDtoById(String billId){
+		BillDto billDto=this.baseDao.getDataById(BillDto.class, billId);
+		if (billDto == null) {
+			logger.info("单据获取失败，未根据billId获得对应单据，失败单据id为{}", billId);
+			throw new MsgErrorException("单据打开失败,未获得对应单据！");
+		}
+		if (billDto.getBillEngineEntity() == null) {
+			logger.info("单据获取失败，失败单据id为{}。未能正确获得引擎类型，引擎类型获得为空", billId);
+			throw new MsgErrorException("单据打开失败,单据引擎错误！");
+		}
+		return billDto;
+	}
 	
 	
 	

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.webframework.ui.entity.FormStaticEntity">
+	<sql id="staticColumns"> 
+		td_ui_static.type_id
+		,td_ui_static.data_id
+		,td_ui_static.data_name
+		,td_ui_static.order_no
+		,td_ui_static.is_used
+	</sql>
+	
+	<select id="getFormStaticEntity" resultType="com.xiaoshabao.webframework.ui.entity.FormStaticEntity">
+		select
+			<include refid="staticColumns" />
+		from td_ui_static
+		where td_ui_static.type_id=#{typeId}
+	</select>
+</mapper>
