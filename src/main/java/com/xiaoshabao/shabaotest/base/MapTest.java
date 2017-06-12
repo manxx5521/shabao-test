@@ -25,6 +25,7 @@ public class MapTest {
 	/**
 	 * 遍历一个map有很多种方式,但是以以下方式性能最优。
 	 * <p>
+	 * 方法不支持1.5以下JDK。
 	 * 如果只是遍历key值使用下边第二个方法traverseMapKey()
 	 * </p>
 	 * 
@@ -62,6 +63,25 @@ public class MapTest {
 			// 输出内容
 			System.out.println("key值为：" + key);
 		}
+	}
+	
+	/**
+	 * 1.5jdk以下遍历方式
+	 * @Title: traverseMap15     
+	 * @Description: TODO
+	 */
+	@SuppressWarnings("rawtypes")
+	public void traverseMap15(){
+	  Map<String, String> hm = new HashMap<String, String>();
+    hm.put("111", "222");
+    
+    Set keys= hm.keySet();
+    Iterator iterator = keys.iterator( );       
+    while(iterator.hasNext( )) {       
+        Object key = iterator.next( );       
+        Object value = hm.get(key);
+        System.out.println("输出"+key+"--"+value);
+    } 
 	}
 
 }
