@@ -5,8 +5,10 @@ package com.xiaoshabao.webframework.ui.component;
  * 静态变量存储
  */
 public class FormConstants {
-	/**session表示名称**/
-	public final static String SESSION_TAG="form_session_key";
+	/**请求session表示名称**/
+	public final static String REQ_SESSION_TAG="form_session_key";
+	/**请求id表示名称**/
+	public final static String REQ_ID_TAG="form_id_key";
 	
 	public final static String ELEMENT_TEMPLATE_ID="templateId";
 	public final static String ELEMENT_ELEMENT_ID="elementId";

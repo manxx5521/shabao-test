@@ -7,6 +7,7 @@
 		,td_ui_template.template_name
 		,td_ui_template.template_engine
 		,td_ui_template.is_visible
+		,td_ui_template.table_id
 		,td_ui_template.remark
 	</sql>
 	<sql id="templateColumnsRef"> 
@@ -14,6 +15,7 @@
 		,${prefix}.template_name '${prefix}.template_name'
 		,${prefix}.template_engine '${prefix}.template_engine'
 		,${prefix}.is_visible '${prefix}.is_visible'
+		,${prefix}.table_id '${prefix}.table_id'
 		,${prefix}.remark '${prefix}.remark'
 	</sql>
 	

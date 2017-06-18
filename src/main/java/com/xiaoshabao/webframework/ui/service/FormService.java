@@ -42,6 +42,16 @@ public interface FormService {
 	 * @return
 	 */
 	public BillViewData getView(String billId, Map<String, Object> data);
+	
+	
+	/**
+	 * 视图界面按钮功能操作
+	 * 
+	 * @param buttonId
+	 * @param data
+	 * @return
+	 */
+	public AjaxResult doButtonView(String billId,String buttonId, Map<String, Object> data);
   
   
 //  -------------------------------

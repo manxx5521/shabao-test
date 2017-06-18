@@ -45,12 +45,9 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 		String templateEngine=billListDto.getTemplate().getTemplateEngine();
 		FormTemplateService templateService = ApplicationContextUtil.getBean(
 				templateEngine, FormTemplateService.class);
-		boolean isLoadWhere = false;
-		if (billListDto.getList().isQuery()) {
-			isLoadWhere = true;
-		}
+		
 		TemplateData templateData = templateService.getTemplate(
-				billListDto.getTemplate(), data, isLoadWhere);
+				billListDto.getTemplate(), data);
 		if (!templateData.isSuccess()) {
 			throw new MsgErrorException(
 					templateData.getMessage() == null ? "模版渲染错误"

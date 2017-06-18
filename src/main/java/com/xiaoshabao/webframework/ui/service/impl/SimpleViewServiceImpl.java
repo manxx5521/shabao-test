@@ -12,7 +12,10 @@ import com.xiaoshabao.webframework.ui.component.FormConstants;
 import com.xiaoshabao.webframework.ui.dto.BillDto;
 import com.xiaoshabao.webframework.ui.dto.BillViewData;
 import com.xiaoshabao.webframework.ui.dto.ButtonDto;
+import com.xiaoshabao.webframework.ui.dto.FormFieldSet;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
+import com.xiaoshabao.webframework.ui.entity.FormField;
+import com.xiaoshabao.webframework.ui.entity.TableEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 import com.xiaoshabao.webframework.ui.entity.ViewEntity;
 import com.xiaoshabao.webframework.ui.enums.ViewPositionEnum;
@@ -39,7 +42,7 @@ public class SimpleViewServiceImpl extends AbstractViewServiceImpl implements Fo
 							templateEntity.getTemplateEngine(), FormTemplateService.class);
 					
 					TemplateData templateData = templateService.getTemplate(
-							templateEntity, data, false);
+							templateEntity, data);
 					if (!templateData.isSuccess()) {
 						throw new MsgErrorException(
 								templateData.getMessage() == null ? "模版渲染错误"
@@ -70,6 +73,31 @@ public class SimpleViewServiceImpl extends AbstractViewServiceImpl implements Fo
 		
 		
 		return result;
+	}
+
+	@Override
+	public FormFieldSet getViewField(BillDto billDto,Map<String, Object> data) {
+		List<ViewEntity> viewList=this.baseDao.getData(ViewEntity.class, billDto.getBillId());
+		FormFieldSet fromBean=new FormFieldSet();
+		if(viewList!=null&&!viewList.isEmpty()){
+			for(ViewEntity view:viewList){
+				Integer viewType=view.getViewType();
+				if(FormConstants.ENGINE_TYPE_TEMPLATE==viewType){
+					//表单类型
+					TemplateEntity templateEntity=this.baseDao.getDataById(TemplateEntity.class, view.getViewExtId());
+					FormTemplateService templateService = ApplicationContextUtil.getBean(
+							templateEntity.getTemplateEngine(), FormTemplateService.class);
+					TableEntity table=this.baseDao.getDataById(TableEntity.class, templateEntity.getTableId());
+					List<FormField> list=templateService.getTemplateField(templateEntity.getTemplateId(), data);
+					fromBean.setMainFields(list);
+					fromBean.setMainTableName(table.getTableName());
+				}else if(FormConstants.ENGINE_TYPE_REPORT==viewType){
+					//表类型
+				}
+			}
+			
+		}
+		return fromBean;
 	}
 
 }

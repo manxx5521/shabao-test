@@ -17,4 +17,12 @@
 			table_id=#{tableId}
 	  	</where>
 	</select>
+	<select id="getTableEntityById" resultType="com.xiaoshabao.webframework.ui.entity.TableEntity">
+    	select 
+			<include refid="tableColumns" />
+    	from td_ui_table
+    	<where>
+			table_id=#{id}
+	  	</where>
+	</select>
 </mapper>

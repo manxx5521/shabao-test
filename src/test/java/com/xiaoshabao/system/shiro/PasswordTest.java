@@ -1,7 +1,5 @@
 package com.xiaoshabao.system.shiro;
 
-import static org.junit.Assert.fail;
-
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.junit.Test;

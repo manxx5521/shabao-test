@@ -11,6 +11,11 @@ public class ButtonDto extends ButtonEntity{
 	private String displayName;
 	
 	private ButtonImageEntity buttonImage;
+	
+	/**
+	 * 实现ButtonSql借口后有值
+	 */
+	private FormFieldSet fieldSet;
 
 	public ButtonImageEntity getButtonImage() {
 		return buttonImage;
@@ -26,6 +31,14 @@ public class ButtonDto extends ButtonEntity{
 
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+
+	public FormFieldSet getFieldSet() {
+		return fieldSet;
+	}
+
+	public void setFieldSet(FormFieldSet fieldSet) {
+		this.fieldSet = fieldSet;
 	}
 	
 }

@@ -17,6 +17,8 @@ import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.BillListDto;
 import com.xiaoshabao.webframework.ui.dto.BillViewData;
 import com.xiaoshabao.webframework.ui.dto.ButtonDto;
+import com.xiaoshabao.webframework.ui.dto.ButtonFunctionResult;
+import com.xiaoshabao.webframework.ui.dto.FormFieldSet;
 import com.xiaoshabao.webframework.ui.dto.TemplateData;
 import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.ListEntity;
@@ -26,7 +28,9 @@ import com.xiaoshabao.webframework.ui.service.FormListService;
 import com.xiaoshabao.webframework.ui.service.FormService;
 import com.xiaoshabao.webframework.ui.service.FormViewService;
 import com.xiaoshabao.webframework.ui.service.TemplateFactory;
+import com.xiaoshabao.webframework.ui.service.button.ButtonAddSql;
 import com.xiaoshabao.webframework.ui.service.button.ButtonFunction;
+import com.xiaoshabao.webframework.ui.service.button.ButtonSql;
 
 /**
  * 表单服务
@@ -90,6 +94,11 @@ public class FormServiceImpl extends AbstractFormServiceImpl implements
 		}
 		
 		ButtonFunction buttonFunction=ApplicationContextUtil.getBean("buttonService_"+buttonDto.getButtonValue(), ButtonFunction.class);
+		
+		
+		if(buttonFunction instanceof ButtonAddSql){
+			System.out.println();
+		}
 		Object exeResult=buttonFunction.execute(buttonDto, ButtonEnum.LIST);
 		result.setData(exeResult);
 		result.setSuccess(true);
@@ -109,6 +118,32 @@ public class FormServiceImpl extends AbstractFormServiceImpl implements
 		return formViewService.getView(billDto, data);
 	}
 	
+	/*
+	 * 视图界面执行按钮
+	 */
+	@Override
+	public AjaxResult doButtonView(String billId,String buttonId, Map<String, Object> data) {
+		ButtonDto buttonDto=this.baseDao.getDataById(ButtonDto.class, buttonId);
+		
+		if(buttonDto==null){
+			logger.error("按钮{}无法在数据库中查询到。",buttonId);
+			return new AjaxResult("按钮操作错误（不存在）");
+		}
+		
+		ButtonFunction buttonFunction=ApplicationContextUtil.getBean("buttonService_"+buttonDto.getButtonValue(), ButtonFunction.class);
+		
+		if(buttonFunction instanceof ButtonSql){
+			BillDto billDto=getBillDtoById(billId);
+			FormViewService formViewService=ApplicationContextUtil.getBean(billDto.getBillEngineEntity().getViewEngine(), FormViewService.class);
+			
+			FormFieldSet fieldSet=formViewService.getViewField(billDto,data);
+			fieldSet.setData(data);
+			buttonDto.setFieldSet(fieldSet);
+		}
+		
+		ButtonFunctionResult exeResult=buttonFunction.execute(buttonDto, ButtonEnum.VIEW);
+		return exeResult;
+	}
 	
 	/**
 	 * 根据billId获得列表界面信息
@@ -208,6 +243,7 @@ public class FormServiceImpl extends AbstractFormServiceImpl implements
 				engineType, TemplateFactory.class);
 		return templateFactory.getElementResponse(element, params);
 	}
+
 
 
 }

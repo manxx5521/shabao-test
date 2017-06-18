@@ -11,6 +11,8 @@ public class TemplateEntity {
 	/**模版引擎类型*/
 	private String templateEngine;
 	
+	private String tableId;
+	
 	private String remark;
 	
 	/**********************/
@@ -54,6 +56,12 @@ public class TemplateEntity {
 	}
 	public void setTemplateEngine(String templateEngine) {
 		this.templateEngine = templateEngine;
+	}
+	public String getTableId() {
+		return tableId;
+	}
+	public void setTableId(String tableId) {
+		this.tableId = tableId;
 	}
 	
 }

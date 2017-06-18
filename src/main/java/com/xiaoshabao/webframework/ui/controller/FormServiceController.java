@@ -43,7 +43,7 @@ public class FormServiceController extends AbstractController {
 	@RequestMapping(value = "/form/{billId}/list")
 	public ModelAndView getList(ModelMap model,@PathVariable("billId") String billId,
 			HttpServletRequest request) {
-	  Map<String, Object> params=getRequestParams(request);
+		Map<String, Object> params=getRequestParams(request);
 		BillListData data=formService.getList( billId, params);
 		model.put("data", data);
 //		model.put("reqParam", params);//请求参数
@@ -62,7 +62,7 @@ public class FormServiceController extends AbstractController {
     }
     
     //添加session信息
-    params.put(FormConstants.SESSION_TAG,formEngineComponet.getFormSessionService().getSessionMap(request));
+    params.put(FormConstants.REQ_SESSION_TAG,formEngineComponet.getFormSessionService().getSessionMap(request));
     
     return params;
 	}
@@ -96,6 +96,20 @@ public class FormServiceController extends AbstractController {
 	}
 	
 	/**
+	 * 视图界面按钮功能操作
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/form/{billId}/view/{buttonId}/function")
+	@ResponseBody
+	public AjaxResult doButtonView(@PathVariable("billId") String billId,
+			@PathVariable("buttonId") String buttonId,
+			HttpServletRequest request) {
+		Map<String, Object> data = getRequestParams(request);
+		return formService.doButtonView(billId,buttonId, data);
+	}
+	
+	/**
 	 * 带参数视图界面请求
 	 * @param model
 	 * @param templateId
@@ -106,6 +120,24 @@ public class FormServiceController extends AbstractController {
 	public ModelAndView getView(ModelMap model,@PathVariable("billId") String billId,
 			HttpServletRequest request) {
 		Map<String, Object> params=getRequestParams(request);
+		BillViewData data=formService.getView( billId, params);
+		model.put("data", data);
+//		model.put("reqParam", params);//请求参数
+		return new ModelAndView("/webframe/ui/"+data.getPagePath(),model);
+	}
+	
+	/**
+	 * 视图界面按钮功能操作
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/form/{billId}/view/{id}/detail")
+	@ResponseBody
+	public ModelAndView getViewDetail(ModelMap model,@PathVariable("billId") String billId,
+			@PathVariable("id") String id,
+			HttpServletRequest request) {
+		Map<String, Object> params=getRequestParams(request);
+		params.put(FormConstants.REQ_ID_TAG, id);
 		BillViewData data=formService.getView( billId, params);
 		model.put("data", data);
 //		model.put("reqParam", params);//请求参数

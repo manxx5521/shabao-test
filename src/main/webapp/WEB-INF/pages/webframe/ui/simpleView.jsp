@@ -71,17 +71,19 @@
 	${data.headerScript}
     <script>
     	function clickButton(buttonId){
+    		var formData=$('#form1').serialize();
     		$.ajax({
 				  type: 'POST',
-				  url: './list/'+buttonId+'/function',//+$('#form1').serialize()
-				  data: {},
+				  url: './view/'+buttonId+'/function',
+				  data:formData,
 				  dataType:'json',
 				  success: function(result){
 					  if(result.success){
+						  if(!!result.message){
+							cbox.info(result.message);
+						  }
 						  if(!!result.script){
 							  eval(result.script);//优先执行脚本
-						  }else if(!!result.message){
-							 cbox.info(result.message);
 						  }
 					  }else{
 						  if(!!result.message){
