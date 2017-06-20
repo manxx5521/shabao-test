@@ -9,6 +9,8 @@ public class FormConstants {
 	public final static String REQ_SESSION_TAG="form_session_key";
 	/**请求id表示名称**/
 	public final static String REQ_ID_TAG="form_id_key";
+	/**请求视图类型标识**/
+	public final static String REQ_VIEW_TYPE_ENUM="form_viewTypeEnum";
 	
 	public final static String ELEMENT_TEMPLATE_ID="templateId";
 	public final static String ELEMENT_ELEMENT_ID="elementId";

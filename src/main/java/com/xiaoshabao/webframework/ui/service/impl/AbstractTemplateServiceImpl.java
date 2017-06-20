@@ -21,6 +21,7 @@ import com.xiaoshabao.webframework.ui.dto.TemplateData;
 import com.xiaoshabao.webframework.ui.entity.FormField;
 import com.xiaoshabao.webframework.ui.entity.TableEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
+import com.xiaoshabao.webframework.ui.enums.ViewTypeEnum;
 import com.xiaoshabao.webframework.ui.service.element.UIElement;
 /*
  * 模版要修改，修改后，只取数据表默认值
@@ -66,6 +67,12 @@ public abstract class AbstractTemplateServiceImpl extends
 			return result;
 		}
 		StringBuffer rs = new StringBuffer();
+		//页面属性，是否只读
+		boolean viewReadOnly=false;
+		Object viewTypeObj=data.get(FormConstants.REQ_VIEW_TYPE_ENUM);
+		if(viewTypeObj!=null&&viewTypeObj instanceof ViewTypeEnum){
+			viewReadOnly=((ViewTypeEnum)viewTypeObj).isReadOnly();
+		}
 		for (ElementColumnDto elementDto : columnList) {
 			logger.debug("处理模版元素{}", elementDto.getElementId());
 
@@ -85,6 +92,8 @@ public abstract class AbstractTemplateServiceImpl extends
 
 			// 是否只读模版
 			boolean isReadOnly = elementDto.getIsReadOnly();
+			//如果能修改，还要看页面处于位置，比如展示界面不可修改为只读
+			isReadOnly=isReadOnly?isReadOnly:viewReadOnly;
 
 			// 设置header
 			getElementHeader(result, elementParams, isReadOnly);

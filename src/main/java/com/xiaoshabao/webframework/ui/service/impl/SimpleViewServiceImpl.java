@@ -1,5 +1,6 @@
 package com.xiaoshabao.webframework.ui.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +20,7 @@ import com.xiaoshabao.webframework.ui.entity.TableEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 import com.xiaoshabao.webframework.ui.entity.ViewEntity;
 import com.xiaoshabao.webframework.ui.enums.ViewPositionEnum;
+import com.xiaoshabao.webframework.ui.enums.ViewTypeEnum;
 import com.xiaoshabao.webframework.ui.service.FormTemplateService;
 import com.xiaoshabao.webframework.ui.service.FormViewService;
 
@@ -60,7 +62,13 @@ public class SimpleViewServiceImpl extends AbstractViewServiceImpl implements Fo
 					result.setPagePath("simpleView");
 					if(ViewPositionEnum.MAIN_VIEW.equals(view.getViewPosition())){
 						//添加按钮
-						List<ButtonDto> buttons=this.baseDao.getData("getViewButtonDto", view);
+						Map<String, Object> buttonParams=new HashMap<String, Object>();
+						buttonParams.put("viewId", view.getViewId());
+						Object viewTypeObj=data.get(FormConstants.REQ_VIEW_TYPE_ENUM);
+						if(viewTypeObj!=null&&viewTypeObj instanceof ViewTypeEnum){
+							buttonParams.put("buttonIndex",((ViewTypeEnum)viewTypeObj).getIndex());
+						}
+						List<ButtonDto> buttons=this.baseDao.getData("getViewButtonDto", buttonParams);
 						result.setButtons(buttons);
 					}
 				}else if(FormConstants.ENGINE_TYPE_REPORT==viewType){

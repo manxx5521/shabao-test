@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
+import com.xiaoshabao.webframework.ui.component.FormConstants;
 import com.xiaoshabao.webframework.ui.dao.ElementDao;
 import com.xiaoshabao.webframework.ui.dto.BillDto;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
@@ -24,6 +25,7 @@ import com.xiaoshabao.webframework.ui.entity.ElementEntity;
 import com.xiaoshabao.webframework.ui.entity.ListEntity;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
 import com.xiaoshabao.webframework.ui.enums.ButtonEnum;
+import com.xiaoshabao.webframework.ui.enums.ViewTypeEnum;
 import com.xiaoshabao.webframework.ui.service.FormListService;
 import com.xiaoshabao.webframework.ui.service.FormService;
 import com.xiaoshabao.webframework.ui.service.FormViewService;
@@ -57,7 +59,13 @@ public class FormServiceImpl extends AbstractFormServiceImpl implements
 		billListData.setTitle(billDto.getBillName());
 		
 		//添加按钮
-		List<ButtonDto> buttons=this.baseDao.getData("getListButtonDto", billListDto.getList());
+		Map<String, Object> buttonParams=new HashMap<String, Object>();
+		buttonParams.put("listId", billListDto.getList().getListId());
+		Object viewTypeObj=data.get(FormConstants.REQ_VIEW_TYPE_ENUM);
+		if(viewTypeObj!=null&&viewTypeObj instanceof ViewTypeEnum){
+			buttonParams.put("buttonIndex",((ViewTypeEnum)viewTypeObj).getIndex());
+		}
+		List<ButtonDto> buttons=this.baseDao.getData("getListButtonDto", buttonParams);
 		billListData.setButtons(buttons);
 		return billListData;
 	}
@@ -99,7 +107,7 @@ public class FormServiceImpl extends AbstractFormServiceImpl implements
 		if(buttonFunction instanceof ButtonAddSql){
 			System.out.println();
 		}
-		Object exeResult=buttonFunction.execute(buttonDto, ButtonEnum.LIST);
+		Object exeResult=buttonFunction.execute(buttonDto, ViewTypeEnum.LIST);
 		result.setData(exeResult);
 		result.setSuccess(true);
 		return result;
@@ -141,7 +149,7 @@ public class FormServiceImpl extends AbstractFormServiceImpl implements
 			buttonDto.setFieldSet(fieldSet);
 		}
 		
-		ButtonFunctionResult exeResult=buttonFunction.execute(buttonDto, ButtonEnum.VIEW);
+		ButtonFunctionResult exeResult=buttonFunction.execute(buttonDto, ViewTypeEnum.VIEW);
 		return exeResult;
 	}
 	

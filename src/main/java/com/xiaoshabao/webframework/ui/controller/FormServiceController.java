@@ -22,6 +22,7 @@ import com.xiaoshabao.webframework.ui.component.FormConstants;
 import com.xiaoshabao.webframework.ui.component.FormEngineComponet;
 import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.BillViewData;
+import com.xiaoshabao.webframework.ui.enums.ViewTypeEnum;
 import com.xiaoshabao.webframework.ui.service.FormService;
 
 @Controller
@@ -43,7 +44,7 @@ public class FormServiceController extends AbstractController {
 	@RequestMapping(value = "/form/{billId}/list")
 	public ModelAndView getList(ModelMap model,@PathVariable("billId") String billId,
 			HttpServletRequest request) {
-		Map<String, Object> params=getRequestParams(request);
+		Map<String, Object> params=getRequestParams(request,ViewTypeEnum.LIST);
 		BillListData data=formService.getList( billId, params);
 		model.put("data", data);
 //		model.put("reqParam", params);//请求参数
@@ -53,7 +54,15 @@ public class FormServiceController extends AbstractController {
 	/**
 	 * 获得前台传过来的参数
 	 */
-	private Map<String, Object> getRequestParams(HttpServletRequest request){
+	private Map<String, Object> getRequestParams(HttpServletRequest request,ViewTypeEnum viewType,String id){
+		Map<String, Object> result= getRequestParams( request, viewType);
+		result.put(FormConstants.REQ_ID_TAG, id);
+		return result;
+	}
+	/**
+	 * 获得前台传过来的参数
+	 */
+	private Map<String, Object> getRequestParams(HttpServletRequest request,ViewTypeEnum viewType){
 	  Map<String, Object> params = new HashMap<String, Object>();
     Enumeration<String> paramnames = request.getParameterNames();
     while (paramnames.hasMoreElements()) {
@@ -63,6 +72,7 @@ public class FormServiceController extends AbstractController {
     
     //添加session信息
     params.put(FormConstants.REQ_SESSION_TAG,formEngineComponet.getFormSessionService().getSessionMap(request));
+    params.put(FormConstants.REQ_VIEW_TYPE_ENUM,viewType);
     
     return params;
 	}
@@ -77,7 +87,7 @@ public class FormServiceController extends AbstractController {
 	@ResponseBody
 	public AjaxResult queryList(@PathVariable("listId") String listId,
 			HttpServletRequest request) {
-		Map<String, Object> data = getRequestParams(request);
+		Map<String, Object> data = getRequestParams(request,ViewTypeEnum.LIST);
 		return formService.queryList(listId, data);
 	}
   
@@ -91,7 +101,7 @@ public class FormServiceController extends AbstractController {
 	public AjaxResult doButtonList(@PathVariable("billId") String billId,
 			@PathVariable("buttonId") String buttonId,
 			HttpServletRequest request) {
-		Map<String, Object> data = getRequestParams(request);
+		Map<String, Object> data = getRequestParams(request,ViewTypeEnum.LIST);
 		return formService.doButtonList(buttonId, data);
 	}
 	
@@ -105,12 +115,12 @@ public class FormServiceController extends AbstractController {
 	public AjaxResult doButtonView(@PathVariable("billId") String billId,
 			@PathVariable("buttonId") String buttonId,
 			HttpServletRequest request) {
-		Map<String, Object> data = getRequestParams(request);
+		Map<String, Object> data = getRequestParams(request,ViewTypeEnum.VIEW);
 		return formService.doButtonView(billId,buttonId, data);
 	}
 	
 	/**
-	 * 带参数视图界面请求
+	 * 新增界面
 	 * @param model
 	 * @param templateId
 	 * @param request
@@ -119,7 +129,7 @@ public class FormServiceController extends AbstractController {
 	@RequestMapping(value = "/form/{billId}/add")
 	public ModelAndView getView(ModelMap model,@PathVariable("billId") String billId,
 			HttpServletRequest request) {
-		Map<String, Object> params=getRequestParams(request);
+		Map<String, Object> params=getRequestParams(request,ViewTypeEnum.VIEW_ADD);
 		BillViewData data=formService.getView( billId, params);
 		model.put("data", data);
 //		model.put("reqParam", params);//请求参数
@@ -127,7 +137,7 @@ public class FormServiceController extends AbstractController {
 	}
 	
 	/**
-	 * 视图界面按钮功能操作
+	 * 展示界面
 	 * @param request
 	 * @return
 	 */
@@ -136,8 +146,7 @@ public class FormServiceController extends AbstractController {
 	public ModelAndView getViewDetail(ModelMap model,@PathVariable("billId") String billId,
 			@PathVariable("id") String id,
 			HttpServletRequest request) {
-		Map<String, Object> params=getRequestParams(request);
-		params.put(FormConstants.REQ_ID_TAG, id);
+		Map<String, Object> params=getRequestParams(request,ViewTypeEnum.VIEW_DETAIL,id);
 		BillViewData data=formService.getView( billId, params);
 		model.put("data", data);
 //		model.put("reqParam", params);//请求参数

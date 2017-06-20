@@ -2,7 +2,7 @@ package com.xiaoshabao.webframework.ui.service.button;
 
 import com.xiaoshabao.webframework.ui.dto.ButtonDto;
 import com.xiaoshabao.webframework.ui.dto.ButtonFunctionResult;
-import com.xiaoshabao.webframework.ui.enums.ButtonEnum;
+import com.xiaoshabao.webframework.ui.enums.ViewTypeEnum;
 
 /**
  * 按钮功能接口
@@ -26,7 +26,7 @@ public interface ButtonFunction {
 	 * @param buttonEnum
 	 * @return
 	 */
-	public ButtonFunctionResult execute(ButtonDto buttonDto,ButtonEnum buttonEnum);
+	public ButtonFunctionResult execute(ButtonDto buttonDto,ViewTypeEnum viewType);
 
 
 }

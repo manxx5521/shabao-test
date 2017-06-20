@@ -2,7 +2,7 @@ package com.xiaoshabao.webframework.ui.service.impl.button.base;
 
 import com.xiaoshabao.webframework.ui.dto.ButtonDto;
 import com.xiaoshabao.webframework.ui.dto.ButtonFunctionResult;
-import com.xiaoshabao.webframework.ui.enums.ButtonEnum;
+import com.xiaoshabao.webframework.ui.enums.ViewTypeEnum;
 import com.xiaoshabao.webframework.ui.service.button.ButtonFunction;
 
 /**
@@ -15,7 +15,7 @@ public abstract class ButtonCommonFunction implements ButtonFunction{
 
 	
 	@Override
-	public final ButtonFunctionResult execute(ButtonDto buttonDto, ButtonEnum buttonEnum) {
+	public final ButtonFunctionResult execute(ButtonDto buttonDto, ViewTypeEnum viewType) {
 		return execute(buttonDto);
 	}
 

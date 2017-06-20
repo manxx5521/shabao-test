@@ -22,5 +22,10 @@
 		,${prefix}.order_no '${prefix}.order_no'
 		,${prefix}.is_used '${prefix}.is_used'
 	</sql>
+	<sql id="buttonIndexWhere"> 
+		<if test="buttonIndex !=null and buttonIndex !='' ">
+		and substring(${prefix}.button_frame,-${buttonIndex},1)='1'
+		</if>
+	</sql>
 	
 </mapper>

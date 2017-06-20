@@ -28,6 +28,9 @@
 		left join td_ui_button_image buttonImage
 			on td_ui_button.image_id = buttonImage.image_id
 		where a.list_id=#{listId}
+			<include refid="com.xiaoshabao.webframework.ui.entity.ButtonEntity.buttonIndexWhere" >
+				<property name="prefix" value="td_ui_button"/>
+    		</include>
 	</select>
 	
 	<!-- 视图界面按钮 -->
@@ -44,5 +47,8 @@
 		left join td_ui_button_image buttonImage
 			on td_ui_button.image_id = buttonImage.image_id
 		where a.view_id=#{viewId}
+			<include refid="com.xiaoshabao.webframework.ui.entity.ButtonEntity.buttonIndexWhere" >
+				<property name="prefix" value="td_ui_button"/>
+    		</include>
 	</select>
 </mapper>

@@ -103,11 +103,15 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 		countSql.append(whereSql);
 		countSql.append(" </script>");
 		Map<String,Object> countResult=this.baseDao.getSqlMapper().selectOne(countSql.toString(), data);
-		Object count=countResult.get("COUNT");
-		
+		Object countObj=countResult.get("COUNT");
+		int count = 0;
+		if(countObj instanceof Long){
+			count=((Long)countObj).intValue();
+		}
 		//查询值
 		List<Map<String, Object>> list = null;
-		if(count==null||(Long)count<0){
+		if(count<1){
+			
 			//没有值直接返回空记录
 			list=new ArrayList<Map<String,Object>>();
 			count=Integer.valueOf(0);
@@ -138,8 +142,9 @@ public class SimpleListServiceImpl extends AbstractFormListServiceImpl
 		result.setSuccess(true);
 		Integer draw=Integer.valueOf(data.get("draw").toString());
 		result.setDraw(draw);
-		result.setRecordsTotal((Long)count);
-		result.setRecordsFiltered(list.size());
+		result.setRecordsTotal((long) count);
+//		result.setRecordsFiltered(list.size());
+		result.setRecordsFiltered(count);
 		result.setData(list);
 		return result;
 	}
