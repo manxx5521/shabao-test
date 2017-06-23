@@ -61,7 +61,7 @@ public class FormFieldSet {
 	public String getMainIdColumn() {
 		if(mainIdColumn==null){
 			for(FormField field: mainFields){
-				if(field.getIsKey()==1){
+				if(field.isKey()){
 					mainIdColumn=field.getFieldCode();
 				}
 			}

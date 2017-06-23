@@ -53,4 +53,6 @@ public final class ApplicationContextUtil implements DisposableBean,
 	public static String getMessage(String code) {
 		return getMessage(code, null);
 	}
+	
+//  ApplicationContextUtil.getApplicationContext().getBeansOfType(FormSessionService.class); 获得某一个借口的所有实现
 }

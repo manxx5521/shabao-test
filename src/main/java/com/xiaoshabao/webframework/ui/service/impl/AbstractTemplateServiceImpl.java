@@ -308,7 +308,7 @@ public abstract class AbstractTemplateServiceImpl extends
      
       //确定主键字段
       if(idTag){
-    	  if(elementDto.getTableColumn().getIsKey()==1){
+    	  if(elementDto.getTableColumn().isKey()){
     		  idColumn=elementDto.getTableColumn().getFieldCode();
     	  }
     	  addSqlBySelect(tableName,sql,elementDto.getTableColumn().getFieldCode());

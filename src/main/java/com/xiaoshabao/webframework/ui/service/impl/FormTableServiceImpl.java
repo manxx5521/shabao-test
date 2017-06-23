@@ -26,7 +26,7 @@ import com.xiaoshabao.webframework.ui.service.FormTableService;
  * 表单服务
  */
 @Service("formTableService")
-public class FormTableServiceImpl extends AbstractTemplateServiceImpl3 implements FormTableService {
+public class FormTableServiceImpl extends AbstractFormServiceImpl implements FormTableService {
 	
 	/*
 	 * 获得表信息
@@ -102,8 +102,8 @@ public class FormTableServiceImpl extends AbstractTemplateServiceImpl3 implement
         element.setFieldType(SQLUtil.toDataType(rsmd.getColumnType(i)));
         element.setFieldLength(rsmd.getPrecision(i));
         element.setFieldDecimal(rsmd.getScale(i));
-        element.setIsKey(0);
-        element.setIsNull(rsmd.isNullable(i));
+        element.setKey(false);;
+        element.setNull(rsmd.isNullable(i)==1?true:false);
       }
       results.add(element);
       logger.debug("sql语句执行成功：{}", sql);

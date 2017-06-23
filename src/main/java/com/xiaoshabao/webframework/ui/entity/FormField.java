@@ -7,8 +7,8 @@ public class FormField {
 	private Integer fieldAttr;
 	private Integer fieldLength;
 	private Integer fieldDecimal;
-	private Integer isKey;
-	private Integer isNull;
+	private boolean isKey;
+	private boolean isNull;
 	private boolean isRef;
 	private String refTable;
 	
@@ -48,16 +48,16 @@ public class FormField {
 	public void setFieldDecimal(Integer fieldDecimal) {
 		this.fieldDecimal = fieldDecimal;
 	}
-	public Integer getIsKey() {
+	public boolean isKey() {
 		return isKey;
 	}
-	public void setIsKey(Integer isKey) {
+	public void setKey(boolean isKey) {
 		this.isKey = isKey;
 	}
-	public Integer getIsNull() {
+	public boolean isNull() {
 		return isNull;
 	}
-	public void setIsNull(Integer isNull) {
+	public void setNull(boolean isNull) {
 		this.isNull = isNull;
 	}
 	public boolean isRef() {

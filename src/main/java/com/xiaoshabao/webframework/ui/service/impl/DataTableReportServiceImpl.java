@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.component.TemplateEngine;
+import com.xiaoshabao.webframework.ui.dto.DisplayColumnBean;
 import com.xiaoshabao.webframework.ui.dto.ReportColumnDto;
 import com.xiaoshabao.webframework.ui.dto.ReportData;
 import com.xiaoshabao.webframework.ui.entity.ListEntity;
@@ -41,12 +42,14 @@ public class DataTableReportServiceImpl extends AbstractReportServiceImpl
 		List<ReportColumnDto> reportColumns=getReportColumns(report.getReportId());
 		
 		List<String> title=new ArrayList<String>();
-		List<String> displayColumn=new ArrayList<String>();
+		List<DisplayColumnBean> displayColumn=new ArrayList<DisplayColumnBean>();
 		StringBuilder selectSql=new StringBuilder();
 		StringBuilder formSql=new StringBuilder();
 		selectSql.append("SELECT 1");
 		formSql.append(table.getTableName());
 		formSql.append(" ");
+		String pkColumn=null;
+		DisplayColumnBean columnBean=null;
 		
 		for(ReportColumnDto reportColumn: reportColumns){
 			String elementServiceType = formEngineComponet
@@ -66,7 +69,14 @@ public class DataTableReportServiceImpl extends AbstractReportServiceImpl
 			
 			if(reportColumn.isDisplay()){
 				title.add(reportColumn.getTitle());//头部标题
-				displayColumn.add(reprotSql[1]);
+				columnBean=new DisplayColumnBean();
+				columnBean.setColumn(reprotSql[1]);
+				columnBean.setHref(reportColumn.isHref());
+				displayColumn.add(columnBean);
+			}
+			
+			if(reportColumn.getTableColumn().isKey()){
+				pkColumn=reportColumn.getTableColumn().getFieldCode();
 			}
 		}
 		
@@ -76,6 +86,7 @@ public class DataTableReportServiceImpl extends AbstractReportServiceImpl
 		result.getHeader().add("dataTables");
 		
 		data.put("titleList", title);
+		data.put("pkColumn", pkColumn);
 		data.put("columnList", displayColumn);
 		data.put("dataTablesName", "dataTables-"+report.getReportId());
 		data.put("dataTablesQueryListId", listEntity.getListId());

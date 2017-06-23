@@ -7,13 +7,14 @@ import org.apache.shiro.session.Session;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xiaoshabao.system.entity.SessionUserInfo;
+import com.xiaoshabao.webframework.component.ContextHolderUtils;
 import com.xiaoshabao.webframework.component.SessionParams;
 
 /**
  * 上下文操作
  *
  */
-public class ContextHolderSystem implements SessionParams {
+public class ContextHolderSystem extends ContextHolderUtils implements SessionParams{
 	/**
 	 * 获取Shiro的用户session信息
 	 */
@@ -26,7 +27,6 @@ public class ContextHolderSystem implements SessionParams {
 			return null;
 		}
 	}
-
 	/**
 	 * 获取Shiro的用户userId信息
 	 */
@@ -41,9 +41,11 @@ public class ContextHolderSystem implements SessionParams {
 		return getSeesionInfo().getPriFrame();
 	}
 
-	// 统一获得参数
-	@Override
-	public Map<String, Object> getSessionParams() {
+	/** 
+	 * 统一获得参数
+	 * @return
+	 */
+	public static Map<String, Object> getSessionMap() {
 		SessionUserInfo session = getSeesionInfo();
 		if (session == null) {
 			return null;
@@ -54,10 +56,13 @@ public class ContextHolderSystem implements SessionParams {
 		return params;
 	}
 	
-	//获得session类
+	@Override
+	public Map<String, Object> getSessionParams() {
+		return getSessionMap();
+	}
 	@Override
 	public Object getSessionObject() {
 		return getSeesionInfo();
 	}
-
+	
 }

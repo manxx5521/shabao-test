@@ -9,6 +9,8 @@ public class ReportColumnEntity {
 	private String titleGroup2;
 	private String titleGroup3;
 	private String titleGroup4;
+	/** 是否是超链接*/
+	private boolean isHref;
 	private String extParams;
 	private boolean isDisplay;
 	private boolean isUsed;
@@ -86,6 +88,11 @@ public class ReportColumnEntity {
 	public void setExtParams(String extParams) {
 		this.extParams = extParams;
 	}
-	
+	public boolean isHref() {
+		return isHref;
+	}
+	public void setHref(boolean isHref) {
+		this.isHref = isHref;
+	}
 	
 }

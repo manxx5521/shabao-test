@@ -7,8 +7,16 @@ $(document).ready(function() {
         "processing": true,
         "serverSide": true,//服务模式
         "columns":[
-            <#list columnList as column>
-            {"data":"${column}","defaultContent": ""}<#if column_has_next>,</#if>
+            <#list columnList as item>
+            {
+            	"data":"${item.column}",
+            	"defaultContent": ""
+              	<#if item.href >
+              	,"render":function(data, type, row, meta) {
+              		return '<a href="./view/'+row.${pkColumn}+'/detail" target="_self">'+data+'</a>';
+              	}
+              	</#if>
+            }<#if item_has_next>,</#if>
   			</#list>
         ],
         "ajax": {

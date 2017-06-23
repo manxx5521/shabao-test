@@ -11,6 +11,7 @@
 		,td_ui_report_column.title_group2
 		,td_ui_report_column.title_group3
 		,td_ui_report_column.title_group4
+		,td_ui_report_column.is_href
 		,td_ui_report_column.ext_params
 		,td_ui_report_column.is_display
 		,td_ui_report_column.is_used
@@ -26,6 +27,7 @@
 		,${prefix}.title_group2 '${prefix}.title_group2'
 		,${prefix}.title_group3 '${prefix}.title_group3'
 		,${prefix}.title_group4 '${prefix}.title_group4'
+		,${prefix}.is_href '${prefix}.is_href'
 		,${prefix}.ext_params '${prefix}.ext_params'
 		,${prefix}.is_display '${prefix}.is_display'
 		,${prefix}.is_used '${prefix}.is_used'

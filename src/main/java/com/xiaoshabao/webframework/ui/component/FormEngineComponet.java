@@ -2,6 +2,8 @@ package com.xiaoshabao.webframework.ui.component;
 
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.component.SessionParams;
 import com.xiaoshabao.webframework.ui.entity.TemplateEntity;
@@ -10,6 +12,7 @@ import com.xiaoshabao.webframework.ui.service.FormSessionService;
 /**
  * 表单引擎组件(XML注入)
  */
+@Component("formEngineComponet")
 public class FormEngineComponet {
 	
 	/** 引擎类型 **/

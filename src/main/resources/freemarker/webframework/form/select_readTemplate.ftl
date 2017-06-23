@@ -4,7 +4,7 @@
         <div class="col-md-8 col-sm-8 col-xs-12">
         <#if dataList??>
   			<#list dataList as list>
-  				<#if value?? && ${list.id}==value>
+  				<#if value?? && list.id==value>
   			<input type="text" id="${fieldCode}" class="form-control" value="${list.text}" readonly="readonly" />
   				</#if>
   			</#list>

@@ -2,7 +2,9 @@ package com.xiaoshabao.webframework.ui.controller;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xiaoshabao.baseframework.component.ApplicationContextUtil;
 import com.xiaoshabao.baseframework.enums.ErrorEnum;
 import com.xiaoshabao.baseframework.exception.ServiceException;
 import com.xiaoshabao.webframework.controller.AbstractController;
@@ -24,6 +27,7 @@ import com.xiaoshabao.webframework.ui.dto.BillListData;
 import com.xiaoshabao.webframework.ui.dto.BillViewData;
 import com.xiaoshabao.webframework.ui.enums.ViewTypeEnum;
 import com.xiaoshabao.webframework.ui.service.FormService;
+import com.xiaoshabao.webframework.ui.service.FormSessionService;
 
 @Controller
 @RequestMapping("/admin/ui")
@@ -32,6 +36,8 @@ public class FormServiceController extends AbstractController {
 	private FormService formService;
 	@Resource(name = "formEngineComponet")
 	FormEngineComponet formEngineComponet;
+	
+	private static Map<String, FormSessionService> sessionServices=ApplicationContextUtil.getApplicationContext().getBeansOfType(FormSessionService.class);
 	
 	/**
 	 * 带参数列表界面请求
@@ -71,7 +77,16 @@ public class FormServiceController extends AbstractController {
     }
     
     //添加session信息
-    params.put(FormConstants.REQ_SESSION_TAG,formEngineComponet.getFormSessionService().getSessionMap(request));
+    /*if(formEngineComponet.getFormSessionService()!=null)
+    	params.put(FormConstants.REQ_SESSION_TAG,formEngineComponet.getFormSessionService().getSessionMap(request));*/
+    if(!sessionServices.isEmpty()){
+		Set<Map.Entry<String, FormSessionService>> sessionSet=sessionServices.entrySet();
+		Iterator<Map.Entry<String,FormSessionService>> Iterator=sessionSet.iterator();
+		while(Iterator.hasNext()){
+			Map.Entry<String,FormSessionService> sessionService=Iterator.next();
+			params.put(FormConstants.REQ_SESSION_TAG,sessionService.getValue().getSessionMap(request));
+		}
+    }
     params.put(FormConstants.REQ_VIEW_TYPE_ENUM,viewType);
     
     return params;
