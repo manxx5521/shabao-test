@@ -41,19 +41,63 @@ public class FormFieldSet {
 	}
 	
 	/**
+	 * 获得update语句
+	 */
+	public String getUpdateSql(){
+		StringBuilder sql=new StringBuilder("<script> UPDATE ");
+		sql.append(mainTableName);
+		sql.append(" <set> ");
+		
+		for(int i=0,len=mainFields.size();i<len;i++){
+			FormField field=mainFields.get(i);
+			this.appendIfNullStart(sql, field.getFieldCode());
+			sql.append(field.getFieldCode());
+			sql.append("=");
+			appendVarString(sql,field.getFieldCode(),field.getFieldType());
+			sql.append(",");
+			this.appendIfNullEnd(sql, field.getFieldCode());
+		}
+		
+		sql.append(" </set> ");
+		sql.append(" where ");
+		sql.append(getMainIdColumn());
+		sql.append("= #{");
+		sql.append(getMainIdColumn());
+		sql.append("}");
+		return sql.toString();
+	}
+	
+	/**
 	 * 向字符串添加mybatis变量属性#{tableName,jdbcType=VARCHAR}
 	 * @param sb
 	 * @param varName 变量名
 	 * @param fieldType 字段类型
 	 */
-	protected void appendVarString(StringBuilder sb,String varName,Integer  fieldType){
-		sb.append("#{");
-		sb.append(varName);
-		sb.append(",jdbcType=");
-		sb.append(FieldTypeEnum.getJdbcTypeByType(fieldType));
-		sb.append("}");
+	protected void appendVarString(StringBuilder sql,String varName,Integer  fieldType){
+		sql.append("#{");
+		sql.append(varName);
+		sql.append(",jdbcType=");
+		sql.append(FieldTypeEnum.getJdbcTypeByType(fieldType));
+		sql.append("}");
 	}
 	
+	/**
+	 * if语句
+	 */
+	protected void appendIfNullStart(StringBuilder sql,String varName){
+		sql.append(" <if test=\"");
+		sql.append(varName);
+		sql.append(" !=null and ");
+		sql.append(varName);
+		sql.append(" !='' \"> ");
+		
+	}
+	/**
+	 * if语句
+	 */
+	protected void appendIfNullEnd(StringBuilder sql,String varName){
+		sql.append(" </if> ");
+	}
 	/**
 	 * 获得主表主键列
 	 * @return

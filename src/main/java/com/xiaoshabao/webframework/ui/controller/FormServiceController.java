@@ -157,10 +157,23 @@ public class FormServiceController extends AbstractController {
 	 * @return
 	 */
 	@RequestMapping(value = "/form/{billId}/view/{id}/detail")
-	@ResponseBody
 	public ModelAndView getViewDetail(ModelMap model,@PathVariable("billId") String billId,
-			@PathVariable("id") String id,
-			HttpServletRequest request) {
+			@PathVariable("id") String id,HttpServletRequest request) {
+		Map<String, Object> params=getRequestParams(request,ViewTypeEnum.VIEW_DETAIL,id);
+		BillViewData data=formService.getView( billId, params);
+		model.put("data", data);
+//		model.put("reqParam", params);//请求参数
+		return new ModelAndView("/webframe/ui/"+data.getPagePath(),model);
+	}
+	
+	/**
+	 * 修改界面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/form/{billId}/view/{id}/update")
+	public ModelAndView getViewUpdate(ModelMap model,@PathVariable("billId") String billId,
+			@PathVariable("id") String id,HttpServletRequest request) {
 		Map<String, Object> params=getRequestParams(request,ViewTypeEnum.VIEW_DETAIL,id);
 		BillViewData data=formService.getView( billId, params);
 		model.put("data", data);
