@@ -3,7 +3,12 @@ function getDataTableUrl(){
 }
 
 $(document).ready(function() {
-    var dataTable=$('.${dataTablesName}').DataTable( {
+    var dataTable=$('.${dataTablesName}').on('xhr.dt', function ( e, settings, json, xhr ) {//返回数据后操作
+        if(!json.success){
+			cbox.alert(json.message); 
+			json={};       
+        }
+    } ).DataTable( {
         "processing": true,
         "serverSide": true,//服务模式
         "columns":[

@@ -68,8 +68,72 @@ public abstract class AbstractUIElement extends AbstractFormServiceImpl
 	@Override
 	public FormValidateInfo validateData(Map<String, Object> data,
 			ElementColumnDto elementDto, Map<String, Object> elementParams) {
-		// 默认返回true，通过验证
+		FormValidateInfo info = new FormValidateInfo(false);
+		String fieldCode = elementDto.getTableColumn().getFieldCode();
+		String label=elementDto.getLabel();
+		Object value = data.get(fieldCode);//value类
+		
+		//验证是否必填
+		if(elementDto.isRequired()){
+			//验证单据填写的非空
+			if(StringUtils.isEmpty(value.toString())){
+				info.setMessage(getValidatMessage(label,"必须填写"));
+				return info;
+			}
+				
+		}/*else if(elementDto.getTableColumn().isNull()){
+			//验证数据库
+			if(StringUtils.isEmpty(value.toString())){
+				info.setMessage(getValidatMessage(label,"必须填写（数据库层面必填）"));
+				return info;
+			}
+		}*/
+		
+		if(value!=null&&StringUtils.isNoneEmpty(value.toString())){//有值
+			//验证大小
+			int size=getValueSize(value);
+			if (elementDto.getMaxLength()!=null&&elementDto.getMaxLength()<size) {
+				info.setMessage(getValidatMessage(label, "不能大于"+elementDto.getMaxLength()));
+				return info;
+			} else if(elementDto.getMinLength()!=null&&elementDto.getMinLength()>size) {
+				info.setMessage(getValidatMessage(label, "不能小于"+elementDto.getMinLength()));
+				return info;
+			}/*else if(elementDto.getTableColumn().getFieldLength()!=null&&elementDto.getTableColumn().getFieldLength()<size) {
+				info.setMessage(getValidatMessage(label, "不能大于"+elementDto.getTableColumn().getFieldLength()+"（数据库层面）"));
+				return info;
+			} */
+		}
+		info.setSuccess(true);
+		return info;
+	}
+	
+	//验证初始化参数
+	@Override
+	public FormValidateInfo validateParams(Map<String, Object> data,
+			ElementColumnDto elementDto, Map<String, Object> elementParams) {
+		
 		return new FormValidateInfo(true);
+	}
+	
+	/**
+	 * 统一获得验证显示信息
+	 */
+	protected final String getValidatMessage(String label,String message){
+		StringBuilder msg=new StringBuilder();
+		msg.append(label);
+		msg.append("的内容");
+		msg.append(message);
+		return msg.toString();
+	}
+	
+	/**
+	 * 获得值的大小
+	 * <p>默认时string的大小，具体元素可以自己实现</p>
+	 * @param value 值（不能为null）
+	 * @return
+	 */
+	protected int getValueSize(Object value){
+		return value.toString().length();
 	}
 
 	// 获得元素自定义参数

@@ -13,7 +13,7 @@ import com.xiaoshabao.webframework.ui.service.impl.button.base.AbstractButtonFun
 /**
  * 新增按钮
  */
-@Component("buttonService_BUTTON_ADD")
+@Component("buttonService_BUTTON_RETURN")
 public class ButtonReturnFunction extends AbstractButtonFunction implements ButtonSql{
 	
 	@Resource(name="mybatisBaseDao")

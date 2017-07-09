@@ -8,6 +8,7 @@ public class FormField {
 	private Integer fieldLength;
 	private Integer fieldDecimal;
 	private boolean isKey;
+	/**是否非空**/
 	private boolean isNull;
 	private boolean isRef;
 	private String refTable;

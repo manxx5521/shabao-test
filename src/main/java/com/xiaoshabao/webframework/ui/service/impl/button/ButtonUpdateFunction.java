@@ -13,21 +13,22 @@ import com.xiaoshabao.webframework.ui.service.impl.button.base.AbstractButtonFun
 /**
  * 新增按钮
  */
-@Component("buttonService_BUTTON_ADD")
-public class ButtonUpdateFunction extends AbstractButtonFunction implements ButtonSql{
-	
-	@Resource(name="mybatisBaseDao")
+@Component("buttonService_BUTTON_UPDATE")
+public class ButtonUpdateFunction extends AbstractButtonFunction implements
+		ButtonSql {
+
+	@Resource(name = "mybatisBaseDao")
 	private BaseDao baseDao;
 
 	@Override
 	protected ButtonFunctionResult executeList(ButtonDto buttonDto) {
-		ButtonFunctionResult result=new ButtonFunctionResult();
+		ButtonFunctionResult result = new ButtonFunctionResult();
 		return result;
 	}
 
 	@Override
 	protected ButtonFunctionResult executeView(ButtonDto buttonDto) {
-		ButtonFunctionResult result=new ButtonFunctionResult();
+		ButtonFunctionResult result = new ButtonFunctionResult();
 		result.setScript("window.location.href ='./update'");
 		return result;
 	}

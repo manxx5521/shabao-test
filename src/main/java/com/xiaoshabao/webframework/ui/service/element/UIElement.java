@@ -23,7 +23,7 @@ public interface UIElement extends AbstractElement {
     String fieldCode, Object value);
 
 	/**
-	 * 验证前台数据是否正确(元素的特殊验证)
+	 * 验证前台数据是否正确
 	 * <p>
 	 * 使用于增删改，如果有验证不通过的参数向reslut中填充提示。
 	 * </p>
@@ -37,6 +37,23 @@ public interface UIElement extends AbstractElement {
 	 *            元素参数
 	 */
 	public FormValidateInfo validateData(Map<String, Object> data,
+			ElementColumnDto elementDto, Map<String, Object> elementParams);
+	
+	/**
+	 * 元素初始化，需要验证的参数(元素的特殊验证)
+	 * <p>
+	 * 使用于增删改，如果有验证不通过的参数向reslut中填充提示。
+	 * </p>
+	 * 
+	 * @param result
+	 *            返回结果
+	 * @param data
+	 *            前台数据
+	 * @param elementDto
+	 * @param elementParams
+	 *            元素参数
+	 */
+	public FormValidateInfo validateParams(Map<String, Object> data,
 			ElementColumnDto elementDto, Map<String, Object> elementParams);
 
 	/**

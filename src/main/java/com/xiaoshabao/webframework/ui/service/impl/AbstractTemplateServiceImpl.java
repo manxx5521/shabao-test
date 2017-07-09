@@ -146,29 +146,12 @@ public abstract class AbstractTemplateServiceImpl extends
 			ElementColumnDto elementDto, UIElement element,
 			Map<String, Object> data, Map<String, Object> elementParams) {
 		FormValidateInfo result = null;
-		// 公共参数验证，大小等
-		result = this.validatePublicParams(elementDto, data);
-		if (!result.isSuccess()) {
-			return result;
-		}
 		// 验证uielement的特殊方法
 		result = element.validateData(data, elementDto, elementParams);
 		if (!result.isSuccess()) {
 			return result;
 		}
-		return validateParams(elementDto, data);
-	}
-
-	/**
-	 * 验证公共参数
-	 */
-	private FormValidateInfo validatePublicParams(ElementColumnDto elementDto,
-			Map<String, Object> data) {
-		FormValidateInfo info = new FormValidateInfo(false);
-		// 公共参数验证，大小等
-
-		info.setSuccess(true);
-		return info;
+		return validateData(elementDto, data);
 	}
 
 	/**
@@ -176,13 +159,8 @@ public abstract class AbstractTemplateServiceImpl extends
 	 * <p>
 	 * 默认无实现
 	 * </p>
-	 * 
-	 * @param result
-	 * @param element
-	 * @param params
-	 * @return
 	 */
-	protected FormValidateInfo validateParams(ElementColumnDto elementDto,
+	protected FormValidateInfo validateData(ElementColumnDto elementDto,
 			Map<String, Object> data) {
 		return new FormValidateInfo(true);
 	}

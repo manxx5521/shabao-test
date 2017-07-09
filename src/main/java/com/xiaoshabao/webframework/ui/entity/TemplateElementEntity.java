@@ -16,7 +16,7 @@ public class TemplateElementEntity {
 	/** 默认值 **/
 	private String defaultValue;
 	/** 是否必填 **/
-	private Integer required;
+	private boolean required=false;
 	/** 最大长度 */
 	private Integer maxLength;
 	/** 最小长度 */
@@ -98,13 +98,13 @@ public class TemplateElementEntity {
 	public void setOrderNo(Integer orderNo) {
 		this.orderNo = orderNo;
 	}
-	public Integer getRequired() {
+	
+	public boolean isRequired() {
 		return required;
 	}
-	public void setRequired(Integer required) {
+	public void setRequired(boolean required) {
 		this.required = required;
 	}
-	
 	public String getViewType() {
 		return viewType;
 	}
@@ -172,7 +172,6 @@ public class TemplateElementEntity {
 	public void setDefaultValue(String defaultValue) {
 		this.defaultValue = defaultValue;
 	}
-	
 	
 	
 }
