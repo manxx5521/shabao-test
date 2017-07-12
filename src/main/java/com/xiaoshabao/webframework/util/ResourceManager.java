@@ -9,7 +9,7 @@ import com.xiaoshabao.wechat.api.core.exception.WeixinReqException;
 
 public class ResourceManager {
 	private static Logger logger = LoggerFactory.getLogger(ResourceManager.class);
-	private static ResourceManager instance = null;
+	private volatile static ResourceManager instance = null;
 
 	private ResourceManager() {
 		try {
