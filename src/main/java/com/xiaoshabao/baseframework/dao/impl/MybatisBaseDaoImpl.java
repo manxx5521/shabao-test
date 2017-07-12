@@ -75,7 +75,7 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	}
 
 	@Override
-	public <T> T getDataById(Class<T> clazz, String id) {
+	public <T> T getDataById(Class<T> clazz, Object id) {
 		return this.getSqlSession().selectOne(
 				"get" + clazz.getSimpleName() + "ById", id);
 	}

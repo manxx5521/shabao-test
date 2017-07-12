@@ -48,7 +48,7 @@ public interface BaseDao {
 	/**
 	 * 通过id获取数据
 	 */
-	public <T> T getDataById(Class<T> clasz, String id);
+	public <T> T getDataById(Class<T> clasz, Object id);
 
 	/**
 	 * 通过实体T 和参数获得唯一记录<br/>
