@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+<root>
+<!--
+exclude 作为排除覆盖内容，配置的文件不会覆盖原有程序 
+override 会将src的文件重新覆盖到 to属性位置。(路径基于项目路径)
+-->
+	<exclude src="" />
+	<override desc="覆盖配置文件">
+		<src>/WEB-INF/classes/upgrade/file/config.properties</src>
+		<to>/WEB-INF/classes/config.properties</to>
+	</override>
+
+</root>

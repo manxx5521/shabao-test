@@ -4,115 +4,124 @@ import java.util.Date;
 
 public class UpgradeEntity {
 
-  private Integer upgradeId;
+	private Integer upgradeId;
 
-  private String upgradeName;
+	private String upgradeName;
 
-  private String upgardeDate;
-  
-  private String serverUser;
-  
-  private String serverPassword;
-  
-  private String serverHost;
-  
-  private String serverPort;
-  
-  private String serverPath;
-  
-  private String applicationPath;
+	private String upgradeFileName;
 
-  private Date updateTime;
+	private String upgardeDate;
 
-  private Integer updateUser;
+	private String serverUser;
 
-  public Integer getUpgradeId() {
-    return upgradeId;
-  }
+	private String serverPassword;
 
-  public void setUpgradeId(Integer upgradeId) {
-    this.upgradeId = upgradeId;
-  }
+	private String serverHost;
 
-  public String getUpgradeName() {
-    return upgradeName;
-  }
+	private Integer serverPort;
 
-  public void setUpgradeName(String upgradeName) {
-    this.upgradeName = upgradeName;
-  }
+	private String serverPath;
 
-  public String getUpgardeDate() {
-    return upgardeDate;
-  }
+	private String applicationPath;
 
-  public void setUpgardeDate(String upgardeDate) {
-    this.upgardeDate = upgardeDate;
-  }
+	private Date updateTime;
 
-  public Date getUpdateTime() {
-    return updateTime;
-  }
+	private Integer updateUser;
 
-  public void setUpdateTime(Date updateTime) {
-    this.updateTime = updateTime;
-  }
+	public Integer getUpgradeId() {
+		return upgradeId;
+	}
 
-  public Integer getUpdateUser() {
-    return updateUser;
-  }
+	public void setUpgradeId(Integer upgradeId) {
+		this.upgradeId = upgradeId;
+	}
 
-  public void setUpdateUser(Integer updateUser) {
-    this.updateUser = updateUser;
-  }
+	public String getUpgradeName() {
+		return upgradeName;
+	}
 
-  public String getServerUser() {
-    return serverUser;
-  }
+	public void setUpgradeName(String upgradeName) {
+		this.upgradeName = upgradeName;
+	}
 
-  public void setServerUser(String serverUser) {
-    this.serverUser = serverUser;
-  }
+	public String getUpgardeDate() {
+		return upgardeDate;
+	}
 
-  public String getServerPassword() {
-    return serverPassword;
-  }
+	public void setUpgardeDate(String upgardeDate) {
+		this.upgardeDate = upgardeDate;
+	}
 
-  public void setServerPassword(String serverPassword) {
-    this.serverPassword = serverPassword;
-  }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-  public String getServerHost() {
-    return serverHost;
-  }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-  public void setServerHost(String serverHost) {
-    this.serverHost = serverHost;
-  }
+	public Integer getUpdateUser() {
+		return updateUser;
+	}
 
-  public String getServerPort() {
-    return serverPort;
-  }
+	public void setUpdateUser(Integer updateUser) {
+		this.updateUser = updateUser;
+	}
 
-  public void setServerPort(String serverPort) {
-    this.serverPort = serverPort;
-  }
+	public String getServerUser() {
+		return serverUser;
+	}
 
-  public String getServerPath() {
-    return serverPath;
-  }
+	public void setServerUser(String serverUser) {
+		this.serverUser = serverUser;
+	}
 
-  public void setServerPath(String serverPath) {
-    this.serverPath = serverPath;
-  }
+	public String getServerPassword() {
+		return serverPassword;
+	}
 
-  public String getApplicationPath() {
-    return applicationPath;
-  }
+	public void setServerPassword(String serverPassword) {
+		this.serverPassword = serverPassword;
+	}
 
-  public void setApplicationPath(String applicationPath) {
-    this.applicationPath = applicationPath;
-  }
-  
+	public String getServerHost() {
+		return serverHost;
+	}
+
+	public void setServerHost(String serverHost) {
+		this.serverHost = serverHost;
+	}
+
+	public Integer getServerPort() {
+		return serverPort;
+	}
+
+	public void setServerPort(Integer serverPort) {
+		this.serverPort = serverPort;
+	}
+
+	public String getServerPath() {
+		return serverPath;
+	}
+
+	public void setServerPath(String serverPath) {
+		this.serverPath = serverPath;
+	}
+
+	public String getApplicationPath() {
+		return applicationPath;
+	}
+
+	public void setApplicationPath(String applicationPath) {
+		this.applicationPath = applicationPath;
+	}
+
+	public String getUpgradeFileName() {
+		return upgradeFileName;
+	}
+
+	public void setUpgradeFileName(String upgradeFileName) {
+		this.upgradeFileName = upgradeFileName;
+	}
 
 }

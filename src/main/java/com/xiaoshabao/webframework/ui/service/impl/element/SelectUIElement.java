@@ -14,7 +14,6 @@ import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 import com.xiaoshabao.webframework.ui.component.FormConstants;
 import com.xiaoshabao.webframework.ui.dto.ElementColumnDto;
-import com.xiaoshabao.webframework.ui.dto.FormValidateInfo;
 import com.xiaoshabao.webframework.ui.dto.ReportColumnDto;
 import com.xiaoshabao.webframework.ui.dto.SelectResultDto;
 import com.xiaoshabao.webframework.ui.entity.TableColumnEntity;

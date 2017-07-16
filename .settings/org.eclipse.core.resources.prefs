@@ -3,6 +3,7 @@ encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/main/resources/config.properties=UTF-8
 encoding//src/main/resources/log4j.properties=UTF-8
+encoding//src/main/resources/upgrade/file/config.properties=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/context/head.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/system/common.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/wechat/common.jsp=UTF-8

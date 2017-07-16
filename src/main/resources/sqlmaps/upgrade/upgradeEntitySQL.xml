@@ -5,7 +5,14 @@
 	<sql id="upgradeColumns"> 
 		td_s_upgrade.upgrade_id
 		,td_s_upgrade.upgrade_name
+		,td_s_upgrade.upgrade_file_name
 		,td_s_upgrade.upgrade_date
+		,td_s_upgrade.server_user
+		,td_s_upgrade.server_password
+		,td_s_upgrade.server_host
+		,td_s_upgrade.server_port
+		,td_s_upgrade.server_path
+		,td_s_upgrade.application_path
 		,td_s_upgrade.update_time
 		,td_s_upgrade.update_user
 	</sql>
