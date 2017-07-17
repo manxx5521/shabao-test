@@ -10,7 +10,7 @@ public interface UpgradeService {
 	 * @param path
 	 * @return
 	 */
-	public AjaxResult upgradeApplication(Integer upgradeId, String path);
+	public AjaxResult upgradeApplication(Integer upgradeId);
 
 	/**
 	 * 获得未更新列表

@@ -42,7 +42,7 @@ public class FilePathTest {
   
   public static void main(String[] args){
     FilePathTest test=new FilePathTest();
-    test.winPathSp();
+    test.getUserDir();
   }
 
 }

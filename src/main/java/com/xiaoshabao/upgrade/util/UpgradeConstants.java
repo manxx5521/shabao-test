@@ -1,5 +1,7 @@
 package com.xiaoshabao.upgrade.util;
 
+import org.apache.commons.io.FilenameUtils;
+
 
 public class UpgradeConstants {
 	
@@ -21,6 +23,8 @@ public class UpgradeConstants {
 	public final static String BACKUP_PATH="backup";
 
 	public final static String separator="/";
+	
+	public final static String SPECIAL_CONFIG_PATH="";
 	
 	/**
 	 * 获得文件在服务端缓存目录
@@ -91,8 +95,20 @@ public class UpgradeConstants {
 		StringBuilder sb=new StringBuilder(serverPath);
 		getFilePath(sb);
 		sb.append(separator);
-		sb.append(fileName);
+		sb.append(FilenameUtils.getBaseName(fileName));
 		return sb.toString();
+	}
+	
+	
+	/**
+	 * 获得特殊文件配置路径
+	 * @Title: getSpecialConfigPath     
+	 * @Description: TODO    
+	 * @param serverPath
+	 * @return
+	 */
+	public static String getSpecialConfigPath(String serverPath){
+	  return SPECIAL_CONFIG_PATH;
 	}
 
 }

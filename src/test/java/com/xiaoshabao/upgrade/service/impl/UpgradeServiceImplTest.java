@@ -18,7 +18,7 @@ public class UpgradeServiceImplTest extends SpringTest{
 	@Test
 	public void testUpgradeApplication() {
 		try {
-			upgradeService.upgradeApplication(1001, "");
+			upgradeService.upgradeApplication(1001);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

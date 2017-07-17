@@ -56,4 +56,10 @@ public class ServerUpgradeService extends UpgradeServiceImpl {
 		
 	}
 
+  @Override
+  protected void existsUpgradeFile(UpgradeEntity upgradeEntity) {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

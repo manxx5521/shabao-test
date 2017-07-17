@@ -1,10 +1,14 @@
 package com.xiaoshabao.upgrade.service.impl;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,8 @@ import com.jcraft.jsch.UserInfo;
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.upgrade.entity.UpgradeEntity;
 import com.xiaoshabao.upgrade.util.UpgradeConstants;
+import com.xiaoshabao.upgrade.util.ZipUpgradeUtil;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 
 /**
  * 本地直接升级服务端代码
@@ -28,9 +34,53 @@ import com.xiaoshabao.upgrade.util.UpgradeConstants;
 public class LocalUpgradeService extends UpgradeServiceImpl {
 	/** 远程链接session */
 	private Session session;
-
+	
+	/**是否检查目录标识**/
+	private boolean checkDir=false;
+	
+	private final static String FILE_PATH_LOCAL="C:\\Users\\Administrator\\Desktop\\";
+	
+	
 	@Override
+  public AjaxResult upgradeApplication(Integer upgradeId) {
+	  UpgradeEntity upgradeEntity=getUpgradeEntity(upgradeId);
+	  File file=new File(FILE_PATH_LOCAL+upgradeEntity.getUpgradeFileName());
+	  if(file==null||!file.exists()){
+	    throw new MsgErrorException("未能在桌面找到所需升级文件");
+	  }
+	  //检查目录
+	  existsDir(upgradeEntity);
+	  checkDir=true;
+	  
+	  //要把本地包传到服务器
+	  ChannelSftp channel = null;
+    try {
+      this.getSSHConnect(upgradeEntity.getServerUser(),
+          upgradeEntity.getServerPassword(),
+          upgradeEntity.getServerHost(),
+          upgradeEntity.getServerPort());
+      channel = (ChannelSftp) session.openChannel("sftp");
+      channel.connect();
+
+      channel.put(FILE_PATH_LOCAL+upgradeEntity.getUpgradeFileName(), UpgradeConstants.getFilePath(upgradeEntity
+            .getServerPath()));
+      
+      channel.quit();
+      channel.disconnect();
+    } catch (Exception e) {
+      if (channel != null && !channel.isClosed()) {
+        channel.disconnect();
+      }
+      throw new MsgErrorException("检查目录失败", e);
+    }
+	  
+    return upgradeApplication(upgradeId,upgradeEntity);
+  }
+
+  @Override
 	protected void existsDir(UpgradeEntity upgradeEntity) {
+    if(checkDir)
+      return;
 		ChannelSftp channel = null;
 		try {
 			this.getSSHConnect(upgradeEntity.getServerUser(),
@@ -74,6 +124,95 @@ public class LocalUpgradeService extends UpgradeServiceImpl {
 			throw new MsgErrorException("检查目录失败", e);
 		}
 	}
+	
+	@Override
+  protected void deleteFileTmepDir(UpgradeEntity upgradeEntity) {
+	  ChannelSftp channel = null;
+    try {
+      this.getSSHConnect(upgradeEntity.getServerUser(),
+          upgradeEntity.getServerPassword(),
+          upgradeEntity.getServerHost(),
+          upgradeEntity.getServerPort());
+      channel = (ChannelSftp) session.openChannel("sftp");
+      channel.connect();
+
+      @SuppressWarnings("unchecked")
+      Vector<LsEntry> serverPaths = channel.ls(UpgradeConstants.getFileTempPath(upgradeEntity
+        .getServerPath(), upgradeEntity.getUpgradeFileName()));
+      if (hasLsEntry(serverPaths, FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName()))) {
+        channel.rmdir(UpgradeConstants.getFileTempPath(upgradeEntity
+        .getServerPath(), upgradeEntity.getUpgradeFileName()));
+      }
+      
+      channel.quit();
+      channel.disconnect();
+    } catch (Exception e) {
+      if (channel != null && !channel.isClosed()) {
+        channel.disconnect();
+      }
+      throw new MsgErrorException("删除临时目录失败", e);
+    }
+    
+  }
+
+  @Override
+  protected void deleteFileTmep(UpgradeEntity upgradeEntity) {
+    ChannelSftp channel = null;
+    try {
+      this.getSSHConnect(upgradeEntity.getServerUser(),
+          upgradeEntity.getServerPassword(),
+          upgradeEntity.getServerHost(),
+          upgradeEntity.getServerPort());
+      channel = (ChannelSftp) session.openChannel("sftp");
+      channel.connect();
+
+      @SuppressWarnings("unchecked")
+      Vector<LsEntry> serverPaths = channel.ls(UpgradeConstants.getFilePath(upgradeEntity
+        .getServerPath()));
+      if (hasLsEntry(serverPaths, upgradeEntity.getUpgradeFileName())) {
+        channel.rm(UpgradeConstants.getFilePath(upgradeEntity
+        .getServerPath())+UpgradeConstants.separator+upgradeEntity.getUpgradeFileName());
+      }
+      
+      channel.quit();
+      channel.disconnect();
+    } catch (Exception e) {
+      if (channel != null && !channel.isClosed()) {
+        channel.disconnect();
+      }
+      throw new MsgErrorException("删除文件失败", e);
+    }
+  }
+
+  @Override
+  protected void existsUpgradeFile(UpgradeEntity upgradeEntity) {
+    ChannelSftp channel = null;
+    try {
+      this.getSSHConnect(upgradeEntity.getServerUser(),
+          upgradeEntity.getServerPassword(),
+          upgradeEntity.getServerHost(),
+          upgradeEntity.getServerPort());
+      channel = (ChannelSftp) session.openChannel("sftp");
+      channel.connect();
+
+      //验证目录是否存在
+      @SuppressWarnings("unchecked")
+      Vector<LsEntry> serverPaths = channel.ls(UpgradeConstants.getFilePath(upgradeEntity
+        .getServerPath()));
+      if (!hasLsEntry(serverPaths, upgradeEntity.getUpgradeFileName())) {
+        throw new MsgErrorException("未找到要升级的文件");
+      }
+      
+      channel.quit();
+      channel.disconnect();
+    } catch (Exception e) {
+      if (channel != null && !channel.isClosed()) {
+        channel.disconnect();
+      }
+      throw new MsgErrorException("验证升级的文件是否存在时错误", e);
+    }
+    
+  }
 
 	/**
 	 * 判断数组中是否有value
@@ -82,7 +221,7 @@ public class LocalUpgradeService extends UpgradeServiceImpl {
 	 * @param path
 	 * @return
 	 */
-	protected boolean hasLsEntry(Vector<LsEntry> files, String value) {
+	private boolean hasLsEntry(Vector<LsEntry> files, String value) {
 		boolean flag = false;
 		if (StringUtils.isEmpty(value)) {
 			return flag;
@@ -96,6 +235,10 @@ public class LocalUpgradeService extends UpgradeServiceImpl {
 		return flag;
 	}
 
+	/**
+	 * 解压文件
+	 * <p>需要服务端解压一份，用来升级文件。本地解压一份用来升级sql</p>
+	 */
 	@Override
 	protected void unzip(UpgradeEntity upgradeEntity, String zipFilePath,
 			String saveFileDir) {
@@ -104,8 +247,18 @@ public class LocalUpgradeService extends UpgradeServiceImpl {
 				upgradeEntity.getServerPassword(),
 				upgradeEntity.getServerHost(), upgradeEntity.getServerPort());
 
-		StringBuilder command = new StringBuilder();
-
+		StringBuilder command = new StringBuilder("jar -xvf ");
+		command.append(UpgradeConstants.getFilePath(upgradeEntity
+        .getServerPath())+UpgradeConstants.separator+upgradeEntity.getUpgradeFileName());
+		
+		this.exeShell(command.toString());//执行命令解压服务器文件
+		
+		File tempDir=new File("FILE_PATH_LOCAL+FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName())");
+		if(tempDir.exists()){
+		  tempDir.delete();//先删除
+		}
+		ZipUpgradeUtil.unzip(FILE_PATH_LOCAL+upgradeEntity.getUpgradeFileName(), 
+		  FILE_PATH_LOCAL+FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName()));
 	}
 
 	/**
@@ -214,16 +367,5 @@ public class LocalUpgradeService extends UpgradeServiceImpl {
 		}
 	}
 
-	@Override
-	protected void deleteFileTmepDir(UpgradeEntity upgradeEntity) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void deleteFileTmep(UpgradeEntity upgradeEntity) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
