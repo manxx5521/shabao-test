@@ -27,9 +27,9 @@ import com.xiaoshabao.webframework.dto.AjaxResult;
 /**
  * 本地直接升级服务端代码
  */
-@Service("localUpgradeService")
+@Service("localUpgradeServiceImpl")
 @Scope("prototype")
-public class LocalUpgradeService extends UpgradeServiceImpl {
+public class LocalUpgradeServiceImpl extends BaseUpgradeServiceImpl {
 	/** 远程链接session */
 	private Session session;
 	

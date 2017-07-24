@@ -10,9 +10,9 @@ import com.xiaoshabao.upgrade.service.UpgradeService;
 
 import util.SpringTest;
 
-public class LocalUpgradeServiceTest extends SpringTest {
+public class LocalUpgradeServiceImplTest extends SpringTest {
 
-	@Resource(name = "localUpgradeService")
+	@Resource(name = "localUpgradeServiceImpl")
 	private UpgradeService upgradeService;
 
 	@Test

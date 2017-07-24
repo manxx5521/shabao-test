@@ -16,7 +16,7 @@ import com.xiaoshabao.upgrade.util.ZipUpgradeUtil;
  */
 @Service("serverUpgradeService")
 @Scope("prototype")
-public class ServerUpgradeService extends BaseUpgradeServiceImpl {
+public class ServerUpgradeServiceImpl extends BaseUpgradeServiceImpl {
 	@Override
 	protected void unzip(UpgradeEntity upgradeEntity, String zipFilePath,
 			String saveFileDir) {

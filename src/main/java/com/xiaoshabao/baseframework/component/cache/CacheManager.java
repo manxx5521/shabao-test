@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * 缓存实现
  */
-@SuppressWarnings({ "unchecked", "rawtypes","static-access" })
+@SuppressWarnings({ "unchecked", "rawtypes"})
 public class CacheManager {
   public static final Object NULL_OBJECT = new Object();
 

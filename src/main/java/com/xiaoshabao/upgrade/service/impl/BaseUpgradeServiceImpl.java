@@ -22,8 +22,8 @@ import com.xiaoshabao.upgrade.service.UpgradeService;
 import com.xiaoshabao.upgrade.util.UpgradeConstants;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 
-public abstract class UpgradeServiceImpl implements UpgradeService {
-  protected Logger logger = LoggerFactory.getLogger(UpgradeServiceImpl.class);
+public abstract class BaseUpgradeServiceImpl implements UpgradeService {
+  protected Logger logger = LoggerFactory.getLogger(BaseUpgradeServiceImpl.class);
 
   @Resource(name = "mybatisBaseDao")
   protected BaseDao baseDao;
