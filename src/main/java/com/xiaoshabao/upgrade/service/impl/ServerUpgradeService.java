@@ -62,4 +62,24 @@ public class ServerUpgradeService extends UpgradeServiceImpl {
     
   }
 
+  @Override
+  protected void deleteServerFile(UpgradeEntity upgradeEntity, String path) {
+    // TODO Auto-generated method stub
+    
+  }
+
+
+  @Override
+  protected void copyServerFileToFile(UpgradeEntity upgradeEntity, String srcPath, String destPath) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  protected String getSpecialConfigPath(UpgradeEntity upgradeEntity, String specialPath) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+
 }
