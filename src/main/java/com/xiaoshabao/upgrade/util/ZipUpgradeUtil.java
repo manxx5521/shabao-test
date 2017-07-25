@@ -11,6 +11,8 @@ import java.io.OutputStream;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * 压缩
@@ -37,36 +39,28 @@ public class ZipUpgradeUtil {
 	    try {
 	      is = new FileInputStream(file);
 	      //根据工厂创建自定义输入流，工厂无法指定字符编码
-	      input = new ArchiveStreamFactory().createArchiveInputStream(is);
+	      input = new ArchiveStreamFactory().createArchiveInputStream(ArchiveStreamFactory.JAR,is);
 	      ArchiveEntry archiveEntry = null;
 	      while ((archiveEntry = input.getNextEntry()) != null) {
 	        // 获取文件名  
 	        String entryFileName = archiveEntry.getName();
 	        // 构造解压出来的文件存放路径  
-	        String entryFilePath = saveFileDir + entryFileName;
-	        OutputStream os = null;
+	        String entryFilePath = saveFileDir+entryFileName;
 	        try {
 	          // 把解压出来的文件写到指定路径  
 	          File entryFile = new File(entryFilePath);
 	          if (entryFileName.endsWith("/")) {
 	            entryFile.mkdirs();
 	          } else {
-	            os = new BufferedOutputStream(new FileOutputStream(entryFile));
-	            byte[] buffer = new byte[1024];
-	            int len = -1;
-	            while ((len = input.read(buffer)) != -1) {
-	              os.write(buffer, 0, len);
-	            }
+	        	  //输出文件流  
+                  OutputStream out = FileUtils.openOutputStream(entryFile);  
+                  IOUtils.copy(input, out);  
+                  //关闭输出文件流  
+                  out.close(); 
 	          }
 	        } catch (IOException e) {
 	          throw new IOException(e);
-	        } finally {
-	          if (os != null) {
-	            os.flush();
-	            os.close();
-	          }
-	        }
-
+	        } 
 	      }
 	    } catch (Exception e) {
 	      throw new RuntimeException(e);

@@ -38,13 +38,13 @@ public class LocalUpgradeServiceImpl extends BaseUpgradeServiceImpl {
 	/**是否检查目录标识**/
 	private boolean checkDir=false;
 	
-	private final static String FILE_PATH_LOCAL="C:\\Users\\Administrator\\Desktop\\upgrade";
+	private final static String FILE_PATH_LOCAL="C:\\Users\\xv\\Desktop\\upgrade";
 	
 	
 	@Override
   public AjaxResult upgradeApplication(Integer upgradeId) {
 	  UpgradeEntity upgradeEntity=getUpgradeEntity(upgradeId);
-	  File file=new File(this.getFilePathRoot(upgradeEntity,"\\",upgradeEntity.getUpgradeFileName()));
+	  File file=new File(this.getFilePathRoot(upgradeEntity,upgradeEntity.getUpgradeFileName()));
 	  if(file==null||!file.exists()){
 	    throw new MsgErrorException("未能在升级目录找到所需升级文件");
 	  }
@@ -62,8 +62,7 @@ public class LocalUpgradeServiceImpl extends BaseUpgradeServiceImpl {
       channel = (ChannelSftp) session.openChannel("sftp");
       channel.connect();
 
-      channel.put(this.getFilePathRoot(upgradeEntity,"\\",upgradeEntity.getUpgradeFileName()), UpgradeConstants.getFilePath(upgradeEntity
-            .getServerPath()));
+//      channel.put(this.getFilePathRoot(upgradeEntity,upgradeEntity.getUpgradeFileName()), UpgradeConstants.getFilePath(upgradeEntity.getServerPath()));
       
       channel.quit();
       channel.disconnect();
@@ -127,32 +126,8 @@ public class LocalUpgradeServiceImpl extends BaseUpgradeServiceImpl {
 	
 	@Override
   protected void deleteFileTmepDir(UpgradeEntity upgradeEntity) {
-	  ChannelSftp channel = null;
-    try {
-      this.getSSHConnect(upgradeEntity.getServerUser(),
-          upgradeEntity.getServerPassword(),
-          upgradeEntity.getServerHost(),
-          upgradeEntity.getServerPort());
-      channel = (ChannelSftp) session.openChannel("sftp");
-      channel.connect();
-
-      @SuppressWarnings("unchecked")
-      Vector<LsEntry> serverPaths = channel.ls(UpgradeConstants.getFileTempPath(upgradeEntity
+	  this.exeShell("rm -rf "+UpgradeConstants.getFileTempPath(upgradeEntity
         .getServerPath(), upgradeEntity.getUpgradeFileName()));
-      if (hasLsEntry(serverPaths, FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName()))) {
-        channel.rmdir(UpgradeConstants.getFileTempPath(upgradeEntity
-        .getServerPath(), upgradeEntity.getUpgradeFileName()));
-      }
-      
-      channel.quit();
-      channel.disconnect();
-    } catch (Exception e) {
-      if (channel != null && !channel.isClosed()) {
-        channel.disconnect();
-      }
-      throw new MsgErrorException("删除临时目录失败", e);
-    }
-    
   }
 	
 	
@@ -163,7 +138,7 @@ public class LocalUpgradeServiceImpl extends BaseUpgradeServiceImpl {
 
   @Override
   protected String getServerPathRoot(UpgradeEntity upgradeEntity) {
-    return upgradeEntity.getServerPath();
+    return upgradeEntity.getServerPath()+UpgradeConstants.separator+UpgradeConstants.DIR_PATH;
   }
 
   
@@ -265,19 +240,28 @@ public class LocalUpgradeServiceImpl extends BaseUpgradeServiceImpl {
 		this.getSSHConnect(upgradeEntity.getServerUser(),
 				upgradeEntity.getServerPassword(),
 				upgradeEntity.getServerHost(), upgradeEntity.getServerPort());
-
-		StringBuilder command = new StringBuilder("jar -xvf ");
-		command.append(UpgradeConstants.getFilePath(upgradeEntity
-        .getServerPath())+UpgradeConstants.separator+upgradeEntity.getUpgradeFileName());
 		
-		this.exeShell(command.toString());//执行命令解压服务器文件
+		//创建解压文件夹
+		this.exeShell("mkdir "+this.getServerPathRoot(upgradeEntity,UpgradeConstants.FILE_PATH,FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName())));
+		//考本文件到解压文件夹
+		this.exeShell("cp "
+				+this.getServerPathRoot(upgradeEntity,UpgradeConstants.FILE_PATH,upgradeEntity.getUpgradeFileName())
+				+" "
+				+this.getServerPathRoot(upgradeEntity,UpgradeConstants.FILE_PATH,FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName())));
+		//解压文件
+		this.exeShell("jar -xvf "+this.getServerPathRoot(upgradeEntity,UpgradeConstants.FILE_PATH,
+				FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName()),upgradeEntity.getUpgradeFileName()));//执行命令解压服务器文件
 		
-		File tempDir=new File(FILE_PATH_LOCAL+FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName()));
+		//删除用来解压数据的临时包
+		this.exeShell("rm -rf  "+this.getServerPathRoot(upgradeEntity,UpgradeConstants.FILE_PATH,
+			FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName()),upgradeEntity.getUpgradeFileName()));//执行命令解压服务器文件
+		
+		File tempDir=new File(this.getFilePathRoot(upgradeEntity,FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName())));
 		if(tempDir.exists()){
 		  tempDir.delete();//先删除
 		}
-		ZipUpgradeUtil.unzip(FILE_PATH_LOCAL+upgradeEntity.getUpgradeFileName(), 
-		  FILE_PATH_LOCAL+FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName()));
+		ZipUpgradeUtil.unzip(this.getFilePathRoot(upgradeEntity,upgradeEntity.getUpgradeFileName()), 
+				this.getFilePathRoot(upgradeEntity,FilenameUtils.getBaseName(upgradeEntity.getUpgradeFileName()))+this.getFileRootSeparator());
 	}
 
 	@Override

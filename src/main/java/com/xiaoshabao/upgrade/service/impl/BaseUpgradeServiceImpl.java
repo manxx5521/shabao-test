@@ -8,7 +8,8 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.annotation.Resource;
@@ -23,7 +24,6 @@ import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xiaoshabao.baseframework.dao.BaseDao;
 import com.xiaoshabao.baseframework.dao.impl.MybatisBaseDaoImpl;
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.upgrade.entity.UpgradeEntity;
@@ -75,14 +75,16 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
       ScriptRunner runner = new ScriptRunner(conn);
       Resources.setCharset(Charset.forName("UTF-8")); //设置字符集,不然中文乱码插入错误
       
-      File infoLog=new File("log.txt");
+      String path=this.getFilePathRoot(upgradeEntity,UpgradeConstants.LOG_PATH,getLogNamePrefix());
+      File infoLog=new File("log_"+path+".txt");
       PrintWriter infoWriter=new PrintWriter(infoLog);
       runner.setLogWriter(infoWriter);
       
-      File errorLog=new File("error.txt");
+      File errorLog=new File("error_"+path+".txt");
       PrintWriter errorWriter=new PrintWriter(errorLog);
       runner.setErrorLogWriter(errorWriter);
       
+      exeSql( runner,errorWriter,files);
       
       runner.closeConnection();
       conn.close();
@@ -103,11 +105,21 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
     }
     
   }
+  /**
+   * 获得日志名字前缀
+   * @return
+   */
+  protected final String getLogNamePrefix(){
+	  try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+//		e.printStackTrace();
+	}
+	  return new SimpleDateFormat("yyyy-MM-dd_HHmmss_SSSS").format(new Date());
+  }
   
   /**
    * 获得数据连接（多数源需重写）
-   * @Title: getConnection     
-   * @Description: TODO    
    * @return
    */
   public Connection getConnection(){

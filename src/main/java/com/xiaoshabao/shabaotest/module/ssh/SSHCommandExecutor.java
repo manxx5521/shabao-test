@@ -97,51 +97,38 @@ public class SSHCommandExecutor {
 		}
 	}
 
-	
 	class MyUserInfo implements UserInfo {
 		private String password;
 
-		private String passphrase;
-
-		@Override
-		public String getPassphrase() {
-			System.out.println("MyUserInfo.getPassphrase()");
-			return null;
+		public MyUserInfo() {
 		}
 
-		@Override
+		public MyUserInfo(String password) {
+			this.password = password;
+		}
+
 		public String getPassword() {
-			System.out.println("MyUserInfo.getPassword()");
+			return password;
+		}
+
+		public boolean promptYesNo(String str) {
+			return true;
+		}
+
+		public String getPassphrase() {
 			return null;
 		}
 
-		@Override
-		public boolean promptPassphrase(final String arg0) {
-			System.out.println("MyUserInfo.promptPassphrase()");
-			System.out.println(arg0);
-			return false;
+		public boolean promptPassphrase(String message) {
+			return true;
 		}
 
-		@Override
-		public boolean promptPassword(final String arg0) {
-			System.out.println("MyUserInfo.promptPassword()");
-			System.out.println(arg0);
-			return false;
+		public boolean promptPassword(String message) {
+			return true;
 		}
 
-		@Override
-		public boolean promptYesNo(final String arg0) {
-			System.out.println("MyUserInfo.promptYesNo()");
-			System.out.println(arg0);
-			if (arg0.contains("The authenticity of host")) {
-				return true;
-			}
-			return false;
-		}
+		public void showMessage(String message) {
 
-		@Override
-		public void showMessage(final String arg0) {
-			System.out.println("MyUserInfo.showMessage()");
 		}
 	}
 }

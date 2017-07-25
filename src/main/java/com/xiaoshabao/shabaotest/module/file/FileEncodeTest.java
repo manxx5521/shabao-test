@@ -10,10 +10,10 @@ import org.junit.Test;
  */
 public class FileEncodeTest {
   
-  private String filePath="";
+  private String filePath="E:\\test\\FileTest.java";
   
   /**
-   * jdk获得文件编码
+   * jdk获得文件编码(获得的编码错误的)
    */
   @Test
   public void getFileEncode(){
