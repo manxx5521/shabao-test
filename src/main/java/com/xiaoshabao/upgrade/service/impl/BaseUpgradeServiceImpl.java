@@ -2,13 +2,21 @@ package com.xiaoshabao.upgrade.service.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Iterator;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -16,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.xiaoshabao.baseframework.dao.BaseDao;
+import com.xiaoshabao.baseframework.dao.impl.MybatisBaseDaoImpl;
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.upgrade.entity.UpgradeEntity;
 import com.xiaoshabao.upgrade.service.UpgradeService;
@@ -26,7 +35,7 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
   protected Logger logger = LoggerFactory.getLogger(BaseUpgradeServiceImpl.class);
 
   @Resource(name = "mybatisBaseDao")
-  protected BaseDao baseDao;
+  protected MybatisBaseDaoImpl baseDao;
 
   @Override
   public AjaxResult upgradeApplication(Integer upgradeId) {
@@ -53,13 +62,56 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
    * 执行sql
    */
   protected void exeSql(UpgradeEntity upgradeEntity) {
-    String sqlPath = UpgradeConstants.getSqlFilePath(upgradeEntity
-        .getServerPath());
+    String sqlPath = this.getFilePathRoot(upgradeEntity, UpgradeConstants.SQL_FILE_PATH.replace("/", getFileRootSeparator()));
     File sqlFileRoot = new File(sqlPath);
     if (!sqlFileRoot.exists()) {
-      
+      throw new MsgErrorException("未找到存放sql文件的文件夹");
     }
-
+    
+    File[] files=sqlFileRoot.listFiles();
+    
+    Connection conn =getConnection();
+    try {
+      ScriptRunner runner = new ScriptRunner(conn);
+      Resources.setCharset(Charset.forName("UTF-8")); //设置字符集,不然中文乱码插入错误
+      
+      File infoLog=new File("log.txt");
+      PrintWriter infoWriter=new PrintWriter(infoLog);
+      runner.setLogWriter(infoWriter);
+      
+      File errorLog=new File("error.txt");
+      PrintWriter errorWriter=new PrintWriter(errorLog);
+      runner.setErrorLogWriter(errorWriter);
+      
+      
+      runner.closeConnection();
+      conn.close();
+    } catch (Exception e) {
+    }
+  }
+  
+  protected void exeSql(ScriptRunner runner,PrintWriter log,File[] files) throws FileNotFoundException{
+    for(File file:files){
+      if(file.isDirectory()){
+        //如果是文件夹，直接进去找文件
+        exeSql(runner,log,file.listFiles());
+      }else{
+        //文件
+//        runner.runScript(Resources.getResourceAsReader("sql/CC20-01.sql"));
+        runner.runScript(new FileReader(file));
+      }
+    }
+    
+  }
+  
+  /**
+   * 获得数据连接（多数源需重写）
+   * @Title: getConnection     
+   * @Description: TODO    
+   * @return
+   */
+  public Connection getConnection(){
+    return this.baseDao.getSqlSession().getConnection();
   }
   /**
    * 覆盖文件
@@ -115,6 +167,62 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
    * @return
    */
   protected abstract String getSpecialConfigPath(UpgradeEntity upgradeEntity,String specialPath);
+  
+  /**
+   * 获得文件路径根目录（--/--/upgrade）
+   * @param specialPath 特殊文件目录
+   * @return
+   */
+  protected abstract String getFilePathRoot(UpgradeEntity upgradeEntity);
+  /**
+   * 获得文件路径根目录（--/--/upgrade）
+   * @param specialPath 特殊文件目录
+   * @return
+   */
+  protected String getFilePathRoot(UpgradeEntity upgradeEntity,String... path){
+    StringBuilder sb=new StringBuilder(getFilePathRoot(upgradeEntity));
+    for(String temp:path){
+      sb.append(getFileRootSeparator());
+      sb.append(temp);
+    }
+    return sb.toString();
+  }
+  
+  /**
+   * 获得文件路径的分割符号（如果子类特殊可复写）
+   * @return
+   */
+  protected String getFileRootSeparator(){
+    return UpgradeConstants.separator;
+  }
+  
+  /**
+   * 获得服务端路径根目录（--/--/upgrade）
+   * @param specialPath 特殊文件目录
+   * @return
+   */
+  protected abstract String getServerPathRoot(UpgradeEntity upgradeEntity);
+  /**
+   * 获得服务端路径根目录（--/--/upgrade）
+   * @param specialPath 特殊文件目录
+   * @return
+   */
+  protected String getServerPathRoot(UpgradeEntity upgradeEntity,String... path){
+    StringBuilder sb=new StringBuilder(getServerPathRoot(upgradeEntity));
+    for(String temp:path){
+      sb.append(UpgradeConstants.separator);
+      sb.append(temp);
+    }
+    return sb.toString();
+  }
+  
+  
+  
+  
+  
+  
+  
+  
   /**
    * 判断所需目录是否存在
    * @param upgradeEntity
@@ -169,8 +277,11 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
   
   protected abstract void copyServerFileToFile(UpgradeEntity upgradeEntity,String srcPath, String destPath);
   
+  /**
+   * 获得升级列表
+   */
   @Override
-  public AjaxResult getUpgradeList(Integer upgradeId, String path) {
+  public AjaxResult getUpgradeList(Integer upgradeId) {
     // TODO Auto-generated method stub
     return null;
   }

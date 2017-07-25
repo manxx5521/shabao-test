@@ -18,7 +18,7 @@ public interface UpgradeService {
 	 * @param path
 	 * @return
 	 */
-	public AjaxResult getUpgradeList(Integer upgradeId, String path);
+	public AjaxResult getUpgradeList(Integer upgradeId);
 
 	/**
 	 * 获得未更新列表

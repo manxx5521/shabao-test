@@ -3,6 +3,8 @@ package com.xiaoshabao.upgrade.service.impl;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -36,15 +38,15 @@ public class LocalUpgradeServiceImpl extends BaseUpgradeServiceImpl {
 	/**是否检查目录标识**/
 	private boolean checkDir=false;
 	
-	private final static String FILE_PATH_LOCAL="C:\\Users\\Administrator\\Desktop\\";
+	private final static String FILE_PATH_LOCAL="C:\\Users\\Administrator\\Desktop\\upgrade";
 	
 	
 	@Override
   public AjaxResult upgradeApplication(Integer upgradeId) {
 	  UpgradeEntity upgradeEntity=getUpgradeEntity(upgradeId);
-	  File file=new File(FILE_PATH_LOCAL+upgradeEntity.getUpgradeFileName());
+	  File file=new File(this.getFilePathRoot(upgradeEntity,"\\",upgradeEntity.getUpgradeFileName()));
 	  if(file==null||!file.exists()){
-	    throw new MsgErrorException("未能在桌面找到所需升级文件");
+	    throw new MsgErrorException("未能在升级目录找到所需升级文件");
 	  }
 	  //检查目录
 	  existsDir(upgradeEntity);
@@ -60,7 +62,7 @@ public class LocalUpgradeServiceImpl extends BaseUpgradeServiceImpl {
       channel = (ChannelSftp) session.openChannel("sftp");
       channel.connect();
 
-      channel.put(FILE_PATH_LOCAL+upgradeEntity.getUpgradeFileName(), UpgradeConstants.getFilePath(upgradeEntity
+      channel.put(this.getFilePathRoot(upgradeEntity,"\\",upgradeEntity.getUpgradeFileName()), UpgradeConstants.getFilePath(upgradeEntity
             .getServerPath()));
       
       channel.quit();
@@ -152,6 +154,43 @@ public class LocalUpgradeServiceImpl extends BaseUpgradeServiceImpl {
     }
     
   }
+	
+	
+	@Override
+  protected String getFilePathRoot(UpgradeEntity upgradeEntity) {
+    return FILE_PATH_LOCAL;
+  }
+
+  @Override
+  protected String getServerPathRoot(UpgradeEntity upgradeEntity) {
+    return upgradeEntity.getServerPath();
+  }
+
+  
+  /**
+   * 获得文件路径的分割符号
+   * @return
+   */
+  @Override
+  protected String getFileRootSeparator(){
+    return "\\";
+  }
+  
+  /**
+   * 获得数据连接（多数源需重写）
+   * @return
+   */
+  @Override
+  public Connection getConnection(){
+    try {
+      Class.forName("com.mysql.jdbc.Driver").newInstance();
+      return DriverManager.getConnection("", "", "");
+    } catch (Exception e) {
+      throw new MsgErrorException("设置升级数据源失败");
+    }
+  }
+  
+  
 
   @Override
   protected void deleteFileTmep(UpgradeEntity upgradeEntity) {

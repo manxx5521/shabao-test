@@ -22,6 +22,7 @@ public class UpgradeConstants {
    */
   public final static String BACKUP_PATH="backup";
 
+  /** 服务器文件分割符号 **/
   public final static String separator="/";
   
   /**

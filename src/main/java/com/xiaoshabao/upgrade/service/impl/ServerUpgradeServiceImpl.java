@@ -17,44 +17,44 @@ import com.xiaoshabao.upgrade.util.ZipUpgradeUtil;
 @Service("serverUpgradeService")
 @Scope("prototype")
 public class ServerUpgradeServiceImpl extends BaseUpgradeServiceImpl {
-	@Override
-	protected void unzip(UpgradeEntity upgradeEntity, String zipFilePath,
-			String saveFileDir) {
-		ZipUpgradeUtil.unzip(zipFilePath, saveFileDir);
-	}
+  @Override
+  protected void unzip(UpgradeEntity upgradeEntity, String zipFilePath,
+      String saveFileDir) {
+    ZipUpgradeUtil.unzip(zipFilePath, saveFileDir);
+  }
 
-	@Override
-	protected void existsDir(UpgradeEntity upgradeEntity) {
-		if (StringUtils.isEmpty(upgradeEntity.getUpgradeFileName())) {
-			throw new MsgErrorException("要升级的文件为空");
-		}
-		File file = new File(upgradeEntity.getServerPath() + File.separator
-				+ upgradeEntity.getUpgradeFileName());
-		if (!file.exists()) {
-			throw new MsgErrorException("未找到要执行的文件");
-		}
+  @Override
+  protected void existsDir(UpgradeEntity upgradeEntity) {
+    if (StringUtils.isEmpty(upgradeEntity.getUpgradeFileName())) {
+      throw new MsgErrorException("要升级的文件为空");
+    }
+    File file = new File(upgradeEntity.getServerPath() + File.separator
+        + upgradeEntity.getUpgradeFileName());
+    if (!file.exists()) {
+      throw new MsgErrorException("未找到要执行的文件");
+    }
 
-		// 检查解压文件目录
-		File tempDir = new File(UpgradeConstants.getFileTempPath(
-				upgradeEntity.getServerPath(),
-				upgradeEntity.getUpgradeFileName()));
-		if (tempDir.exists()) {
-			tempDir.delete();
-		}
-		tempDir.mkdir();
-	}
+    // 检查解压文件目录
+    File tempDir = new File(UpgradeConstants.getFileTempPath(
+        upgradeEntity.getServerPath(),
+        upgradeEntity.getUpgradeFileName()));
+    if (tempDir.exists()) {
+      tempDir.delete();
+    }
+    tempDir.mkdir();
+  }
 
-	@Override
-	protected void deleteFileTmepDir(UpgradeEntity upgradeEntity) {
-		// TODO Auto-generated method stub
-		
-	}
+  @Override
+  protected void deleteFileTmepDir(UpgradeEntity upgradeEntity) {
+    // TODO Auto-generated method stub
+    
+  }
 
-	@Override
-	protected void deleteFileTmep(UpgradeEntity upgradeEntity) {
-		// TODO Auto-generated method stub
-		
-	}
+  @Override
+  protected void deleteFileTmep(UpgradeEntity upgradeEntity) {
+    // TODO Auto-generated method stub
+    
+  }
 
   @Override
   protected void existsUpgradeFile(UpgradeEntity upgradeEntity) {
@@ -77,6 +77,18 @@ public class ServerUpgradeServiceImpl extends BaseUpgradeServiceImpl {
 
   @Override
   protected String getSpecialConfigPath(UpgradeEntity upgradeEntity, String specialPath) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  protected String getFilePathRoot(UpgradeEntity upgradeEntity) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  protected String getServerPathRoot(UpgradeEntity upgradeEntity) {
     // TODO Auto-generated method stub
     return null;
   }
