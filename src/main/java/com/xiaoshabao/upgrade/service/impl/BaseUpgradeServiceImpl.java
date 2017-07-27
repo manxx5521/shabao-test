@@ -2,8 +2,8 @@ package com.xiaoshabao.upgrade.service.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
@@ -15,9 +15,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.io.Resources;
@@ -42,7 +45,8 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
   @Resource(name = "mybatisBaseDao")
   protected MybatisBaseDaoImpl baseDao;
 
-  private static DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+  protected static DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+  protected static Pattern DATE_PATTERN = Pattern.compile("(\\d{4}-\\d{2}-\\d{2})");
 
   @Override
   public AjaxResult upgradeApplication(Integer upgradeId) {
@@ -100,7 +104,7 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
     }
   }
 
-  protected void exeSql(ScriptRunner runner, PrintWriter log, File[] files) throws FileNotFoundException {
+  protected void exeSql(ScriptRunner runner, PrintWriter log, File[] files) throws IOException {
     for (File file : files) {
       if (file.isDirectory()) {
         //如果是文件夹，直接进去找文件
@@ -109,6 +113,7 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
         //文件
         //        runner.runScript(Resources.getResourceAsReader("sql/CC20-01.sql"));
         runner.runScript(new FileReader(file));
+        List<String> writers=FileUtils.readLines(file,"UTF-8");
       }
     }
 
@@ -320,12 +325,44 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
     return fileList;
   }
 
-  protected void getUpgradeList(List<UpgradeFileDetail> fileList, File[] files, Date upgradeDate) {
+  protected void getUpgradeList(List<UpgradeFileDetail> fileList, File[] files, Date upgradeDate) throws ParseException{
+    
+      UpgradeFileDetail fileDetail=new UpgradeFileDetail();
+      for (File file : files) {
+        if (file.isDirectory()) {
+          String dirName=file.getName();
+          Matcher m = DATE_PATTERN.matcher(dirName);
+          if (m.find()) {
+            dirName=m.group(0);
+            Date dirDate=DATE_FORMAT.parse(dirName);
+            file.listFiles();
+            
+          }
+          //如果是文件夹，直接进去找文件
+          getUpgradeList(fileList, file.listFiles(), upgradeDate);
+        } else {
+          String name=file.getName();
+          String path=file.getAbsolutePath();
+//          path.
+//          fileDetail.setDate(date);
+        }
+      }
+
+  }
+  
+  protected void getUpgradeList(List<UpgradeFileDetail> fileList, File[] files) {
     UpgradeFileDetail fileDetail=new UpgradeFileDetail();
     for (File file : files) {
       if (file.isDirectory()) {
+        String dirName=file.getName();
+        Matcher m = DATE_PATTERN.matcher(dirName);
+        if (m.find()) {
+          dirName=m.group(0);
+          file.listFiles();
+          
+        }
         //如果是文件夹，直接进去找文件
-        getUpgradeList(fileList, file.listFiles(), upgradeDate);
+//        getUpgradeList(fileList, file.listFiles(), upgradeDate);
       } else {
         String name=file.getName();
         String path=file.getAbsolutePath();
@@ -335,6 +372,7 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
     }
 
   }
+
 
   @Override
   public AjaxResult getLogList(Integer upgradeId) {
