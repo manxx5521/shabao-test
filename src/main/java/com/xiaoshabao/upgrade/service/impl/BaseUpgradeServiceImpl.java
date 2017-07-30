@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -95,15 +96,25 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
       File errorLog = new File("error_" + path + ".txt");
       PrintWriter errorWriter = new PrintWriter(errorLog);
       runner.setErrorLogWriter(errorWriter);
-
+      
+      List<UpgradeFileDetail> upgradeList=getUpgradeList(upgradeEntity);
+      if(upgradeList.size()<1){
+    	  throw new MsgErrorException("未获得升级列表");
+      }
       exeSql(runner, errorWriter, files);
 
       runner.closeConnection();
       conn.close();
-    } catch (Exception e) {
+    } catch (IOException e) {
+		e.printStackTrace();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally{
+    	close();
     }
   }
-
+  
   protected void exeSql(ScriptRunner runner, PrintWriter log, File[] files) throws IOException {
     for (File file : files) {
       if (file.isDirectory()) {
@@ -305,6 +316,12 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
     return new AjaxResult(true, getUpgradeList(upgradeEntity));
   }
 
+  /**
+   * 获得升级文件列表
+   * <p>需要文件已经解压到文件目录</p>
+   * @param upgradeEntity
+   * @return
+   */
   protected List<UpgradeFileDetail> getUpgradeList(UpgradeEntity upgradeEntity) {
     String sqlPath = this.getFilePathRoot(upgradeEntity,
       UpgradeConstants.SQL_FILE_PATH.replace("/", getFileRootSeparator()));
@@ -325,49 +342,52 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
     return fileList;
   }
 
+  /**
+   * 根据升级文件获得符合格式2017-03-09的文件夹，并且在upgradeDate升级日期之后
+   * @param fileList 返回的升级文件列表
+   * @param files
+   * @param upgradeDate 升级日期
+   * @throws ParseException
+   */
   protected void getUpgradeList(List<UpgradeFileDetail> fileList, File[] files, Date upgradeDate) throws ParseException{
     
-      UpgradeFileDetail fileDetail=new UpgradeFileDetail();
       for (File file : files) {
         if (file.isDirectory()) {
           String dirName=file.getName();
           Matcher m = DATE_PATTERN.matcher(dirName);
           if (m.find()) {
+        	  //符合日期格式
             dirName=m.group(0);
             Date dirDate=DATE_FORMAT.parse(dirName);
-            file.listFiles();
-            
+            if(dirDate.after(upgradeDate)){
+            	getUpgradeList(fileList,file.listFiles(),dirName);
+            }
+          }else{
+        	//如果是文件夹，并且不符合日期格式 直接进去找文件
+              getUpgradeList(fileList, file.listFiles(), upgradeDate);
           }
-          //如果是文件夹，直接进去找文件
-          getUpgradeList(fileList, file.listFiles(), upgradeDate);
-        } else {
-          String name=file.getName();
-          String path=file.getAbsolutePath();
-//          path.
-//          fileDetail.setDate(date);
+          
         }
       }
 
   }
   
-  protected void getUpgradeList(List<UpgradeFileDetail> fileList, File[] files) {
-    UpgradeFileDetail fileDetail=new UpgradeFileDetail();
+  /**
+   * 获得符合格式文件夹夹下的具体文件
+   * @param fileList
+   * @param files
+   * @param dateStr
+   */
+  protected void getUpgradeList(List<UpgradeFileDetail> fileList, File[] files,String dateStr) {
+    
     for (File file : files) {
       if (file.isDirectory()) {
-        String dirName=file.getName();
-        Matcher m = DATE_PATTERN.matcher(dirName);
-        if (m.find()) {
-          dirName=m.group(0);
-          file.listFiles();
-          
-        }
-        //如果是文件夹，直接进去找文件
-//        getUpgradeList(fileList, file.listFiles(), upgradeDate);
+    	  getUpgradeList(fileList,file.listFiles(),dateStr);
       } else {
-        String name=file.getName();
-        String path=file.getAbsolutePath();
-//        path.
-//        fileDetail.setDate(date);
+    	  UpgradeFileDetail fileDetail=new UpgradeFileDetail();
+    	  fileDetail.setName(file.getName());
+    	  fileDetail.setPath(file.getAbsolutePath());
+        fileDetail.setDate(dateStr);
       }
     }
 
@@ -378,6 +398,13 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
   public AjaxResult getLogList(Integer upgradeId) {
     // TODO Auto-generated method stub
     return null;
+  }
+  
+  /**
+   * 最后关闭可能存在的资源
+   */
+  protected void close(){
+	  //默认无实现，需子类覆写
   }
 
 }
