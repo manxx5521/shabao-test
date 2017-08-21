@@ -27,6 +27,8 @@ public class MapTest {
 	 * <p>
 	 * 方法不支持1.5以下JDK。
 	 * 如果只是遍历key值使用下边第二个方法traverseMapKey()
+	 * 
+	 * entrySet方式优于keySet方式
 	 * </p>
 	 * 
 	 */
