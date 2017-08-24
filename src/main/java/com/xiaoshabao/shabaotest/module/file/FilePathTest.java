@@ -43,6 +43,9 @@ public class FilePathTest {
   public static void main(String[] args){
     FilePathTest test=new FilePathTest();
     test.getUserDir();
+    
+    File file=new File(test.getUserDir());
+    String filePath=file.getParent();
   }
 
 }
