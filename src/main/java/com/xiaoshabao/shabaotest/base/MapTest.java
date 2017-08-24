@@ -13,7 +13,7 @@ import org.junit.Test;
 public class MapTest {
 
 	/**
-	 * 获得一个不存在的变量时，返回null
+	 * 获得一个不存在的变量时，返回null 
 	 */
 	@Test
 	public void test() {
