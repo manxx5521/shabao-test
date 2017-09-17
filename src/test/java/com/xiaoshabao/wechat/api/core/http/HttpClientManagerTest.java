@@ -8,11 +8,13 @@ import java.util.Map;
 import org.junit.Test;
 
 public class HttpClientManagerTest {
-
+	
+	HttpClientManager http=HttpClientManager.getInstance();
 
 	@Test
 	public void testDoGetString() {
-		fail("Not yet implemented");
+		String rs=http.doGet("http://weibo.com/p/1005052930285990/photos?from=page_100505&mod=TAB#place");
+		System.out.println(rs);
 	}
 
 	@Test
@@ -22,7 +24,8 @@ public class HttpClientManagerTest {
 
 	@Test
 	public void testDoGetSSLString() {
-		fail("Not yet implemented");
+		String rs=http.doGetSSL("http://weibo.com/p/1005052930285990/photos?from=page_100505&mod=TAB#place");
+		System.out.println(rs);
 	}
 
 	@Test
@@ -33,7 +36,6 @@ public class HttpClientManagerTest {
 	@Test
 	public void testGetFileGetSSLStringMapOfStringObjectString() {
 		try {
-			HttpClientManager http=HttpClientManager.getInstance();
 			Map<String ,Object> params=new HashMap<String ,Object>();
 			http.getFileGetSSL("http://wx.qlogo.cn/mmopen/OQKjftn2qHhibGwZQic3iazczIFLNP9qgVMZqmq195Y6iblnu8BJEbd1OpWVLU9XBSNsCK2JZhTRVOIaGQEjOCtyibKInUx2t1lUic/0", 
 					params, "E://test");
