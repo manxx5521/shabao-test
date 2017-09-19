@@ -2,11 +2,10 @@ package com.xiaoshabao.shabaotest.plugins.zhuatu;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -28,20 +27,18 @@ import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 import org.htmlparser.visitors.NodeVisitor;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.xiaoshabao.shabaotest.plugins.zhuatu.MDownloadThreePool.DownloadTask;
 
 /**
  * 抓图工具
  */
-public class MZhuatu {
+public abstract class BaseMZhuatu {
 
-	private final static Logger logger = LoggerFactory.getLogger(MZhuatu.class);
+	private final static Logger logger = LoggerFactory
+			.getLogger(BaseMZhuatu.class);
 
-	protected final static String DEFAULT_CHARSET = "GBK";
+	protected String defaultCharset = "GBK";
 
 	protected String projectName;
 
@@ -56,14 +53,9 @@ public class MZhuatu {
 	 */
 	private ThreadPoolExecutor executor;
 
-	@Test
-	public void test() {
-		this.projectName = "gm";
-		savePath = "E:\\test\\shabao-m\\resources\\plugins\\mm\\99renti";
-		start("http://www.99renti.wang/html/guomosipai/");
-	}
-
-	public void start(String url) {
+	public void start(String url, String savePath, String charset) {
+		this.savePath = savePath;
+		this.defaultCharset = "charset";
 		try {
 			File path = new File(savePath);
 			if (!path.exists() || path.isFile()) {
@@ -82,8 +74,19 @@ public class MZhuatu {
 			URL urlEntity = new URL(url);
 			urlRoot = urlEntity.getProtocol() + "://" + urlEntity.getHost();
 
+			parserPage(url);
+		} catch (MalformedURLException e1) {
+			logger.error("url初始化时解析错误：{}", url, e1);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+
+	private void parserPage(String url) {
+		try {
 			Parser parser = Parser.createParser(this.doGet5(url),
-					MZhuatu.DEFAULT_CHARSET);
+					defaultCharset);
 			NodeList list = parser.parse(new HasAttributeFilter("class",
 					"ulPic"));
 			Node body = list.elementAt(0);
@@ -141,6 +144,8 @@ public class MZhuatu {
 			e.printStackTrace();
 		}
 	}
+	
+	protected abstract void parserPageDetailUrl();
 
 	/**
 	 * 打开详情界面
@@ -151,7 +156,7 @@ public class MZhuatu {
 			List<String> downloads, List<String> pages) throws ParserException {
 
 		String html = this.doGet5(urlRoot + href);
-		Parser parser = Parser.createParser(html, MZhuatu.DEFAULT_CHARSET);
+		Parser parser = Parser.createParser(html, defaultCharset);
 
 		NodeList imgs = parser.parse(new TagNameFilter("img"));
 		for (Node node : imgs.toNodeArray()) {
@@ -180,7 +185,7 @@ public class MZhuatu {
 
 		pages.add(href);
 
-		parser = Parser.createParser(html, MZhuatu.DEFAULT_CHARSET);
+		parser = Parser.createParser(html, defaultCharset);
 		NodeList nexts = parser.parse(new HasAttributeFilter("class", "a1"));
 		for (Node node : nexts.toNodeArray()) {
 			LinkTag link = (LinkTag) node;
@@ -201,7 +206,7 @@ public class MZhuatu {
 		return title.trim().replace("amp;", "");
 	}
 
-	public String doGet5(String url) {
+	private String doGet5(String url) {
 		String result = null;
 		boolean flag = true;
 		int i = 1;
@@ -227,7 +232,7 @@ public class MZhuatu {
 		return result;
 	}
 
-	public String doGet(String url) {
+	private String doGet(String url) {
 		HttpGet httpGet = new HttpGet(url);
 		CloseableHttpClient httpClient = null;
 		CloseableHttpResponse response = null;
@@ -239,8 +244,7 @@ public class MZhuatu {
 			// 执行请求
 			response = httpClient.execute(httpGet);
 			entity = response.getEntity();
-			responseContent = EntityUtils.toString(entity,
-					MZhuatu.DEFAULT_CHARSET);// 获得响应内容
+			responseContent = EntityUtils.toString(entity, defaultCharset);// 获得响应内容
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("HttpClientUtil 发送http get请求未能正常建立连接或者访问资源！！\n访问url："

@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 下载线程池
+ * 下载线程池(只做展示)
  */
 public class MDownloadThreePool {
 	private static Logger logger = LoggerFactory
