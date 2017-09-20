@@ -7,11 +7,19 @@ public class MTuInfo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String url;
+	private String title;
 	private String fileNamePath;
-
+	public MTuInfo() {
+	}
 	public MTuInfo(String url, String fileNamePath) {
 		this.url = url;
 		this.fileNamePath = fileNamePath;
+	}
+	
+	public void clear(){
+		this.url=null;
+		this.title=null;
+		this.fileNamePath=null;
 	}
 
 	public String getUrl() {
@@ -28,6 +36,15 @@ public class MTuInfo implements Serializable{
 
 	public void setFileNamePath(String fileNamePath) {
 		this.fileNamePath = fileNamePath;
+	}
+	
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	@Override
