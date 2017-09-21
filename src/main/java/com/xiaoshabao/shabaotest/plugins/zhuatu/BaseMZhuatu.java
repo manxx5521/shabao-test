@@ -1,7 +1,6 @@
 package com.xiaoshabao.shabaotest.plugins.zhuatu;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -9,12 +8,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -124,61 +117,32 @@ public class BaseMZhuatu {
 		String result = null;
 		boolean flag = true;
 		int i = 1;
-		do {
-			result = this.doGet(url);
-			if (StringUtils.isNotEmpty(result)) {
-				flag = false;
-			} else {
-				if (i > 5) {
-					logger.error("解析失败" + url + "\n");
-					flag = false;
-				} else {
-					logger.error("解析失败，开始重试第" + i + "次：" + url);
-					i++;
-					try {
-						Thread.sleep(1000 * 3);
-					} catch (InterruptedException e1) {
-					}
-				}
-			}
+		  do {
+		    try {
+	      result = MZhuatuHttpUtil.doGet(url,defaultCharset);
+		    } catch (Exception e) {
+		      logger.error("未能正常访问url：{}",url,e);
+		    }
+	      if (StringUtils.isNotEmpty(result)) {
+	        flag = false;
+	      } else {
+	        if (i > 5) {
+	          logger.error("解析失败" + url + "\n");
+	          flag = false;
+	        } else {
+	          logger.error("解析失败，开始重试第" + i + "次：" + url);
+	          i++;
+	          try {
+	            Thread.sleep(1000 * 3);
+	          } catch (InterruptedException e1) {
+	          }
+	        }
+	      }
 
-		} while (flag);
+	    } while (flag);
+    
 		return result;
 	}
-
-	private String doGet(String url) {
-		HttpGet httpGet = new HttpGet(url);
-		CloseableHttpClient httpClient = null;
-		CloseableHttpResponse response = null;
-		HttpEntity entity = null;
-		String responseContent = null;
-		try {
-			// 创建默认的httpClient实例.
-			httpClient = HttpClients.createDefault();
-			// 执行请求
-			response = httpClient.execute(httpGet);
-			entity = response.getEntity();
-			responseContent = EntityUtils.toString(entity, defaultCharset);// 获得响应内容
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("HttpClientUtil 发送http get请求未能正常建立连接或者访问资源！！\n访问url："
-					+ url, e);
-		} finally {
-			try {
-				// 关闭连接,释放资源
-				if (response != null) {
-					response.close();
-				}
-				if (httpClient != null) {
-					httpClient.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				logger.error("HttpClientUtil 发送http get请求时资源未能正常关闭！！", e);
-			}
-		}
-		return responseContent;
-
-	}
+	
 
 }

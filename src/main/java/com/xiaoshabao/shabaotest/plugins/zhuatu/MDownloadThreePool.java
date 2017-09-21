@@ -10,7 +10,6 @@ import java.util.concurrent.Executors;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -76,13 +75,6 @@ public class MDownloadThreePool {
 			HttpEntity entity = null;
 			try {
 				httpClient = HttpClients.createDefault();
-				/*自定义超时时间等
-				RequestConfig requestConfig = RequestConfig.custom()
-						.setCookieSpec("easy").setSocketTimeout(5000) // socket超时
-						.setConnectTimeout(5000) // connect超时
-						.build();
-				httpGet.setConfig(requestConfig);*/
-				
 				response = httpClient.execute(httpGet);
 				entity = response.getEntity();
 				if (entity != null) {

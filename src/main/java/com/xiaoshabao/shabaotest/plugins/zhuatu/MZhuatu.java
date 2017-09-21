@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -31,8 +29,6 @@ import org.htmlparser.visitors.NodeVisitor;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.xiaoshabao.shabaotest.plugins.zhuatu.MDownloadThreePool.DownloadTask;
 
 /**
  * 抓图工具
