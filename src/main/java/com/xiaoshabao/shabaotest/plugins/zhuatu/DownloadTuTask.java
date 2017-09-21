@@ -26,7 +26,7 @@ public class DownloadTuTask  implements Runnable{
 	 * 下载文件
 	 * 
 	 * @param url
-	 *            http://www.99pic.org/uploadfile/2017/0915/07/01.jpg
+	 *            http://www.***.org/uploadfile/2017/0915/07/01.jpg
 	 * @param fileNamePath
 	 *            E:\\test\\gm\\01.jpg
 	 */
