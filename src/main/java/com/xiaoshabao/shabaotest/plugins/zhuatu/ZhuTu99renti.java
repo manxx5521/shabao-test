@@ -35,7 +35,7 @@ public class ZhuTu99renti {
 		zhuatuServices.add(new MZhuatuWaitService() {
 			@Override
 			public List<MTuInfo> parser(String html, MTuInfo parentInfo,
-					List<String> projects, List<String> downloadURL) {
+					final List<String> projects,final List<String> downloadURL) {
 				final List<MTuInfo> result = new LinkedList<MTuInfo>();
 				final MTuInfo info = new MTuInfo();
 				try {
