@@ -34,7 +34,7 @@ public class DownloadTuTask  implements Runnable{
 				logger.info("下载成功:" + url);
 			} catch (Exception e) {
 				if(i>5){
-					logger.error("下载失败"+url+"\n预期目录："+fileNamePath);
+					logger.error("下载失败"+url+"\n预期目录："+fileNamePath,e);
 					flag=false;
 				}else{
 					logger.error("下载失败，开始重试第"+i+"次："+url);

@@ -1,6 +1,7 @@
 package com.xiaoshabao.shabaotest.plugins.zhuatu;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -10,6 +11,10 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.xiaoshabao.shabaotest.plugins.zhuatu.service.MZhuatuDownloadService;
+import com.xiaoshabao.shabaotest.plugins.zhuatu.service.MZhuatuService;
+import com.xiaoshabao.shabaotest.plugins.zhuatu.service.MZhuatuWaitService;
 
 /**
  * 抓图工具
@@ -36,6 +41,7 @@ public class BaseMZhuatu {
 
 	public void start(String url, String savePath, String charset,
 			List<MZhuatuService> zhuatuServices) {
+		logger.info("开始抓取：{}",url);
 		this.zhuatuServices = zhuatuServices;
 		this.savePath = savePath;
 		this.defaultCharset = charset;
@@ -61,12 +67,14 @@ public class BaseMZhuatu {
 
 	}
 
-	private void parserPage(MTuInfo parentInfo, String html,
+	private void parserPage(MTuInfo pageInfo, String html,
 			MZhuatuService zhuatuService, int idx, List<String> downloadURL) {
-		List<MTuInfo> list = zhuatuService.parser(html, parentInfo,
-				downloadURL, downloadURL);
+		List<MTuInfo> list = zhuatuService.parser(html, pageInfo,
+				projects, downloadURL);
 
-		for (MTuInfo tuInfo : list) {
+		Iterator<MTuInfo> iterator=list.iterator();
+		while(iterator.hasNext()){//链表用迭代器
+			MTuInfo tuInfo=iterator.next();
 			// 需要等待相同内容连接池
 			if (zhuatuService instanceof MZhuatuWaitService) {
 				// 检查任务是否过多
@@ -74,6 +82,7 @@ public class BaseMZhuatu {
 				while (flag) {
 					if (executor.getActiveCount() < 5) {
 						flag = false;
+						logger.info("开始下载项目:{}  ######################",tuInfo.getTitle());
 					} else {
 						try {
 							Thread.sleep(1000 * 2);
@@ -107,7 +116,7 @@ public class BaseMZhuatu {
 		if (StringUtils.isNotEmpty(nextUrl)) {
 			MTuInfo tuInfo = new MTuInfo();
 			tuInfo.setUrl(nextUrl);
-			tuInfo.setTitle(parentInfo.getTitle());
+			tuInfo.setTitle(pageInfo.getTitle());
 			parserPage(tuInfo, this.doGet5(tuInfo.getUrl()),
 					zhuatuServices.get(idx), idx, downloadURL);// 下一页
 		}

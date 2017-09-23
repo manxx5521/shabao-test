@@ -1,4 +1,4 @@
-package com.xiaoshabao.shabaotest.plugins.zhuatu;
+package com.xiaoshabao.shabaotest.plugins.zhuatu.service;
 
 /**
  * 需要等待的服务类

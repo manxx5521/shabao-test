@@ -1,6 +1,8 @@
-package com.xiaoshabao.shabaotest.plugins.zhuatu;
+package com.xiaoshabao.shabaotest.plugins.zhuatu.service;
 
 import java.util.List;
+
+import com.xiaoshabao.shabaotest.plugins.zhuatu.MTuInfo;
 
 /**
  * 抓图接口
@@ -15,7 +17,7 @@ public interface MZhuatuService {
 	 * @param downloadURL 当前项目已经下载的链接
 	 * @return
 	 */
-	public List<MTuInfo> parser(String html,MTuInfo parentInfo,List<String> projects,List<String> downloadURL);
+	public List<MTuInfo> parser(String html,MTuInfo pageInfo,List<String> projects,List<String> downloadURL);
 	
 	/**
 	 * 解析下一页的URL

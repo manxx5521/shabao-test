@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -22,11 +23,13 @@ public class MZhuatuHttpUtil {
     CloseableHttpResponse response = null;
     HttpEntity entity = null;
     //自定义超时时间等
-    /* RequestConfig requestConfig = RequestConfig.custom()
-    .setCookieSpec("easy").setSocketTimeout(5000) // socket超时
+    RequestConfig requestConfig = RequestConfig.custom()
+    		
+    .setSocketTimeout(1000*60*15) // socket超时
     .setConnectTimeout(5000) // connect超时
     .build();
-    httpGet.setConfig(requestConfig);*/
+    httpGet.setConfig(requestConfig);
+    
     httpGet.setHeader("Accept", "text/html, */*; q=0.01");
     httpGet.setHeader("Accept-Encoding", "gzip, deflate,sdch");
     httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8");

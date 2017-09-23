@@ -1,9 +1,10 @@
-package com.xiaoshabao.shabaotest.plugins.zhuatu;
+package com.xiaoshabao.shabaotest.plugins.zhuatu.service.impl;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
 import org.htmlparser.Tag;
@@ -17,16 +18,22 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ZhuTu99renti {
+import com.xiaoshabao.shabaotest.plugins.zhuatu.BaseMZhuatu;
+import com.xiaoshabao.shabaotest.plugins.zhuatu.MTuInfo;
+import com.xiaoshabao.shabaotest.plugins.zhuatu.service.MZhuatuDownloadService;
+import com.xiaoshabao.shabaotest.plugins.zhuatu.service.MZhuatuService;
+import com.xiaoshabao.shabaotest.plugins.zhuatu.service.MZhuatuWaitService;
+
+public class ZhuTuGmtt8 {
 
 	private final static Logger logger = LoggerFactory
-			.getLogger(BaseMZhuatu.class);
+			.getLogger(ZhuTuGmtt8.class);
 
-	private String defaultCharset = "GBK";
+	private String defaultCharset = "UTF-8";
 
 	List<String> pages = new LinkedList<String>();
 	
-	protected String urlRoot="http://www.99renti.wang";
+	protected String urlRoot="http://www.gmtt8.com";
 
 	@Test
 	public void test() {
@@ -34,10 +41,12 @@ public class ZhuTu99renti {
 		// 第一层解析分项的信息，找打具体的项目
 		zhuatuServices.add(new MZhuatuWaitService() {
 			@Override
-			public List<MTuInfo> parser(String html, MTuInfo parentInfo,
+			public List<MTuInfo> parser(String html, MTuInfo pageInfo,
 					final List<String> projects,final List<String> downloadURL) {
+				if (!pages.contains(pageInfo.getUrl())) {
+					pages.add(pageInfo.getUrl());
+				}
 				final List<MTuInfo> result = new LinkedList<MTuInfo>();
-				final MTuInfo info = new MTuInfo();
 				try {
 					Parser parser = Parser.createParser(html, defaultCharset);
 					NodeList list = parser.parse(new HasAttributeFilter(
@@ -55,9 +64,10 @@ public class ZhuTu99renti {
 									logger.info("未下载" + title + "（已经存在）");
 									return;
 								}
+								logger.info("准备下载：" + title);
 								projects.add(title);
 
-								info.clear();
+								MTuInfo info = new MTuInfo();
 								info.setUrl(urlRoot+href);
 								info.setTitle(title);
 								result.add(info);
@@ -73,7 +83,24 @@ public class ZhuTu99renti {
 
 			@Override
 			public String nextPage(String html) {
-				// TODO Auto-generated method stub
+				try {
+					Parser parser = Parser.createParser(html,
+							defaultCharset);
+					NodeList nexts = parser.parse(new HasAttributeFilter(
+							"class", "a1"));
+					for (Node node : nexts.toNodeArray()) {
+						LinkTag link = (LinkTag) node;
+						String nextUrl = link.getLink();
+						if(StringUtils.isNotEmpty(nextUrl)){
+							nextUrl=urlRoot+nextUrl;
+							if (!pages.contains(nextUrl)) {
+								return nextUrl;
+							}
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				return null;
 			}
 
@@ -82,10 +109,12 @@ public class ZhuTu99renti {
 		// 第二层解析具体照片
 		zhuatuServices.add(new MZhuatuDownloadService() {
 			@Override
-			public List<MTuInfo> parser(String html, MTuInfo parentInfo,
+			public List<MTuInfo> parser(String html, MTuInfo pageInfo,
 					List<String> projects, List<String> downloadURL) {
-				final List<MTuInfo> result = new LinkedList<MTuInfo>();
-				final MTuInfo info = new MTuInfo();
+				if (!pages.contains(pageInfo.getUrl())) {
+					pages.add(pageInfo.getUrl());
+				}
+				List<MTuInfo> result = new LinkedList<MTuInfo>();
 				try {
 					Parser parser = Parser.createParser(html, defaultCharset);
 
@@ -97,7 +126,7 @@ public class ZhuTu99renti {
 						if (alt == null || src == null) {
 							continue;
 						}
-						if (!parserTitleName(parentInfo.getTitle()).equals(
+						if (!parserTitleName(pageInfo.getTitle()).equals(
 								parserTitleName(alt))
 								|| downloadURL.contains(src)) {
 							continue;
@@ -106,7 +135,7 @@ public class ZhuTu99renti {
 						if (src.endsWith("/")) {
 							throw new RuntimeException("获得的图片下载链接错误");
 						}
-
+						MTuInfo info = new MTuInfo();
 						info.clear();
 						info.setUrl(src);
 						info.setTitle(alt);
@@ -123,14 +152,17 @@ public class ZhuTu99renti {
 			public String nextPage(String html) {
 				try {
 					Parser parser = Parser.createParser(html,
-							MZhuatu.DEFAULT_CHARSET);
+							defaultCharset);
 					NodeList nexts = parser.parse(new HasAttributeFilter(
 							"class", "a1"));
 					for (Node node : nexts.toNodeArray()) {
 						LinkTag link = (LinkTag) node;
 						String nextUrl = link.getLink();
-						if (!pages.contains(nextUrl)) {
-							return urlRoot+nextUrl;
+						if(StringUtils.isNotEmpty(nextUrl)){
+							nextUrl=urlRoot+nextUrl;
+							if (!pages.contains(nextUrl)) {
+								return nextUrl;
+							}
 						}
 					}
 				} catch (Exception e) {
@@ -144,8 +176,8 @@ public class ZhuTu99renti {
 
 		// 装载抓图任务
 		BaseMZhuatu zhuatu = new BaseMZhuatu();
-		zhuatu.start("http://www.99renti.wang/html/guomosipai/",
-				"E:\\test\\shabao-m\\resources\\plugins\\mm\\99renti", "GBK",
+		zhuatu.start("http://www.gmtt8.com/archives/category/%E5%9B%BD%E6%A8%A1%E5%A5%97%E5%9B%BE/",
+				"E:\\test\\shabao-m\\resources\\plugins\\mm\\gmtt8", defaultCharset,
 				zhuatuServices);
 	}
 

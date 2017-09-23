@@ -1,4 +1,4 @@
-package com.xiaoshabao.shabaotest.plugins.zhuatu;
+package com.xiaoshabao.shabaotest.plugins.zhuatu.service;
 
 /**
  * 下载服务
