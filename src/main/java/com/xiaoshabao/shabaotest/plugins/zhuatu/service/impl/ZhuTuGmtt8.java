@@ -7,13 +7,12 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
-import org.htmlparser.Tag;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.tags.HeadingTag;
 import org.htmlparser.tags.ImageTag;
 import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
-import org.htmlparser.visitors.NodeVisitor;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +32,9 @@ public class ZhuTuGmtt8 {
 
 	List<String> pages = new LinkedList<String>();
 	
+	/** 解析当前项目的下载项目链接 **/
+	protected List<String> parserProjectUrl = new LinkedList<String>();
+	
 	protected String urlRoot="http://www.gmtt8.com";
 
 	@Test
@@ -42,7 +44,7 @@ public class ZhuTuGmtt8 {
 		zhuatuServices.add(new MZhuatuWaitService() {
 			@Override
 			public List<MTuInfo> parser(String html, MTuInfo pageInfo,
-					final List<String> projects,final List<String> downloadURL) {
+					final List<String> projects,boolean newProject) {
 				if (!pages.contains(pageInfo.getUrl())) {
 					pages.add(pageInfo.getUrl());
 				}
@@ -50,33 +52,33 @@ public class ZhuTuGmtt8 {
 				try {
 					Parser parser = Parser.createParser(html, defaultCharset);
 					NodeList list = parser.parse(new HasAttributeFilter(
-							"class", "ulPic"));
-					Node body = list.elementAt(0);
-					body.accept(new NodeVisitor() {
-						@Override
-						public void visitTag(Tag tag) {
-							if (tag instanceof LinkTag) {
-								LinkTag link = (LinkTag) tag;
+							"rel", "bookmark"));
+					
+					for (Node node : list.toNodeArray()) {
+						if(node instanceof LinkTag&&node.getParent() instanceof HeadingTag){
+							HeadingTag h2=(HeadingTag) node.getParent();
+							if("entry-title".equals(h2.getAttribute("class"))){
+								LinkTag link = (LinkTag) node;
 								String href = link.getLink();
-								String title = link.getAttribute("title");
-								if (projects.contains(title)
-										|| downloadURL.contains(href)) {
+								String title = link.childAt(0).getText();
+								if (StringUtils.isEmpty(title)||projects.contains(title)) {
 									logger.info("未下载" + title + "（已经存在）");
-									return;
+								}else{
+									logger.info("准备下载：" + title);
+									projects.add(title);
+									MTuInfo info = new MTuInfo();
+									info.setUrl(href);
+									info.setTitle(title);
+									result.add(info);
 								}
-								logger.info("准备下载：" + title);
-								projects.add(title);
-
-								MTuInfo info = new MTuInfo();
-								info.setUrl(urlRoot+href);
-								info.setTitle(title);
-								result.add(info);
-								downloadURL.add(href);
+								
 							}
+							
 						}
-					});
+						
+					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("解析出错{}",pageInfo.getUrl(),e);	
 				}
 				return result;
 			}
@@ -87,19 +89,21 @@ public class ZhuTuGmtt8 {
 					Parser parser = Parser.createParser(html,
 							defaultCharset);
 					NodeList nexts = parser.parse(new HasAttributeFilter(
-							"class", "a1"));
+							"class", "page-numbers"));
 					for (Node node : nexts.toNodeArray()) {
-						LinkTag link = (LinkTag) node;
-						String nextUrl = link.getLink();
-						if(StringUtils.isNotEmpty(nextUrl)){
-							nextUrl=urlRoot+nextUrl;
-							if (!pages.contains(nextUrl)) {
-								return nextUrl;
+						if(node instanceof LinkTag){
+							LinkTag link = (LinkTag) node;
+							String nextUrl = link.getLink();
+							if(StringUtils.isNotEmpty(nextUrl)){
+								if (!pages.contains(nextUrl)) {
+									return nextUrl;
+								}
 							}
 						}
+						
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("下一页 解析出错{}",e);	
 				}
 				return null;
 			}
@@ -110,7 +114,11 @@ public class ZhuTuGmtt8 {
 		zhuatuServices.add(new MZhuatuDownloadService() {
 			@Override
 			public List<MTuInfo> parser(String html, MTuInfo pageInfo,
-					List<String> projects, List<String> downloadURL) {
+					List<String> projects,boolean newProject) {
+				if(newProject){
+					parserProjectUrl.clear();
+				}
+				
 				if (!pages.contains(pageInfo.getUrl())) {
 					pages.add(pageInfo.getUrl());
 				}
@@ -118,57 +126,65 @@ public class ZhuTuGmtt8 {
 				try {
 					Parser parser = Parser.createParser(html, defaultCharset);
 
-					NodeList imgs = parser.parse(new TagNameFilter("img"));
+					NodeList imgs = parser.parse(new HasAttributeFilter("class","size-full"));
+					
+					//换解析思路
+					if(imgs==null||imgs.size()<1){
+						imgs = Parser.createParser(html, defaultCharset).parse(new TagNameFilter("img"));
+						/*try {
+				            File file = new File("E:\\test\\1.html");
+				            PrintStream ps = new PrintStream(new FileOutputStream(file));
+				            ps.println(html);// 往文件里写入字符串
+				            ps.flush();
+				            ps.close();
+				        } catch (FileNotFoundException e) {
+				            // TODO Auto-generated catch block
+				            e.printStackTrace();
+				        }*/
+					}
+					
 					for (Node node : imgs.toNodeArray()) {
-						ImageTag img = (ImageTag) node;
-						String src = img.getAttribute("src");
-						String alt = img.getAttribute("alt");
-						if (alt == null || src == null) {
-							continue;
+						if(node instanceof ImageTag){
+							ImageTag img = (ImageTag) node;
+							String src = img.getAttribute("src");
+							String alt = img.getAttribute("alt");
+							if(StringUtils.isNotEmpty(img.getAttribute("data-echo"))){
+								continue;
+							}
+							if (alt == null || src == null) {
+								continue;
+							}
+							
+							//去除部分无用链接
+							if(src.startsWith("http://33img.com")){
+								continue;
+							}
+							
+							if (!parserTitleName(pageInfo.getTitle()).equals(
+									parserTitleName(alt))
+									|| parserProjectUrl.contains(src)) {
+								continue;
+							}
+							logger.info("取到下载链接：" + src);
+							if (src.endsWith("/")) {
+								throw new RuntimeException("获得的图片下载链接错误");
+							}
+							MTuInfo info = new MTuInfo();
+							info.setUrl(src);
+							info.setTitle(alt);
+							result.add(info);
+							parserProjectUrl.add(src);
 						}
-						if (!parserTitleName(pageInfo.getTitle()).equals(
-								parserTitleName(alt))
-								|| downloadURL.contains(src)) {
-							continue;
-						}
-						logger.info("取到下载链接：" + src);
-						if (src.endsWith("/")) {
-							throw new RuntimeException("获得的图片下载链接错误");
-						}
-						MTuInfo info = new MTuInfo();
-						info.clear();
-						info.setUrl(src);
-						info.setTitle(alt);
-						result.add(info);
-						downloadURL.add(src);
+						
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("解析出错{}",pageInfo.getUrl(),e);	
 				}
 				return result;
 			}
 
 			@Override
 			public String nextPage(String html) {
-				try {
-					Parser parser = Parser.createParser(html,
-							defaultCharset);
-					NodeList nexts = parser.parse(new HasAttributeFilter(
-							"class", "a1"));
-					for (Node node : nexts.toNodeArray()) {
-						LinkTag link = (LinkTag) node;
-						String nextUrl = link.getLink();
-						if(StringUtils.isNotEmpty(nextUrl)){
-							nextUrl=urlRoot+nextUrl;
-							if (!pages.contains(nextUrl)) {
-								return nextUrl;
-							}
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
 				return null;
 			}
 

@@ -14,10 +14,10 @@ public interface MZhuatuService {
 	 * @param html
 	 * @param parentInfo
 	 * @param projects 已经下载的项目
-	 * @param downloadURL 当前项目已经下载的链接
+	 * @param newProject 是否是新项目（如果false表示是下一页解析）
 	 * @return
 	 */
-	public List<MTuInfo> parser(String html,MTuInfo pageInfo,List<String> projects,List<String> downloadURL);
+	public List<MTuInfo> parser(String html,MTuInfo pageInfo,List<String> projects,boolean newProject);
 	
 	/**
 	 * 解析下一页的URL

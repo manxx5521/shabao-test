@@ -21,7 +21,7 @@ import com.xiaoshabao.shabaotest.plugins.zhuatu.service.MZhuatuWaitService;
  */
 public class BaseMZhuatu {
 
-	private final static Logger logger = LoggerFactory
+	protected final static Logger logger = LoggerFactory
 			.getLogger(BaseMZhuatu.class);
 
 	protected String defaultCharset = "GBK";
@@ -61,16 +61,24 @@ public class BaseMZhuatu {
 
 		MTuInfo info = new MTuInfo();
 		info.setUrl(url);
-		parserPage(info, this.doGet5(url), zhuatuServices.get(0), 0,
-				new LinkedList<String>());
+		parserPage(info, zhuatuServices.get(0), 0,
+				true);
 		executor.shutdown();
 
 	}
 
-	private void parserPage(MTuInfo pageInfo, String html,
-			MZhuatuService zhuatuService, int idx, List<String> downloadURL) {
+	/**
+	 * 解析页面
+	 * @param pageInfo
+	 * @param zhuatuService
+	 * @param idx 当前层次
+	 * @param newProject 是否是新项目（如果false表示是下一页解析）
+	 */
+	protected void parserPage(MTuInfo pageInfo, 
+			MZhuatuService zhuatuService, int idx,boolean newProject) {
+		String html=this.doGet5(pageInfo.getUrl());
 		List<MTuInfo> list = zhuatuService.parser(html, pageInfo,
-				projects, downloadURL);
+				projects, newProject);
 
 		Iterator<MTuInfo> iterator=list.iterator();
 		while(iterator.hasNext()){//链表用迭代器
@@ -96,19 +104,11 @@ public class BaseMZhuatu {
 
 			// 如果时需要下载的url
 			if (zhuatuService instanceof MZhuatuDownloadService) {
-				String fileName = tuInfo.getUrl().substring(
-						tuInfo.getUrl().lastIndexOf("/") + 1,
-						tuInfo.getUrl().length());
-				DownloadTuTask myTask = new DownloadTuTask(tuInfo.getUrl(),
-						savePath + File.separator + tuInfo.getTitle()
-								+ File.separator + fileName);
-				executor.execute(myTask);
+				download(tuInfo);
 			}
 
 			if (zhuatuServices.size() > idx + 1) {
-				parserPage(tuInfo, this.doGet5(tuInfo.getUrl()),
-						zhuatuServices.get(idx + 1), idx + 1,
-						new LinkedList<String>());// 进行下一层任务
+				parserPageNextIdx(tuInfo, zhuatuServices.get(idx + 1), idx + 1);// 进行下一层任务
 			}
 		}
 
@@ -117,9 +117,25 @@ public class BaseMZhuatu {
 			MTuInfo tuInfo = new MTuInfo();
 			tuInfo.setUrl(nextUrl);
 			tuInfo.setTitle(pageInfo.getTitle());
-			parserPage(tuInfo, this.doGet5(tuInfo.getUrl()),
-					zhuatuServices.get(idx), idx, downloadURL);// 下一页
+			parserPage(tuInfo, zhuatuServices.get(idx), idx, false);// 下一页
 		}
+		
+	}
+	/**
+	 * 进行下一层任务
+	 */
+	protected void parserPageNextIdx(MTuInfo pageInfo, 
+			MZhuatuService zhuatuService, int idx) {
+		parserPage(pageInfo, zhuatuService, idx,true);
+	}
+	protected void download(MTuInfo tuInfo){
+		String fileName = tuInfo.getUrl().substring(
+				tuInfo.getUrl().lastIndexOf("/") + 1,
+				tuInfo.getUrl().length());
+		DownloadTuTask myTask = new DownloadTuTask(tuInfo.getUrl(),
+				savePath + File.separator + tuInfo.getTitle()
+						+ File.separator + fileName);
+		executor.execute(myTask);
 	}
 
 	private String doGet5(String url) {

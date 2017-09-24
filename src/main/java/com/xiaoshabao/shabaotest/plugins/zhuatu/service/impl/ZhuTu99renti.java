@@ -34,6 +34,9 @@ public class ZhuTu99renti {
 	List<String> pages = new LinkedList<String>();
 	
 	protected String urlRoot="http://www.99renti.wang";
+	
+	/** 解析当前项目的下载项目链接 **/
+	protected List<String> parserProjectUrl = new LinkedList<String>();
 
 	@Test
 	public void test() {
@@ -42,7 +45,7 @@ public class ZhuTu99renti {
 		zhuatuServices.add(new MZhuatuWaitService() {
 			@Override
 			public List<MTuInfo> parser(String html, MTuInfo pageInfo,
-					final List<String> projects,final List<String> downloadURL) {
+					final List<String> projects,boolean newProject) {
 				if (!pages.contains(pageInfo.getUrl())) {
 					pages.add(pageInfo.getUrl());
 				}
@@ -59,8 +62,7 @@ public class ZhuTu99renti {
 								LinkTag link = (LinkTag) tag;
 								String href = link.getLink();
 								String title = link.getAttribute("title");
-								if (projects.contains(title)
-										|| downloadURL.contains(href)) {
+								if (projects.contains(title)) {
 									logger.info("未下载" + title + "（已经存在）");
 									return;
 								}
@@ -71,12 +73,11 @@ public class ZhuTu99renti {
 								info.setUrl(urlRoot+href);
 								info.setTitle(title);
 								result.add(info);
-								downloadURL.add(href);
 							}
 						}
 					});
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("解析出错{}",pageInfo.getUrl(),e);	
 				}
 				return result;
 			}
@@ -99,7 +100,7 @@ public class ZhuTu99renti {
 						}
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("下一页 解析出错{}",e);	
 				}
 				return null;
 			}
@@ -110,7 +111,10 @@ public class ZhuTu99renti {
 		zhuatuServices.add(new MZhuatuDownloadService() {
 			@Override
 			public List<MTuInfo> parser(String html, MTuInfo pageInfo,
-					List<String> projects, List<String> downloadURL) {
+					List<String> projects,boolean newProject) {
+				if(newProject){
+					parserProjectUrl.clear();
+				}
 				if (!pages.contains(pageInfo.getUrl())) {
 					pages.add(pageInfo.getUrl());
 				}
@@ -128,7 +132,7 @@ public class ZhuTu99renti {
 						}
 						if (!parserTitleName(pageInfo.getTitle()).equals(
 								parserTitleName(alt))
-								|| downloadURL.contains(src)) {
+								|| parserProjectUrl.contains(src)) {
 							continue;
 						}
 						logger.info("取到下载链接：" + src);
@@ -140,10 +144,10 @@ public class ZhuTu99renti {
 						info.setUrl(src);
 						info.setTitle(alt);
 						result.add(info);
-						downloadURL.add(src);
+						parserProjectUrl.add(src);
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("解析出错{}",pageInfo.getUrl(),e);	
 				}
 				return result;
 			}
@@ -166,7 +170,7 @@ public class ZhuTu99renti {
 						}
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("下一页 解析出错{}",e);	
 				}
 
 				return null;
