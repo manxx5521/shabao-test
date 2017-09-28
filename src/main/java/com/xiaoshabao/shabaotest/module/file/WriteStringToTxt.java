@@ -80,6 +80,18 @@ public class WriteStringToTxt {
             e.printStackTrace();
         }
     }
+    
+    public void WriteStringToFile6(String filePath) {
+      try {
+        File file = new File("D:\\test\\11.html");
+        PrintStream ps = new PrintStream(new FileOutputStream(file));
+        ps.println("adsaf");// 往文件里写入字符串
+        ps.close();
+      } catch (Exception e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+      }
+  }
 
     public static void main(String[] args) {
         String filePath = "E:\\link.txt";
