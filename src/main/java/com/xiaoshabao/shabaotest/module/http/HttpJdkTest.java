@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * JDK发HTTP请求
  */
-public class httpJdkTest {
+public class HttpJdkTest {
 	
 	/**
 	 * 发送HTTP请求
