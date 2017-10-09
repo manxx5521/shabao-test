@@ -25,7 +25,7 @@ public class HttpUnitTest {
     
     
     WebClient webClient = new WebClient();
-    // 启用JS解释器，默认为true
+    // 启用JS解释器，默认为true 
     webClient.getOptions().setJavaScriptEnabled(true); 
     // 禁用css支持
     webClient.getOptions().setCssEnabled(false); 
