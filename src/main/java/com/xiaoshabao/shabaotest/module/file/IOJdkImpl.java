@@ -41,7 +41,7 @@ public class IOJdkImpl implements IOInterface{
 
   @Override
   public void toInputStreanByString(String content) {
-    
+     
     new ByteArrayInputStream(content.getBytes()); 
     
   }
