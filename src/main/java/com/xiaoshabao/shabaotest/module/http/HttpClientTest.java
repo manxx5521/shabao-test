@@ -123,7 +123,7 @@ public class HttpClientTest {
 	}
 
 	@Test
-	public void testpost() {
+	public void testpost() { 
 		Map<String, String> header = new HashMap<String, String>();
 		try {
 			post("http://weibo.com/p/1006051227328177/photos?from=page_100605&mod=TAB#place",
