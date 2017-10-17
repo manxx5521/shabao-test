@@ -2,6 +2,7 @@ package com.xiaoshabao.webframework.ui.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
@@ -28,44 +29,66 @@ public class BaseInfoServiceImpl extends AbstractFormServiceImpl implements Base
   
   @Override
   public AjaxResult addBaseInfo(String tableId, BaseInfoDto baseInfo) {
-    // TODO Auto-generated method stub
+    String validMsg=this.validBaseInfo(baseInfo);
+    if(validMsg!=null){
+      return new AjaxResult(false,validMsg);
+    }
+    
+    TableInfoDto tableInfo=this.getTableInfo(tableId);
+    StringBuilder sql=new StringBuilder();
+    sql.append("INSERT INTO (");
+    sql.append(tableInfo.getTable().getTableName());
+    
+    //拼接insert字段
+    ColumnParser parser=new ColumnParser(sql,tableInfo.getColumns()){
+      @Override
+      String parserFileAttr(TableColumnEntity columnEntity, String asName, int fieldAttr) {
+        return columnEntity.getFieldCode();
+      }
+    };
+    sql.append(parser.parser());
+    
+    sql.append(") VALUES (");
+    //拼接values字段
+    ColumnParser valuesParser=new ColumnParser(sql,tableInfo.getColumns()){
+      @Override
+      String parserFileAttr(TableColumnEntity columnEntity, String asName, int fieldAttr) {
+        return "#{"+asName+"}";
+      }
+    };
+    sql.append(valuesParser.parser());
+    
+    sql.append(")");
+    
+    int i=this.baseDao.getSqlMapper().insert(sql.toString(), baseInfo);
+    if(i<1){
+      throw new MsgErrorException("数据未插入成功");
+    }
+    return new AjaxResult(true);
+  }
+  
+  private String validBaseInfo(BaseInfoDto baseInfo){
     return null;
   }
   
   protected String getSelectSql(TableInfoDto tableInfo){
     StringBuilder sql=new StringBuilder();
     sql.append("SELECT ");
-    for(int i=0,size=tableInfo.getColumns().size();i<size;i++){
-      TableColumnEntity columnEntity=tableInfo.getColumns().get(i);
-      Integer fieldAttr=columnEntity.getFieldAttr();
-      String fieldName=null;
-      //配置字段类型
-      if(fieldAttr!=null&&fieldAttr.intValue()!=0){
-        if(FieldAttrEnum.BASE_CODE.getType()==fieldAttr.intValue()){
-          fieldName=columnEntity.getFieldCode()+" baseCode";
-        }else if(FieldAttrEnum.BASE_NAME.getType()==fieldAttr.intValue()){
-          fieldName=columnEntity.getFieldCode()+" baseName";
-        }else if(FieldAttrEnum.PARENT_CODE.getType()==fieldAttr.intValue()){
-          fieldName=columnEntity.getFieldCode()+" parentCode";
-        }else if(FieldAttrEnum.IS_USED.getType()==fieldAttr.intValue()){
-          fieldName=columnEntity.getFieldCode()+" isUsed";
-        }else if(FieldAttrEnum.ORDER_NO.getType()==fieldAttr.intValue()){
-          fieldName=columnEntity.getFieldCode()+" orderNo";
-        }
+    
+    //拼接查询字段
+    ColumnParser parser=new ColumnParser(sql,tableInfo.getColumns()){
+      @Override
+      String parserFileAttr(TableColumnEntity columnEntity, String asName, int fieldAttr) {
+        return columnEntity.getFieldCode()+" "+asName;
       }
-      
-      if(fieldName!=null&&i!=0){
-        sql.append(",");
-      }
-      if(fieldName!=null){
-        sql.append(fieldName);
-      }
-    }
+    };
+    sql.append(parser.parser());
     
     sql.append(" FROM ");
     sql.append(tableInfo.getTable().getTableName());
     return sql.toString();
   }
+  
   
   
   protected TableInfoDto getTableInfo(String tableId){
@@ -88,6 +111,63 @@ public class BaseInfoServiceImpl extends AbstractFormServiceImpl implements Base
   
   
 
+}
+
+abstract class ColumnParser{
+  private List<TableColumnEntity> columns;
+  private StringBuilder sql;
+  public ColumnParser(List<TableColumnEntity> columns){
+    this.columns=columns;
+    sql=new StringBuilder();
+  }
+  public ColumnParser(StringBuilder sql,List<TableColumnEntity> columns){
+    this.sql=sql;
+    this.columns=columns;
+  }
+  
+  public String parser(){
+    for(int i=0,size=columns.size();i<size;i++){
+      TableColumnEntity columnEntity=columns.get(i);
+      Integer fieldAttr=columnEntity.getFieldAttr();
+      String addSql=null;
+      //配置字段类型
+      if(fieldAttr!=null&&fieldAttr.intValue()!=0){
+        addSql=parserFileAttr(columnEntity,fieldAttr.intValue());
+      }
+      
+      if(StringUtils.isNotEmpty(addSql)&&i!=0){
+        sql.append(",");
+      }
+      if(StringUtils.isNotEmpty(addSql)){
+        sql.append(addSql);
+      }
+    }
+    return sql.toString();
+  }
+  private String parserFileAttr(TableColumnEntity columnEntity,int fieldAttr){
+    if(FieldAttrEnum.BASE_CODE.getType()==fieldAttr){
+      return parserFileAttr(columnEntity,"baseCode",fieldAttr);
+    }else if(FieldAttrEnum.BASE_NAME.getType()==fieldAttr){
+      return parserFileAttr(columnEntity,"baseName",fieldAttr);
+    }else if(FieldAttrEnum.PARENT_CODE.getType()==fieldAttr){
+      return parserFileAttr(columnEntity,"parentCode",fieldAttr);
+    }else if(FieldAttrEnum.IS_USED.getType()==fieldAttr){
+      return parserFileAttr(columnEntity,"isUsed",fieldAttr);
+    }else if(FieldAttrEnum.ORDER_NO.getType()==fieldAttr){
+      return parserFileAttr(columnEntity,"orderNo",fieldAttr);
+    }
+    return null;
+  }
+  /**
+   * 解析添加了字段类型的sql
+   * @param columnEntity
+   * @param asName 别名,对应{@link BaseInfoDto}的属性名
+   * @param fieldAttr
+   * @return
+   */
+  abstract String parserFileAttr(TableColumnEntity columnEntity,String asName,int fieldAttr);
+  
+  
 }
 
 class TableInfoDto{
