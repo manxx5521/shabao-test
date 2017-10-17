@@ -10,6 +10,7 @@ public interface BaseInfoService {
 
   AjaxResult addBaseInfo(String tableId, BaseInfoDto baseInfo);
   
+  
   AjaxResult updateBaseInfo(String tableId, BaseInfoDto baseInfo);
 
 }
