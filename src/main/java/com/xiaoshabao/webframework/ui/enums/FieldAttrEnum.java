@@ -5,11 +5,15 @@ package com.xiaoshabao.webframework.ui.enums;
  */
 public enum FieldAttrEnum {
 	
-	CODE(1,"代码"),
-	VALUE(2,"名字值");
+	BASE_CODE(1,"基础代码"),
+	BASE_NAME(2,"基础名称"),
+	PARENT_CODE(3,"父级"),
+	ORDER_NO(4,"排序"),
+	IS_USED(5,"是否使用"),
+	DEPART_TAG(6,"部门标识");
 	
 	
-	/** ；类型 */
+	/** 类型 */
 	private int type;
 	/** 所在位置名称 */
 	private String name;
@@ -18,8 +22,7 @@ public enum FieldAttrEnum {
 		this.type=type;
 		this.name=name;
 	}
-
-
+	
 	public int getType() {
 		return type;
 	}
