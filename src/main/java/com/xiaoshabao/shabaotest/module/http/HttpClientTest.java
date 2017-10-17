@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.http.Consts;
+import org.apache.http.Header;
 import org.apache.http.HeaderIterator;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -127,6 +128,7 @@ public class HttpClientTest {
 		Map<String, String> header = new HashMap<String, String>();
 		try {
 			post("http://weibo.com/p/1006051227328177/photos?from=page_100605&mod=TAB#place",
+//					post("https://passport.weibo.com/visitor/visitor?_rand=1508249215.3803&a=enter&domain=.weibo.com&entry=miniblog&ua=php-sso_sdk_client-0.6.23&url=http%3A%2F%2Fweibo.com%2Fp%2F1006051227328177%2Fphotos%3Ffrom%3Dpage_100605%26mod%3DTAB",
 					header, null, null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -183,7 +185,10 @@ public class HttpClientTest {
 			if (statusCode == HttpStatus.SC_OK) {
 				HttpEntity resEntity = httpResponse.getEntity();
 				result = EntityUtils.toString(resEntity);
-			} else {
+			}else if(statusCode==HttpStatus.SC_MOVED_TEMPORARILY) {
+				Header locationHeader = httpResponse.getFirstHeader("Location");
+				post(locationHeader.getValue(),null,null,null);
+			}else{
 				readHttpResponse(httpResponse);
 			}
 		} catch (Exception e) {
