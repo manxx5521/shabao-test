@@ -67,6 +67,37 @@ public class BaseInfoServiceImpl extends AbstractFormServiceImpl implements Base
     return new AjaxResult(true);
   }
   
+  @Override
+  public AjaxResult updateBaseInfo(String tableId, BaseInfoDto baseInfo) {
+    String validMsg=this.validBaseInfo(baseInfo);
+    if(validMsg!=null){
+      return new AjaxResult(false,validMsg);
+    }
+    
+    TableInfoDto tableInfo=this.getTableInfo(tableId);
+    StringBuilder sql=new StringBuilder();
+    sql.append("UPDATE ");
+    sql.append(tableInfo.getTable().getTableName());
+    sql.append(" SET ");
+    
+    //拼接insert字段
+    ColumnParser parser=new ColumnParser(sql,tableInfo.getColumns()){
+      @Override
+      String parserFileAttr(TableColumnEntity columnEntity, String asName, int fieldAttr) {
+        return columnEntity.getFieldCode()+"=#{"+asName+"}";
+      }
+    };
+    sql.append(" WHERE ");
+    sql.append(parser.getCodeField());
+    sql.append("=#{baseCode}");
+    
+    int i=this.baseDao.getSqlMapper().update(sql.toString(), baseInfo);
+    if(i<1){
+      throw new MsgErrorException("数据更新失败");
+    }
+    return new AjaxResult(true,"数据更新成功");
+  }
+  
   private String validBaseInfo(BaseInfoDto baseInfo){
     return null;
   }
@@ -108,14 +139,13 @@ public class BaseInfoServiceImpl extends AbstractFormServiceImpl implements Base
   }
 
   
-  
-  
 
 }
 
 abstract class ColumnParser{
   private List<TableColumnEntity> columns;
   private StringBuilder sql;
+  private String codeField;
   public ColumnParser(List<TableColumnEntity> columns){
     this.columns=columns;
     sql=new StringBuilder();
@@ -146,6 +176,7 @@ abstract class ColumnParser{
   }
   private String parserFileAttr(TableColumnEntity columnEntity,int fieldAttr){
     if(FieldAttrEnum.BASE_CODE.getType()==fieldAttr){
+      codeField=columnEntity.getFieldCode();
       return parserFileAttr(columnEntity,"baseCode",fieldAttr);
     }else if(FieldAttrEnum.BASE_NAME.getType()==fieldAttr){
       return parserFileAttr(columnEntity,"baseName",fieldAttr);
@@ -157,6 +188,10 @@ abstract class ColumnParser{
       return parserFileAttr(columnEntity,"orderNo",fieldAttr);
     }
     return null;
+  }
+  
+  public String getCodeField(){
+    return codeField;
   }
   /**
    * 解析添加了字段类型的sql

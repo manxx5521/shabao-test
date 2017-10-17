@@ -9,5 +9,7 @@ public interface BaseInfoService {
   BaseInfoListDto getInfoView(String tableId);
 
   AjaxResult addBaseInfo(String tableId, BaseInfoDto baseInfo);
+  
+  AjaxResult updateBaseInfo(String tableId, BaseInfoDto baseInfo);
 
 }
