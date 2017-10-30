@@ -1,6 +1,9 @@
 package com.xiaoshabao.shabaotest.module.http;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URL;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -127,7 +130,8 @@ public class HttpClientTest {
 	public void testpost() { 
 		Map<String, String> header = new HashMap<String, String>();
 		try {
-			post("http://weibo.com/p/1006051227328177/photos?from=page_100605&mod=TAB#place",
+			post("http://i.youku.com/i/UMzA0ODM3NjIwNA==/videos?spm=a2hzp.8253869.0.0",
+//					post("http://weibo.com/p/1006051227328177/photos?from=page_100605&mod=TAB#place",
 //					post("https://passport.weibo.com/visitor/visitor?_rand=1508249215.3803&a=enter&domain=.weibo.com&entry=miniblog&ua=php-sso_sdk_client-0.6.23&url=http%3A%2F%2Fweibo.com%2Fp%2F1006051227328177%2Fphotos%3Ffrom%3Dpage_100605%26mod%3DTAB",
 					header, null, null);
 		} catch (Exception e) {
@@ -153,11 +157,12 @@ public class HttpClientTest {
 	 */
 	public static String post(String url, Map<String, String> header,
 			Map<String, String> param, HttpEntity entity) throws Exception {
+		URL urle = new URL(null,url,new sun.net.www.protocol.https.Handler());//重点在这里，需要使用带有URLStreamHandler参数的URL构造方法  
 		String result = "";
 		CloseableHttpClient httpClient = null;
 		try {
 			httpClient = getHttpClient();
-			HttpPost httpPost = new HttpPost(url);
+			HttpPost httpPost = new HttpPost(urle.toURI());
 			// 设置头信息
 			if (MapUtils.isNotEmpty(header)) {
 				for (Map.Entry<String, String> entry : header.entrySet()) {
@@ -185,6 +190,11 @@ public class HttpClientTest {
 			if (statusCode == HttpStatus.SC_OK) {
 				HttpEntity resEntity = httpResponse.getEntity();
 				result = EntityUtils.toString(resEntity);
+				
+				PrintWriter pw = new PrintWriter(new FileWriter("E:\\test\\test\\1.html"));
+				pw.print(result);
+				pw.close();
+				
 			}else if(statusCode==HttpStatus.SC_MOVED_TEMPORARILY) {
 				Header locationHeader = httpResponse.getFirstHeader("Location");
 				post(locationHeader.getValue(),null,null,null);
