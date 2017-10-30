@@ -4,7 +4,7 @@ package com.xiaoshabao.webframework.ui.enums;
  * 属性
  */
 public enum FieldAttrEnum {
-	
+	PK_CODE(0,"主键类型"),
 	BASE_CODE(1,"基础代码"),
 	BASE_NAME(2,"基础名称"),
 	PARENT_CODE(3,"父级"),

@@ -12,5 +12,7 @@ public interface BaseInfoService {
   
   
   AjaxResult updateBaseInfo(String tableId, BaseInfoDto baseInfo);
+  
+  AjaxResult deleteBaseInfo(String tableId, BaseInfoDto baseInfo);
 
 }
