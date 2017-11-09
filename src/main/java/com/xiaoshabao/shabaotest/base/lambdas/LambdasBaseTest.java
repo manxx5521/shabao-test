@@ -2,6 +2,7 @@ package com.xiaoshabao.shabaotest.base.lambdas;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.junit.Test;
@@ -61,10 +62,19 @@ public class LambdasBaseTest {
 		Consumer<T> - T作为输入，执行某种动作但没有返回值
 		Supplier<T> - 没有任何输入，返回T
 		BinaryOperator<T> -两个T作为输入，返回一个T作为输出，对于“reduce”操作很有用*/
-		//使用自带的函数
+		
+		//使用自带的函数Predicate<T> 
 		rs=able.parser1(persion -> persion.getAge() > 20);
 		System.out.println("年龄大于20："+rs);
 		
+		//使用自带的函数 Function<T, R> 
+		ParserAbleFunction<PersionReturn> rable = new ParserAbleFunction<PersionReturn>(list);
+		rs=rable.parser(persion -> {
+			if(persion.getAge() > 20)
+				return new PersionReturn(persion.getAge());
+			return null;
+			});
+		System.out.println("年龄大于20："+rs);
 		
 
 	}
@@ -102,6 +112,26 @@ class ParserAble {
 	}
 }
 
+/** 解析类(使用系统自带的输入输出) **/
+class ParserAbleFunction<R extends PersionReturn> {
+	private List<Persion> data;
+
+	public ParserAbleFunction(List<Persion> data) {
+		this.data = data;
+	}
+
+	public String parser(Function<Persion, R> function) {
+		StringBuilder sb = new StringBuilder();
+		for (Persion persion : data) {
+			R r=function.apply(persion);
+			if(r!=null&&r.isSuccess()) {
+				sb.append(r.getAge());
+			}
+		}
+		return sb.toString();
+	}
+}
+
 /** 函数接口 **/
 interface ParserFunction {
 	boolean parser(Persion persion);
@@ -129,6 +159,28 @@ class Persion {
 	}
 
 	public void setAge(int age) {
+		this.age = age;
+	}
+}
+
+class PersionReturn{
+	private boolean success;
+	private Integer age;
+	
+	public PersionReturn(Integer age) {
+		this.success=true;
+		this.age=age;
+	}
+	public boolean isSuccess() {
+		return success;
+	}
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+	public Integer getAge() {
+		return age;
+	}
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 }
