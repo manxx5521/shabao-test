@@ -7,6 +7,7 @@ import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 /**
@@ -38,7 +39,9 @@ public class HttpUnitTest {
 
     // 拿到这个网页
     HtmlPage page = webClient.getPage("http://weibo.com/p/1006051227328177/photos?from=page_100605&mod=TAB#place");
-
+    String str = page.asText();
+    str=page.asXml();
+    HtmlElement htmlElement=page.getDocumentElement();
     // 填入用户名和密码
     HtmlInput username = (HtmlInput) page.getElementById("userName");
     username.type("yourAccount");
