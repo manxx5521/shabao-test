@@ -46,30 +46,22 @@ public class ZhuatuHttpManager {
 	 * @return 返回响应内容
 	 */
 	public String doGetAuto5(String url) {
-		return new RetryFactory<String, String>(url, "访问URL").execute(tempUrl -> {
-			return this.doGetAuto(tempUrl);
-		});
+		return new RetryFactory<String, String>(url, "访问URL")
+				.execute(tempUrl -> {
+					return this.doGetAuto(tempUrl);
+				});
 	}
 
-	private String doGetAuto(String url) {
-		try {
-			return this.doGet(url);
-		} catch (Exception e) {
-			log.error("请求失败异常终止,url为{}", url, e);
-		}
-		return null;
+	private String doGetAuto(String url) throws ClientProtocolException, IOException {
+		return this.doGet(url);
 	}
 
 	public void download5(String url, String pathName) {
-		Boolean result = new RetryFactory<DownloadInfo, Boolean>(new DownloadInfo(url, pathName), "访问URL")
-				.execute(info -> {
-					try {
-						this.download(info.url, info.pathName);
-					} catch (IOException e) {
-						log.warn("下载失败开始重试，重试第{}次，url为{}", url);
-					}
-					return Boolean.FALSE;
-				});
+		Boolean result = new RetryFactory<DownloadInfo, Boolean>(
+				new DownloadInfo(url, pathName), "访问URL").execute(info -> {
+			this.download(info.url, info.pathName);
+			return Boolean.TRUE;
+		});
 		if (!result) {
 			log.error("下载文件失败，目录{}\n\t url为{}", pathName, url);
 		}
@@ -86,7 +78,8 @@ public class ZhuatuHttpManager {
 		}
 	}
 
-	private void download(String url, String pathName) throws ClientProtocolException, IOException {
+	private void download(String url, String pathName)
+			throws ClientProtocolException, IOException {
 		HttpGet httpGet = new HttpGet(url);// 创建get请求
 		CloseableHttpClient httpClient = null;
 		CloseableHttpResponse response = null;
@@ -94,7 +87,7 @@ public class ZhuatuHttpManager {
 		// 自定义超时时间等
 		RequestConfig requestConfig = RequestConfig.custom()
 
-				.setSocketTimeout(1000 * 60 * 15) // socket超时
+		.setSocketTimeout(1000 * 60 * 15) // socket超时
 				.setConnectTimeout(5000) // connect超时
 				.build();
 		httpGet.setConfig(requestConfig);
@@ -103,7 +96,8 @@ public class ZhuatuHttpManager {
 		httpGet.setHeader("Accept-Encoding", "gzip, deflate,sdch");
 		httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
 		httpGet.setHeader("Connection", "keep-alive");
-		httpGet.setHeader("User-Agent",
+		httpGet.setHeader(
+				"User-Agent",
 				"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36)");
 
 		try {
@@ -130,7 +124,8 @@ public class ZhuatuHttpManager {
 		}
 	}
 
-	private String doGet(String url) throws ClientProtocolException, IOException {
+	private String doGet(String url) throws ClientProtocolException,
+			IOException {
 		return doGet(url, "UTF-8");
 	}
 
@@ -144,7 +139,8 @@ public class ZhuatuHttpManager {
 	 * @throws IOException
 	 *             发送http get请求时资源未能正常关闭！！
 	 */
-	public static String doGet(String url, String charset) throws ClientProtocolException, IOException {
+	public static String doGet(String url, String charset)
+			throws ClientProtocolException, IOException {
 		HttpGet httpGet = new HttpGet(url);
 		CloseableHttpClient httpClient = null;
 		CloseableHttpResponse response = null;
@@ -155,7 +151,8 @@ public class ZhuatuHttpManager {
 		httpGet.setHeader("Accept-Encoding", "gzip, deflate,sdch");
 		httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
 		httpGet.setHeader("Connection", "keep-alive");
-		httpGet.setHeader("User-Agent",
+		httpGet.setHeader(
+				"User-Agent",
 				"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36)");
 
 		try {

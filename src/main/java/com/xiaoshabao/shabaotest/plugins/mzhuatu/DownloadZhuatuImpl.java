@@ -6,13 +6,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuDownloadService;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuService;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.ZhuatuDownloadAble;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.ZhuatuWaitAble;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.loadFileAble;
 
-public class DownloadZhuatuImpl extends AbstractZhuatuImpl {
+public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 	/** 是否需要下载池 */
 	private boolean isNeedPool = false;
 	/** 存储已经下载的项目列表 */
@@ -51,7 +50,7 @@ public class DownloadZhuatuImpl extends AbstractZhuatuImpl {
 		}
 
 		// 如果是需要下载的url
-		if (service instanceof ZhuatuDownloadService) {
+		if (service instanceof ZhuatuDownloadAble) {
 			String fileName = tuInfo.getUrl().substring(tuInfo.getUrl().lastIndexOf("/") + 1, tuInfo.getUrl().length());
 			DownloadTuTask myTask = new DownloadTuTask(tuInfo.getUrl(),
 					config.getSavePath() + File.separator + tuInfo.getTitle() + File.separator + fileName);
