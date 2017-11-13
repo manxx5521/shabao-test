@@ -112,10 +112,10 @@ public class ZhuatuHttpManager {
 			response = httpClient.execute(httpGet);
 			entity = response.getEntity();
 			if (entity != null) {
-				InputStream instream = entity.getContent();
-				byte[] image = IOUtils.toByteArray(instream);
-				FileUtils.writeByteArrayToFile(new File(pathName), image);
-				IOUtils.closeQuietly(instream);
+				try(InputStream instream = entity.getContent()){
+					byte[] image = IOUtils.toByteArray(instream);
+					FileUtils.writeByteArrayToFile(new File(pathName), image);
+				}
 			}
 			/*
 			 * } catch (Exception e) { logger.error("文件下载失败:" + url, e);
