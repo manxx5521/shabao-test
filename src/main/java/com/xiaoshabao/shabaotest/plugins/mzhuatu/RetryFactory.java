@@ -1,7 +1,5 @@
 package com.xiaoshabao.shabaotest.plugins.mzhuatu;
 
-import java.util.function.Function;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +26,7 @@ public class RetryFactory<T, R> {
 		this.t = t;
 		this.detailMsg = detailMsg;
 	}
+
 	public RetryFactory(T t, String detailMsg, int count) {
 		this.t = t;
 		this.detailMsg = detailMsg;
@@ -36,26 +35,33 @@ public class RetryFactory<T, R> {
 
 	/**
 	 * 执行
+	 * <p>
+	 * 函数内无需捕获异常，直接向上抛，在重试工厂中统一捕获
+	 * </p>
 	 * 
 	 * @param function
 	 * @return 错误返回null
 	 */
-	public R execute(Function<T, R> function){
-		R result=null;
+	public R execute(RetryFunction<T, R> function) {
+		R result = null;
 		int i = 1;
+		Exception laste = null;// 记录最后一次失败异常
 		do {
 			try {
-				result=function.apply(t);
-				if(result instanceof Boolean&&(Boolean)result) {
+				result = function.apply(t);
+				if (result instanceof Boolean && (Boolean) result) {
 					return result;
-				}else if(result!=null) {
+				} else if (result != null) {
 					return result;
 				}
 			} catch (Exception e) {
 				log.warn("{}未能执行成功，进行重试。开始重试第{}次", this.detailMsg, i, e);
+				if (i >= count) {
+					laste = e;
+				}
 			}
 			if (i > count) {
-				log.error("{}执行失败", this.detailMsg);
+				log.error("{}执行失败", this.detailMsg, laste);
 				return null;
 			}
 			try {
