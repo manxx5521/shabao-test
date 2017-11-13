@@ -1,10 +1,11 @@
-package com.xiaoshabao.shabaotest.plugins.mzhuatu;
+package com.xiaoshabao.shabaotest.plugins.mzhuatu.core;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.MTuInfo;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuService;
 
 

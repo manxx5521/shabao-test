@@ -1,4 +1,4 @@
-package com.xiaoshabao.shabaotest.plugins.mzhuatu;
+package com.xiaoshabao.shabaotest.plugins.mzhuatu.core;
 
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +7,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.MTuInfo;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuAble;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuConfig;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuHttpManager;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuService;
 
 /**
@@ -46,7 +50,7 @@ public abstract class AbstractZhuatuImpl implements ZhuatuAble {
 
 		// 预先加载服务
 		for (ZhuatuService service : zhuatuServices) {
-			initBySerivce(service);
+			initBeforSerivce(service);
 		}
 
 		MTuInfo info = new MTuInfo();
@@ -58,7 +62,7 @@ public abstract class AbstractZhuatuImpl implements ZhuatuAble {
 	 * 根据加载服务的不同类型进行初始化操作
 	 * @param service
 	 */
-	protected void initBySerivce(ZhuatuService service) {
+	protected void initBeforSerivce(ZhuatuService service) {
 		
 	}
 

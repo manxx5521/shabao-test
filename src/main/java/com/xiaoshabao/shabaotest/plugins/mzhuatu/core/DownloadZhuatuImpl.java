@@ -1,4 +1,4 @@
-package com.xiaoshabao.shabaotest.plugins.mzhuatu;
+package com.xiaoshabao.shabaotest.plugins.mzhuatu.core;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.DownloadTuTask;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.MTuInfo;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuDownloadPool;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuService;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.ZhuatuDownloadAble;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.ZhuatuWaitAble;
@@ -18,7 +21,7 @@ public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 	protected List<String> projects = new LinkedList<String>();
 
 	@Override
-	protected void initBySerivce(ZhuatuService service) {
+	protected void initBeforSerivce(ZhuatuService service) {
 		if (service instanceof ZhuatuDownloadAble) {
 			isNeedPool = true;
 		}
