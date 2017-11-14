@@ -271,7 +271,7 @@
 			<!-- XML解析 主要用来映射bean -->
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
-			<version>1.4.8</version>
+			<version>1.4.10</version>
 		</dependency>
 		<dependency>
 			<!-- XML API 方式比较优秀的处理xml类 -->
