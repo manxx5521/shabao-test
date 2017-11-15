@@ -11,7 +11,7 @@ public interface ExcelFactory{
   /**
    * 解析到文件路径
    */
-  public boolean exportExcelForPath(String FileName, String path) throws IOException;
+  public boolean exportExcelForPath(String fileName, String path) throws IOException;
   
   /**
    * 解析到文件路径

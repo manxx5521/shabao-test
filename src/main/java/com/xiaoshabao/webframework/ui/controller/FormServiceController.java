@@ -81,9 +81,9 @@ public class FormServiceController extends AbstractController {
     	params.put(FormConstants.REQ_SESSION_TAG,formEngineComponet.getFormSessionService().getSessionMap(request));*/
     if(!sessionServices.isEmpty()){
 		Set<Map.Entry<String, FormSessionService>> sessionSet=sessionServices.entrySet();
-		Iterator<Map.Entry<String,FormSessionService>> Iterator=sessionSet.iterator();
-		while(Iterator.hasNext()){
-			Map.Entry<String,FormSessionService> sessionService=Iterator.next();
+		Iterator<Map.Entry<String,FormSessionService>> iterator=sessionSet.iterator();
+		while(iterator.hasNext()){
+			Map.Entry<String,FormSessionService> sessionService=iterator.next();
 			params.put(FormConstants.REQ_SESSION_TAG,sessionService.getValue().getSessionMap(request));
 		}
     }

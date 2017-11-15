@@ -262,11 +262,11 @@ public abstract class AbstractExcelFactory implements ExcelFactory {
    * 导出到文件
    */
   @Override
-  public final boolean exportExcelForPath(String FileName, String path) throws IOException {
+  public final boolean exportExcelForPath(String fileName, String path) throws IOException {
     try {
       this.exportExcel();
       if (out == null) {
-        this.out = new FileOutputStream(path + FileName + ".xls");
+        this.out = new FileOutputStream(path + fileName + ".xls");
       }
       this.createWorkBook(out);
     } catch (FileNotFoundException e) {
