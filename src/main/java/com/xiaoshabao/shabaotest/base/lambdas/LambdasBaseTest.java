@@ -70,8 +70,9 @@ public class LambdasBaseTest {
 		//使用自带的函数 Function<T, R> 
 		ParserAbleFunction<PersionReturn> rable = new ParserAbleFunction<PersionReturn>(list);
 		rs=rable.parser(persion -> {
-			if(persion.getAge() > 20)
+			if(persion.getAge() > 20) {
 				return new PersionReturn(persion.getAge());
+			}
 			return null;
 			});
 		System.out.println("年龄大于20："+rs);

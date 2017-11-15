@@ -253,8 +253,9 @@ public class TompressTest {
           } catch (Exception e) {
             throw new RuntimeException(e);
           } finally {
-            if (is != null)
-              is.close();
+            if (is != null) {
+            	is.close();
+            }
           }
 
         }

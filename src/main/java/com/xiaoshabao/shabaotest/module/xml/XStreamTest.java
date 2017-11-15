@@ -11,7 +11,7 @@ public class XStreamTest {
 	 * 从XML转换成bean
 	 */
 	@Test
-	public void TesttoBean() {
+	public void testToBean() {
 		XStream xStream = new XStream();// 默认方式，使用自带的包解析
 		// XStream xStream=new XStream(new DomDriver());//使用JDK DOM 解析方式
 		// XStream xstream = new XStream(new StaxDriver());//使用JDK STAX方式
@@ -29,7 +29,7 @@ public class XStreamTest {
 	 * 从bean转换成XML
 	 */
 	@Test
-	public void TesttoXML() {
+	public void testToXML() {
 		XStream xStream = new XStream();// 默认方式，使用自带的包解析
 		// XStream xStream=new XStream(new DomDriver());//使用JDK DOM 解析方式
 		// XStream xstream = new XStream(new StaxDriver());//使用JDK STAX方式

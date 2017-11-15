@@ -31,6 +31,7 @@ public class actionEvent {
 }
 //这个类处理actionEvent
 class ButtonHandler implements ActionListener{
+	@Override
 	public void actionPerformed(ActionEvent e){
 		System.out.println("提交一次");
 	}
