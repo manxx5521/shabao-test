@@ -9,7 +9,7 @@ public class DownloadTuTask  implements Runnable{
 	
 	private String url;
 	private String fileNamePath;
-
+	private String charset;
 	/**
 	 * 下载文件
 	 * 
@@ -18,19 +18,20 @@ public class DownloadTuTask  implements Runnable{
 	 * @param fileNamePath
 	 *            E:\\test\\gm\\01.jpg
 	 */
-	public DownloadTuTask(String url, String fileNamePath) {
+	public DownloadTuTask(String url, String fileNamePath,String charset) {
 		this.url = url;
 		this.fileNamePath = fileNamePath;
+		this.charset=charset;
 	}
 
 	@Override
 	public void run() {
-		ZhuatuHttpManager.getInstance().download5(url,fileNamePath);
+		ZhuatuHttpManager.getInstance(charset).download5(url,fileNamePath);
 		boolean flag=true;
 		int i=1;
 		do{
 			try {
-				ZhuatuHttpManager.getInstance().download5(url,fileNamePath);
+				ZhuatuHttpManager.getInstance(charset).download5(url,fileNamePath);
 				flag=false;
 				logger.info("下载成功:" + url);
 			} catch (Exception e) {

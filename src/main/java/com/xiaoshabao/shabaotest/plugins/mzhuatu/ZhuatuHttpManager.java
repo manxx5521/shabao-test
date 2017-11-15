@@ -1,7 +1,6 @@
 package com.xiaoshabao.shabaotest.plugins.mzhuatu;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,15 +24,19 @@ public class ZhuatuHttpManager {
 	protected Logger log = LoggerFactory.getLogger(getClass());
 	private volatile static ZhuatuHttpManager instance = null;
 
-	private ZhuatuHttpManager() {
+	/** https请求开头 **/
+	private static String HTTPS_STR = "https";
 
+	private String charset;
+
+	private ZhuatuHttpManager(String charset) {
+		this.charset = charset;
 	}
-
-	public static ZhuatuHttpManager getInstance() {
+	public static ZhuatuHttpManager getInstance(String charset) {
 		if (instance == null) {
 			synchronized (ZhuatuHttpManager.class) {
 				if (instance == null) {
-					new ZhuatuHttpManager();
+					new ZhuatuHttpManager(charset);
 				}
 			}
 		}
@@ -46,22 +49,25 @@ public class ZhuatuHttpManager {
 	 * @return 返回响应内容
 	 */
 	public String doGetAuto5(String url) {
-		return new RetryFactory<String, String>(url, "访问URL")
-				.execute(tempUrl -> {
-					return this.doGetAuto(tempUrl);
-				});
+		return new RetryFactory<String, String>(url, "访问URL").execute(tempUrl -> {
+			return this.doGetAuto(tempUrl);
+		});
 	}
 
 	private String doGetAuto(String url) throws ClientProtocolException, IOException {
-		return this.doGet(url);
+		if (url.startsWith(ZhuatuHttpManager.HTTPS_STR)) {
+			return this.doGet(url);
+		} else {
+			return this.doGet(url);
+		}
 	}
 
 	public void download5(String url, String pathName) {
-		Boolean result = new RetryFactory<DownloadInfo, Boolean>(
-				new DownloadInfo(url, pathName), "访问URL").execute(info -> {
-			this.download(info.url, info.pathName);
-			return Boolean.TRUE;
-		});
+		Boolean result = new RetryFactory<DownloadInfo, Boolean>(new DownloadInfo(url, pathName), "访问URL")
+				.execute(info -> {
+					this.download(info.url, info.pathName);
+					return Boolean.TRUE;
+				});
 		if (!result) {
 			log.error("下载文件失败，目录{}\n\t url为{}", pathName, url);
 		}
@@ -78,8 +84,7 @@ public class ZhuatuHttpManager {
 		}
 	}
 
-	private void download(String url, String pathName)
-			throws ClientProtocolException, IOException {
+	private void download(String url, String pathName) throws ClientProtocolException, IOException {
 		HttpGet httpGet = new HttpGet(url);// 创建get请求
 		CloseableHttpClient httpClient = null;
 		CloseableHttpResponse response = null;
@@ -87,7 +92,7 @@ public class ZhuatuHttpManager {
 		// 自定义超时时间等
 		RequestConfig requestConfig = RequestConfig.custom()
 
-		.setSocketTimeout(1000 * 60 * 15) // socket超时
+				.setSocketTimeout(1000 * 60 * 15) // socket超时
 				.setConnectTimeout(5000) // connect超时
 				.build();
 		httpGet.setConfig(requestConfig);
@@ -96,8 +101,7 @@ public class ZhuatuHttpManager {
 		httpGet.setHeader("Accept-Encoding", "gzip, deflate,sdch");
 		httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
 		httpGet.setHeader("Connection", "keep-alive");
-		httpGet.setHeader(
-				"User-Agent",
+		httpGet.setHeader("User-Agent",
 				"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36)");
 
 		try {
@@ -106,7 +110,7 @@ public class ZhuatuHttpManager {
 			response = httpClient.execute(httpGet);
 			entity = response.getEntity();
 			if (entity != null) {
-				try(InputStream instream = entity.getContent()){
+				try (InputStream instream = entity.getContent()) {
 					byte[] image = IOUtils.toByteArray(instream);
 					FileUtils.writeByteArrayToFile(new File(pathName), image);
 				}
@@ -124,11 +128,6 @@ public class ZhuatuHttpManager {
 		}
 	}
 
-	private String doGet(String url) throws ClientProtocolException,
-			IOException {
-		return doGet(url, "UTF-8");
-	}
-
 	/**
 	 * get请求
 	 * 
@@ -139,8 +138,7 @@ public class ZhuatuHttpManager {
 	 * @throws IOException
 	 *             发送http get请求时资源未能正常关闭！！
 	 */
-	public static String doGet(String url, String charset)
-			throws ClientProtocolException, IOException {
+	private String doGet(String url) throws ClientProtocolException, IOException {
 		HttpGet httpGet = new HttpGet(url);
 		CloseableHttpClient httpClient = null;
 		CloseableHttpResponse response = null;
@@ -151,8 +149,7 @@ public class ZhuatuHttpManager {
 		httpGet.setHeader("Accept-Encoding", "gzip, deflate,sdch");
 		httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
 		httpGet.setHeader("Connection", "keep-alive");
-		httpGet.setHeader(
-				"User-Agent",
+		httpGet.setHeader("User-Agent",
 				"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36)");
 
 		try {
