@@ -24,6 +24,7 @@ public final class ApplicationContextUtil implements DisposableBean,
 		context = applicationContext;
 	}
 
+	@Override
 	public void destroy() {
 		context = null;
 	}

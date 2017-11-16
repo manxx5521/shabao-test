@@ -27,16 +27,14 @@ public class ZhuatuHttpManager {
 	/** https请求开头 **/
 	private static String HTTPS_STR = "https";
 
-	private String charset;
-
-	private ZhuatuHttpManager(String charset) {
-		this.charset = charset;
+	private ZhuatuHttpManager() {
 	}
-	public static ZhuatuHttpManager getInstance(String charset) {
+
+	public static ZhuatuHttpManager getInstance() {
 		if (instance == null) {
 			synchronized (ZhuatuHttpManager.class) {
 				if (instance == null) {
-					new ZhuatuHttpManager(charset);
+					new ZhuatuHttpManager();
 				}
 			}
 		}
@@ -49,29 +47,33 @@ public class ZhuatuHttpManager {
 	 * @return 返回响应内容
 	 */
 	public String doGetAuto5(String url) {
+		return doGetAuto5(url, "UTF-8");
+	}
+
+	/**
+	 * 默认自动请求5次
+	 * 
+	 * @return 返回响应内容
+	 */
+	public String doGetAuto5(String url, String charset) {
 		return new RetryFactory<String, String>(url, "访问URL").execute(tempUrl -> {
-			return this.doGetAuto(tempUrl);
+			return this.doGetAuto(tempUrl, charset);
 		});
 	}
 
-	private String doGetAuto(String url) throws ClientProtocolException, IOException {
+	private String doGetAuto(String url, String charset) throws ClientProtocolException, IOException {
 		if (url.startsWith(ZhuatuHttpManager.HTTPS_STR)) {
-			return this.doGet(url);
+			return this.doGet(url, charset);
 		} else {
-			return this.doGet(url);
+			return this.doGet(url, charset);
 		}
 	}
 
 	public void download5(String url, String pathName) {
-		Boolean result = new RetryFactory<DownloadInfo, Boolean>(new DownloadInfo(url, pathName), "访问URL")
-				.execute(info -> {
-					this.download(info.url, info.pathName);
-					return Boolean.TRUE;
-				});
-		if (!result) {
-			log.error("下载文件失败，目录{}\n\t url为{}", pathName, url);
-		}
-
+		new RetryFactory<DownloadInfo, Boolean>(new DownloadInfo(url, pathName), "访问URL").execute(info -> {
+			this.download(info.url, info.pathName);
+			return Boolean.TRUE;
+		});
 	}
 
 	class DownloadInfo {
@@ -138,7 +140,7 @@ public class ZhuatuHttpManager {
 	 * @throws IOException
 	 *             发送http get请求时资源未能正常关闭！！
 	 */
-	private String doGet(String url) throws ClientProtocolException, IOException {
+	private String doGet(String url, String charset) throws ClientProtocolException, IOException {
 		HttpGet httpGet = new HttpGet(url);
 		CloseableHttpClient httpClient = null;
 		CloseableHttpResponse response = null;

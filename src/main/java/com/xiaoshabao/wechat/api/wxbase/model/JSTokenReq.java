@@ -19,11 +19,11 @@ public class JSTokenReq extends WeixinReqParam{
 		sb.append(type);
 		return sb.toString();
 	}
-
+	@Override
 	public String getAccess_token() {
 		return access_token;
 	}
-
+	@Override
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
 	}

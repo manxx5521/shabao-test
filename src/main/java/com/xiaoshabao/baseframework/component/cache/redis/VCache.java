@@ -438,8 +438,10 @@ public class VCache {
 	 * @param isBroken
 	 */
 	public static void returnResource(Jedis jedis, boolean isBroken) {
-        if (jedis == null)
-            return;
+        if (jedis == null) {
+        	return;
+        }
+            
 //        if (isBroken)
 //            J.getJedisPool().returnBrokenResource(jedis);
 //        else

@@ -57,8 +57,9 @@ public class UUIDGenerator {
 
 	private final static short getCount() {
 		synchronized (UUIDGenerator.class) {
-			if (counter < 0)
+			if (counter < 0) {
 				counter = 0;
+			}
 			return counter++;
 		}
 	}

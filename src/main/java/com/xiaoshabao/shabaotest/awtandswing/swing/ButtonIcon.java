@@ -15,6 +15,7 @@ public class ButtonIcon extends JPanel implements ActionListener{
 		jf.setVisible(true);
 		jf.addWindowListener(new WindowAdapter(){//窗口适配
 			//匿名类注册监听
+			@Override
 			public void windowClosing(WindowEvent evt){ //实现windowClosing
 				System.exit(0);  //关闭窗口
 			}
@@ -42,6 +43,7 @@ public class ButtonIcon extends JPanel implements ActionListener{
 		button[2].addActionListener(this);   //所以重写他的方法就可以实现监听		
 	}
 	//实现actionlistener监听的方法
+	@Override
 	public void actionPerformed(ActionEvent e){
 		ImageIcon temp;  //创建一个内部imageicon
 		if((JButton)e.getSource()==button[0]){  //根据源判断

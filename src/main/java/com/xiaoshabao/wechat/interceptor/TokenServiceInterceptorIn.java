@@ -25,6 +25,7 @@ public class TokenServiceInterceptorIn  extends AbstractPhaseInterceptor<SoapMes
 	/**
      * 拦截获取消息
      */
+	@Override
     public void handleMessage(SoapMessage message) throws Fault {
     	
         List<Header> headers=message.getHeaders();
@@ -55,7 +56,7 @@ public class TokenServiceInterceptorIn  extends AbstractPhaseInterceptor<SoapMes
 		} catch (NumberFormatException e) {
 			throw new Fault(new IllegalArgumentException("时间格式不对"));
 		}
-		long newDate=new Date().getTime();
+		long newDate=System.currentTimeMillis();
         if((newDate-1000*5*60)>ltime){
         	 throw new Fault(new IllegalArgumentException("已超过最大验证时间"));
         }

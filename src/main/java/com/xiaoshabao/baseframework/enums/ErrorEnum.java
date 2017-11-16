@@ -21,6 +21,7 @@ public enum ErrorEnum implements ErrorInterface{
 	 * 代码
 	 * @return
 	 */
+	@Override
 	public int getCode() {
 		return code;
 	}
@@ -28,6 +29,7 @@ public enum ErrorEnum implements ErrorInterface{
 	 * 错误信息
 	 * @return
 	 */
+	@Override
 	public String getMessage() {
 		return message;
 	}

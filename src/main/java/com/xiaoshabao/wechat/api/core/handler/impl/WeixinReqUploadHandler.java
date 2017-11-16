@@ -23,7 +23,7 @@ import com.xiaoshabao.wechat.api.core.req.WeixinUploadParam;
 public class WeixinReqUploadHandler implements WeiXinReqHandler {
 
 	private static Logger logger = Logger.getLogger(WeixinReqUploadHandler.class);
-
+	@Override
 	public String doRequest(WeixinReqParam weixinReqParam,
 			WeixinReqConfig objConfig) throws WeixinReqException {
 		logger.info("使用WeixinUploadHandler 处理上传文件");

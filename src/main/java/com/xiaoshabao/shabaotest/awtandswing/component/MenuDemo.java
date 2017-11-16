@@ -10,6 +10,7 @@ public class MenuDemo extends Frame{
 		super(str);  //调用父类构造
 		
 		addWindowListener(new WindowAdapter(){//窗口适配
+			@Override
 			public void windowClosing(WindowEvent evt){ //实现windowClosing
 				setVisible(false);  //设置窗口不可见
 				dispose();   //释放窗口组件资源
@@ -54,6 +55,7 @@ public class MenuDemo extends Frame{
 		
 		//事件处理
 		p.addMouseListener(new MouseAdapter(){
+			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt){
 				if(evt.isPopupTrigger()){
 					System.out.println("popup trigger"); //输出字符串信息

@@ -23,6 +23,7 @@ public class TableDemo extends JFrame{
 		pack();  //尽量小的适配窗口
 		addWindowListener(new WindowAdapter(){//窗口适配
 			//匿名类注册监听
+			@Override
 			public void windowClosing(WindowEvent evt){ //实现windowClosing
 				System.exit(0);  //关闭窗口
 			}
@@ -42,23 +43,28 @@ public class TableDemo extends JFrame{
 			{"齐四","11079",new Integer(25),"北京",new Boolean(false)},
 		};
 		//获得有多少列
+		@Override
 		public int getColumnCount(){
 			return columnName.length;
 		}
 		//获得有多少行
+		@Override
 		public int getRowCount(){
 			return data.length;
 		}
 		//获得某列的名字
+		@Override
 		public String getColumnName(int col){
 			return columnName[col];
 		}
 		//获得某行某列的类
+		@Override
 		public Object getValueAt(int row, int col){
 			return data[row][col];
 		}
 		//获得指定列的类型
 		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@Override
 		public Class getColumnClass(int col){
 			return getValueAt(0,col).getClass();
 		}
@@ -71,6 +77,7 @@ public class TableDemo extends JFrame{
 			}
 		}
 		//使表格可以修改数据
+		@Override
 		public void setValueAt(Object value,int row,int col){
 			//用instanceof判断data[][] 是否是Integer类型
 			if(data[0][col] instanceof Integer&&!(value instanceof Integer)){

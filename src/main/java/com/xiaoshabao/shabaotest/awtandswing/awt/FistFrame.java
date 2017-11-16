@@ -19,6 +19,7 @@ public class FistFrame extends Frame{  //所有‘窗口’的框架继承于Fra
 	}
 	//定义监听实现窗口关闭
 	class Mywindowadapter extends WindowAdapter{
+		@Override
 		public void windowClosing(WindowEvent we){//覆盖windowAdapter方法
 			System.exit(0);  //退出函数
 		}

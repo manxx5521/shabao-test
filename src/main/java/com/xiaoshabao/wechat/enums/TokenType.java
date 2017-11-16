@@ -51,6 +51,7 @@ public enum TokenType {
 			this.token_name = "ticket";
 			this.expires_in_name = "expires_in";
 			break;
+		default:
 		}
 	}
 

@@ -137,8 +137,10 @@ public abstract class AbstractExcelFactory implements ExcelFactory {
    */
   @SuppressWarnings("unchecked")
   protected int createSheetData(HSSFSheet sheet, List<ColumnBase> fields, int rownum, List<?> dataset) {
-    if (fields.size() < 1)
-      return rownum;
+    if (fields.size() < 1) {
+    	return rownum;
+    }
+      
     for (int i = 0; i < dataset.size(); i++) {
       //      BeanMap map=new BeanMap(list.get(0));
       Map<String, Object> map = null;

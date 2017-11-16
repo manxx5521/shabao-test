@@ -17,6 +17,7 @@ public class actionEvent {
 		f.setSize(100,100);
 		f.setVisible(true);
 		f.addWindowListener(new WindowAdapter(){//窗口适配
+			@Override
 			public void windowClosing(WindowEvent evt){ //实现windowClosing
 				f.setVisible(false);  //设置窗口不可见
 				f.dispose();   //释放窗口组件资源

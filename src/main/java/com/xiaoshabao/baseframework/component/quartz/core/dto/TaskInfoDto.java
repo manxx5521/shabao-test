@@ -1,48 +1,38 @@
 package com.xiaoshabao.baseframework.component.quartz.core.dto;
 
-public class TaskInfoDto extends RouteEntity{
-  
-  private TaskEntity task;
-  
-  private boolean replaceFlag;
-  
-  private Integer workId;
-  
-  /**
-   * 并行项目数
-   */
-  private int eqnum;
+public class TaskInfoDto extends RouteEntity {
 
-  public TaskEntity getTask() {
-    return task;
-  }
+	private TaskEntity task;
 
-  public void setTask(TaskEntity task) {
-    this.task = task;
-  }
+	private boolean replaceFlag;
 
-  public boolean isReplaceFlag() {
-    return replaceFlag;
-  }
+	/**
+	 * 并行项目数
+	 */
+	private int eqnum;
 
-  public void setReplaceFlag(boolean replaceFlag) {
-    this.replaceFlag = replaceFlag;
-  }
+	public TaskEntity getTask() {
+		return task;
+	}
 
-  public Integer getWorkId() {
-    return workId;
-  }
+	public void setTask(TaskEntity task) {
+		this.task = task;
+	}
 
-  public void setWorkId(Integer workId) {
-    this.workId = workId;
-  }
+	public boolean isReplaceFlag() {
+		return replaceFlag;
+	}
 
-  public int getEqnum() {
-    return eqnum;
-  }
+	public void setReplaceFlag(boolean replaceFlag) {
+		this.replaceFlag = replaceFlag;
+	}
 
-  public void setEqnum(int eqnum) {
-    this.eqnum = eqnum;
-  }
-  
+	public int getEqnum() {
+		return eqnum;
+	}
+
+	public void setEqnum(int eqnum) {
+		this.eqnum = eqnum;
+	}
+
 }

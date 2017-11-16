@@ -40,8 +40,10 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
     redisConnectionFactory.setHostName(host);
     redisConnectionFactory.setPort(port);
-    if(StringUtils.isNotEmpty(password))
-      redisConnectionFactory.setPassword(password);
+    if(StringUtils.isNotEmpty(password)) {
+    	redisConnectionFactory.setPassword(password);
+    }
+      
     redisConnectionFactory.setTimeout(maxWait);
     return redisConnectionFactory;
   }

@@ -91,8 +91,7 @@ public class MessageUtil {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public static Map<String, String> parseXml(HttpServletRequest request)
-			throws Exception {
+	public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
 		// 将解析结果存储在HashMap中
 		Map<String, String> map = new HashMap<String, String>();
 
@@ -107,8 +106,9 @@ public class MessageUtil {
 		List<Element> elementList = root.elements();
 
 		// 遍历所有子节点
-		for (Element e : elementList)
+		for (Element e : elementList) {
 			map.put(e.getName(), e.getText());
+		}
 
 		// 释放资源
 		inputStream.close();
@@ -158,16 +158,19 @@ public class MessageUtil {
 	 * 扩展xstream，使其支持CDATA块
 	 */
 	private static XStream xstream = new XStream(new XppDriver() {
+		@Override
 		public HierarchicalStreamWriter createWriter(Writer out) {
 			return new PrettyPrintWriter(out) {
 				// 对所有xml节点的转换都增加CDATA标记
 				boolean cdata = true;
 
 				@SuppressWarnings("rawtypes")
+				@Override
 				public void startNode(String name, Class clazz) {
 					super.startNode(name);
 				}
 
+				@Override
 				protected void writeText(QuickWriter writer, String text) {
 					if (cdata) {
 						writer.write("<![CDATA[");

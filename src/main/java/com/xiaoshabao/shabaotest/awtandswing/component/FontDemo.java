@@ -10,6 +10,7 @@ public class FontDemo extends Frame{
 	public FontDemo(String str){
 		super(str);
 		addWindowListener(new WindowAdapter(){//窗口适配
+			@Override
 			public void windowClosing(WindowEvent evt){ //实现windowClosing
 				setVisible(false);  //设置窗口不可见
 				dispose();   //释放窗口组件资源
@@ -21,6 +22,7 @@ public class FontDemo extends Frame{
 	}
 	//重载了paint方法，绘制了以下内容
 	@SuppressWarnings("static-access")
+	@Override
 	public void paint(Graphics g){
 		Font font=new Font("Arial",Font.BOLD,18);  //设置字体
 		g.setColor(Color.RED);//设置颜色

@@ -19,13 +19,13 @@ public class TokenServiceInterceptorAdd extends AbstractPhaseInterceptor<SoapMes
         super(Phase.PREPARE_SEND); // 发送SOAP消息之前调用拦截器
         this.key=key;
     }
- 
+	@Override
     public void handleMessage(SoapMessage message) throws Fault {
         List<Header> headers=message.getHeaders();
          
         Document doc=DOMUtils.createDocument();
         Element ele=doc.createElement("authHeader");
-        Long times=new Date().getTime();
+        Long times=System.currentTimeMillis();
         String md5=DigestUtils.md5Hex((this.key+times).getBytes());
         
         Element keyElement=doc.createElement("key");

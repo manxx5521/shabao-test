@@ -16,6 +16,7 @@ public class ResourceTag extends TagSupport {
 	/**
 	 * 头标签加CSS
 	 */
+	@Override
 	public int doStartTag() throws JspException {
 		if(this.type.equals("all")||this.type.equals("css")){
 			try {
@@ -36,6 +37,7 @@ public class ResourceTag extends TagSupport {
 	/**
 	 * 尾部签加JS
 	 */
+	@Override
 	public int doEndTag() throws JspException {
 		if(this.type.equals("all")||this.type.equals("js")){
 			try {

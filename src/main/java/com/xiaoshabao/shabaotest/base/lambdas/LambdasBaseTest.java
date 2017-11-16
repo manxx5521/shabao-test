@@ -47,8 +47,10 @@ public class LambdasBaseTest {
 		
 		//使用代码块
 		rs=able.parser(persion -> {
-			if(persion.getAge()<20) 
+			if(persion.getAge()<20) {
 				return true;
+			}
+				
 			return false;
 		});
 		System.out.println("年龄小于20："+rs);

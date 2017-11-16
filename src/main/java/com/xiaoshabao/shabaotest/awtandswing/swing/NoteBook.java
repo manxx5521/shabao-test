@@ -90,6 +90,7 @@ public class NoteBook extends JFrame implements ActionListener{
 	}
 	
 	//监听
+	@Override
 	public void actionPerformed(ActionEvent e){
 		Object eventSoure=e.getSource();  //获得监听源
 		if(eventSoure==newItem){  //点击新建

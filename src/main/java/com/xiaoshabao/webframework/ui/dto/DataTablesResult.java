@@ -56,7 +56,7 @@ public class DataTablesResult extends AjaxResult{
 	public void setRecordsFiltered(Integer recordsFiltered) {
 		this.recordsFiltered = recordsFiltered;
 	}
-	
+	@Override
 	public List<Map<String, Object>> getData() {
 		return data;
 	}

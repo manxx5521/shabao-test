@@ -47,6 +47,7 @@ public class GridBagLayoutDemo extends Frame{
 		p1.add(bt2);
 		
 		addWindowListener(new WindowAdapter(){
+			@Override
 			public void windowClosing(WindowEvent we){
 				System.exit(0);
 			}

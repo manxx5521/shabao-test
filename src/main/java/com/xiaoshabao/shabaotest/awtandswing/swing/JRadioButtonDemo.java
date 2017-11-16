@@ -15,6 +15,7 @@ public class JRadioButtonDemo extends JPanel implements ActionListener{
 		jf.setVisible(true);
 		jf.addWindowListener(new WindowAdapter(){//窗口适配
 			//匿名类注册监听
+			@Override
 			public void windowClosing(WindowEvent evt){ //实现windowClosing
 				System.exit(0);  //关闭窗口
 			}
@@ -60,6 +61,7 @@ public class JRadioButtonDemo extends JPanel implements ActionListener{
 		button[1].addActionListener(this);
 		button[2].addActionListener(this);	
 	}
+	@Override
 	public void actionPerformed(ActionEvent e){
 		String select="";
 		for(int i=0;i<button.length;i++){

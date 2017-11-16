@@ -15,9 +15,11 @@ public class FocusEventDemo extends Frame{
 		setLayout(new GridLayout(2,1));//网格布局
 		textarea=new TextArea();  //初始化文本域
 		textarea.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent eve){
 				textarea.setText("文本区获得聚焦");//设置内容
 			}
+			@Override
 			public void focusLost(FocusEvent eve){
 				textarea.setText("文本区失去聚焦");//设置内容
 			}
@@ -25,9 +27,11 @@ public class FocusEventDemo extends Frame{
 		
 		tf=new TextField();//初始化文本
 		tf.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent eve){
 				tf.setText("文本区获得聚焦");//设置内容
 			}
+			@Override
 			public void focusLost(FocusEvent eve){
 				tf.setText("文本区失去聚焦");//设置内容
 			}
@@ -38,6 +42,7 @@ public class FocusEventDemo extends Frame{
 		setSize(300,200);
 		setVisible(true);
 		addWindowListener(new WindowAdapter(){//窗口适配
+			@Override
 			public void windowClosing(WindowEvent evt){ //实现windowClosing
 				setVisible(false);  //设置窗口不可见
 				dispose();   //释放窗口组件资源

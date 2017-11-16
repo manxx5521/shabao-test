@@ -19,31 +19,39 @@ public enum ViewPositionEnum {
 	private ViewPositionEnum(int position) {
 		this.position = position;
 	}
-	
-	public boolean equals(int position){
-		if(this.position!=position){
+
+	public boolean equals(int position) {
+		if (this.position != position) {
 			return false;
 		}
 		return true;
 	}
-	public boolean equals(Integer position){
-		if(position==null)
+
+	public boolean equals(Integer position) {
+		if (position == null) {
 			return false;
-		if(position.intValue()!=this.position)
+		}
+		if (position.intValue() != this.position) {
 			return false;
+		}
 		return true;
 	}
-	public boolean equals(String position){
-		
-		if(StringUtils.isEmpty(position))
+
+	public boolean equals(String position) {
+
+		if (StringUtils.isEmpty(position)) {
 			return false;
-		if(!NumberUtils.isNumber(position))
+		}
+		if (!NumberUtils.isNumber(position)) {
 			return false;
-		if(Integer.valueOf(position).intValue()!=this.position)
+		}
+		if (Integer.valueOf(position).intValue() != this.position) {
 			return false;
+		}
+
 		return true;
 	}
-	
+
 	public int getPosition() {
 		return position;
 	}

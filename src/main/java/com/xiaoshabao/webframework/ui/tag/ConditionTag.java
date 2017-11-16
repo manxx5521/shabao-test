@@ -17,6 +17,7 @@ public class ConditionTag extends TagSupport {
 	protected String id;
 
 	// 头标签加CSS
+	@Override
 	public int doStartTag() throws JspException {
 		try {
 			JspWriter out = this.pageContext.getOut();
@@ -29,10 +30,11 @@ public class ConditionTag extends TagSupport {
 	}
 
 	// 尾部签加JS
+	@Override
 	public int doEndTag() throws JspException {
 		return EVAL_PAGE;
 	}
-
+	@Override
 	public void setId(String id) {
 		this.id = id;
 	}

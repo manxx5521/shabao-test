@@ -27,6 +27,7 @@ public class FrameAddPanel extends Frame{  //面板panel加到窗口Frame里
 	}
 	//定义监听实现窗口关闭
 	class Mywindowadapter extends WindowAdapter{
+		@Override
 		public void windowClosing(WindowEvent we){//覆盖windowAdapter方法
 			System.exit(0);  //退出函数
 		}

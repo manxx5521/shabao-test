@@ -27,6 +27,7 @@ public class FlowLayoutDemo{
 		f.pack();  //设置窗口的大小为组件的大小，让窗口尽量的小。可选
 		//添加监听
 		f.addWindowListener(new WindowAdapter(){//窗口适配
+			@Override
 			public void windowClosing(WindowEvent evt){ //实现windowClosing
 				f.setVisible(false);  //设置窗口不可见
 				f.dispose();   //释放窗口组件资源

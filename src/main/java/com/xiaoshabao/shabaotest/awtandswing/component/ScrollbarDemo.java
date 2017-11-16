@@ -23,6 +23,7 @@ public class ScrollbarDemo extends Frame{
 		setSize(300,50);
 		setVisible(true);
 		addWindowListener(new WindowAdapter(){//窗口适配
+			@Override
 			public void windowClosing(WindowEvent evt){ //实现windowClosing
 				setVisible(false);  //设置窗口不可见
 				dispose();   //释放窗口组件资源

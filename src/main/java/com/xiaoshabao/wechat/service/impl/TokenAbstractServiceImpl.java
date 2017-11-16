@@ -27,6 +27,7 @@ public abstract class TokenAbstractServiceImpl implements TokenService{
 	private int time=60000;
 	
 	//获得帐号信息，不保证token信息实时
+	@Override
 	public AccessToken getAccountToken(Integer accountId){
 		return this.getMemoryToken(accountId);
 	}
@@ -51,6 +52,7 @@ public abstract class TokenAbstractServiceImpl implements TokenService{
 	 * @param time_now_long
 	 * @return
 	 */
+	@Override
 	public AccessToken updateAccessToken(Integer accountId,AccessToken accessToken,long time_now_long) {
 		logger.debug("内存中的accessToken不在有效期内需要重新换取");
 		TokenResult token=TokenAPI.getAccessTokenAll(accessToken.getAppid(), accessToken.getAppsecret());
@@ -87,6 +89,7 @@ public abstract class TokenAbstractServiceImpl implements TokenService{
 	 * @param time_now_long
 	 * @return
 	 */
+	@Override
 	public AccessToken updateJSToken(Integer accountId,AccessToken accessToken,long time_now_long ){
 		logger.debug("内存中的jsToken不在有效期内需要重新换取");
 		//判断accessToken

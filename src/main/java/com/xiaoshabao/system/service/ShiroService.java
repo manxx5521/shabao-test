@@ -12,20 +12,20 @@ public interface ShiroService extends AbstractService{
 	 * @param userName
 	 * @return
 	 */
-	public LoginUserDto getByUserName(String LoginName);
+	public LoginUserDto getByUserName(String loginName);
 	
 	/**
 	 * 通过用户名查询角色信息
 	 * @param userName
 	 * @return
 	 */
-	public Set<String> getRoles(String LoginName);
+	public Set<String> getRoles(String loginName);
 	
 	/**
 	 * 通过用户名查询权限信息
 	 * @param userName
 	 * @return
 	 */
-	public Set<String> getPermissions(String LoginName);
+	public Set<String> getPermissions(String loginName);
 
 }

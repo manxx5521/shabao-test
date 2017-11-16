@@ -56,7 +56,7 @@ public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 		if (service instanceof ZhuatuDownloadAble) {
 			String fileName = tuInfo.getUrl().substring(tuInfo.getUrl().lastIndexOf("/") + 1, tuInfo.getUrl().length());
 			DownloadTuTask myTask = new DownloadTuTask(tuInfo.getUrl(),
-					config.getSavePath() + File.separator + tuInfo.getTitle() + File.separator + fileName,config.getCharset());
+					config.getSavePath() + File.separator + tuInfo.getTitle() + File.separator + fileName);
 			ZhuatuDownloadPool.getInstance().execute(myTask);
 		}
 	}

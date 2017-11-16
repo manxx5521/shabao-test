@@ -91,8 +91,10 @@ public class CacheManager {
    * @param value 要缓存的对象
    */
   public void putObject(Object key, Object value) {
-    if (null == value)
-      value = NULL_OBJECT;
+    if (null == value) {
+    	value = NULL_OBJECT;
+    }
+      
     //关于缓存的操作，需要互斥
     synchronized (this) {
       if (serialize && !readOnly && value != NULL_OBJECT) {

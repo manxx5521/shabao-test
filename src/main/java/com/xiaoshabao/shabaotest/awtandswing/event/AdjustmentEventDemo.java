@@ -28,6 +28,7 @@ public class AdjustmentEventDemo extends Frame{
 		setSize(300,50);
 		setVisible(true);
 		addWindowListener(new WindowAdapter(){//窗口适配
+			@Override
 			public void windowClosing(WindowEvent evt){ //实现windowClosing
 				setVisible(false);  //设置窗口不可见
 				dispose();   //释放窗口组件资源
@@ -43,6 +44,7 @@ public class AdjustmentEventDemo extends Frame{
 	//监听处理
 	class AdjustmentEventHandler implements AdjustmentListener{
 		//实现adjustmentVauleChanged方法
+		@Override
 		public void adjustmentValueChanged(AdjustmentEvent eve){
 			value.setText(Integer.toString(((Scrollbar)eve.getSource()).getValue()));
 			     //设置了value的值

@@ -44,6 +44,7 @@ public class CardLayoutDemo extends Frame implements MouseListener {
 		add("Center", cards);// 将cards面板家到 边界布局的center
 		// 注册监听的关闭功能
 		addWindowListener(new WindowAdapter() {
+			@Override
 			public void windowClosing(WindowEvent we) {// 重写关闭方法
 				setVisible(false); // 设置不可见
 				dispose(); // 释放资源
@@ -55,6 +56,7 @@ public class CardLayoutDemo extends Frame implements MouseListener {
 	}
 
 	// 设置实现的监听方法
+	@Override
 	public void mouseClicked(MouseEvent evt) { // 当点击时触发
 		if (evt.getSource() == first) {// 当事件源为first时
 			cl.first(cards); // 翻到第一章卡片

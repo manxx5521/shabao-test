@@ -57,7 +57,7 @@ public abstract class AbstractUIElement extends AbstractFormServiceImpl
 	}
 
 	//
-	// @Override
+	@Override
 	public Object getCustomValue(Map<String, Object> data,
 			Map<String, Object> elementParams, String fieldCode, Object value) {
 		// 默认返回正常value不做任何处理

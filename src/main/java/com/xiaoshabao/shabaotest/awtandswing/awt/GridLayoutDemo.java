@@ -30,6 +30,7 @@ public class GridLayoutDemo {
 		f.add(b5);
 		f.add(b6);
 		f.addWindowListener(new WindowAdapter(){//创建适配监听
+			@Override
 			public void windowClosing(WindowEvent we){//重写了windowClosing
 				f.setVisible(false);  //设置不显示
 				f.dispose();  //释放窗口组件资源

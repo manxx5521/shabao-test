@@ -13,6 +13,7 @@ public class CanvasDemo extends Panel{
 		private static final long serialVersionUID = -2546405284547652865L;
 
 		//重载paint（）方法  绘图方法
+		@Override
 		public void paint(Graphics g){
 			g.setColor(Color.RED);  //设置绘图颜色
 			g.drawRect(100, 40, 100, 100);//绘制矩形，前两个数字坐标，后两个长宽
@@ -28,6 +29,7 @@ public class CanvasDemo extends Panel{
 		f.setSize(300,200);
 		f.setVisible(true);
 		f.addWindowListener(new WindowAdapter(){//窗口适配
+			@Override
 			public void windowClosing(WindowEvent evt){ //实现windowClosing
 				f.setVisible(false);  //设置窗口不可见
 				f.dispose();   //释放窗口组件资源

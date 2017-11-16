@@ -16,7 +16,7 @@ public interface LoginService extends AbstractService {
 	 * @return
 	 * @throws Exception
 	 */
-	public SessionUserInfo adminLogin(String user_id, String password)
+	public SessionUserInfo adminLogin(String userId, String password)
 			throws Exception;
 
 }

@@ -55,6 +55,7 @@ public class HtmlJFrame extends JFrame implements ActionListener,javax.swing.eve
 		this.urls=new URL[20];   //创建一个url数组
 		actionPerformed(null); //事件处理方式初始化 
 	}
+	@Override
 	public void actionPerformed(ActionEvent e){
 		String urlname=(String)combobox_url.getSelectedItem();//获得组合框选中的字符串
 		int i=tab.getTabCount();  //tab标签当前的页数，即下一页的序号
@@ -98,6 +99,7 @@ public class HtmlJFrame extends JFrame implements ActionListener,javax.swing.eve
 	}
 	
 	//选项卡监听
+	@Override
 	public void stateChanged(ChangeEvent e){
 		String str="文件:";
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm");  //获取系统时间

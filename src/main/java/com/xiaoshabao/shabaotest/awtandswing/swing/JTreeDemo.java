@@ -60,6 +60,7 @@ public class JTreeDemo implements ActionListener,TreeModelListener{
 		panel.add(delete);	
 	}
 	//动作监听的实现
+	@Override
 	public void actionPerformed(ActionEvent event){
 		//获取选择选择树的节点
 		DefaultMutableTreeNode selectedNode=
@@ -98,6 +99,7 @@ public class JTreeDemo implements ActionListener,TreeModelListener{
 	}
 	
 	//树监听器实现的方法
+	@Override
 	public void treeNodesChanged(TreeModelEvent event){//更改节点后调用
 		TreePath treePath=event.getTreePath();//返回已更改的节点
 		//返回指定位置的索引组件
@@ -111,28 +113,32 @@ public class JTreeDemo implements ActionListener,TreeModelListener{
 		System.out.println(nodeName+"更改数据为："+(String)node.getUserObject());
 	}
 	
-
+	@Override
 	public void treeNodesInserted(TreeModelEvent e) {//插入节点后调用
 		System.out.println("插入节点");
 	}
-
+	@Override
 	public void treeNodesRemoved(TreeModelEvent e) {//删除节点后调用
 		System.out.println("删除节点");
 	}
-
+	@Override
 	public void treeStructureChanged(TreeModelEvent e) { //给定节点开始向下的地方发生彻底更改之后调用
 		System.out.println("结构变化");
 	}
 	
 	//鼠标监听器实现的类
+	
 	class MouseHandle extends MouseAdapter{  //继承自鼠标适配类
+		@Override
 		public void mousePressed(MouseEvent e){ //实现按下的函数
 			try{
 				JTree tree=(JTree)e.getSource();//获得事件的发生对象
 				int rowLocation=tree.getRowForLocation(e.getX(), e.getY());
 						//获得tree坐标，路径
-				if(rowLocation<0)
+				if(rowLocation<0) {
 					return;
+				}
+					
 				TreePath treepath=tree.getPathForRow(rowLocation);//返回指定行的路径
 				//返回指定索引路径位置的组件
 				TreeNode treenode=(TreeNode)treepath.getLastPathComponent();

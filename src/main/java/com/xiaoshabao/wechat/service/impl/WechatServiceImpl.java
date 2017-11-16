@@ -146,7 +146,7 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 			TextMessage textMessage = new TextMessage();
 			textMessage.setToUserName(fromUserName);
 			textMessage.setFromUserName(toUserName);
-			textMessage.setCreateTime(new Date().getTime());
+			textMessage.setCreateTime(System.currentTimeMillis());
 			textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 			textMessage.setFuncFlag(0);
 			//由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义
@@ -256,7 +256,7 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 		TextMessage textMessage = new TextMessage();
 		textMessage.setToUserName(fromUserName);
 		textMessage.setFromUserName(toUserName);
-		textMessage.setCreateTime(new Date().getTime());
+		textMessage.setCreateTime(System.currentTimeMillis());
 		textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 		textMessage.setFuncFlag(0);
 		// 由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义
@@ -287,7 +287,7 @@ public class WechatServiceImpl extends AbstractServiceImpl implements
 		TextMessage textMessage = new TextMessage();
 		textMessage.setToUserName(fromUserName);
 		textMessage.setFromUserName(toUserName);
-		textMessage.setCreateTime(new Date().getTime());
+		textMessage.setCreateTime(System.currentTimeMillis());
 		textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 		textMessage.setFuncFlag(0);
 		if (StringUtils.isEmpty(content)) {
