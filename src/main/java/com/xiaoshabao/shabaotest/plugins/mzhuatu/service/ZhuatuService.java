@@ -3,6 +3,7 @@ package com.xiaoshabao.shabaotest.plugins.mzhuatu.service;
 import java.util.List;
 
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.MTuInfo;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuConfig;
 
 
 /**
@@ -18,11 +19,11 @@ public interface ZhuatuService {
 	 * @param newProject 是否是新项目（如果false表示是下一页解析）
 	 * @return
 	 */
-	public List<MTuInfo> parser(String html,MTuInfo pageInfo/*,List<String> projects,boolean newProject*/);
+	public List<MTuInfo> parser(String html,MTuInfo pageInfo,ZhuatuConfig config/*,List<String> projects,boolean newProject*/) throws Exception;
 	
 	/**
 	 * 解析下一页的URL
 	 */
-	public String nextPage(String html);
+	public String nextPage(String html) throws Exception;
 
 }

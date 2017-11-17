@@ -1,5 +1,7 @@
 package com.xiaoshabao.shabaotest.plugins.mzhuatu;
 
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.http.ZhuatuHttpManager;
+
 public class DownloadTuTask implements Runnable {
 
 	private String url;

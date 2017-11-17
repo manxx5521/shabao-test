@@ -9,7 +9,9 @@ import org.apache.commons.lang3.StringUtils;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.DownloadTuTask;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.MTuInfo;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuDownloadPool;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuUtil;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuService;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.ProjectAble;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.ZhuatuDownloadAble;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.ZhuatuWaitAble;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.loadFileAble;
@@ -20,6 +22,9 @@ public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 	/** 存储已经下载的项目列表 */
 	protected List<String> projects = new LinkedList<String>();
 
+	/**
+	 * 初始化服务列表
+	 */
 	@Override
 	protected void initBeforSerivce(ZhuatuService service) {
 		if (service instanceof ZhuatuDownloadAble) {
@@ -44,8 +49,18 @@ public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 		}
 	}
 
+	/**
+	 * 解析当前页项目
+	 */
 	@Override
 	protected void exeCurrPageProjet(ZhuatuService service, MTuInfo tuInfo) {
+
+		// 如果是项目服务，进行项目比对排重
+		if (service instanceof ProjectAble && projects.contains(ZhuatuUtil.parserTitleName(tuInfo.getTitle()))) {
+			log.warn("项目{}未下载（项目已经存在）。", tuInfo.getTitle());
+			return;
+		}
+
 		// 需要等待相同内容连接池
 		if (isNeedPool && service instanceof ZhuatuWaitAble) {
 			// 等待现成
@@ -55,10 +70,11 @@ public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 		// 如果是需要下载的url
 		if (service instanceof ZhuatuDownloadAble) {
 			String fileName = tuInfo.getUrl().substring(tuInfo.getUrl().lastIndexOf("/") + 1, tuInfo.getUrl().length());
-			DownloadTuTask myTask = new DownloadTuTask(tuInfo.getUrl(),
-					config.getSavePath() + File.separator + tuInfo.getTitle() + File.separator + fileName);
+			DownloadTuTask myTask = new DownloadTuTask(tuInfo.getUrl(), config.getSavePath() + File.separator
+					+ tuInfo.getTitle() + File.separator + ZhuatuUtil.parserTitleName(fileName));
 			ZhuatuDownloadPool.getInstance().execute(myTask);
 		}
 	}
+
 
 }

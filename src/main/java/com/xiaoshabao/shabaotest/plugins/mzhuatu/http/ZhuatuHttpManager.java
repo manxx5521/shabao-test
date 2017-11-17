@@ -1,4 +1,4 @@
-package com.xiaoshabao.shabaotest.plugins.mzhuatu;
+package com.xiaoshabao.shabaotest.plugins.mzhuatu.http;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,11 +11,17 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.RetryFactory;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuConfig;
 
 /**
  * HTTP管理
@@ -34,7 +40,7 @@ public class ZhuatuHttpManager {
 		if (instance == null) {
 			synchronized (ZhuatuHttpManager.class) {
 				if (instance == null) {
-					new ZhuatuHttpManager();
+					instance=new ZhuatuHttpManager();
 				}
 			}
 		}
@@ -46,8 +52,8 @@ public class ZhuatuHttpManager {
 	 * 
 	 * @return 返回响应内容
 	 */
-	public String doGetAuto5(String url) {
-		return doGetAuto5(url, "UTF-8");
+	public String doHTTPAuto5(String url) {
+		return doHTTPAuto5(url, new ZhuatuConfig());
 	}
 
 	/**
@@ -55,17 +61,28 @@ public class ZhuatuHttpManager {
 	 * 
 	 * @return 返回响应内容
 	 */
-	public String doGetAuto5(String url, String charset) {
+	public String doHTTPAuto5(String url, ZhuatuConfig config) {
 		return new RetryFactory<String, String>(url, "访问URL").execute(tempUrl -> {
-			return this.doGetAuto(tempUrl, charset);
+			return this.doHTTPAuto(tempUrl, config);
 		});
 	}
 
-	private String doGetAuto(String url, String charset) throws ClientProtocolException, IOException {
+	/**
+	 * 请求分发
+	 */
+	private String doHTTPAuto(String url, ZhuatuConfig config) throws ClientProtocolException, IOException {
 		if (url.startsWith(ZhuatuHttpManager.HTTPS_STR)) {
-			return this.doGet(url, charset);
+			if(config.getMethod().equals(RequestMethod.GET)) {
+				return this.doGet(url, config.getCharset());
+			}else {
+				return this.doPost(url, config.getCharset());
+			}
 		} else {
-			return this.doGet(url, charset);
+			if(config.getMethod().equals(RequestMethod.GET)) {
+				return this.doGet(url, config.getCharset());
+			}else {
+				return this.doPost(url, config.getCharset());
+			}
 		}
 	}
 
@@ -98,13 +115,7 @@ public class ZhuatuHttpManager {
 				.setConnectTimeout(5000) // connect超时
 				.build();
 		httpGet.setConfig(requestConfig);
-
-		httpGet.setHeader("Accept", "text/html, */*; q=0.01");
-		httpGet.setHeader("Accept-Encoding", "gzip, deflate,sdch");
-		httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
-		httpGet.setHeader("Connection", "keep-alive");
-		httpGet.setHeader("User-Agent",
-				"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36)");
+		this.setHearder(httpGet);
 
 		try {
 			httpClient = HttpClients.createDefault();
@@ -147,12 +158,7 @@ public class ZhuatuHttpManager {
 		HttpEntity entity = null;
 		String responseContent = null;
 
-		httpGet.setHeader("Accept", "text/html, */*; q=0.01");
-		httpGet.setHeader("Accept-Encoding", "gzip, deflate,sdch");
-		httpGet.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
-		httpGet.setHeader("Connection", "keep-alive");
-		httpGet.setHeader("User-Agent",
-				"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36)");
+		this.setHearder(httpGet);
 
 		try {
 			// 创建默认的httpClient实例.
@@ -171,6 +177,56 @@ public class ZhuatuHttpManager {
 		}
 		return responseContent;
 
+	}
+	
+	/**
+	 * 发送post请求
+	 * @return String 返回字符串，可转换成JSON
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	public String doPost(String url,String charset) throws ClientProtocolException, IOException {
+		HttpPost httpPost=new HttpPost(url);
+		CloseableHttpClient httpClient = null;
+		CloseableHttpResponse response = null;
+		HttpEntity entity = null;
+		String result = null;
+		
+		this.setHearder(httpPost);
+		
+		try {
+			// 创建默认的httpClient实例.
+			httpClient = HttpClients.createDefault();
+			// 执行请求
+			response = httpClient.execute(httpPost);
+			entity = response.getEntity();
+			result = EntityUtils.toString(entity, charset);// 获得响应内容
+		} finally {
+			try {
+				// 关闭连接,释放资源
+				if (response != null) {
+					response.close();
+				}
+				if (httpClient != null) {
+					httpClient.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * 设置header
+	 */
+	public void setHearder(HttpRequestBase httpRequest) {
+		httpRequest.setHeader("Accept", "text/html, */*; q=0.01");
+		httpRequest.setHeader("Accept-Encoding", "gzip, deflate,sdch");
+		httpRequest.setHeader("Accept-Language", "zh-CN,zh;q=0.8");
+		httpRequest.setHeader("Connection", "keep-alive");
+		httpRequest.setHeader("User-Agent",
+				"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36)");
 	}
 
 }
