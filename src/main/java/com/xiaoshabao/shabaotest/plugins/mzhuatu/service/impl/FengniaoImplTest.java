@@ -106,17 +106,19 @@ public class FengniaoImplTest {
 			@Override
 			public List<MTuInfo> parser(String html, MTuInfo pageInfo, ZhuatuConfig config) throws IOException {
 				StringReader stringReader = new StringReader(html);
-
-				BufferedReader bufferedReader = new BufferedReader(stringReader);
+				
 				String upStrFlag = "var picList = ".trim();
 				String strLine = null;
 				String jsonStr = null;
-				while ((strLine = bufferedReader.readLine()) != null) {
-					if (strLine != null && strLine.trim().contains(upStrFlag)) {
-						jsonStr = strLine.substring(strLine.indexOf("'") + 1, strLine.lastIndexOf("'"));
-						break;
+				try(BufferedReader bufferedReader = new BufferedReader(stringReader)){
+					while ((strLine = bufferedReader.readLine()) != null) {
+						if (strLine != null && strLine.trim().contains(upStrFlag)) {
+							jsonStr = strLine.substring(strLine.indexOf("'") + 1, strLine.lastIndexOf("'"));
+							break;
+						}
 					}
 				}
+				
 				JSONArray array = JSONArray.parseArray(jsonStr.toString());
 				List<MTuInfo> result = new ArrayList<MTuInfo>(array.size());
 				for (int i = 0, len = array.size(); i < len; i++) {
