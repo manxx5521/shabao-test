@@ -29,6 +29,19 @@ public class ZhuatuDownloadPool extends ThreadPoolExecutor {
 	}
 
 	/**
+	 * 初始化（防止多次使用）
+	 */
+	public static void init() {
+		if (instance != null) {
+			synchronized (ZhuatuDownloadPool.class) {
+				if (instance != null && instance.isShutdown()) {
+					instance = new ZhuatuDownloadPool();
+				}
+			}
+		}
+	}
+
+	/**
 	 * 等待活跃的进程数小于5
 	 */
 	public void waitActiveThread() {

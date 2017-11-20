@@ -106,28 +106,27 @@ public class FengniaoImplTest {
 			@Override
 			public List<MTuInfo> parser(String html, MTuInfo pageInfo, ZhuatuConfig config) throws IOException {
 				StringReader stringReader = new StringReader(html);
+
 				BufferedReader bufferedReader = new BufferedReader(stringReader);
-				String upStrFlag="var picList = ".trim();
-				String nextStrFlag="picList = eval('(' + picList + ')');".trim();
-				StringBuffer jsonStr=new StringBuffer();
+				String upStrFlag = "var picList = ".trim();
 				String strLine = null;
-				boolean flag=false;
+				String jsonStr = null;
 				while ((strLine = bufferedReader.readLine()) != null) {
-					
-					if(strLine!=null&&flag&&!nextStrFlag.equals(strLine)) {
-						jsonStr.append(strLine);
-					}
-					
-					if(strLine!=null&&upStrFlag.equals(strLine)) {
-						flag=true;
-					}
-					if(strLine!=null&&nextStrFlag.equals(strLine)) {
-						flag=false;
+					if (strLine != null && strLine.trim().contains(upStrFlag)) {
+						jsonStr = strLine.substring(strLine.indexOf("'") + 1, strLine.lastIndexOf("'"));
+						break;
 					}
 				}
-				JSONObject.parseObject(jsonStr.toString());
-//				List<MTuInfo> result = new ArrayList<MTuInfo>(array.size());
-				return null;
+				JSONArray array = JSONArray.parseArray(jsonStr.toString());
+				List<MTuInfo> result = new ArrayList<MTuInfo>(array.size());
+				for (int i = 0, len = array.size(); i < len; i++) {
+					JSONObject info = array.getJSONObject(i);
+					String title = pageInfo.getTitle();
+					String url = info.getString("bigPic");
+					log.info("获得下载链接 {}",url);
+					result.add(new MTuInfo(url, title));
+				}
+				return result;
 			}
 
 			@Override
@@ -137,6 +136,10 @@ public class FengniaoImplTest {
 		});
 		ZhuatuConfig config = new ZhuatuConfig();
 		config.setMethod(RequestMethod.POST);
+		config.setSavePath("E:\\test\\test");
+		config.setDownlaodUrlParser(url->{
+			return url.substring(0, url.indexOf("?"));
+		});
 		ZhuatuFactory.createDownloadZhuatu().start(getNextUrl(), zhuatuServices, config);
 	}
 

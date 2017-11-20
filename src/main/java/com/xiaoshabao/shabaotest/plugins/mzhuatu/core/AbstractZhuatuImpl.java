@@ -12,7 +12,6 @@ import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuAble;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuConfig;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.http.ZhuatuHttpManager;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuService;
-import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.HttpServiceAble;
 
 /**
  * 抓图抽象类
@@ -25,19 +24,19 @@ public abstract class AbstractZhuatuImpl implements ZhuatuAble {
 	protected ZhuatuConfig config;
 
 	@Override
-	public void start(String url, List<ZhuatuService> zhuatuServices) {
+	final public void start(String url, List<ZhuatuService> zhuatuServices) {
 		this.start(url, zhuatuServices, new ZhuatuConfig());
 	}
 
 	@Override
-	public void start(String url, List<ZhuatuService> zhuatuServices, String savePath) {
+	final public void start(String url, List<ZhuatuService> zhuatuServices, String savePath) {
 		ZhuatuConfig config = new ZhuatuConfig();
 		config.setSavePath(savePath);
 		this.start(url, zhuatuServices, config);
 	}
 
 	@Override
-	public void start(String url, List<ZhuatuService> zhuatuServices, String savePath, String charset) {
+	final public void start(String url, List<ZhuatuService> zhuatuServices, String savePath, String charset) {
 		ZhuatuConfig config = new ZhuatuConfig();
 		config.setSavePath(savePath);
 		config.setCharset(charset);
@@ -114,7 +113,10 @@ public abstract class AbstractZhuatuImpl implements ZhuatuAble {
 		while (iterator.hasNext()) {// 链表用迭代器
 			MTuInfo tuInfo = iterator.next();
 
-			exeCurrPageProjet(zhuatuService, tuInfo);// 扩展操作
+			// 扩展操作
+			if(!exeCurrPageProjet(zhuatuService, tuInfo)) {
+				continue;
+			}
 
 			if (zhuatuServices.size() > idx + 1) {
 				parserPageNextIdx(tuInfo, zhuatuServices.get(idx + 1), idx + 1);// 进行下一层任务
@@ -149,9 +151,10 @@ public abstract class AbstractZhuatuImpl implements ZhuatuAble {
 	 * @param service
 	 * @param tuInfo
 	 *            解析出的项目（列表中的一个）
+	 * @return 返回false代表跳过当前，不进行下层操作。否则查找下层任务
 	 */
-	protected void exeCurrPageProjet(ZhuatuService service, MTuInfo tuInfo) {
-
+	protected boolean exeCurrPageProjet(ZhuatuService service, MTuInfo tuInfo) {
+		return true;
 	}
 
 	/**

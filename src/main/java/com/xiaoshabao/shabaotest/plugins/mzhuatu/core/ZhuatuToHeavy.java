@@ -30,7 +30,7 @@ public class ZhuatuToHeavy extends AbstractZhuatuImpl{
 		}else if(!pages.contains(url)){
 			pages.add(url);
 		}else{
-			log.info("项目{}已经解析过了",pageInfo.getTitle()==null?"":pageInfo.getTitle());
+			log.info("{}已经解析过了",pageInfo.getTitle()==null?"":pageInfo.getTitle());
 			return;
 		}
 		super.parserPage(pageInfo, idx, newProject);

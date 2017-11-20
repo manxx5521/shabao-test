@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.DownloadTuTask;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.MTuInfo;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuConfig;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuDownloadPool;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuUtil;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuService;
@@ -47,18 +48,26 @@ public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 				}
 			}
 		}
+		
+		if (service instanceof ZhuatuDownloadAble) {
+			ZhuatuDownloadPool.init();
+		}
 	}
 
 	/**
 	 * 解析当前页项目
 	 */
 	@Override
-	protected void exeCurrPageProjet(ZhuatuService service, MTuInfo tuInfo) {
+	protected boolean exeCurrPageProjet(ZhuatuService service, MTuInfo tuInfo) {
 
 		// 如果是项目服务，进行项目比对排重
-		if (service instanceof ProjectAble && projects.contains(ZhuatuUtil.parserTitleName(tuInfo.getTitle()))) {
-			log.warn("项目{}未下载（项目已经存在）。", tuInfo.getTitle());
-			return;
+		if (service instanceof ProjectAble) {
+			if(projects.contains(ZhuatuUtil.parserTitleName(tuInfo.getTitle()))) {
+				log.warn("项目 {} 未下载（项目已经存在）。", tuInfo.getTitle());
+				return false;
+			}else {
+				log.warn("**开始下载项目 {}。(目录：{})***********", tuInfo.getTitle(),config.getSavePath());
+			}
 		}
 
 		// 需要等待相同内容连接池
@@ -69,12 +78,36 @@ public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 
 		// 如果是需要下载的url
 		if (service instanceof ZhuatuDownloadAble) {
-			String fileName = tuInfo.getUrl().substring(tuInfo.getUrl().lastIndexOf("/") + 1, tuInfo.getUrl().length());
-			DownloadTuTask myTask = new DownloadTuTask(tuInfo.getUrl(), config.getSavePath() + File.separator
+			String fileNameUrl = tuInfo.getUrl();
+			if (fileNameUrl.contains("?")) {
+				fileNameUrl = fileNameUrl.substring(0, fileNameUrl.indexOf("?"));
+			}
+			String fileName = fileNameUrl.substring(fileNameUrl.lastIndexOf("/") + 1, fileNameUrl.length());
+			
+			String downloadUrl=parserDowloadUrl(tuInfo.getUrl());
+			DownloadTuTask myTask = new DownloadTuTask(downloadUrl, config.getSavePath() + File.separator
 					+ tuInfo.getTitle() + File.separator + ZhuatuUtil.parserTitleName(fileName));
 			ZhuatuDownloadPool.getInstance().execute(myTask);
 		}
+		return true;
 	}
 
-
+	@Override
+	public void start(String url, List<ZhuatuService> zhuatuServices, ZhuatuConfig config) {
+		super.start(url, zhuatuServices, config);
+		ZhuatuDownloadPool.getInstance().shutdown();
+	}
+	
+	/**
+	 * 根据配置config信息，调整下载url
+	 * @param url
+	 * @return
+	 */
+	private String parserDowloadUrl(String url) {
+		if(config.getDownlaodUrlParser()!=null) {
+			url=config.getDownlaodUrlParser().apply(url);
+		}
+		return url;
+	}
+	
 }

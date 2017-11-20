@@ -131,8 +131,8 @@ public class HttpClientTest {
 		Map<String, String> header = new HashMap<String, String>();
 		try {
 //			post("http://i.youku.com/i/UMzA0ODM3NjIwNA==/videos?spm=a2hzp.8253869.0.0",
-					post("http://bbs.fengniao.com/forum/pic/slide_27_9346366_82877093.html",
-//					post("https://passport.weibo.com/visitor/visitor?_rand=1508249215.3803&a=enter&domain=.weibo.com&entry=miniblog&ua=php-sso_sdk_client-0.6.23&url=http%3A%2F%2Fweibo.com%2Fp%2F1006051227328177%2Fphotos%3Ffrom%3Dpage_100605%26mod%3DTAB",
+//					post("https://bbs.qn.img-space.com/g2/M00/06/10/Cg-4k1hKlCOIRllvAA5uUuTd2cUAAJaHALnGNAADm5q658.jpg",
+					post("https://passport.weibo.com/visitor/visitor?_rand=1508249215.3803&a=enter&domain=.weibo.com&entry=miniblog&ua=php-sso_sdk_client-0.6.23&url=http%3A%2F%2Fweibo.com%2Fp%2F1006051227328177%2Fphotos%3Ffrom%3Dpage_100605%26mod%3DTAB",
 					header, null, null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

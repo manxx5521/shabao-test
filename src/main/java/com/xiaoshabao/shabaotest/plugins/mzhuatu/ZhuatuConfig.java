@@ -1,5 +1,7 @@
 package com.xiaoshabao.shabaotest.plugins.mzhuatu;
 
+import java.util.function.Function;
+
 import org.springframework.web.bind.annotation.RequestMethod;
 
 public class ZhuatuConfig {
@@ -9,6 +11,9 @@ public class ZhuatuConfig {
 	private String savePath;
 	
 	private RequestMethod method=RequestMethod.GET;
+	
+	/**下载链接解析函数*/
+	private Function<String,String> downlaodUrlParser;
 
 	public String getCharset() {
 		return charset;
@@ -22,6 +27,10 @@ public class ZhuatuConfig {
 		return savePath;
 	}
 
+	/**
+	 * 设置保存路径
+	 * @param savePath E:\\test\\test
+	 */
 	public void setSavePath(String savePath) {
 		this.savePath = savePath;
 	}
@@ -33,5 +42,21 @@ public class ZhuatuConfig {
 	public void setMethod(RequestMethod method) {
 		this.method = method;
 	}
+
+	public Function<String, String> getDownlaodUrlParser() {
+		return downlaodUrlParser;
+	}
+
+	/**
+	 * 下载链接解析函数
+	 * config.setDownlaodUrlParser(url->{
+			return url.substring(0, url.indexOf("?"));
+		});
+	 * @param downlaodUrlParser
+	 */
+	public void setDownlaodUrlParser(Function<String, String> downlaodUrlParser) {
+		this.downlaodUrlParser = downlaodUrlParser;
+	}
+	
 	
 }
