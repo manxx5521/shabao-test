@@ -33,7 +33,8 @@ public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 		}
 
 		// 加载本地文件
-		if (service instanceof loadFileAble) {
+		
+		if (service instanceof LoadFileAble) {
 			if (StringUtils.isEmpty(this.config.getSavePath())) {
 				log.error("启用了加载本地文件接口，但是没有配置本地文件目录");
 				return;
@@ -66,7 +67,7 @@ public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 				log.warn("项目 {} 未下载（项目已经存在）。", tuInfo.getTitle());
 				return false;
 			}else {
-				log.warn("**开始下载项目 {}。(目录：{})***********", tuInfo.getTitle(),config.getSavePath());
+				log.warn("**开始下载项目 {}。(目录：{})***********", ZhuatuUtil.parserTitleName(tuInfo.getTitle()),config.getSavePath());
 			}
 		}
 
@@ -86,7 +87,7 @@ public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 			
 			String downloadUrl=parserDowloadUrl(tuInfo.getUrl());
 			DownloadTuTask myTask = new DownloadTuTask(downloadUrl, config.getSavePath() + File.separator
-					+ tuInfo.getTitle() + File.separator + ZhuatuUtil.parserTitleName(fileName));
+					+ZhuatuUtil.parserTitleName(tuInfo.getTitle()) + File.separator + ZhuatuUtil.parserTitleName(fileName));
 			ZhuatuDownloadPool.getInstance().execute(myTask);
 		}
 		return true;
