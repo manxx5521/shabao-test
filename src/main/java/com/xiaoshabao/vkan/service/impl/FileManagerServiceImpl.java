@@ -3,6 +3,7 @@ package com.xiaoshabao.vkan.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -55,8 +56,8 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
     String path = file.getAbsolutePath();
     String md5 = null;
     if(isFile){
-      try {
-        md5 = DigestUtils.md5Hex(new FileInputStream(file));
+      try(InputStream inputStream=new FileInputStream(file)) {
+        md5 = DigestUtils.md5Hex(inputStream);
       } catch (IOException e) {
         logger.error("记录文件{}时出现错误", path, e);
       }

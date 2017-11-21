@@ -7,13 +7,14 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
+import org.htmlparser.Tag;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.TagNameFilter;
-import org.htmlparser.tags.HeadingTag;
 import org.htmlparser.tags.ImageTag;
 import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
+import org.htmlparser.visitors.NodeVisitor;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +26,11 @@ import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuDownloadService;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuService;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuWaitService;
 
-public class ZhuTuGmtt8 {
+public class ZhuTu99renti {
 
-	private final static Logger logger = LoggerFactory.getLogger(ZhuTuGmtt8.class);
+	private final static Logger logger = LoggerFactory.getLogger(ZhuTu99renti.class);
 
-	protected String urlRoot = "http://www.gmtt8.com";
+	protected String urlRoot = "http://www.99renti.wang";
 
 	@Test
 	public void test() {
@@ -40,24 +41,23 @@ public class ZhuTuGmtt8 {
 			public List<MTuInfo> parser(String html, MTuInfo pageInfo, ZhuatuConfig config) throws ParserException {
 				final List<MTuInfo> result = new LinkedList<MTuInfo>();
 				Parser parser = Parser.createParser(html, config.getCharset());
-				NodeList list = parser.parse(new HasAttributeFilter("rel", "bookmark"));
-
-				for (Node node : list.toNodeArray()) {
-					if (node instanceof LinkTag && node.getParent() instanceof HeadingTag) {
-						HeadingTag h2 = (HeadingTag) node.getParent();
-						if ("entry-title".equals(h2.getAttribute("class"))) {
-							LinkTag link = (LinkTag) node;
+				NodeList list = parser.parse(new HasAttributeFilter("class", "ulPic"));
+				Node body = list.elementAt(0);
+				body.accept(new NodeVisitor() {
+					@Override
+					public void visitTag(Tag tag) {
+						if (tag instanceof LinkTag) {
+							LinkTag link = (LinkTag) tag;
 							String href = link.getLink();
-							String title = link.childAt(0).getText();
+							String title = link.getAttribute("title");
+
 							MTuInfo info = new MTuInfo();
-							info.setUrl(href);
+							info.setUrl(urlRoot + href);
 							info.setTitle(title);
 							result.add(info);
 						}
-
 					}
-
-				}
+				});
 				return result;
 			}
 
@@ -65,14 +65,13 @@ public class ZhuTuGmtt8 {
 			public String nextPage(String html, ZhuatuConfig config) throws ParserException {
 				String nextUrl = null;
 				Parser parser = Parser.createParser(html, config.getCharset());
-				NodeList nexts = parser.parse(new HasAttributeFilter("class", "page-numbers"));
+				NodeList nexts = parser.parse(new HasAttributeFilter("class", "a1"));
 				for (Node node : nexts.toNodeArray()) {
-					if (node instanceof LinkTag) {
-						LinkTag link = (LinkTag) node;
-						nextUrl = link.getLink();
-
+					LinkTag link = (LinkTag) node;
+					nextUrl = link.getLink();
+					if (StringUtils.isNotEmpty(nextUrl)) {
+						nextUrl = urlRoot + nextUrl;
 					}
-
 				}
 				return nextUrl;
 			}
@@ -86,54 +85,48 @@ public class ZhuTuGmtt8 {
 				List<MTuInfo> result = new LinkedList<MTuInfo>();
 				Parser parser = Parser.createParser(html, config.getCharset());
 
-				NodeList imgs = parser.parse(new HasAttributeFilter("class", "size-full"));
-
-				// 换解析思路
-				if (imgs == null || imgs.size() < 1) {
-					imgs = Parser.createParser(html, config.getCharset()).parse(new TagNameFilter("img"));
-				}
-
+				NodeList imgs = parser.parse(new TagNameFilter("img"));
 				for (Node node : imgs.toNodeArray()) {
-					if (node instanceof ImageTag) {
-						ImageTag img = (ImageTag) node;
-						String src = img.getAttribute("src");
-						String alt = img.getAttribute("alt");
-						if (StringUtils.isNotEmpty(img.getAttribute("data-echo"))) {
-							continue;
-						}
-						if (alt == null || src == null) {
-							continue;
-						}
-
-						// 去除部分无用链接
-						if (src.startsWith("http://33img.com")) {
-							continue;
-						}
-						logger.info("取到下载链接：" + src);
-						if (src.endsWith("/")) {
-							throw new RuntimeException("获得的图片下载链接错误");
-						}
-						MTuInfo info = new MTuInfo();
-						info.setUrl(src);
-						info.setTitle(alt);
-						result.add(info);
+					ImageTag img = (ImageTag) node;
+					String src = img.getAttribute("src");
+					String alt = img.getAttribute("alt");
+					if (alt == null || src == null) {
+						continue;
 					}
-
+					logger.info("取到下载链接：" + src);
+					if (src.endsWith("/")) {
+						throw new RuntimeException("获得的图片下载链接错误");
+					}
+					MTuInfo info = new MTuInfo();
+					info.clear();
+					info.setUrl(src);
+					info.setTitle(alt);
+					result.add(info);
 				}
 				return result;
 			}
 
 			@Override
-			public String nextPage(String html, ZhuatuConfig config) {
-				return null;
+			public String nextPage(String html, ZhuatuConfig config) throws ParserException {
+				String nextUrl = null;
+				Parser parser = Parser.createParser(html, config.getCharset());
+				NodeList nexts = parser.parse(new HasAttributeFilter("class", "a1"));
+				for (Node node : nexts.toNodeArray()) {
+					LinkTag link = (LinkTag) node;
+					nextUrl = link.getLink();
+					if (StringUtils.isNotEmpty(nextUrl)) {
+						nextUrl = urlRoot + nextUrl;
+					}
+				}
+
+				return nextUrl;
 			}
 
 		});
 
 		// 装载抓图任务
-		ZhuatuFactory.createDownloadZhuatu().start(
-				"http://www.gmtt8.com/archives/category/%E5%9B%BD%E6%A8%A1%E5%A5%97%E5%9B%BE/", zhuatuServices,
-				"E:\\\\test\\\\shabao-m\\\\resources\\\\plugins\\\\mm\\\\gmtt8");
+		ZhuatuFactory.createDownloadZhuatu().start("http://www.99renti.wang/html/guomosipai/", zhuatuServices,
+				"E:\\\\test\\\\shabao-m\\\\resources\\\\plugins\\\\mm\\\\99renti", "GBK");
 	}
 
 }

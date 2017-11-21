@@ -24,6 +24,6 @@ public interface ZhuatuService {
 	/**
 	 * 解析下一页的URL
 	 */
-	public String nextPage(String html) throws Exception;
+	public String nextPage(String html,ZhuatuConfig config) throws Exception;
 
 }

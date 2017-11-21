@@ -114,7 +114,7 @@ public abstract class AbstractZhuatuImpl implements ZhuatuAble {
 			MTuInfo tuInfo = iterator.next();
 
 			// 扩展操作
-			if(!exeCurrPageProjet(zhuatuService, tuInfo)) {
+			if (!exeCurrPageProjet(zhuatuService, tuInfo)) {
 				continue;
 			}
 
@@ -125,7 +125,7 @@ public abstract class AbstractZhuatuImpl implements ZhuatuAble {
 
 		String nextUrl = null;
 		try {
-			nextUrl = zhuatuService.nextPage(html);
+			nextUrl = zhuatuService.nextPage(html, config);
 		} catch (Exception e) {
 			log.warn("url解析下一页时错误。  url->{}", pageInfo.getUrl());
 		}

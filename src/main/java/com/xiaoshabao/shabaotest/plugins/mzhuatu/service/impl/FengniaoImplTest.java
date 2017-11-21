@@ -30,14 +30,11 @@ public class FengniaoImplTest {
 
 	
 	private final static Logger log = LoggerFactory.getLogger(FengniaoImplTest.class);
-//	private String indexUrl = "http://tu.fengniao.com/62/";
-	//paiqidang
-	private String indexUrl = "http://tu.fengniao.com/72/";
 	//专辑精选
 	private String indexUrl = "http://tu.fengniao.com/album/";
 	private String nextUrl = "http://tu.fengniao.com/data/loadAlbum.php";
 
-	private String nextUrl = "http://tu.fengniao.com/data/loadHot.php";
+//	private String nextUrl = "http://tu.fengniao.com/data/loadHot.php";
 
 	private String lastid;
 	private String postid;
@@ -72,7 +69,7 @@ public class FengniaoImplTest {
 			}
 
 			@Override
-			public String nextPage(String html) {
+			public String nextPage(String html, ZhuatuConfig config) {
 				return null;
 			}
 		});
@@ -101,7 +98,7 @@ public class FengniaoImplTest {
 			}
 
 			@Override
-			public String nextPage(String html) {
+			public String nextPage(String html, ZhuatuConfig config) {
 				return getNextUrl();
 			}
 		});
@@ -112,11 +109,11 @@ public class FengniaoImplTest {
 			@Override
 			public List<MTuInfo> parser(String html, MTuInfo pageInfo, ZhuatuConfig config) throws IOException {
 				StringReader stringReader = new StringReader(html);
-				
+
 				String upStrFlag = "var picList = ".trim();
 				String strLine = null;
 				String jsonStr = null;
-				try(BufferedReader bufferedReader = new BufferedReader(stringReader)){
+				try (BufferedReader bufferedReader = new BufferedReader(stringReader)) {
 					while ((strLine = bufferedReader.readLine()) != null) {
 						if (strLine != null && strLine.trim().contains(upStrFlag)) {
 							jsonStr = strLine.substring(strLine.indexOf("'") + 1, strLine.lastIndexOf("'"));
@@ -124,21 +121,21 @@ public class FengniaoImplTest {
 						}
 					}
 				}
-				
+
 				JSONArray array = JSONArray.parseArray(jsonStr.toString());
 				List<MTuInfo> result = new ArrayList<MTuInfo>(array.size());
 				for (int i = 0, len = array.size(); i < len; i++) {
 					JSONObject info = array.getJSONObject(i);
 					String title = pageInfo.getTitle();
 					String url = info.getString("bigPic");
-					log.info("获得下载链接 {}",url);
+					log.info("获得下载链接 {}", url);
 					result.add(new MTuInfo(url, title));
 				}
 				return result;
 			}
 
 			@Override
-			public String nextPage(String html) {
+			public String nextPage(String html, ZhuatuConfig config) {
 				return null;
 			}
 		});

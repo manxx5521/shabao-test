@@ -15,7 +15,7 @@ import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuService;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.ProjectAble;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.ZhuatuDownloadAble;
 import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.ZhuatuWaitAble;
-import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.loadFileAble;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.able.LoadFileAble;
 
 public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 	/** 是否需要下载池 */
@@ -33,7 +33,6 @@ public class DownloadZhuatuImpl extends ZhuatuToHeavy {
 		}
 
 		// 加载本地文件
-		
 		if (service instanceof LoadFileAble) {
 			if (StringUtils.isEmpty(this.config.getSavePath())) {
 				log.error("启用了加载本地文件接口，但是没有配置本地文件目录");

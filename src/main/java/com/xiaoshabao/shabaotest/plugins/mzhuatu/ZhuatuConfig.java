@@ -5,15 +5,15 @@ import java.util.function.Function;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 public class ZhuatuConfig {
-	
-	private String charset="UTF-8";
-	
+
+	private String charset = "UTF-8";
+
 	private String savePath;
-	
-	private RequestMethod method=RequestMethod.GET;
-	
-	/**下载链接解析函数*/
-	private Function<String,String> downlaodUrlParser;
+
+	private RequestMethod method = RequestMethod.GET;
+
+	/** 下载链接解析函数 */
+	private Function<String, String> downlaodUrlParser;
 
 	public String getCharset() {
 		return charset;
@@ -29,7 +29,9 @@ public class ZhuatuConfig {
 
 	/**
 	 * 设置保存路径
-	 * @param savePath E:\\test\\test
+	 * 
+	 * @param savePath
+	 *            E:\\test\\test
 	 */
 	public void setSavePath(String savePath) {
 		this.savePath = savePath;
@@ -49,14 +51,17 @@ public class ZhuatuConfig {
 
 	/**
 	 * 下载链接解析函数
-	 * config.setDownlaodUrlParser(url->{
-			return url.substring(0, url.indexOf("?"));
-		});
-	 * @param downlaodUrlParser
+	 * <p>
+	 * 使用方式(下载url只取?之前部分)
+	 * <pre>
+	 * config.setDownlaodUrlParser(url -> {
+	 * 	return url.substring(0, url.indexOf("?"));
+	 * });
+	 * </pre>
+	 * </p>
 	 */
 	public void setDownlaodUrlParser(Function<String, String> downlaodUrlParser) {
 		this.downlaodUrlParser = downlaodUrlParser;
 	}
-	
-	
+
 }
