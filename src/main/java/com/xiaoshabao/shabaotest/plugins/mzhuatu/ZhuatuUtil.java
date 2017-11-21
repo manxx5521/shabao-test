@@ -7,6 +7,15 @@ public class ZhuatuUtil {
 	 * @return
 	 */
 	public static String parserTitleName(String title) {
-		return title.trim().replace("amp;", "");
+		title = title.replace("/", "");
+		title = title.replace("\\", "");
+		title = title.replace("|", "");
+		title = title.replace("?", "");
+		title = title.replace(":", "");
+		title = title.replace("*", "");
+		title = title.replace("<", "");
+		title = title.replace(">", "");
+		title = title.replace("amp;", "");
+		return title;
 	}
 }

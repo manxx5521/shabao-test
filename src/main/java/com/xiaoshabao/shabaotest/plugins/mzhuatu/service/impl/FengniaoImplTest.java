@@ -28,8 +28,14 @@ import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuWaitService;
 
 public class FengniaoImplTest {
 
+	
 	private final static Logger log = LoggerFactory.getLogger(FengniaoImplTest.class);
-	private String indexUrl = "http://tu.fengniao.com/62/";
+//	private String indexUrl = "http://tu.fengniao.com/62/";
+	//paiqidang
+	private String indexUrl = "http://tu.fengniao.com/72/";
+	//专辑精选
+	private String indexUrl = "http://tu.fengniao.com/album/";
+	private String nextUrl = "http://tu.fengniao.com/data/loadAlbum.php";
 
 	private String nextUrl = "http://tu.fengniao.com/data/loadHot.php";
 
@@ -138,7 +144,7 @@ public class FengniaoImplTest {
 		});
 		ZhuatuConfig config = new ZhuatuConfig();
 		config.setMethod(RequestMethod.POST);
-		config.setSavePath("E:\\test\\test");
+		config.setSavePath("E:\\test\\test\\fengniao");
 		config.setDownlaodUrlParser(url->{
 			return url.substring(0, url.indexOf("?"));
 		});
