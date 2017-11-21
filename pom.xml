@@ -409,6 +409,13 @@
     		<version>5.7.0</version>
 		</dependency>
 		
+		<!-- 添加jetty支持 -->
+		<dependency>
+    		<groupId>org.eclipse.jetty</groupId>
+    		<artifactId>jetty-server</artifactId>
+    		<version>9.4.7.v20170914</version>
+		</dependency>
+		
 		
 
 	</dependencies>
@@ -425,7 +432,7 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<!-- 热编译: apache官方tomcat插件,支持deploy -->
+			<!-- 热编译: apache官方tomcat插件,支持deploy
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
@@ -435,6 +442,7 @@
 					<server>admin</server>
 				</configuration>
 			</plugin>
+			 -->
 			<!-- 跳过测试用例,防止编译时出错 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -444,6 +452,33 @@
 					<skipTests>true</skipTests>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+      			<groupId>org.eclipse.jetty</groupId>
+      			<artifactId>jetty-maven-plugin</artifactId>
+      			<version>9.4.7.v20170914</version>
+      			<configuration>
+      				<!-- 命令启动 mvn jetty:run -->
+      				<httpConnector>
+          				<port>8080</port>
+        			</httpConnector>
+        			<!-- 命令关闭 mvn jetty:stop -->
+        			<stopKey>shutdown</stopKey>
+        			<stopPort>9966</stopPort>
+      				<!-- 扫描文件重新加载时间2秒 
+  					<scanIntervalSeconds>2</scanIntervalSeconds>-->
+  					<!-- 回车才重新加载 -->
+  					<reload>manual</reload>
+  					<!-- 控制台内容不保存到文件 -->
+  					<dumpOnStart>true</dumpOnStart>
+  					<!-- 配置访问上下文 -->
+  					<webApp>
+    					<contextPath>/shabao-test</contextPath>
+  					</webApp>
+				</configuration>
+    		</plugin>
+			
+			
 		</plugins>
 	</build>
 </project>

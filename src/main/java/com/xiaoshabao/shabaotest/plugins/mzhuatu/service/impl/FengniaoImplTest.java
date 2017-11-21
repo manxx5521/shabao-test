@@ -29,9 +29,11 @@ import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuWaitService;
 public class FengniaoImplTest {
 
 	private final static Logger log = LoggerFactory.getLogger(FengniaoImplTest.class);
-	private String indexUrl = "http://tu.fengniao.com/62/";
+	//专辑精选
+	private String indexUrl = "http://tu.fengniao.com/album/";
+	private String nextUrl = "http://tu.fengniao.com/data/loadAlbum.php";
 
-	private String nextUrl = "http://tu.fengniao.com/data/loadHot.php";
+//	private String nextUrl = "http://tu.fengniao.com/data/loadHot.php";
 
 	private String lastid;
 	private String postid;
