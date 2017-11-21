@@ -45,7 +45,9 @@ public class RetryFactory<T, R> {
 	public R execute(RetryFunction<T, R> function) {
 		R result = null;
 		int i = 1;
-		Exception laste = null;// 记录最后一次失败异常
+		
+		// 记录最后一次失败异常
+		Exception laste = null;
 		do {
 			try {
 				result = function.apply(t);

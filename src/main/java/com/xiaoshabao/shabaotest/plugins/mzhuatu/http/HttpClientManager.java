@@ -1,5 +1,7 @@
 package com.xiaoshabao.shabaotest.plugins.mzhuatu.http;
 
+import javax.net.ssl.SSLContext;
+
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.Registry;
@@ -13,11 +15,9 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContexts;
 
-import javax.net.ssl.SSLContext;
-
 public class HttpClientManager {
 
-	private static final String[] userAgent = {
+	private static final String[] USER_AGENT = {
 			"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36",
 			"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; LBBROWSER)",
 			"Mozilla/5.0 (Windows; U; Windows NT 5.2) Gecko/2008070208 Firefox/3.0.1",
@@ -26,7 +26,6 @@ public class HttpClientManager {
 			"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; QQBrowser/7.0.3698.400)",
 			"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
 			"Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9" };
-
 
 	public static CloseableHttpClient generateClient() {
 		return generateClient(null);
@@ -52,7 +51,7 @@ public class HttpClientManager {
 	}
 
 	public static String randomUserAgent() {
-		return userAgent[(int) (Math.random() * userAgent.length)];
+		return HttpClientManager.USER_AGENT[(int) (Math.random() * HttpClientManager.USER_AGENT.length)];
 	}
 
 }
