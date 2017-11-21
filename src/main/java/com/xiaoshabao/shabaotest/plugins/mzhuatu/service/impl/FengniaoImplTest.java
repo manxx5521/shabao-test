@@ -66,7 +66,7 @@ public class FengniaoImplTest {
 			}
 
 			@Override
-			public String nextPage(String html) {
+			public String nextPage(String html, ZhuatuConfig config) {
 				return null;
 			}
 		});
@@ -95,7 +95,7 @@ public class FengniaoImplTest {
 			}
 
 			@Override
-			public String nextPage(String html) {
+			public String nextPage(String html, ZhuatuConfig config) {
 				return getNextUrl();
 			}
 		});
@@ -106,11 +106,11 @@ public class FengniaoImplTest {
 			@Override
 			public List<MTuInfo> parser(String html, MTuInfo pageInfo, ZhuatuConfig config) throws IOException {
 				StringReader stringReader = new StringReader(html);
-				
+
 				String upStrFlag = "var picList = ".trim();
 				String strLine = null;
 				String jsonStr = null;
-				try(BufferedReader bufferedReader = new BufferedReader(stringReader)){
+				try (BufferedReader bufferedReader = new BufferedReader(stringReader)) {
 					while ((strLine = bufferedReader.readLine()) != null) {
 						if (strLine != null && strLine.trim().contains(upStrFlag)) {
 							jsonStr = strLine.substring(strLine.indexOf("'") + 1, strLine.lastIndexOf("'"));
@@ -118,28 +118,28 @@ public class FengniaoImplTest {
 						}
 					}
 				}
-				
+
 				JSONArray array = JSONArray.parseArray(jsonStr.toString());
 				List<MTuInfo> result = new ArrayList<MTuInfo>(array.size());
 				for (int i = 0, len = array.size(); i < len; i++) {
 					JSONObject info = array.getJSONObject(i);
 					String title = pageInfo.getTitle();
 					String url = info.getString("bigPic");
-					log.info("获得下载链接 {}",url);
+					log.info("获得下载链接 {}", url);
 					result.add(new MTuInfo(url, title));
 				}
 				return result;
 			}
 
 			@Override
-			public String nextPage(String html) {
+			public String nextPage(String html, ZhuatuConfig config) {
 				return null;
 			}
 		});
 		ZhuatuConfig config = new ZhuatuConfig();
 		config.setMethod(RequestMethod.POST);
 		config.setSavePath("E:\\test\\test");
-		config.setDownlaodUrlParser(url->{
+		config.setDownlaodUrlParser(url -> {
 			return url.substring(0, url.indexOf("?"));
 		});
 		ZhuatuFactory.createDownloadZhuatu().start(getNextUrl(), zhuatuServices, config);
