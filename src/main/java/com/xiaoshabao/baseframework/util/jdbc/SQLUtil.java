@@ -5,18 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 需要重新  调整
+ */
 public class SQLUtil {
 	private static Logger logger = LoggerFactory.getLogger(SQLUtil.class);
 	// 定义需要的变量
-	private Connection conn = null;
-	private PreparedStatement ps = null;
-	private ResultSet rs = null;
+	// private Connection conn = null;
+	// private PreparedStatement ps = null;
+	// private ResultSet rs = null;
 
 	/**
 	 * 执行一个update/delete/insert语句
@@ -61,9 +63,9 @@ public class SQLUtil {
 	 *            传入多组参数String[][]
 	 */
 	public int executeUpdates(String sql, String[][] parameters) {
-		Connection conn =null;
+		Connection conn = null;
 		PreparedStatement ps = null;
-		int length=0;
+		int length = 0;
 		try {
 			// 多个sql语句，考虑事务
 			conn = getConnection();
@@ -84,7 +86,7 @@ public class SQLUtil {
 			}
 
 			conn.commit();
-			
+
 			logger.debug("sql语句执行成功:{}", sql);
 		} catch (SQLException e) {
 			// 回滚
@@ -113,7 +115,7 @@ public class SQLUtil {
 	public int executeUpdates(String[] sqls, String[][] parameters) {
 		Connection conn = null;
 		PreparedStatement ps = null;
-		int length=0;
+		int length = 0;
 		try {
 			// 得到连接
 			conn = getConnection();
@@ -161,7 +163,7 @@ public class SQLUtil {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			conn=getConnection();
+			conn = getConnection();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 
@@ -177,7 +179,7 @@ public class SQLUtil {
 
 				results.add(objects);
 			}
-			logger.debug("sql语句执行成功{}",sql);
+			logger.debug("sql语句执行成功{}", sql);
 		} catch (SQLException e) {
 			logger.error("sql执行失败{}", sql, e);
 		} finally {
@@ -203,7 +205,7 @@ public class SQLUtil {
 		ArrayList<Object[]> results = new ArrayList<Object[]>();
 
 		try {
-			conn=getConnection();
+			conn = getConnection();
 			ps = conn.prepareStatement(sql);
 
 			if (parameters != null) {
@@ -226,7 +228,7 @@ public class SQLUtil {
 
 				results.add(objects);
 			}
-			logger.debug("sql语句执行成功：{}",sql);
+			logger.debug("sql语句执行成功：{}", sql);
 		} catch (SQLException e) {
 			logger.error("sql执行失败{}", sql, e);
 		} finally {
@@ -239,9 +241,9 @@ public class SQLUtil {
 	private Connection getConnection() {
 		return JDBCUtil.getConnection();
 	}
-	
-	public static int toDataType(int i){
-		Types a;
+
+	public static int toDataType(int i) {
+		// Types a;
 		return i;
 	}
 

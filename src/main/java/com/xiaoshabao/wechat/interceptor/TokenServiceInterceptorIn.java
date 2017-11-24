@@ -1,6 +1,5 @@
 package com.xiaoshabao.wechat.interceptor;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;

@@ -1,5 +1,4 @@
 package com.xiaoshabao.wechat.interceptor;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.namespace.QName;

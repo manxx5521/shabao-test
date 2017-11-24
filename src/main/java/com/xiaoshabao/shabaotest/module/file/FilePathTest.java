@@ -46,6 +46,7 @@ public class FilePathTest {
 
 		File file = new File(test.getUserDir());
 		String filePath = file.getParent();
+		System.out.println(filePath);
 	}
 
 }

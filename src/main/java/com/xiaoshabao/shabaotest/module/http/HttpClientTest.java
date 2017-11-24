@@ -157,6 +157,7 @@ public class HttpClientTest {
 	 */
 	public static String post(String url, Map<String, String> header,
 			Map<String, String> param, HttpEntity entity) throws Exception {
+		@SuppressWarnings("restriction")
 		URL urle = new URL(null,url,new sun.net.www.protocol.https.Handler());//重点在这里，需要使用带有URLStreamHandler参数的URL构造方法  
 		String result = "";
 		CloseableHttpClient httpClient = null;

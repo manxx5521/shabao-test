@@ -125,6 +125,9 @@ public abstract class BaseUpgradeServiceImpl implements UpgradeService {
         //        runner.runScript(Resources.getResourceAsReader("sql/CC20-01.sql"));
         runner.runScript(new FileReader(file));
         List<String> writers=FileUtils.readLines(file,"UTF-8");
+        if(writers!=null&&!writers.isEmpty()) {
+        	
+        }
       }
     }
 
