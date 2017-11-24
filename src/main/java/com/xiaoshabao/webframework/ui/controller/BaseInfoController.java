@@ -16,7 +16,7 @@ import com.xiaoshabao.webframework.ui.service.BaseInfoService;
 
 @Controller
 public class BaseInfoController {
-  @Resource(name = "baseInfoService")
+  @Resource(name = "baseInfoServiceImpl")
   private BaseInfoService baseInfoService;
 
   @RequestMapping(value = "/baseinfo/{id}/view")
