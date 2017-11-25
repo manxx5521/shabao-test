@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2017-08-03 01:03:56
+Date: 2017-09-07 23:22:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -370,7 +370,7 @@ DROP TABLE IF EXISTS `td_uis_demo`;
 CREATE TABLE `td_uis_demo` (
   `id` int(5) NOT NULL,
   `name` varchar(20) DEFAULT NULL,
-  `depart_id` varchar(5) DEFAULT NULL,
+  `depart_id` varchar(5) DEFAULT NULL COMMENT '部门编码',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
