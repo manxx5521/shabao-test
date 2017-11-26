@@ -24,10 +24,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xiaoshabao.shabaotest.plugins.zhuatu.BaseMZhuatu;
-import com.xiaoshabao.shabaotest.plugins.zhuatu.MTuInfo;
-import com.xiaoshabao.shabaotest.plugins.zhuatu.MZhuatuToHeavy;
-import com.xiaoshabao.shabaotest.plugins.zhuatu.service.MZhuatuService;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.MTuInfo;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.ZhuatuConfig;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.core.ZhuatuFactory;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuService;
+import com.xiaoshabao.shabaotest.plugins.mzhuatu.service.ZhuatuWaitService;
 
 public class ZhuatuYouku {
 
@@ -57,12 +58,11 @@ public class ZhuatuYouku {
 	
 	public void start(Project project) {
 		
-		List<MZhuatuService> zhuatuServices = new ArrayList<MZhuatuService>();
+		List<ZhuatuService> zhuatuServices = new ArrayList<ZhuatuService>();
 		// 第一层解析分项的信息，找打具体的项目
-		zhuatuServices.add(new MZhuatuService() {
+		zhuatuServices.add(new ZhuatuWaitService() {
 			@Override
-			public List<MTuInfo> parser(String html, MTuInfo pageInfo,
-					final List<String> projects, boolean newProject) {
+			public List<MTuInfo> parser(String html, MTuInfo pageInfo, ZhuatuConfig config) {
 				final List<MTuInfo> result = new LinkedList<MTuInfo>();
 				try {
 					Parser parser = Parser.createParser(html, defaultCharset);
@@ -99,7 +99,7 @@ public class ZhuatuYouku {
 			}
 
 			@Override
-			public String nextPage(String html) {
+			public String  nextPage(String html, ZhuatuConfig config) {
 				try {
 					Parser parser = Parser.createParser(html, defaultCharset);
 					NodeList nexts = parser.parse(new HasAttributeFilter(
@@ -125,9 +125,11 @@ public class ZhuatuYouku {
 		});
 		
 		// 装载抓图任务
-		BaseMZhuatu zhuatu = new MZhuatuToHeavy();
-		zhuatu.start(project.getUrl(),null,
-				defaultCharset, zhuatuServices);
+		ZhuatuFactory.createDownloadZhuatu().start(project.getUrl(), zhuatuServices,
+						null, defaultCharset);
+//		BaseMZhuatu zhuatu = new MZhuatuToHeavy();
+//		zhuatu.start(project.getUrl(),null,
+//				defaultCharset, zhuatuServices);
 	}
 	
 	public String parserDate(String str){
