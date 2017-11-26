@@ -31,6 +31,9 @@ public class ZhuTu99renti {
 	private final static Logger logger = LoggerFactory.getLogger(ZhuTu99renti.class);
 
 	protected String urlRoot = "http://www.99renti.wang";
+	
+	/**封面图片 不下载*/
+	private String FM_JPG="slt.jpg";
 
 	@Test
 	public void test() {
@@ -90,7 +93,7 @@ public class ZhuTu99renti {
 					ImageTag img = (ImageTag) node;
 					String src = img.getAttribute("src");
 					String alt = img.getAttribute("alt");
-					if (alt == null || src == null) {
+					if (alt == null || src == null||src.endsWith(FM_JPG)||!alt.equals(pageInfo.getTitle())) {
 						continue;
 					}
 					logger.info("取到下载链接：" + src);
@@ -126,7 +129,7 @@ public class ZhuTu99renti {
 
 		// 装载抓图任务
 		ZhuatuFactory.createDownloadZhuatu().start("http://www.99renti.wang/html/guomosipai/", zhuatuServices,
-				"E:\\\\test\\\\shabao-m\\\\resources\\\\plugins\\\\mm\\\\99renti", "GBK");
+				"E:\\test\\shabao-m\\resources\\plugins\\mm\\99renti", "GBK");
 	}
 
 }

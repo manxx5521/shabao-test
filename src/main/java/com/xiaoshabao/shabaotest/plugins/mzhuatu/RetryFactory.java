@@ -1,5 +1,8 @@
 package com.xiaoshabao.shabaotest.plugins.mzhuatu;
 
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +52,10 @@ public class RetryFactory<T, R> {
 		// 记录最后一次失败异常
 		Exception laste = null;
 		do {
+			if (i > count) {
+				log.error("{}执行失败", this.detailMsg, laste);
+				return null;
+			}
 			try {
 				result = function.apply(t);
 				if (result instanceof Boolean && (Boolean) result) {
@@ -57,14 +64,18 @@ public class RetryFactory<T, R> {
 					return result;
 				}
 			} catch (Exception e) {
-				log.warn("{}未能执行成功，进行重试。开始重试第{}次", this.detailMsg, i, e);
-				if (i >= count) {
+				log.warn("{}未能执行成功，进行重试。开始重试第{}次", this.detailMsg, i);
+				if(e instanceof SocketException){
+					log.warn("错误原因：SocketException->Connection reset。");
+				}else if(e instanceof SocketTimeoutException){
+					log.warn("错误原因：SocketTimeoutException->Read timed out。");
+				}
+				
+				//记录最后一次错误信息
+				if (i == count) {
 					laste = e;
 				}
-			}
-			if (i > count) {
-				log.error("{}执行失败", this.detailMsg, laste);
-				return null;
+				i++;
 			}
 			try {
 				Thread.sleep(1000 * 3);
