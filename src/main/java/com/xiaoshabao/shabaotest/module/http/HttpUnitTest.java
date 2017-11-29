@@ -5,12 +5,13 @@ import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Test;
+
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.DomNode;
-import com.gargoylesoftware.htmlunit.html.HTMLParserListener;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
@@ -23,8 +24,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  * </p>
  */
 public class HttpUnitTest {
-
-	public static void main(String[] args) throws FailingHttpStatusCodeException, MalformedURLException, IOException {
+	@Test
+	public void test() throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 
 		WebClient webClient = new WebClient();
 		// 启用JS解释器，默认为true
@@ -37,9 +38,6 @@ public class HttpUnitTest {
 		webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 		// js运行错误时，是否抛出异常。 防止js语法错误抛出异常
 		webClient.getOptions().setThrowExceptionOnScriptError(false);
-
-		webClient.setHTMLParserListener(HTMLParserListener.LOG_REPORTER);
-		System.getProperties().put("org.apache.commons.logging.simplelog.defaultlog", "error");
 
 		// 拿到这个网页
 		HtmlPage page = webClient.getPage("http://tu.fengniao.com/62/");
