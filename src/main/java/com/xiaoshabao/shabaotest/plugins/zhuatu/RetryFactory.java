@@ -17,6 +17,8 @@ public class RetryFactory<T, R> {
 	protected Logger log = LoggerFactory.getLogger(getClass());
 
 	private int count = 5;
+	
+	private int sleepTime=1000*3;
 
 	/**
 	 * 描述信息
@@ -53,7 +55,12 @@ public class RetryFactory<T, R> {
 		Exception laste = null;
 		do {
 			if (i > count) {
-				log.error("{}执行失败", this.detailMsg, laste);
+				if(result==null) {
+					log.error("{}执行失败,原因：函数中返回结果为null", this.detailMsg);
+				}else {
+					log.error("{}执行失败", this.detailMsg, laste);
+				}
+				
 				return null;
 			}
 			try {
@@ -75,12 +82,12 @@ public class RetryFactory<T, R> {
 				if (i == count) {
 					laste = e;
 				}
-				i++;
 			}
 			try {
-				Thread.sleep(1000 * 3);
+				Thread.sleep(sleepTime);
 			} catch (InterruptedException e1) {
 			}
+			i++;
 		} while (true);
 	}
 
@@ -90,6 +97,10 @@ public class RetryFactory<T, R> {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public void setSleepTime(int sleepTime) {
+		this.sleepTime = sleepTime;
 	}
 
 }
