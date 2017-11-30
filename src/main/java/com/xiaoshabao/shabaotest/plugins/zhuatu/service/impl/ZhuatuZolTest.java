@@ -29,9 +29,9 @@ import com.xiaoshabao.shabaotest.plugins.zhuatu.service.ZhuatuWaitService;
 /**
  * 中关村在线抓取（使用jsoup，htmlunit）
  */
-public class ZolImplTest {
+public class ZhuatuZolTest {
 
-	private final static Logger log = LoggerFactory.getLogger(ZolImplTest.class);
+	private final static Logger log = LoggerFactory.getLogger(ZhuatuZolTest.class);
 
 	private String indexUrl = "http://bbs.zol.com.cn/dcbbs/d14_pic.html#c";
 	private String urlRoot = "http://bbs.zol.com.cn";

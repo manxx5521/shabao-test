@@ -26,10 +26,10 @@ import com.xiaoshabao.shabaotest.plugins.zhuatu.service.ZhuatuDownloadService;
 import com.xiaoshabao.shabaotest.plugins.zhuatu.service.ZhuatuService;
 import com.xiaoshabao.shabaotest.plugins.zhuatu.service.ZhuatuWaitService;
 
-public class FengniaoImplTest {
+public class ZhuatuFengniaoTest {
 
 	
-	private final static Logger log = LoggerFactory.getLogger(FengniaoImplTest.class);
+	private final static Logger log = LoggerFactory.getLogger(ZhuatuFengniaoTest.class);
 	//专辑精选
 //	private String indexUrl = "http://tu.fengniao.com/album/";
 //	private String nextUrl = "http://tu.fengniao.com/data/loadAlbum.php";
