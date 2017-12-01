@@ -2,16 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaoshabao.vkan.entity.FileEntity">
-	<sql id="fileColumns"> 
-		td_ui_element.element_id,td_ui_element.element_type
-		,td_ui_element.element_name,td_ui_element.params
-		,td_ui_element.version,td_ui_element.order_no
-		,td_ui_element.view_template,td_ui_element.read_template
+	<sql id="fileColumns">
+		vk_file.file_id,vk_file.project_id
+		,vk_file.file_name,vk_file.path
+		,vk_file.md5,vk_file.file_type
+		,vk_file.parent_id,vk_file.update_time
 	</sql>
-	<sql id="fileColumnsRef"> 
-		${prefix}.element_id '${prefix}.element_id',${prefix}.element_type '${prefix}.element_type'
-		,${prefix}.element_name '${prefix}.element_name',${prefix}.params '${prefix}.params'
-		,${prefix}.version '${prefix}.version',${prefix}.order_no '${prefix}.order_no'
-		,${prefix}.view_template '${prefix}.view_template',${prefix}.read_template '${prefix}.read_template'
+	<sql id="fileColumnsRef">
+		${prefix}.file_id,${prefix}.project_id
+		,${prefix}.file_name,${prefix}.path
+		,${prefix}.md5,${prefix}.file_type
+		,${prefix}.parent_id,${prefix}.update_time
 	</sql>
+
+	<insert id="insertFileEntity">
+		insert into vk_file
+		(file_id,project_id,file_name,path,md5,file_type,parent_id,update_time)
+		values
+		(#{fileId,jdbcType=NUMERIC},#{projectId,jdbcType=NUMERIC},#{fileName,jdbcType=VARCHAR},
+		#{path,jdbcType=VARCHAR},
+		#{md5,jdbcType=VARCHAR},
+		#{fileType,jdbcType=NUMERIC},
+		#{parentId,jdbcType=NUMERIC},SYSDATE())
+	</insert>
+	<select id="oneFileEntity" resultType="com.xiaoshabao.vkan.entity.FileEntity"
+		parameterType="com.xiaoshabao.vkan.entity.FileEntity">
+		select
+		<include refid="fileColumns" />
+		from vk_file
+		<where>
+			<if test="fileId != null and fileId !=''">
+				and file_id=#{groupId}
+			</if>
+			<if test="projectId != null and projectId !=''">
+				and project_id=#{projectId}
+			</if>
+			<if test="fileName != null and fileName !=''">
+				and file_name=#{fileName}
+			</if>
+			<if test="path != null and path !=''">
+				and path=#{path}
+			</if>
+			<if test="md5 != null and md5 !=''">
+				and md5=#{md5}
+			</if>
+			<if test="fileType != null and fileType !=''">
+				and file_type=#{fileType}
+			</if>
+			<if test="parentId != null and parentId !=''">
+				and parent_id=#{parentId}
+			</if>
+		</where>
+	</select>
+
 </mapper>

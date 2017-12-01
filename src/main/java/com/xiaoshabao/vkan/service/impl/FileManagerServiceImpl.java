@@ -6,75 +6,130 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
-import com.xiaoshabao.baseframework.util.UUIDGenerator;
+import com.xiaoshabao.baseframework.util.SnowflakeUtil;
 import com.xiaoshabao.vkan.entity.FileEntity;
+import com.xiaoshabao.vkan.entity.ProjectEntity;
+import com.xiaoshabao.vkan.enums.FileType;
+import com.xiaoshabao.vkan.enums.ReaderFileType;
 import com.xiaoshabao.vkan.service.FileManagerService;
+import com.xiaoshabao.webframework.dto.AjaxResult;
 
 @Service("fileManagerServiceImpl")
 public class FileManagerServiceImpl extends AbstractServiceImpl implements FileManagerService {
-  protected Logger logger = LoggerFactory.getLogger(getClass());
 
-  @Override
-  public void initFiles(String parentPath) {
-    initFiles(parentPath,UUIDGenerator.generate());
-  }
-  
-  public void initFiles(String parentPath,String parentId) {
-    if (StringUtils.isEmpty(parentPath)) {
-      throw new MsgErrorException("更新文件时，没有获得父级目录！");
-    }
-    File file = new File(parentPath);
-    if (!file.isDirectory()) {
-      throw new MsgErrorException("更新文件时，父级目录不是文件夹！");
-    }
-    
-    readFiles(file,parentId);
-  }
+	// 新增项目
+	@Override
+	@Transactional
+	public AjaxResult addProject(String projectName, String filePath) {
+		if (!filePath.endsWith(File.separator)) {
+			filePath = filePath + File.separator;
+		}
+		File file = new File(filePath);
+		if (!file.isDirectory()) {
+			throw new MsgErrorException("添加项目时错误，父级目录不是文件夹！");
+		}
+		// 统一名字
+		filePath = file.getAbsolutePath();
+		if (!filePath.endsWith(File.separator)) {
+			filePath = filePath + File.separator;
+		}
+		String prefix = FilenameUtils.getPrefix(filePath);
+		String path = FilenameUtils.getPath(filePath);
 
-  protected void readFiles(File parentFile,String parentId) {
-    File[] files = parentFile.listFiles();
-    for (File file : files) {
-      if (file.isFile()) {
-        insertFile(file,true,parentId);
-      } else if (file.isDirectory()) {
-        String fileId=insertFile(file,false,parentId);
-        readFiles(file,fileId);
-      }
-    }
-  }
+		ProjectEntity project = new ProjectEntity();
+		project.setProjectName(projectName);
+		project.setPrjectPrefix(prefix);
+		project.setProjectPath(path);
+		/*
+		ProjectEntity temp=this.baseDao.getDataSingle(ProjectEntity.class, project);
+		if(temp!=null) {
+			throw new MsgErrorException("当前项目已经存在");
+		}*/
+		int i = this.baseDao.insert(ProjectEntity.class, project);
+		Integer projectId = project.getProjectId();
+		if (i < 1 || projectId == null) {
+			throw new MsgErrorException("项目信息插入失败");
+		}
 
-  protected String insertFile(File file,boolean isFile,String parentId) {
-    String fileId=UUIDGenerator.generate();
-    String fileName = file.getName();
-    String path = file.getAbsolutePath();
-    String md5 = null;
-    if(isFile){
-      try(InputStream inputStream=new FileInputStream(file)) {
-        md5 = DigestUtils.md5Hex(inputStream);
-      } catch (IOException e) {
-        logger.error("记录文件{}时出现错误", path, e);
-      }
-    }
-    FileEntity fileEntity=new FileEntity();
-    fileEntity.setFileId(fileId);
-    fileEntity.setFileName(fileName);
-    fileEntity.setPath(path);
-    fileEntity.setMd5(md5);
-    fileEntity.setParentId(parentId);
-    FileEntity hasbean=this.baseDao.getDataSingle(FileEntity.class, fileEntity);
-    if(hasbean==null){
-      this.baseDao.insert(FileEntity.class, fileEntity);
-      return fileId;
-    }else{
-      return hasbean.getFileId();
-    }
-  }
+		readParserFiles(project, projectId.longValue(), file, ReaderFileType.ADD);
+		return null;
+	}
+
+	/**
+	 * 读取文件入口-递归解析文件
+	 * 
+	 * @param projectId
+	 * @param parentFile
+	 * @param parentId
+	 */
+	private void readParserFiles(ProjectEntity project, Long parentId, File parentFile, ReaderFileType type) {
+		File[] files = parentFile.listFiles();
+		for (File file : files) {
+			if (file.isFile()) {
+				operFile(project, file, true, parentId, type);
+			} else if (file.isDirectory()) {
+				Long fileId = operFile(project, file, false, parentId, type);
+				readParserFiles(project, fileId, file, type);
+			}
+		}
+	}
+
+	/**
+	 * 根据不同的操作，进行文件处理
+	 * 
+	 * @param file
+	 * @param isFile
+	 *            是否是文件
+	 * @param parentId
+	 * @return
+	 */
+	private Long operFile(ProjectEntity project, File file, boolean isFile, Long parentId, ReaderFileType type) {
+		FileEntity fileEntity = new FileEntity();
+		String fileName = file.getName();
+		String path = file.getAbsolutePath();
+		path=path.replace(project.getPrjectPrefix() + project.getProjectPath(), "");
+		fileEntity.setProjectId(project.getProjectId());
+		fileEntity.setFileName(fileName);
+		fileEntity.setPath(path);
+		
+		switch (type) {
+		case UPDATE:
+			//如果存在 跳出
+			FileEntity temp=this.baseDao.getDataSingle(FileEntity.class, fileEntity);
+			if(temp!=null&&temp.getFileId()!=null) {
+				return temp.getFileId();
+			}
+		case ADD:
+			String md5 = null;
+			int fileTypeCode = 9;
+			if (isFile) {
+				try (InputStream inputStream = new FileInputStream(file)) {
+					md5 = DigestUtils.md5Hex(inputStream);
+				} catch (IOException e) {
+					logger.error("记录文件{}时出现错误", path, e);
+				}
+				fileTypeCode = FileType.getCodeByName(file.getName());
+			} else {
+				fileTypeCode = FileType.DIRECTORY.getCode();
+			}
+			
+			long fileId = SnowflakeUtil.nextId();
+			fileEntity.setFileId(fileId);
+			fileEntity.setMd5(md5);
+			fileEntity.setFileType(fileTypeCode);
+			fileEntity.setParentId(parentId);
+
+			this.baseDao.insert(FileEntity.class, fileEntity);
+			return fileId;
+		default:
+			throw new MsgErrorException("读取类型错误");
+		}
+	}
 
 }
