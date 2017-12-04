@@ -65,6 +65,7 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath*:/applicationContext-mvc.xml</param-value>
 		</init-param>
+		<!-- 启动顺序 -->
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>

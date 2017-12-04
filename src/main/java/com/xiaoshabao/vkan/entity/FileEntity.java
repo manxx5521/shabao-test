@@ -5,6 +5,8 @@ import java.util.Date;
 public class FileEntity {
 	private Long fileId;
 	private Integer projectId;
+	/**项目标识，1是项目，0不是*/
+	private Boolean projectTag;
 	private String fileName;
 	private String path;
 	private String md5;
@@ -74,6 +76,14 @@ public class FileEntity {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Boolean getProjectTag() {
+		return projectTag;
+	}
+
+	public void setProjectTag(Boolean projectTag) {
+		this.projectTag = projectTag;
 	}
 	
 }

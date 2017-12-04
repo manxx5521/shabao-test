@@ -11,6 +11,11 @@ import org.junit.Test;
  * map基础知识测试
  */
 public class MapTest {
+	private static Map<String, String> hm = new HashMap<String, String>();
+	static {
+		hm.put("111", "222");
+	}
+	
 
 	/**
 	 * 获得一个不存在的变量时，返回null
@@ -25,8 +30,7 @@ public class MapTest {
 	/**
 	 * 遍历一个map有很多种方式,但是以以下方式性能最优。
 	 * <p>
-	 * 方法不支持1.5以下JDK。
-	 * 如果只是遍历key值使用下边第二个方法traverseMapKey()
+	 * 方法不支持1.5以下JDK。 如果只是遍历key值使用下边第二个方法traverseMapKey()
 	 * 
 	 * entrySet方式优于keySet方式
 	 * </p>
@@ -34,9 +38,6 @@ public class MapTest {
 	 */
 	@Test
 	public void traverseMap() {
-		Map<String, String> hm = new HashMap<String, String>();
-		hm.put("111", "222");
-
 		Set<Map.Entry<String, String>> entrySet = hm.entrySet();
 
 		Iterator<Map.Entry<String, String>> iter = entrySet.iterator();
@@ -53,9 +54,6 @@ public class MapTest {
 	 */
 	@Test
 	public void traverseMapKey() {
-		Map<String, String> hm = new HashMap<String, String>();
-		hm.put("111", "222");
-
 		Set<String> keySet = hm.keySet();
 
 		Iterator<String> iter = keySet.iterator();
@@ -66,24 +64,22 @@ public class MapTest {
 			System.out.println("key值为：" + key);
 		}
 	}
-	
+
 	/**
 	 * 1.5jdk以下遍历方式
-	 * @Title: traverseMap15     
+	 * 
+	 * @Title: traverseMap15
 	 * @Description: TODO
 	 */
 	@SuppressWarnings("rawtypes")
-	public void traverseMap15(){
-	  Map<String, String> hm = new HashMap<String, String>();
-    hm.put("111", "222");
-    
-    Set keys= hm.keySet();
-    Iterator iterator = keys.iterator( );       
-    while(iterator.hasNext( )) {       
-        Object key = iterator.next( );       
-        Object value = hm.get(key);
-        System.out.println("输出"+key+"--"+value);
-    } 
+	public void traverseMap15() {
+		Set keys = hm.keySet();
+		Iterator iterator = keys.iterator();
+		while (iterator.hasNext()) {
+			Object key = iterator.next();
+			Object value = hm.get(key);
+			System.out.println("输出" + key + "--" + value);
+		}
 	}
 
 }

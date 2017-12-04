@@ -4,6 +4,7 @@
 <mapper namespace="com.xiaoshabao.vkan.entity.FileEntity">
 	<sql id="fileColumns">
 		vk_file.file_id,vk_file.project_id
+		,vk_file.project_tag
 		,vk_file.file_name,vk_file.path
 		,vk_file.md5,vk_file.file_type
 		,vk_file.parent_id,vk_file.update_time
@@ -11,6 +12,7 @@
 	<sql id="fileColumnsRef">
 		${prefix}.file_id,${prefix}.project_id
 		,${prefix}.file_name,${prefix}.path
+		,${prefix}.project_tag
 		,${prefix}.md5,${prefix}.file_type
 		,${prefix}.parent_id,${prefix}.update_time
 	</sql>
