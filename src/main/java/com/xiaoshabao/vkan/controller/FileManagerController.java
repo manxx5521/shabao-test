@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -30,10 +31,22 @@ public class FileManagerController {
 		if(StringUtils.isEmpty(projectName)||StringUtils.isEmpty(filePath)) {
 			return new AjaxResult("项目名或项目路径不能为空");
 		}
-		
-		
-		
-		return null;
+		return fileService.addProject(projectName, filePath);
+	}
+	
+	/**
+	 * 设置项目标识
+	 * @param fileId
+	 * @param projectTag
+	 * @return
+	 */
+	@RequestMapping(value="/file/setProjectTag/{fileId}")
+	@ResponseBody
+	public AjaxResult setProjectTag(@PathVariable Integer fileId,Boolean projectTag) {
+		if(projectTag==null) {
+			projectTag=true;
+		}
+		return fileService.setProjectTag(fileId, projectTag);
 	}
 
 }

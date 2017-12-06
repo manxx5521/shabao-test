@@ -52,6 +52,17 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 				DaoEnum.UPDATE.getVlaue() + clazz.getSimpleName(), p);
 
 	}
+	
+	@Override
+	public <T> int update(String sqlId, Class<T> clasz, Object params) {
+		return update(sqlId, params);
+	}
+
+	@Override
+	public <T> int update(String sqlId, Object params) {
+		return this.getSqlSession().update(
+				sqlId, params);
+	}
 
 	@Override
 	public <T> boolean exists(Class<T> clazz, T t) {

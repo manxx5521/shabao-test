@@ -56,5 +56,16 @@
 			</if>
 		</where>
 	</select>
+	
+	<!-- 更新 -->
+	<update id="setProjectTag">
+		update vk_file 
+		<set>
+			<if test="projectTag !=null">
+			project_Tag=#{projectTag},
+			</if>
+		</set>
+		where parent_id=#{fileId}
+	</update>
 
 </mapper>

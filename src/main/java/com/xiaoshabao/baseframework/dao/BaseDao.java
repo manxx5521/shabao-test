@@ -29,6 +29,16 @@ public interface BaseDao {
 	 * 修改一个实体
 	 */
 	public <T> int update(Class<T> clasz, Object params);
+	
+	/**
+	 * 修改一个实体
+	 */
+	public <T> int update(String sqlId,Class<T> clasz, Object params);
+	
+	/**
+	 * 修改一个实体
+	 */
+	public <T> int update(String sqlId, Object params);
 
 	/**
 	 * 校验是否存在

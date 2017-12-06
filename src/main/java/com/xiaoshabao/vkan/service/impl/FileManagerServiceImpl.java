@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -58,7 +60,17 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
 		}
 
 		readParserFiles(project, projectId.longValue(), file, ReaderFileType.ADD);
-		return null;
+		return new AjaxResult(true,"导入项目成功！");
+	}
+	
+	//设置项目标识
+	@Override
+	public AjaxResult setProjectTag(Integer fileId, Boolean projectTag) {
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("fileId", fileId);
+		params.put("projectTag", projectTag?1:0);
+		this.baseDao.update("setProjectTag",FileEntity.class, params);
+		return new AjaxResult(true,"更新成功");
 	}
 
 	/**
@@ -131,5 +143,7 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
 			throw new MsgErrorException("读取类型错误");
 		}
 	}
+
+	
 
 }
