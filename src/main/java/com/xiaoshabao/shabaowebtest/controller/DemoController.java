@@ -62,7 +62,8 @@ public class DemoController extends AbstractController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/detail/{id}", method = { RequestMethod.POST })
+	@RequestMapping(value = "/detail/{id}", method = { RequestMethod.POST }, produces = {
+			"application/json;charset=UTF-8" })
 	@ResponseBody
 	public String getDemoDetail(@PathVariable("id") Integer id) {
 
