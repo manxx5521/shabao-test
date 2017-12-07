@@ -56,6 +56,16 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 		return this.getSqlSession().delete(
 				DaoEnum.DELETE.getVlaue() + clazz.getSimpleName(), t);
 	}
+	
+	@Override
+	public <T> int delete(String sqlId, Class<T> clazz, Object params) {
+		return this.getSqlSession().delete(sqlId, params);
+	}
+
+	@Override
+	public <T> int delete(String sqlId, Object params) {
+		return this.getSqlSession().delete(sqlId, params);
+	}
 
 	@Override
 	public <T> int update(Class<T> clazz, Object p) {

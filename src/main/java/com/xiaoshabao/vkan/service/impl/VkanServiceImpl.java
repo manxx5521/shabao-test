@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.vkan.dto.FileDto;
 import com.xiaoshabao.vkan.dto.VkanIndexDto;
-import com.xiaoshabao.vkan.entity.FileEntity;
+import com.xiaoshabao.vkan.entity.FileTagEntity;
 import com.xiaoshabao.vkan.entity.ProjectEntity;
 import com.xiaoshabao.vkan.entity.TagEntity;
 import com.xiaoshabao.vkan.service.VkanService;
@@ -43,14 +43,37 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService{
 	}
 
 	@Override
-	public void setTagByParentId(Long parentId) {
-		this.baseDao.insert("setTagByParentId", FileEntity.class, parentId);
+	public void setTagByParentId(Long parentId,String tagId) {
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("parentId", parentId);
+		params.put("tagId", tagId);
+		this.baseDao.insert("insertTagByParentId", FileTagEntity.class, params);
 	}
 
 	@Override
-	public void setTagById(Long fileId) {
-		this.baseDao.update("setTagById", FileEntity.class, fileId);
+	public void setTagById(Long fileId,String tagId) {
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("fileId", fileId);
+		params.put("tagId", tagId);
+		this.baseDao.insert("insertTagById", FileTagEntity.class, params);
 		
+	}
+
+	@Override
+	public void deleteTagByParentId(Long parentId, String tagId) {
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("parentId", parentId);
+		params.put("tagId", tagId);
+		this.baseDao.delete("",FileTagEntity.class, params);
+		
+	}
+
+	@Override
+	public void deleteTagById(Long fileId, String tagId) {
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("fileId", fileId);
+		params.put("tagId", tagId);
+		this.baseDao.delete("insertTagById", FileTagEntity.class, params);		
 	}
 
 }

@@ -34,6 +34,16 @@ public interface BaseDao {
 	 * 删除实体 T
 	 */
 	public <T> int delete(Class<T> clazz, T t);
+	
+	/**
+	 * 删除实体 T
+	 */
+	public <T> int delete(String sqlId,Class<T> clazz, Object params);
+	
+	/**
+	 * 删除实体 T
+	 */
+	public <T> int delete(String sqlId,Object params);
 
 	/**
 	 * 修改一个实体
