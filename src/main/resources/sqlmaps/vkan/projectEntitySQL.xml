@@ -20,7 +20,25 @@
 		#{prjectPrefix,jdbcType=VARCHAR},
 		#{projectPath,jdbcType=VARCHAR},SYSDATE())
 	</insert>
-
+	<select id="getProjectEntity" resultType="com.xiaoshabao.vkan.entity.ProjectEntity" >
+		select
+		<include refid="fileColumns" />
+		from vk_project
+		<where>
+			<if test="projectId != null and projectId !=''">
+				and project_id=#{projectId}
+			</if>
+			<if test="projectName != null and projectName !=''">
+				and project_name=#{projectName}
+			</if>
+			<if test="prjectPrefix != null and prjectPrefix !=''">
+				and project_prefix=#{prjectPrefix}
+			</if>
+			<if test="projectPath != null and projectPath !=''">
+				and project_path=#{projectPath}
+			</if>
+		</where>
+	</select>
 	<select id="oneProjectEntity" resultType="com.xiaoshabao.vkan.entity.ProjectEntity"
 		parameterType="com.xiaoshabao.vkan.entity.ProjectEntity">
 		select

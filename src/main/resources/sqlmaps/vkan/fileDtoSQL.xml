@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.vkan.entity.FileDto">
+	<select id="getFileDto" resultType="com.xiaoshabao.vkan.entity.FileDto"
+		parameterType="java.util.Map">
+		select
+			<include refid="com.xiaoshabao.vkan.entity.FileEntity.fileColumns" />
+		from vk_file
+		<where>
+			<if test="tagIds != null">
+				and exists (
+					select 1 from vk_file_tag a
+					where vk_file.file_id=a.file_id
+					and a.tag_id in
+					<foreach collection="tagIds" item="item" index="index" open="(" separator="," close=")">  
+	        		  #{item}
+	    			</foreach>
+				)
+			</if>
+			<if test="parentId != null">
+				vk_file.parent_id=#{parentId}
+			</if>
+			<if test="search != null && search !='' ">
+				vk_file.file_name like "%"#{search}"%"
+			</if>
+		</where>
+	</select>
+</mapper>

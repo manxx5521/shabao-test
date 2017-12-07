@@ -131,6 +131,7 @@ public class DemoController extends AbstractController {
 	public Callable<String> processUpload(final MultipartFile file) {
 
 		return new Callable<String>() {
+			@Override
 			public String call() throws Exception {
 				// 具体操作 一部返回内容，每次返回一部分
 				return "someView";

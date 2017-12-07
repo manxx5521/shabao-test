@@ -7,7 +7,9 @@ public class TagEntity {
 	private String name;
 	private String icon;
 	private Integer type;
+	private Integer level;
 	private Integer parentId;
+	private Boolean used;
 	private Integer orderNo;
 	public Integer getTagId() {
 		return tagId;
@@ -45,4 +47,17 @@ public class TagEntity {
 	public void setOrderNo(Integer orderNo) {
 		this.orderNo = orderNo;
 	}
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+	public Boolean getUsed() {
+		return used;
+	}
+	public void setUsed(Boolean used) {
+		this.used = used;
+	}
+	
 }

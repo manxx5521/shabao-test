@@ -13,7 +13,12 @@ public class VkanController {
 	@Resource(name="vkanServiceImpl")
 	private VkanService vkanService;
 	
-	public ModelAndView getIndexData(ModelMap model) {
+	public ModelAndView getIndexData(ModelMap model,String[] tagIds,String search) {
+		return null;
+	}
+	
+	
+	public ModelAndView getFileDataView(ModelMap model,Long parentId) {
 		return null;
 	}
 	
