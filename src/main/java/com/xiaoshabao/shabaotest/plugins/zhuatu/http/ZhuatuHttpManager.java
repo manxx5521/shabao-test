@@ -122,7 +122,7 @@ public class ZhuatuHttpManager {
 	}
 
 	public void download5(String url, String pathName) {
-		new RetryFactory<DownloadInfo, Boolean>(new DownloadInfo(url, pathName), "访问URL").execute(info -> {
+		new RetryFactory<DownloadInfo, Boolean>(new DownloadInfo(url, pathName), "下载文件").execute(info -> {
 			this.download(info.url, info.pathName);
 			log.info("下载文件成功 url->{}", info.url);
 			return Boolean.TRUE;
