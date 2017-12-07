@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
 import com.xiaoshabao.vkan.dto.FileDto;
 import com.xiaoshabao.vkan.dto.VkanIndexDto;
+import com.xiaoshabao.vkan.entity.FileEntity;
 import com.xiaoshabao.vkan.entity.ProjectEntity;
 import com.xiaoshabao.vkan.entity.TagEntity;
 import com.xiaoshabao.vkan.service.VkanService;
@@ -39,6 +40,17 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService{
 		Map<String,Object> params=new HashMap<String,Object>();
 		params.put("parentId", parentId);
 		return this.baseDao.getData(FileDto.class, params);
+	}
+
+	@Override
+	public void setTagByParentId(Long parentId) {
+		this.baseDao.insert("setTagByParentId", FileEntity.class, parentId);
+	}
+
+	@Override
+	public void setTagById(Long fileId) {
+		this.baseDao.update("setTagById", FileEntity.class, fileId);
+		
 	}
 
 }

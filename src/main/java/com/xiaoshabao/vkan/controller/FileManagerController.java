@@ -14,7 +14,7 @@ import com.xiaoshabao.webframework.dto.AjaxResult;
  * 文件管理
  */
 @Controller
-@RequestMapping(value="/vkan")
+@RequestMapping(value="/vkan/file")
 public class FileManagerController {
 	@Resource(name="fileManagerServiceImpl")
 	private FileManagerService fileService;
@@ -25,7 +25,7 @@ public class FileManagerController {
 	 * @param filePath
 	 * @return
 	 */
-	@RequestMapping(value="/file/insert")
+	@RequestMapping(value="/insert")
 	@ResponseBody
 	public AjaxResult addProject (String projectName,String filePath){
 		if(StringUtils.isEmpty(projectName)||StringUtils.isEmpty(filePath)) {
@@ -40,7 +40,7 @@ public class FileManagerController {
 	 * @param projectTag
 	 * @return
 	 */
-	@RequestMapping(value="/file/setProjectTag/{fileId}")
+	@RequestMapping(value="/setProjectTag/{fileId}")
 	@ResponseBody
 	public AjaxResult setProjectTag(@PathVariable Integer fileId,Boolean projectTag) {
 		if(projectTag==null) {

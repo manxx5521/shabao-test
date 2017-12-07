@@ -39,6 +39,17 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 		return this.getSqlSession().insert(
 				DaoEnum.INSERT.getVlaue() + clazz.getSimpleName(), t);
 	}
+	
+	@Override
+	public <T> int insert(String sqlId, Class<T> clazz, Object params) {
+		return this.getSqlSession().insert(sqlId, params);
+	}
+
+	@Override
+	public <T> int insert(String sqlId, Object params) {
+		return this.getSqlSession().insert(sqlId, params);
+	}
+	
 
 	@Override
 	public <T> int delete(Class<T> clazz, T t) {

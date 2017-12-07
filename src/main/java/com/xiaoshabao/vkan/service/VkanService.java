@@ -12,13 +12,17 @@ public interface VkanService extends AbstractService{
 	 * 获得主页数据
 	 * @return
 	 */
-	public VkanIndexDto getIndexData(String[] tagIds,String search);
+	VkanIndexDto getIndexData(String[] tagIds,String search);
 	
 	/**
 	 * 根据父级id查询数据
 	 * @param parentId
 	 * @return
 	 */
-	public List<FileDto> getFileDto(String parentId);
+	List<FileDto> getFileDto(String parentId);
+	
+	void setTagByParentId(Long parentId);
+	
+	void setTagById(Long fileId);
 	
 }
