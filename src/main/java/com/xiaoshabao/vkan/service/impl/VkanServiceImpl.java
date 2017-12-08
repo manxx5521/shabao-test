@@ -64,7 +64,7 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService{
 		Map<String,Object> params=new HashMap<String,Object>();
 		params.put("parentId", parentId);
 		params.put("tagId", tagId);
-		this.baseDao.delete("",FileTagEntity.class, params);
+		this.baseDao.delete("deleteFileTagEntity",FileTagEntity.class, params);
 		
 	}
 
@@ -73,7 +73,7 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService{
 		Map<String,Object> params=new HashMap<String,Object>();
 		params.put("fileId", fileId);
 		params.put("tagId", tagId);
-		this.baseDao.delete("insertTagById", FileTagEntity.class, params);		
+		this.baseDao.delete("deleteFileTagEntity", FileTagEntity.class, params);		
 	}
 
 }

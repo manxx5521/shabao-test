@@ -29,6 +29,9 @@
 		<if test="parentId !=null">
 			and parent_id=#{parentId},
 		</if>
+		<if test="tagId !=null">
+			and tag_id=#{tagId},
+		</if>
 	  </where>
 	</delete>
 
