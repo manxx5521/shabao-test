@@ -23,9 +23,6 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService{
 		List<ProjectEntity> projects=this.baseDao.getData(ProjectEntity.class, new HashMap<String,Object>());
 		result.setProjectList(projects);
 		
-		List<TagEntity> tagList=this.baseDao.getData(TagEntity.class,null);
-		result.setTagList(tagList);
-		
 		Map<String,Object> params=new HashMap<String,Object>();
 		params.put("tagIds", tagIds);
 		params.put("search", search);
@@ -34,7 +31,12 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService{
 		
 		return result;
 	}
-
+	@Override
+	public List<TagEntity> getTagList(Integer parentId) {
+		TagEntity tagEntity=new TagEntity();
+		tagEntity.setParentId(parentId);
+		return this.baseDao.getData(TagEntity.class,tagEntity);
+	}
 	@Override
 	public List<FileDto> getFileDto(String parentId) {
 		Map<String,Object> params=new HashMap<String,Object>();
@@ -75,5 +77,7 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService{
 		params.put("tagId", tagId);
 		this.baseDao.delete("deleteFileTagEntity", FileTagEntity.class, params);		
 	}
+
+	
 
 }

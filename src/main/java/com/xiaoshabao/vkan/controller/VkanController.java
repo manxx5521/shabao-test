@@ -1,5 +1,7 @@
 package com.xiaoshabao.vkan.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xiaoshabao.vkan.entity.TagEntity;
 import com.xiaoshabao.vkan.service.VkanService;
 
 @Controller
@@ -22,7 +25,22 @@ public class VkanController {
 		
 		return new ModelAndView("/vkan/index", model);
 	}
-
+	
+	/**
+	 * 获得标签数据
+	 * @return
+	 */
+	@RequestMapping("/tagList")
+	@ResponseBody
+	public List<TagEntity> getTagList(Integer parentId){
+		return this.vkanService.getTagList(parentId);
+	}
+	/**
+	 * 获得文件数据
+	 * @return
+	 */
+	@RequestMapping("/fileData")
+	@ResponseBody
 	public ModelAndView getFileDataView(ModelMap model, Long parentId) {
 		return null;
 	}

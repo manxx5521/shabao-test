@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.vkan.entity.TagEntity">
+	<sql id="tagColumns">
+		vk_tag.tag_id
+		,vk_tag.name
+		,vk_tag.icon
+		,vk_tag.type
+		,vk_tag.level
+		,vk_tag.parent_id
+		,vk_tag.used
+		,vk_tag.order_no
+	</sql>
+	<sql id="tagColumnsRef">
+		${prefix}.tag_id
+		,${prefix}.name
+		,${prefix}.icon
+		,${prefix}.type
+		,${prefix}.level
+		,${prefix}.parent_id
+		,${prefix}.used
+		,${prefix}.order_no
+	</sql>
+
+	
+	<select id="getTagEntity" resultType="com.xiaoshabao.vkan.entity.TagEntity"
+		parameterType="com.xiaoshabao.vkan.entity.TagEntity">
+		select
+		<include refid="tagColumns" />
+		from vk_tag
+		<where>
+			<if test="parentId != null and parentId !=''">
+				and parent_id=#{parentId}
+			</if>
+		</where>
+		order by level,order_no
+	</select>
+
+</mapper>

@@ -22,7 +22,7 @@
 	</insert>
 	<select id="getProjectEntity" resultType="com.xiaoshabao.vkan.entity.ProjectEntity" >
 		select
-		<include refid="fileColumns" />
+		<include refid="projectColumns" />
 		from vk_project
 		<where>
 			<if test="projectId != null and projectId !=''">
@@ -42,7 +42,7 @@
 	<select id="oneProjectEntity" resultType="com.xiaoshabao.vkan.entity.ProjectEntity"
 		parameterType="com.xiaoshabao.vkan.entity.ProjectEntity">
 		select
-		<include refid="fileColumns" />
+		<include refid="projectColumns" />
 		from vk_project
 		<where>
 			<if test="projectId != null and projectId !=''">

@@ -186,7 +186,7 @@
 			<input type="submit" id="btnPost" ass="submit" value="搜索">
 		</form>
 	</div>
-	<cbox:resource type="css" value="jquery,masonry,infinite-scroll" />
+	<cbox:resource type="js" value="jquery,masonry,infinite-scroll" />
 	<script src="${ctx}/resources/vkan/index.js" type="text/javascript"></script>
 </body>
 </html>

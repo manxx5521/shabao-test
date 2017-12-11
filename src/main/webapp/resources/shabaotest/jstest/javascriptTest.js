@@ -2,6 +2,22 @@
 var a1;
 var a2=a1||2;//默认值为2，用||分割
 
+//删除
+	var objtest = { 
+	    prop: 'delete me' 
+	}; 
+	//或者这么声明的对象 
+	var objtest = new Array(); 
+	objtest['prop'] = 'delete me'; 
+	//删除属性'prop'： 
+	delete objtest.prop; 
+	//或者 
+	delete objtest['prop'];
+
+	//还可以删除任意变量 
+	var numb = 17; 
+	delete numb;
+
 /**闭包
 方法外可以使用方法内的变量（和作用域相反）
 **/

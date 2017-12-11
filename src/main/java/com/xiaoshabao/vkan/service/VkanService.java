@@ -5,6 +5,7 @@ import java.util.List;
 import com.xiaoshabao.baseframework.service.AbstractService;
 import com.xiaoshabao.vkan.dto.FileDto;
 import com.xiaoshabao.vkan.dto.VkanIndexDto;
+import com.xiaoshabao.vkan.entity.TagEntity;
 
 public interface VkanService extends AbstractService {
 
@@ -14,6 +15,13 @@ public interface VkanService extends AbstractService {
 	 * @return
 	 */
 	VkanIndexDto getIndexData(String[] tagIds, String search);
+	
+	/**
+	 * 查询tag标签
+	 * @param parentId
+	 * @return
+	 */
+	List<TagEntity> getTagList(Integer parentId);
 
 	/**
 	 * 根据父级id查询数据
