@@ -14,21 +14,22 @@ import com.xiaoshabao.vkan.service.VkanService;
 @Controller
 @RequestMapping("/vkan")
 public class VkanController {
-	@Resource(name="vkanServiceImpl")
+	@Resource(name = "vkanServiceImpl")
 	private VkanService vkanService;
-	
-	public ModelAndView getIndexData(ModelMap model,String[] tagIds,String search) {
+
+	@RequestMapping("/index")
+	public ModelAndView getIndexData(ModelMap model, String[] tagIds, String search) {
+		
+		return new ModelAndView("/vkan/index", model);
+	}
+
+	public ModelAndView getFileDataView(ModelMap model, Long parentId) {
 		return null;
 	}
-	
-	
-	public ModelAndView getFileDataView(ModelMap model,Long parentId) {
-		return null;
-	}
-	
-	@RequestMapping(value="/setTag/{id}/parentId")
+
+	@RequestMapping(value = "/setTag/{id}/parentId")
 	@ResponseBody
-	public boolean setTagByParentId(@PathVariable("id")Long parentId) {
+	public boolean setTagByParentId(@PathVariable("id") Long parentId) {
 		return true;
 	}
 

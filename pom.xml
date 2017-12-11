@@ -474,6 +474,8 @@
   					<!-- 配置访问上下文 -->
   					<webApp>
     					<contextPath>/shabao-test</contextPath>
+    					<!-- 指定 web配置，解决无法修改静态文件问题 -->
+    					<defaultsDescriptor>${project.basedir}/src/main/resources/webdefault.xml</defaultsDescriptor>
   					</webApp>
 				</configuration>
     		</plugin>

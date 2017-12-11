@@ -1,3 +1,6 @@
+$(function(){
+	var page={};
+})
 jQuery(document).ready(function() {
 	jQuery(".m-nav ul li").hover(function() {
 		jQuery(this).children("ul").show();

@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>accessToken complex typeµÄ Java Àà¡£
+ * <p>accessToken complex typeçš„ Java ç±»ã€‚
  * 
- * <p>ÒÔÏÂÄ£Ê½Æ¬¶ÎÖ¸¶¨°üº¬ÔÚ´ËÀàÖĞµÄÔ¤ÆÚÄÚÈİ¡£
+ * <p>ä»¥ä¸‹æ¨¡å¼ç‰‡æ®µæŒ‡å®šåŒ…å«åœ¨æ­¤ç±»ä¸­çš„é¢„æœŸå†…å®¹ã€‚
  * 
  * <pre>
  * &lt;complexType name="accessToken"&gt;
@@ -67,7 +67,7 @@ public class AccessToken {
     protected Timestamp updateTime;
 
     /**
-     * »ñÈ¡accessTokenÊôĞÔµÄÖµ¡£
+     * è·å–accessTokenå±æ€§çš„å€¼ã€‚
      * 
      * @return
      *     possible object is
@@ -79,7 +79,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃaccessTokenÊôĞÔµÄÖµ¡£
+     * è®¾ç½®accessTokenå±æ€§çš„å€¼ã€‚
      * 
      * @param value
      *     allowed object is
@@ -91,7 +91,7 @@ public class AccessToken {
     }
 
     /**
-     * »ñÈ¡accountIdÊôĞÔµÄÖµ¡£
+     * è·å–accountIdå±æ€§çš„å€¼ã€‚
      * 
      * @return
      *     possible object is
@@ -103,7 +103,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃaccountIdÊôĞÔµÄÖµ¡£
+     * è®¾ç½®accountIdå±æ€§çš„å€¼ã€‚
      * 
      * @param value
      *     allowed object is
@@ -115,7 +115,7 @@ public class AccessToken {
     }
 
     /**
-     * »ñÈ¡appNameÊôĞÔµÄÖµ¡£
+     * è·å–appNameå±æ€§çš„å€¼ã€‚
      * 
      * @return
      *     possible object is
@@ -127,7 +127,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃappNameÊôĞÔµÄÖµ¡£
+     * è®¾ç½®appNameå±æ€§çš„å€¼ã€‚
      * 
      * @param value
      *     allowed object is
@@ -139,7 +139,7 @@ public class AccessToken {
     }
 
     /**
-     * »ñÈ¡appidÊôĞÔµÄÖµ¡£
+     * è·å–appidå±æ€§çš„å€¼ã€‚
      * 
      * @return
      *     possible object is
@@ -151,7 +151,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃappidÊôĞÔµÄÖµ¡£
+     * è®¾ç½®appidå±æ€§çš„å€¼ã€‚
      * 
      * @param value
      *     allowed object is
@@ -163,7 +163,7 @@ public class AccessToken {
     }
 
     /**
-     * »ñÈ¡appsecretÊôĞÔµÄÖµ¡£
+     * è·å–appsecretå±æ€§çš„å€¼ã€‚
      * 
      * @return
      *     possible object is
@@ -175,7 +175,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃappsecretÊôĞÔµÄÖµ¡£
+     * è®¾ç½®appsecretå±æ€§çš„å€¼ã€‚
      * 
      * @param value
      *     allowed object is
@@ -187,7 +187,7 @@ public class AccessToken {
     }
 
     /**
-     * »ñÈ¡encodingAESKeyÊôĞÔµÄÖµ¡£
+     * è·å–encodingAESKeyå±æ€§çš„å€¼ã€‚
      * 
      * @return
      *     possible object is
@@ -199,7 +199,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃencodingAESKeyÊôĞÔµÄÖµ¡£
+     * è®¾ç½®encodingAESKeyå±æ€§çš„å€¼ã€‚
      * 
      * @param value
      *     allowed object is
@@ -211,7 +211,7 @@ public class AccessToken {
     }
 
     /**
-     * »ñÈ¡expiresInÊôĞÔµÄÖµ¡£
+     * è·å–expiresInå±æ€§çš„å€¼ã€‚
      * 
      */
     public int getExpiresIn() {
@@ -219,7 +219,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃexpiresInÊôĞÔµÄÖµ¡£
+     * è®¾ç½®expiresInå±æ€§çš„å€¼ã€‚
      * 
      */
     public void setExpiresIn(int value) {
@@ -227,7 +227,7 @@ public class AccessToken {
     }
 
     /**
-     * »ñÈ¡idÊôĞÔµÄÖµ¡£
+     * è·å–idå±æ€§çš„å€¼ã€‚
      * 
      * @return
      *     possible object is
@@ -239,7 +239,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃidÊôĞÔµÄÖµ¡£
+     * è®¾ç½®idå±æ€§çš„å€¼ã€‚
      * 
      * @param value
      *     allowed object is
@@ -251,7 +251,7 @@ public class AccessToken {
     }
 
     /**
-     * »ñÈ¡jsaccessTokenÊôĞÔµÄÖµ¡£
+     * è·å–jsaccessTokenå±æ€§çš„å€¼ã€‚
      * 
      * @return
      *     possible object is
@@ -263,7 +263,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃjsaccessTokenÊôĞÔµÄÖµ¡£
+     * è®¾ç½®jsaccessTokenå±æ€§çš„å€¼ã€‚
      * 
      * @param value
      *     allowed object is
@@ -275,7 +275,7 @@ public class AccessToken {
     }
 
     /**
-     * »ñÈ¡jsexpiresInÊôĞÔµÄÖµ¡£
+     * è·å–jsexpiresInå±æ€§çš„å€¼ã€‚
      * 
      */
     public int getJsexpiresIn() {
@@ -283,7 +283,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃjsexpiresInÊôĞÔµÄÖµ¡£
+     * è®¾ç½®jsexpiresInå±æ€§çš„å€¼ã€‚
      * 
      */
     public void setJsexpiresIn(int value) {
@@ -291,7 +291,7 @@ public class AccessToken {
     }
 
     /**
-     * »ñÈ¡jsupdateTimeÊôĞÔµÄÖµ¡£
+     * è·å–jsupdateTimeå±æ€§çš„å€¼ã€‚
      * 
      * @return
      *     possible object is
@@ -303,7 +303,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃjsupdateTimeÊôĞÔµÄÖµ¡£
+     * è®¾ç½®jsupdateTimeå±æ€§çš„å€¼ã€‚
      * 
      * @param value
      *     allowed object is
@@ -315,7 +315,7 @@ public class AccessToken {
     }
 
     /**
-     * »ñÈ¡updateTimeÊôĞÔµÄÖµ¡£
+     * è·å–updateTimeå±æ€§çš„å€¼ã€‚
      * 
      * @return
      *     possible object is
@@ -327,7 +327,7 @@ public class AccessToken {
     }
 
     /**
-     * ÉèÖÃupdateTimeÊôĞÔµÄÖµ¡£
+     * è®¾ç½®updateTimeå±æ€§çš„å€¼ã€‚
      * 
      * @param value
      *     allowed object is
