@@ -120,8 +120,13 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	}
 
 	@Override
-	public <T> T getDataSingle(String sqlid, Object param) {
-		return this.getSqlSession().selectOne(sqlid, param);
+	public <T> T getDataSingle(String sqlId, Object param) {
+		return this.getSqlSession().selectOne(sqlId, param);
+	}
+	
+	@Override
+	public <T> T getDataSingle(String sqlId, Class<T> clazz, Object param) {
+		return this.getSqlSession().selectOne(sqlId, param);
 	}
 
 	@Override

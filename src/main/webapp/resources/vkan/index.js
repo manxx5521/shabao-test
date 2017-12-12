@@ -14,13 +14,15 @@ $(function() {
 								var tag = data[i];
 								if (tag.level == 1) {
 									var container = $(".tags-container");
-									var ul=$('<ul class="tags-box"></ul>').attr('pid',tag.tagId);
+									var ul = $('<ul class="tags-box"></ul>')
+											.attr('pid', tag.tagId);
 									ul.append(page.getTagLi(tag));
 									container.append(ul);
 								}
 								if (tag.level == 2) {
-									var ul=$('.tags-box[pid='+tag.parentId+']');
-									if(!!ul){
+									var ul = $('.tags-box[pid=' + tag.parentId
+											+ ']');
+									if (!!ul) {
 										ul.append(page.getTagLi(tag));
 									}
 								}
@@ -35,45 +37,55 @@ $(function() {
 			},
 			/** 添加tag标签 */
 			getTagLi : function(tag) {
-				var li = $("<li></li>").addClass("hot-1 curr");
+				var li = $("<li></li>").addClass("hot-1");
 				var a = $('<a href="javascript:void(0)" class="tag-font-size-14" >'
 						+ tag.name + '</a>');
 				if (tag.level == 1) {
-					li.addClass('curr');//TODO 分类颜色
+					li.addClass('fenlei');
 				} else {
 					a.attr('tid', tag.tagId);
 				}
 				li.append(a);
 				a.click(function() {
-					var tid=this.attributes.tid.value;
-					$this=$('a[tid='+tid+']');
+					var tid = this.attributes.tid.value;
+					$this = $('a[tid=' + tid + ']');
 					var parent = $this.parent();
-					if (parent.hasClass('curr')){
+					if (parent.hasClass('curr')) {
 						page.deleteTag(tid);
 						parent.removeClass('curr');
-					}else{
+					} else {
 						parent.addClass('curr');
 						page.pushTag(tid);
-						
+
 					}
 				})
 				return li;
 			},
-			pushTag:function(tagId){
-				tags.push(tid);
+			pushTag : function(tagId) {
+				tags.push(tagId);
 			},
-			deleteTag:function(tagId){
+			deleteTag : function(tagId) {
 				var index;
-				for(var i=0;i<tags.length;i++){
-					var temp=tags[i];
-					if(tagId==tid){
-						index=i;
+				for (var i = 0; i < tags.length; i++) {
+					var temp = tags[i];
+					if (tagId == temp) {
+						index = i;
 					}
 				}
-				tags.splice(index,1);
+				tags.splice(index, 1);
 			},
-			init:function() {
+			initSearch:function(){
+				$('#searchId').click(function() {
+					$('#simplemodal-container,#searchbar').show();
+				});
+				$('#simplemodal-container').click(function() {
+					$(this).hide();
+					$('#searchbar').hide();
+				});
+			},
+			init : function() {
 				this.loadTag();
+				this.initSearch();
 			}
 		}
 	})();
@@ -172,12 +184,4 @@ $(function() {
 		return;
 	});
 
-});
-
-$('.searchBtn a').click(function() {
-	$('#simplemodal-container,#searchbar').show();
-});
-$('#simplemodal-container').click(function() {
-	$(this).hide();
-	$('#searchbar').hide();
 });

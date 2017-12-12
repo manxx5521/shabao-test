@@ -8,8 +8,8 @@
 <meta name="keywords" content="资源管理">
 <meta name="description" content="资源管理 ">
 <title>资源管理</title>
-<meta http-equiv="Cache-Control" content="no-siteapp">
 <link rel="shortcut icon"href="${ctx}/resources/img/favicon.ico" type="image/x-icon">
+<cbox:resource type="css" value="cache,jquery,masonry,infinite-scroll" />
 <link href="${ctx}/resources/vkan/index.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -44,15 +44,16 @@
 					</li>
 					<li><a href="http://ecms060.99yuanma.net:8888/hot/" class="tab">最热</a></li>
 					<li><a href="http://ecms060.99yuanma.net:8888/best/" class="tab">推荐</a></li>
-					<li><div class="searchBtn"><a name="search"></a></div></li>
 					-->
+					<li class="menu-item "><a id="searchId"  href="javascript:void(0)" >1111<div class="searchBtn"></div></a><!-- <div class="searchBtn"><a name="search"></a></div> --></li>
+					
 				</ul>
 			</div>
 		</div>
 	</div>
 	<div class="warp">
 		<div class="tags-container">
-			<ul class="tags-box">
+			<!-- <ul class="tags-box">
 				<li class="hot-1 curr"><a href="javascript:void(0)" class="tag-font-size-14">全部</a></li>
 				<li class="hot-1">
 					<a href="http://ecms060.99yuanma.net:8888/e/tags/?tagname=%E6%80%A7%E6%84%9F"
@@ -79,7 +80,7 @@
 					target="_blank" title="218个话题" class="tag-font-size-14">分类3</a></li>
 				
 				
-			</ul>
+			</ul> -->
 		</div>
 		<div class="tips"></div>
 		<!--图片展示begin-->
@@ -175,15 +176,15 @@
 	<div id="simplemodal-container"></div>
 	<div id="searchbar">
 		<p>全站搜索</p>
-		<form onsubmit="return checkSearchForm()" method="post" name="searchform"
-			action="http://ecms060.99yuanma.net:8888/e/search/index.php">
-			<input type="hidden" value="title" name="show"> 
-			<input type="hidden" value="1" name="tempid"> 
-			<input type="hidden" value="news" name="tbname"> 
-			<input name="mid" value="1" type="hidden"> 
-			<input name="dopost" value="search" type="hidden"> 
+		<form method="post" name="searchform">
+			<select>
+				<option value ="volvo">Volvo</option>
+  				<option value ="saab">Saab</option>
+  				<option value="opel">Opel</option>
+  				<option value="audi">Audi</option>
+			</select>
 			<input type="text" name="keyboard" id="edtSearch" class="text" value=""> 
-			<input type="submit" id="btnPost" ass="submit" value="搜索">
+			<input type="button" id="btnPost" value="确定">
 		</form>
 	</div>
 	<cbox:resource type="js" value="jquery,masonry,infinite-scroll" />

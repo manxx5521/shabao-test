@@ -13,6 +13,10 @@
 	<js key="dtree" src="${ctx}/resources/component/jquery.tree.js" />
 	<js key="dimage" src="${ctx}/resources/component/jquery.image.js" />
 	<js key="dselect2" src="${ctx}/resources/component/jquery.select2.js" />
+	<!--缓存设置本地模式关闭缓存-->
+	<css key="cache" type="1" des="缓存"><![CDATA[ <META HTTP-EQUIV="Pragma" CONTENT="no-cache"> ]]></css>
+	<css key="cache" type="1" des="缓存"><![CDATA[ <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"> ]]></css>
+	<css key="cache" type="1" des="缓存"><![CDATA[ <META HTTP-EQUIV="Expires" CONTENT="0"> ]]></css>
 	<!-- 组件 -->
 	<!-- JQuery -->
 	<js key="jquery" type="1" src="${ctx}/resources/plugins/jquery/jquery-1.12.4.min.js" />
