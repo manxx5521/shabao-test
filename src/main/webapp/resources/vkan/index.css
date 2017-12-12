@@ -196,7 +196,7 @@ height: 36px;
 }
 
 .goto-top {
-	background: url(../images/goto-top.png);
+	background: url(../vkan/image/goto-top.png);
 	background-repeat: no-repeat;
 	background-position: 0 0 rgba(0, 0, 0, 0);
 	bottom: 20px;
@@ -323,7 +323,7 @@ float:left;
 }
 
 #img-container .img_inner_wrapper .mid_img_count {
-	background-image: url(../images/mid-img-count-bg.png);
+	background-image: url(../vkan/image/mid-img-count-bg.png);
 	background-position: left top;
 	background-repeat: no-repeat;
 	bottom: 42px;
@@ -428,7 +428,7 @@ float:left;
 }
 
 .tags-container ul .hot-2 a {
-	background: url(../images/hot.gif) no-repeat scroll right top
+	background: url(../vkan/image/hot.gif) no-repeat scroll right top
 		rgba(0, 0, 0, 0);
 	padding: 5px 12px 4px;
 }
@@ -606,7 +606,7 @@ float:left;
 .srcPic img {
 	max-width: 100%;
 	height: auto;
-	cursor: url(../images/zoomin.cur), pointer;
+	cursor: url(../vkan/image/zoomin.cur), pointer;
 }
 
 #bd {
@@ -614,7 +614,7 @@ float:left;
 }
 
 .bdc {
-	background: url(../images/apps_hd.jpg) no-repeat scroll center 0
+	background: url(../vkan/image/apps_hd.jpg) no-repeat scroll center 0
 		rgba(0, 0, 0, 0);
 	padding: 10px;
 	height: 450px;
@@ -633,7 +633,7 @@ float:left;
 }
 
 .btn {
-	background: url(../images/m_btn.png) no-repeat scroll 0 -66px
+	background: url(../vkan/image/m_btn.png) no-repeat scroll 0 -66px
 		rgba(0, 0, 0, 0);
 	display: block;
 	height: 66px;
@@ -643,7 +643,7 @@ float:left;
 }
 
 .btnicon {
-	background: url(../images/m_icon.png) no-repeat scroll 0 -49px
+	background: url(../vkan/image/m_icon.png) no-repeat scroll 0 -49px
 		rgba(0, 0, 0, 0);
 	float: left;
 	height: 49px;
@@ -710,7 +710,7 @@ em {
 }
 
 .pre-next  .pre {
-    background: url("../images/toolbar.gif") no-repeat scroll left 0 transparent;
+    background: url("../vkan/image/toolbar.gif") no-repeat scroll left 0 transparent;
     display: block;
     height: 25px;
     left: 0;
@@ -720,7 +720,7 @@ em {
 }
 
 .pre-next .next {
-    background: url("../images/toolbar.gif") no-repeat scroll left -100px transparent;
+    background: url("../vkan/image/toolbar.gif") no-repeat scroll left -100px transparent;
     display: block;
     height: 25px;
     position: absolute;

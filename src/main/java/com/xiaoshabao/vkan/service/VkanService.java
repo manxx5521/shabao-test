@@ -2,8 +2,10 @@ package com.xiaoshabao.vkan.service;
 
 import java.util.List;
 
+import com.xiaoshabao.baseframework.bean.PageValue;
 import com.xiaoshabao.baseframework.service.AbstractService;
 import com.xiaoshabao.vkan.dto.FileDto;
+import com.xiaoshabao.vkan.dto.FilePagingParams;
 import com.xiaoshabao.vkan.dto.VkanIndexDto;
 import com.xiaoshabao.vkan.entity.TagEntity;
 
@@ -14,7 +16,7 @@ public interface VkanService extends AbstractService {
 	 * 
 	 * @return
 	 */
-	VkanIndexDto getIndexData(String[] tagIds, String search);
+	VkanIndexDto getIndexData(String[] tagIds, String search,String projectPrefix,Integer projectId);
 	
 	/**
 	 * 查询tag标签
@@ -24,12 +26,11 @@ public interface VkanService extends AbstractService {
 	List<TagEntity> getTagList(Integer parentId);
 
 	/**
-	 * 根据父级id查询数据
-	 * 
+	 * 查询文件数据
 	 * @param parentId
 	 * @return
 	 */
-	List<FileDto> getFileDto(String parentId);
+	PageValue<FileDto> getFileDto(FilePagingParams params);
 
 	void setTagByParentId(Long parentId, String tagId);
 

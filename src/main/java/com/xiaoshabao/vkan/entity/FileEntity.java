@@ -13,6 +13,7 @@ public class FileEntity {
 	private String md5;
 	private Integer fileType;
 	private Long parentId;
+	private Integer childNumber;
 	private Date updateTime;
 
 	public Long getFileId() {
@@ -85,6 +86,14 @@ public class FileEntity {
 
 	public void setProjectTag(Boolean projectTag) {
 		this.projectTag = projectTag;
+	}
+
+	public Integer getChildNumber() {
+		return childNumber;
+	}
+
+	public void setChildNumber(Integer childNumber) {
+		this.childNumber = childNumber;
 	}
 	
 }

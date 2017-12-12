@@ -3,34 +3,57 @@ package com.xiaoshabao.vkan.dto;
 import java.util.List;
 
 import com.xiaoshabao.vkan.entity.ProjectEntity;
-import com.xiaoshabao.vkan.entity.TagEntity;
 
 public class VkanIndexDto {
-	
+
 	private List<ProjectEntity> projectList;
-	/**标签 */
-	private List<TagEntity> tagList;
-	/**文件列表**/
-	private List<FileDto> fileList;
+
+	private List<String> prefixs;
+
+	private String projectPrefix;
+
+	private Integer projectId;
 	
+	private String projectName;
+
 	public List<ProjectEntity> getProjectList() {
 		return projectList;
 	}
+
 	public void setProjectList(List<ProjectEntity> projectList) {
 		this.projectList = projectList;
 	}
-	public List<TagEntity> getTagList() {
-		return tagList;
+
+	public List<String> getPrefixs() {
+		return prefixs;
 	}
-	public void setTagList(List<TagEntity> tagList) {
-		this.tagList = tagList;
+
+	public void setPrefixs(List<String> prefixs) {
+		this.prefixs = prefixs;
 	}
-	public List<FileDto> getFileList() {
-		return fileList;
+
+	public String getProjectPrefix() {
+		return projectPrefix;
 	}
-	public void setFileList(List<FileDto> fileList) {
-		this.fileList = fileList;
+
+	public void setProjectPrefix(String projectPrefix) {
+		this.projectPrefix = projectPrefix;
 	}
-	
+
+	public Integer getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 	
 }

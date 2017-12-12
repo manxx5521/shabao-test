@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.vkan.dto.VkanIndexDto">
+	<select id="getProjectPrefix" resultType="java.lang.String" >
+		select project_prefix from vk_project a GROUP BY a.project_prefix
+	</select>
+
+</mapper>

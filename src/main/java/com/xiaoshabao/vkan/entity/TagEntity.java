@@ -9,6 +9,8 @@ public class TagEntity {
 	private Integer type;
 	private Integer level;
 	private Integer parentId;
+	/**是否在文件列表展现*/
+	private Boolean fileShow;
 	private Boolean used;
 	private Integer orderNo;
 	public Integer getTagId() {
@@ -58,6 +60,12 @@ public class TagEntity {
 	}
 	public void setUsed(Boolean used) {
 		this.used = used;
+	}
+	public Boolean getFileShow() {
+		return fileShow;
+	}
+	public void setFileShow(Boolean fileShow) {
+		this.fileShow = fileShow;
 	}
 	
 }

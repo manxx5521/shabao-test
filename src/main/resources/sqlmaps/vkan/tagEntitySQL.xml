@@ -9,6 +9,7 @@
 		,vk_tag.type
 		,vk_tag.level
 		,vk_tag.parent_id
+		,vk_tag.file_show
 		,vk_tag.used
 		,vk_tag.order_no
 	</sql>
@@ -19,6 +20,7 @@
 		,${prefix}.type
 		,${prefix}.level
 		,${prefix}.parent_id
+		,${prefix}.file_show
 		,${prefix}.used
 		,${prefix}.order_no
 	</sql>
@@ -35,6 +37,18 @@
 			</if>
 		</where>
 		order by level,order_no
+	</select>
+	
+	<select id="getTagByFileId" resultType="com.xiaoshabao.vkan.entity.TagEntity"
+		parameterType="com.xiaoshabao.vkan.dto.FileDto">
+		select
+		<include refid="tagColumns" />
+		from vk_tag
+		inner join vk_file_tag
+		on vk_tag.tag_id=vk_file_tag.tag_id
+		<where>
+			vk_file_tag.file_Id=#{fileId}
+		</where>
 	</select>
 
 </mapper>

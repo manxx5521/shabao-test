@@ -17,15 +17,16 @@
 	<div class="head-wrap">
 		<div class="warp ovv">
 			<div class="logo">
-				<a href="http://ecms060.99yuanma.net:8888/" title="我的网站"> 
+				<a href="./index.html" title="我的网站"> 
 					<img width="180" height="45" src="${ctx}/resources/vkan/logo.png">
 				</a>
 			</div>
 			<div class="m-nav">
 				<ul>
-					<li class="menu-item current-menu-item"><a href="http://ecms060.99yuanma.net:8888/">全部</a></li>
-					<li class="menu-item "><a href="http://ecms060.99yuanma.net:8888/xinggan/">视频</a></li>
-					<li class="menu-item "><a href="http://ecms060.99yuanma.net:8888/sifang/">图</a></li>
+					<li class="menu-item current-menu-item"><a href="javascript:void(0)">全部</a></li>
+					<li class="menu-item "><a href="javascript:void(0)">视频</a></li>
+					<li class="menu-item "><a href="javascript:void(0)">图</a></li>
+					<li class="menu-item "><a href="javascript:void(0)">|</a></li>
 					<!--
 					<li class="menu-item "><a href="http://ecms060.99yuanma.net:8888/qingchun/">清纯</a></li>
 					<li class="menu-item "><a href="http://ecms060.99yuanma.net:8888/mengmeizi/">萌妹</a></li>
@@ -45,8 +46,7 @@
 					<li><a href="http://ecms060.99yuanma.net:8888/hot/" class="tab">最热</a></li>
 					<li><a href="http://ecms060.99yuanma.net:8888/best/" class="tab">推荐</a></li>
 					-->
-					<li class="menu-item "><a id="searchId"  href="javascript:void(0)" >1111<div class="searchBtn"></div></a><!-- <div class="searchBtn"><a name="search"></a></div> --></li>
-					
+					<li class="menu-item "><a id="searchId"  href="javascript:void(0)" >${data.projectName}<div class="searchBtn"></div></a><!-- <div class="searchBtn"><a name="search"></a></div> --></li>
 				</ul>
 			</div>
 		</div>
@@ -64,32 +64,16 @@
 				<li class="hot-1"><a
 					href="http://ecms060.99yuanma.net:8888/e/tags/?tagname=%E6%B8%85%E7%BA%AF"
 					target="_blank" title="218个话题" class="tag-font-size-14">分类3</a></li>
-				
-				
 			</ul>
-			<ul class="tags-box">
-				<li class="hot-1 curr"><a href="javascript:void(0)" class="tag-font-size-14">全部</a></li>
-				<li class="hot-1">
-					<a href="http://ecms060.99yuanma.net:8888/e/tags/?tagname=%E6%80%A7%E6%84%9F"
-					target="_blank" title="680个话题" class="tag-font-size-14">分类1</a></li>
-				<li class="hot-1"><a
-					href="http://ecms060.99yuanma.net:8888/e/tags/?tagname=%E7%BE%8E%E8%85%BF"
-					target="_blank" title="246个话题" class="tag-font-size-14">分类2</a></li>
-				<li class="hot-1"><a
-					href="http://ecms060.99yuanma.net:8888/e/tags/?tagname=%E6%B8%85%E7%BA%AF"
-					target="_blank" title="218个话题" class="tag-font-size-14">分类3</a></li>
-				
-				
-			</ul> -->
+			-->
 		</div>
 		<div class="tips"></div>
 		<!--图片展示begin-->
 		<div id="body-container">
 			<span id="dataGroup">
 				<div id="img-container" class="masonry" style="position: relative; height: 2417px;">
-					
-					<div class="border-img-box masonry-brick"
-						>
+					<!-- 
+					<div class="border-img-box masonry-brick">
 						<div class="img_inner_wrapper">
 							<div class="inner_wrapper_img inner_wrapper_img1">
 								<div>
@@ -126,7 +110,7 @@
 							</div>
 						</div>
 					</div>
-
+ -->
 				</div>
 			</span>
 		</div>
@@ -177,13 +161,18 @@
 	<div id="searchbar">
 		<p>全站搜索</p>
 		<form method="post" name="searchform">
-			<select>
-				<option value ="volvo">Volvo</option>
-  				<option value ="saab">Saab</option>
-  				<option value="opel">Opel</option>
-  				<option value="audi">Audi</option>
+			<select name="projectPrefix">
+				<c:forEach var="r" items="${data.prefixs}" varStatus="idx">
+				<option value ="${r}" <c:if test="${r}==${data.projectPrefix}"> selected="selected"</c:if>>${r}</option>
+				</c:forEach>
+			</select>
+			<select name="projectId">
+				<c:forEach var="r" items="${data.projectList}" varStatus="idx">
+				<option value ="${r.projectId}" <c:if test="${r.projectId}==${data.projectId}"> selected="selected"</c:if>>${r.projectName}</option>
+				</c:forEach>
 			</select>
 			<input type="text" name="keyboard" id="edtSearch" class="text" value=""> 
+			<input type="hidden" name="parentId" value=""/> 
 			<input type="button" id="btnPost" value="确定">
 		</form>
 	</div>

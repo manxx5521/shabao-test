@@ -26,4 +26,26 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="getPagingFileDto" resultType="com.xiaoshabao.vkan.dto.FileDto"
+		parameterType="com.xiaoshabao.vkan.dto.FilePagingParams">
+		select
+			<include refid="com.xiaoshabao.vkan.entity.FileEntity.fileColumns" />
+		from vk_file
+		<where>
+			<if test="tagIds != null">
+				and exists (
+					select 1 from vk_file_tag a
+					where vk_file.file_id=a.file_id
+					and a.tag_id in
+					<foreach collection="tagIds" item="item" index="index" open="(" separator="," close=")">  
+	        		  #{item}
+	    			</foreach>
+				)
+			</if>
+			<if test="parentId != null">
+				vk_file.parent_id=#{parentId}
+			</if>
+		</where>
+	</select>
 </mapper>

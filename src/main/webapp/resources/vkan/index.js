@@ -82,10 +82,145 @@ $(function() {
 					$(this).hide();
 					$('#searchbar').hide();
 				});
+				$('#btnPost').click(function() {
+					 window.location.href = './index.html?projectPrefix='+encodeURIComponent($('select[name="projectPrefix"]').val())
+					 		+'&projectId='+$('select[name="projectId"]').val();
+				});
+			},
+			loadFile:function(){
+				var data={};
+				var parentId=$('input[name="parentId"]').val();
+				if(!!parentId){
+					data.parentId=parentId;
+				}
+				data.tagIds=tags;
+				
+				$.ajax({
+					type : "POST",
+					url : webroot + "/vkan/fileData",
+					data:data,
+					dataType : "json",
+					success : function(result) {
+						for(var i=0;i<result.list.length;i++){
+							page.addFileDto(result.list[i]);
+							page.item_masonry();
+						}
+					},
+					error : function(info) {
+						alert(info.responseText);
+						alert(info);
+					}
+				});
+			},
+			/**添加文件*/
+			addFileDto:function(fileDto){
+				var name=fileDto.fileName;
+				var path=$('select[name="projectPrefix"]').find('option:selected').val()+fileDto.path;
+				
+				var html='';
+				html+='<div class="border-img-box masonry-brick">';
+				html+='  <div class="img_inner_wrapper">';
+				html+='    <div class="inner_wrapper_img inner_wrapper_img1">';
+				html+='      <div>';
+				html+='		   <a href="javascript:void(0)" target="_blank"> </a>';//TODO 下一步操作
+				html+='          <img title="'+name+'" class="img-min-height" alt="'+name+'" src="'+path+'">';
+				html+='		   </a>';
+				html+='      <div>';
+				html+='      <div class="mid_img_count">';
+				html+='        <span class="num"> <label>'+(!fileDto.child_number?'*':fileDto.child_number)+'</label>';
+				html+='      </div>';
+				html+='      <div class="img_inner_wrapper_tag">';
+				html+='        <div class="title">';
+				html+='          <a href="javascript:void(0)" target="_blank">'+name+'</a>';//TODO
+				html+='        </div>';
+				html+='        <div class="tag curr">';
+				html+='          <label>分类：</label> <a href="javascript:void(0)">我是分类</a>';//TODO
+				html+='        </div>';
+				html+='        <div class="tag curr">';
+				html+='          <label>标签：</label>';
+				
+				//添加标签
+				for(var i=0;i<fileDto.tagList.length;i++){
+					var tag=fileDto.tagList[i];
+					html+='      <a href="javascript:void(0)" target="_blank" rel="tag" tid="'+tag.tagId+'">'+tag.name+'</a>';
+				}
+				
+				html+='        </div>';
+				html+='      </div>';
+				html+='    </div>';
+				html+='  </div>';
+				html+='</div>';
+				$('#img-container').append(html);
+			},
+			/**实例化瀑布流*/
+			item_masonry:function(){
+				function item_callback() {
+
+					$('.border-img-box').mouseover(function() {
+						$(this).css('box-shadow', '0 1px 5px rgba(35,25,25,0.5)');
+						$('.btns', this).show();
+					}).mouseout(function() {
+						$(this).css('box-shadow', '0 1px 3px rgba(34,25,25,0.2)');
+						$('.btns', this).hide();
+					});
+
+					//瀑布流生成
+					$('.border-img-box img').load(function() {
+						$('#img-container').masonry({
+							itemSelector : '.border-img-box',
+							columnWidth : 228,
+							gutterWidth : 15
+						});
+					});
+
+					$('#img-container').masonry({
+						itemSelector : '.border-img-box',
+						columnWidth : 228,
+						gutterWidth : 15
+					});
+
+				}
+
+				item_callback();
+
+				$('.item').fadeIn();
+
+				var sp = 1
+
+				$("#img-container").infinitescroll({
+					navSelector : "#more",
+					nextSelector : "#more a",
+					itemSelector : ".border-img-box",
+					loading : {
+						img : "./images/masonry_loading_1.gif",
+						msgText : ' ',
+						finishedMsg : '木有了',
+						finished : function() {
+							sp++;
+							if (sp >= 5) { // 到第5页结束事件
+								$("#more").remove();
+								$("#infscr-loading").hide();
+								$(".itempages").show();
+								$(window).unbind('.infscr');
+							}
+						}
+					},
+					errorCallback : function() {
+						$(".itempages").show();
+					}
+
+				}, function(newElements) {
+					var $newElems = $(newElements);
+					$('#img-container').masonry('appended', $newElems, false);
+					$newElems.fadeIn();
+					item_callback();
+					return;
+				});
 			},
 			init : function() {
 				this.loadTag();
 				this.initSearch();
+				this.loadFile();
 			}
 		}
 	})();
@@ -115,7 +250,7 @@ $(document).ready(function() {
 window.onerror = function() {
 	return true;
 };
-
+/*
 function item_masonry() {
 	$('.border-img-box img').load(function() {
 		$('#img-container').masonry({
@@ -185,3 +320,4 @@ $(function() {
 	});
 
 });
+*/
