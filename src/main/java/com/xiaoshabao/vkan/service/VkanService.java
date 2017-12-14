@@ -6,6 +6,7 @@ import com.xiaoshabao.baseframework.bean.PageValue;
 import com.xiaoshabao.baseframework.service.AbstractService;
 import com.xiaoshabao.vkan.dto.FileDto;
 import com.xiaoshabao.vkan.dto.FilePagingParams;
+import com.xiaoshabao.vkan.dto.IndexDataVo;
 import com.xiaoshabao.vkan.dto.VkanIndexDto;
 import com.xiaoshabao.vkan.entity.TagEntity;
 
@@ -16,7 +17,7 @@ public interface VkanService extends AbstractService {
 	 * 
 	 * @return
 	 */
-	VkanIndexDto getIndexData(String[] tagIds, String search,String projectPrefix,Integer projectId);
+	VkanIndexDto getIndexData(IndexDataVo indexData);
 	
 	/**
 	 * 查询tag标签

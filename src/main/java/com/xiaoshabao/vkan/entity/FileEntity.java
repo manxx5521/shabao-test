@@ -3,7 +3,7 @@ package com.xiaoshabao.vkan.entity;
 import java.util.Date;
 
 public class FileEntity {
-	
+//	@JsonSerialize(using=ToStringSerializer.class)
 	private Long fileId;
 	private Integer projectId;
 	/**项目标识，1是项目，0不是*/

@@ -6,7 +6,7 @@ public class FilePagingParams extends PagingParams{
 	
 	private String[] tagIds;
 	
-	private Integer parentId;
+	private Long parentId;
 
 	public String[] getTagIds() {
 		return tagIds;
@@ -16,11 +16,11 @@ public class FilePagingParams extends PagingParams{
 		this.tagIds = tagIds;
 	}
 
-	public Integer getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(Integer parentId) {
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
 	

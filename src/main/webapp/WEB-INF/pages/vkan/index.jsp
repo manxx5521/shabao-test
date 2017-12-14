@@ -23,7 +23,7 @@
 			</div>
 			<div class="m-nav">
 				<ul>
-					<li class="menu-item current-menu-item"><a href="javascript:void(0)">全部</a></li>
+					<li class="menu-item current-menu-item"><a href="./index.html">全部</a></li>
 					<li class="menu-item "><a href="javascript:void(0)">视频</a></li>
 					<li class="menu-item "><a href="javascript:void(0)">图</a></li>
 					<li class="menu-item "><a href="javascript:void(0)">|</a></li>
@@ -172,7 +172,8 @@
 				</c:forEach>
 			</select>
 			<input type="text" name="keyboard" id="edtSearch" class="text" value=""> 
-			<input type="hidden" name="parentId" value=""/> 
+			<input type="hidden" name="parentId" value="${data.parentId}"/> 
+			<input type="hidden" name="projectPath" value="${data.projectPath}"/> 
 			<input type="button" id="btnPost" value="确定">
 		</form>
 	</div>

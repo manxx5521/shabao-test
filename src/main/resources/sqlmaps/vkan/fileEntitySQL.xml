@@ -31,7 +31,7 @@
 		#{fileType,jdbcType=NUMERIC},
 		#{parentId,jdbcType=NUMERIC},SYSDATE())
 	</insert>
-	<select id="oneFileEntity" resultType="com.xiaoshabao.vkan.entity.FileEntity"
+	<select id="getFileEntity" resultType="com.xiaoshabao.vkan.entity.FileEntity"
 		parameterType="com.xiaoshabao.vkan.entity.FileEntity">
 		select
 		<include refid="fileColumns" />

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xiaoshabao.baseframework.bean.PageValue;
 import com.xiaoshabao.vkan.dto.FileDto;
 import com.xiaoshabao.vkan.dto.FilePagingParams;
+import com.xiaoshabao.vkan.dto.IndexDataVo;
 import com.xiaoshabao.vkan.entity.TagEntity;
 import com.xiaoshabao.vkan.service.VkanService;
 
@@ -24,8 +25,8 @@ public class VkanController {
 	private VkanService vkanService;
 
 	@RequestMapping("/index")
-	public ModelAndView getIndexData(ModelMap model, String[] tagIds, String search,String projectPrefix,Integer projectId) {
-		model.put("data", vkanService.getIndexData(tagIds, search,projectPrefix,projectId));
+	public ModelAndView getIndexData(ModelMap model,IndexDataVo indexData) {
+		model.put("data", vkanService.getIndexData(indexData));
 		return new ModelAndView("/vkan/index", model);
 	}
 	

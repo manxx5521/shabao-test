@@ -39,7 +39,7 @@
 			</if>
 		</where>
 	</select>
-	<select id="oneProjectEntity" resultType="com.xiaoshabao.vkan.entity.ProjectEntity"
+	<select id="getProjectEntity" resultType="com.xiaoshabao.vkan.entity.ProjectEntity"
 		parameterType="com.xiaoshabao.vkan.entity.ProjectEntity">
 		select
 		<include refid="projectColumns" />

@@ -101,10 +101,13 @@ $(function() {
 					data:data,
 					dataType : "json",
 					success : function(result) {
+						$('#img-container').empty();
 						for(var i=0;i<result.list.length;i++){
 							page.addFileDto(result.list[i]);
-							page.item_masonry();
 						}
+						page.addClickFile();
+						page.item_masonry();
+						
 					},
 					error : function(info) {
 						alert(info.responseText);
@@ -115,14 +118,30 @@ $(function() {
 			/**添加文件*/
 			addFileDto:function(fileDto){
 				var name=fileDto.fileName;
-				var path=$('select[name="projectPrefix"]').find('option:selected').val()+fileDto.path;
+				
+				//解析图片
+				var path="";
+				var fileType=fileDto.fileType;
+				if(fileType==1){
+					path=webroot+"/resources/vkan/image/type_dir.png";
+				}else if(fileType==2){
+					var prefix=$('select[name="projectPrefix"]').find('option:selected').val();
+					prefix="/"+prefix.substr(0,1).toLowerCase()+"/";
+					path=prefix+$('input[name="projectPath"]').val().replace('vm\\','')+fileDto.path;
+					path=path.replace(/\\/g,'/');
+				}else if(fileType==3){
+					path=webroot+"/resources/vkan/image/type_video.png";
+				}else{
+					path=webroot+"/resources/vkan/image/type_other.png";
+				}
+				
 				
 				var html='';
 				html+='<div class="border-img-box masonry-brick">';
 				html+='  <div class="img_inner_wrapper">';
 				html+='    <div class="inner_wrapper_img inner_wrapper_img1">';
 				html+='      <div>';
-				html+='		   <a href="javascript:void(0)" target="_blank"> </a>';//TODO 下一步操作
+				html+='		   <a class="click_file" href="javascript:void(0)" fid="'+fileDto.fileId+'" ftype="'+fileType+'">';//TODO 下一步操作
 				html+='          <img title="'+name+'" class="img-min-height" alt="'+name+'" src="'+path+'">';
 				html+='		   </a>';
 				html+='      <div>';
@@ -151,6 +170,19 @@ $(function() {
 				html+='  </div>';
 				html+='</div>';
 				$('#img-container').append(html);
+			},
+			/**给文件列表添加点击事件*/
+			addClickFile:function(){
+				$('.click_file').click(function(){
+					var fid = this.attributes.fid.value;
+					var type = this.attributes.ftype.value;
+					
+					//文件夹进入下级目录
+					if(type==1){
+						$('input[name="parentId"]').val(fid);
+						page.loadFile();
+					}
+				})
 			},
 			/**实例化瀑布流*/
 			item_masonry:function(){
@@ -186,7 +218,7 @@ $(function() {
 				$('.item').fadeIn();
 
 				var sp = 1
-
+/*
 				$("#img-container").infinitescroll({
 					navSelector : "#more",
 					nextSelector : "#more a",
@@ -216,6 +248,7 @@ $(function() {
 					item_callback();
 					return;
 				});
+				*/
 			},
 			init : function() {
 				this.loadTag();

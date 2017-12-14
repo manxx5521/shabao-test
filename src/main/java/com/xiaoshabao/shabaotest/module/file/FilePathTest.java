@@ -2,6 +2,8 @@ package com.xiaoshabao.shabaotest.module.file;
 
 import java.io.File;
 
+import org.junit.Test;
+
 public class FilePathTest {
 
 	private final static String FILE_NAME = "fileTestTxt.txt";
@@ -38,6 +40,12 @@ public class FilePathTest {
 			throw new RuntimeException("文件读取异常");
 		}
 
+	}
+	@Test
+	public void test() {
+		File file=new File("E:\\test");
+		System.out.println("11->"+file.isAbsolute());
+		System.out.println("22是否是文件夹->"+file.isDirectory());
 	}
 
 	public static void main(String[] args) {

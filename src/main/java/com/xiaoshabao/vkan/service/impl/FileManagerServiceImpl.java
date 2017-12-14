@@ -113,7 +113,7 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
 		switch (type) {
 		case UPDATE:
 			//如果存在 跳出
-			FileEntity temp=this.baseDao.getDataSingle(FileEntity.class, fileEntity);
+			FileEntity temp=this.baseDao.getDataForObject(FileEntity.class, fileEntity);
 			if(temp!=null&&temp.getFileId()!=null) {
 				return temp.getFileId();
 			}
