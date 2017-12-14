@@ -477,6 +477,14 @@
     					<!-- 指定 web配置，解决无法修改静态文件问题 -->
     					<defaultsDescriptor>${project.basedir}/src/main/resources/webdefault.xml</defaultsDescriptor>
   					</webApp>
+  					<!-- 额外监听目录  虚拟目录设置（未能设置成功）
+        			<contextHandlers>  
+            			<contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">  
+                			<contextPath>/e</contextPath>  
+                			<resourceBase>E:\test\test\zol\</resourceBase>  
+            			</contextHandler>  
+        			</contextHandlers>
+        			-->  
 				</configuration>
     		</plugin>
 			
