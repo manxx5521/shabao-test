@@ -30,11 +30,27 @@
 	</bean>
 	<bean id="mappingJacksonHttpMessageConverter"
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<!-- 设置编码公式防止返回乱码 -->
 		<property name="supportedMediaTypes">
 			<list>
+				<value>application/json;charset=UTF-8</value>
 				<value>text/html;charset=UTF-8</value>
+				<value>text/plain;charset=UTF-8</value>
 			</list>
-		</property>
+		</property> 
+		 <property name="objectMapper">
+			<!-- 设置自定义转换类型，ajax请求时将返回值时，将long想转成String 
+				或者是直接在需要转换字段上添加注解 @JsonSerialize(using=ToStringSerializer.class)
+			-->
+			<bean class="com.xiaoshabao.webframework.component.LongToStringJsonConverter">
+				<!--日期格化暂不启用 
+				<property name="dateFormat">
+					<bean class="java.text.SimpleDateFormat">
+						<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
+					</bean>
+				</property>-->
+			</bean>
+		</property> 
 	</bean>
 	<!--静态资源处理，加入对 JS 等处理，允许使用/映射-->
 	<mvc:default-servlet-handler/>
