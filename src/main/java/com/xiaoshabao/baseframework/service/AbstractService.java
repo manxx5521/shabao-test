@@ -41,16 +41,6 @@ public interface AbstractService {
 	public <T> List<T> getData(String sqlid, Object param);
 
 	/**
-	 * 根据sqlid获得单条数据
-	 */
-	public <T> T getDataSingle(String sqlid, Object param);
-
-	/**
-	 * 根据类型获得单条数据
-	 */
-	public <T> T getDataSingle(Class<T> clazz, Object param);
-
-	/**
 	 * 分页方法
 	 */
 	public <T, P extends PagingParams> PageValue<T> getDataPaging(Class<T> clasz, P pagingPrams);

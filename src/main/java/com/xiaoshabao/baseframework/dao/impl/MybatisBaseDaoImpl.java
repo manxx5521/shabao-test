@@ -106,6 +106,22 @@ public class MybatisBaseDaoImpl extends SqlSessionDaoSupport implements BaseDao 
 	public <T> List<T> getData(String sqlid, Object param) {
 		return this.getSqlSession().selectList(sqlid, param);
 	}
+	
+	@Override
+	public <T> T getDataForObject(Class<T> clazz, Object param) {
+		return this.getSqlSession().selectOne(
+				DaoEnum.GETDATA.getVlaue() + clazz.getSimpleName(), param);
+	}
+
+	@Override
+	public <T> T getDataForObject(String sqlId, Class<T> clazz, Object param) {
+		return this.getSqlSession().selectOne(sqlId, param);
+	}
+
+	@Override
+	public <T> T getDataForObject(String sqlId, Object param) {
+		return this.getSqlSession().selectOne(sqlId, param);
+	}
 
 	@Override
 	public <T> T getDataById(Class<T> clazz, Object id) {

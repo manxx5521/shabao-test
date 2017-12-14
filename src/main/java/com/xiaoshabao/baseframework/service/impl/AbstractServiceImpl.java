@@ -63,16 +63,6 @@ public abstract class AbstractServiceImpl implements AbstractService {
 		return this.baseDao.getData(sqlid, param);
 	}
 
-	@Override
-	public <T> T getDataSingle(String sqlid, Object param) {
-		return this.baseDao.getDataSingle(sqlid, param);
-	}
-
-	@Override
-	public <T> T getDataSingle(Class<T> clazz, Object param) {
-		return this.baseDao.getDataSingle(clazz, param);
-	}
-
 	// 通过这个方法把分页查询DAO实例
 	@Override
 	public <T, P extends PagingParams> PageValue<T> getDataPaging(Class<T> clasz, P pageParams) {

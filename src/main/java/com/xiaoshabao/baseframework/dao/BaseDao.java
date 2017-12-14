@@ -74,6 +74,24 @@ public interface BaseDao {
 	 * 通过sqlid获取数据
 	 */
 	public <T> List<T> getData(String sqlId, Object param);
+	
+	/**
+	 * 通过实体T 和参数获得唯一记录<br/>
+	 * 多条取第一条
+	 */
+	public <T> T getDataForObject(Class<T> clazz, Object param);
+	
+	/**
+	 * 通过sqlid获得单条数据<br/>
+	 * 多条取第一条
+	 */
+	public <T> T getDataForObject(String sqlId,Class<T> clazz, Object param);
+	
+	/**
+	 * 通过sqlid获得单条数据<br/>
+	 * 多条取第一条
+	 */
+	public <T> T getDataForObject(String sqlId, Object param);
 
 	/**
 	 * 通过id获取数据
@@ -84,16 +102,19 @@ public interface BaseDao {
 	 * 通过实体T 和参数获得唯一记录<br/>
 	 * 多条取第一条
 	 */
+	@Deprecated
 	public <T> T getDataSingle(Class<T> clazz, Object param);
 
 	/**
 	 * 通过sqlid获得单条数据
 	 */
+	@Deprecated
 	public <T> T getDataSingle(String sqlId, Object param);
 	
 	/**
 	 * 通过sqlid获得单条数据
 	 */
+	@Deprecated
 	public <T> T getDataSingle(String sqlId, Class<T> clazz, Object param);
 
 	/**
