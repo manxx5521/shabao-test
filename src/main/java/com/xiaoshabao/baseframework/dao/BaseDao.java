@@ -69,6 +69,11 @@ public interface BaseDao {
 	 * 按一定条件获取T类型的数据
 	 */
 	public <T> List<T> getData(Class<T> clazz, Object param);
+	
+	/**
+	 * 通过sqlid获取数据
+	 */
+	public <T> List<T> getData(String sqlId, Class<T> clazz,Object param);
 
 	/**
 	 * 通过sqlid获取数据
