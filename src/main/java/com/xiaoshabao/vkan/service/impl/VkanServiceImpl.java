@@ -57,7 +57,7 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService 
 		List<ProjectEntity> projects = this.baseDao.getData(ProjectEntity.class, new HashMap<String, Object>());
 		result.setProjectList(projects);
 
-//		Sqlmapper位置 VkanIndexDto.class
+//		Sqlmapper位置 VkanIndexDto.class 
 		List<String> prefixs = this.baseDao.getData("getProjectPrefix",new HashMap<String, Object>());
 		result.setPrefixs(prefixs);
 
