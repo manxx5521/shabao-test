@@ -18,7 +18,8 @@ public class VkanIndexDto {
 	
 	private String projectPath;
 	
-	private Integer parentId;
+	/**父级文件id 用于内层查询*/
+	private Long parentId;
 
 	public List<ProjectEntity> getProjectList() {
 		return projectList;
@@ -68,12 +69,12 @@ public class VkanIndexDto {
 		this.projectPath = projectPath;
 	}
 
-	public Integer getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(Integer parentId) {
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
-	
+
 }

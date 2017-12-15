@@ -40,7 +40,7 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService 
 					// 所有信息都能查到
 					String prefix=indexData.getProjectPrefix();
 					if(StringUtils.isEmpty(prefix)) {
-						prefix=projectEntity.getPrjectPrefix();
+						prefix=projectEntity.getProjectPrefix();
 					}
 					String path =prefix+  projectEntity.getProjectPath() + fileEntity.getPath();
 					File file = new File(path);
@@ -54,7 +54,8 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService 
 		}
 
 		//获取主页数据
-		List<ProjectEntity> projects = this.baseDao.getData(ProjectEntity.class, new HashMap<String, Object>());
+		ProjectEntity projectReq=new ProjectEntity();
+		List<ProjectEntity> projects = this.baseDao.getData(ProjectEntity.class, projectReq);
 		result.setProjectList(projects);
 
 //		Sqlmapper位置 VkanIndexDto.class 
@@ -64,19 +65,19 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService 
 		if (projects != null && projects.size() > 0) {
 			// 是否是二次搜索
 			if (indexData.getProjectId() == null) {
-				result.setProjectPrefix(projects.get(0).getPrjectPrefix());
+				result.setProjectPrefix(projects.get(0).getProjectPrefix());
 				result.setProjectId(projects.get(0).getProjectId());
 				result.setProjectName(projects.get(0).getProjectName());
 				result.setProjectPath(projects.get(0).getProjectPath());
-				result.setParentId(projects.get(0).getProjectId());
+				result.setParentId(indexData.getParentId()==null?Long.valueOf(projects.get(0).getProjectId()):indexData.getParentId());
 			} else {
 				for (ProjectEntity project : projects) {
 					if (project.getProjectId().equals(indexData.getProjectId())) {
-						result.setProjectPrefix(project.getPrjectPrefix());
+						result.setProjectPrefix(project.getProjectPrefix());
 						result.setProjectId(project.getProjectId());
 						result.setProjectName(project.getProjectName());
 						result.setProjectPath(project.getProjectPath());
-						result.setParentId(project.getProjectId());
+						result.setParentId(indexData.getParentId()==null?Long.valueOf(project.getProjectId()):indexData.getParentId());
 					}
 				}
 			}

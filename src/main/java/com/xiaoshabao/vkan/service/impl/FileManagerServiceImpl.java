@@ -46,7 +46,7 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
 
 		ProjectEntity project = new ProjectEntity();
 		project.setProjectName(projectName);
-		project.setPrjectPrefix(prefix);
+		project.setProjectPrefix(prefix);
 		project.setProjectPath(path);
 		/*
 		ProjectEntity temp=this.baseDao.getDataSingle(ProjectEntity.class, project);
@@ -105,7 +105,7 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
 		FileEntity fileEntity = new FileEntity();
 		String fileName = file.getName();
 		String path = file.getAbsolutePath();
-		path=path.replace(project.getPrjectPrefix() + project.getProjectPath(), "");
+		path=path.replace(project.getProjectPrefix() + project.getProjectPath(), "");
 		fileEntity.setProjectId(project.getProjectId());
 		fileEntity.setFileName(fileName);
 		fileEntity.setPath(path);

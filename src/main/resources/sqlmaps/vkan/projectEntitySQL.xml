@@ -17,10 +17,10 @@
 		vk_project
 		(project_id,project_name,project_prefix,project_path,create_time)
 		values (null, #{projectName,jdbcType=VARCHAR},
-		#{prjectPrefix,jdbcType=VARCHAR},
+		#{projectPrefix,jdbcType=VARCHAR},
 		#{projectPath,jdbcType=VARCHAR},SYSDATE())
 	</insert>
-	<select id="getProjectEntity" resultType="com.xiaoshabao.vkan.entity.ProjectEntity" >
+	<!-- <select id="getProjectEntity" resultType="com.xiaoshabao.vkan.entity.ProjectEntity" >
 		select
 		<include refid="projectColumns" />
 		from vk_project
@@ -31,14 +31,14 @@
 			<if test="projectName != null and projectName !=''">
 				and project_name=#{projectName}
 			</if>
-			<if test="prjectPrefix != null and prjectPrefix !=''">
-				and project_prefix=#{prjectPrefix}
+			<if test="projectPrefix != null and projectPrefix !=''">
+				and project_prefix=#{projectPrefix}
 			</if>
 			<if test="projectPath != null and projectPath !=''">
 				and project_path=#{projectPath}
 			</if>
 		</where>
-	</select>
+	</select> -->
 	<select id="getProjectEntity" resultType="com.xiaoshabao.vkan.entity.ProjectEntity"
 		parameterType="com.xiaoshabao.vkan.entity.ProjectEntity">
 		select
@@ -51,8 +51,8 @@
 			<if test="projectName != null and projectName !=''">
 				and project_name=#{projectName}
 			</if>
-			<if test="prjectPrefix != null and prjectPrefix !=''">
-				and project_prefix=#{prjectPrefix}
+			<if test="projectPrefix != null and projectPrefix !=''">
+				and project_prefix=#{projectPrefix}
 			</if>
 			<if test="projectPath != null and projectPath !=''">
 				and project_path=#{projectPath}

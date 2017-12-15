@@ -7,7 +7,7 @@ public class ProjectEntity {
 	private Integer projectId;
 	private String projectName;
 	/**所属盘符（预期值）**/
-	private String prjectPrefix;
+	private String projectPrefix;
 	private String projectPath;
 	private Date createTime;
 
@@ -43,12 +43,12 @@ public class ProjectEntity {
 		this.createTime = createTime;
 	}
 
-	public String getPrjectPrefix() {
-		return prjectPrefix;
+	public String getProjectPrefix() {
+		return projectPrefix;
 	}
 
-	public void setPrjectPrefix(String prjectPrefix) {
-		this.prjectPrefix = prjectPrefix;
+	public void setProjectPrefix(String projectPrefix) {
+		this.projectPrefix = projectPrefix;
 	}
 
 }

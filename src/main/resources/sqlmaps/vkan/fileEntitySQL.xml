@@ -38,7 +38,7 @@
 		from vk_file
 		<where>
 			<if test="fileId != null and fileId !=''">
-				and file_id=#{groupId}
+				and file_id=#{fileId}
 			</if>
 			<if test="projectId != null and projectId !=''">
 				and project_id=#{projectId}

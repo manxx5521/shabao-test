@@ -11,7 +11,7 @@
 <%@include file="../../../context/head.jsp"%>
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/touch.css">
 <link rel="stylesheet" href="${ctx}/resources/wechat/vote/blue/colorbox.css">
-<cbox:resource type="all" value="jquery,colorbox,masonry,weui,jweixin" />
+<cbox:resource type="all" value="jquery,colorbox,masonry2,weui,jweixin" />
 <%@include file="../../common.jsp"%>
 <style>
 .slider {

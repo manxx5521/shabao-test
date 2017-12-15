@@ -102,11 +102,18 @@ $(function() {
 					dataType : "json",
 					success : function(result) {
 						$('#img-container').empty();
+						
 						for(var i=0;i<result.list.length;i++){
 							page.addFileDto(result.list[i]);
 						}
 						page.addClickFile();
+						//设置下一页数据
+						$("#more a").attr("href",webroot + "/vkan/fileData?index="+(result.index+1)+"&size="+result.size);
+						
 						page.item_masonry();
+						//重新加载数据，解决清空数据，重新加载布局错乱问题(2版本)
+//						$('#img-container').masonry('reload');
+						
 						
 					},
 					error : function(info) {
@@ -186,47 +193,35 @@ $(function() {
 			},
 			/**实例化瀑布流*/
 			item_masonry:function(){
-				function item_callback() {
 
-					$('.border-img-box').mouseover(function() {
-						$(this).css('box-shadow', '0 1px 5px rgba(35,25,25,0.5)');
-						$('.btns', this).show();
-					}).mouseout(function() {
-						$(this).css('box-shadow', '0 1px 3px rgba(34,25,25,0.2)');
-						$('.btns', this).hide();
-					});
-
-					//瀑布流生成
-					$('.border-img-box img').load(function() {
-						$('#img-container').masonry({
-							itemSelector : '.border-img-box',
-							columnWidth : 228,
-							gutterWidth : 15
-						});
-					});
-
-					$('#img-container').masonry({
-						itemSelector : '.border-img-box',
-						columnWidth : 228,
-						gutterWidth : 15
-					});
-
-				}
-
-				item_callback();
+				$grid=page.item_callback();
 
 				$('.item').fadeIn();
 
 				var sp = 1
-/*
-				$("#img-container").infinitescroll({
-					navSelector : "#more",
-					nextSelector : "#more a",
-					itemSelector : ".border-img-box",
+				try{
+					var msnry = $grid.data('masonry');
+					$("#img-container").infiniteScroll({
+						path: $('#more a').attr('href'),
+						append: '.border-img-box',
+						outlayer: msnry,
+						responseType: 'text',
+						status: '.page-load-status'
+					});
+					
+					$grid.on( 'load.infiniteScroll', function( event, response ) {
+						  console.log('111'+ response )
+						  // parse response into JSON data
+						  
+						});
+				/*$("#img-container").infiniteScroll({
+					navSelector : "#more", //页面分页元素(成功后会被隐藏)
+					nextSelector : "#more a",// 需要点击的下一页链接，和2的html要对应
+					itemSelector : ".border-img-box", // ajax回来之后，每一项的selecter（比如每篇文章都有item这个class）
 					loading : {
-						img : "./images/masonry_loading_1.gif",
-						msgText : ' ',
-						finishedMsg : '木有了',
+						img : webroot+"/resources/vkan/masonry_loading_1.gif",//自定义loadding的动画图
+						msgText : ' ',//加载时的提示语
+						finishedMsg : '木有了',//当加载失败，或者加载不出内容之后的提示语
 						finished : function() {
 							sp++;
 							if (sp >= 5) { // 到第5页结束事件
@@ -245,10 +240,40 @@ $(function() {
 					var $newElems = $(newElements);
 					$('#img-container').masonry('appended', $newElems, false);
 					$newElems.fadeIn();
-					item_callback();
+					page.item_callback();
 					return;
+				});*/
+				}catch(errs){
+					console.log(errs.message)
+				}
+			},
+			/**生成瀑布流样式*/
+			item_callback:function() {
+
+				$('.border-img-box').mouseover(function() {
+					$(this).css('box-shadow', '0 1px 5px rgba(35,25,25,0.5)');
+					$('.btns', this).show();
+				}).mouseout(function() {
+					$(this).css('box-shadow', '0 1px 3px rgba(34,25,25,0.2)');
+					$('.btns', this).hide();
 				});
-				*/
+
+				//瀑布流生成
+				/*$('.border-img-box img').load(function() {
+					$('#img-container').masonry({
+						itemSelector : '.border-img-box',
+						columnWidth : 228,
+						gutterWidth : 15
+					});
+				});*/
+
+				$grid=$('#img-container').masonry({
+					itemSelector : '.border-img-box',
+					columnWidth : 228,
+					gutterWidth : 15
+				});
+				
+				return $grid;
 			},
 			init : function() {
 				this.loadTag();

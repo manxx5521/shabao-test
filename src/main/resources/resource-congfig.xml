@@ -45,7 +45,8 @@
 	<css key="swiper" des="弹窗" src="${ctx}/resources/plugins/swiper/swiper.min.css" />
 	<js  key="swiper" des="弹窗" src="${ctx}/resources/plugins/swiper/swiper.jquery.min.js" />
 	<js key="colorbox" des="灯箱" src="${ctx}/resources/plugins/jstree/jstree.min.js" />
-	<js key="masonry" des="瀑布流" src="${ctx}/resources/plugins/masonry/jquery.masonry.min.js" />
+	<js key="masonry2" des="旧版本瀑布流" src="${ctx}/resources/plugins/masonry/jquery.masonry.min.js" />
+	<js key="masonry" des="瀑布流" src="${ctx}/resources/plugins/masonry/masonry.pkgd.min.js" />
 	<js key="infinite-scroll" des="无限下拉" src="${ctx}/resources/plugins/infinite-scroll/infinite-scroll.pkgd.min.js" />
 	<js key="leanModal" des="手机弹窗" src="${ctx}/resources/plugins/leanModal/jquery.leanModal.min.js" />
 	<css key="sweetalert" des="提示框" src="${ctx}/resources/plugins/sweetalert/sweetalert.css" />

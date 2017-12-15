@@ -115,7 +115,13 @@
 			</span>
 		</div>
 		<!--图片展示end-->
-		<!--<div id="more"><a href="/index_2.html"></a></div>-->
+		<!-- 下拉分页 -->
+		<div class="page-load-status">
+			<p class="infinite-scroll-request">Loading...</p>
+			<p class="infinite-scroll-last">End of content</p>
+			<p class="infinite-scroll-error">No more pages to load</p>
+		</div>
+		<div id="more"><a href="#">1111</a></div>
 		<div class="itempages">
 			<ul>
 				<a href="http://ecms060.99yuanma.net:8888/index.html#" class="current">1</a>
