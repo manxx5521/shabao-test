@@ -596,7 +596,7 @@
 	<!-- 滚动条 -->
 	<script src="${ctx}/resources/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 	<!-- 弹框插件 -->
-	<script src="${ctx}/resources/plugins/layer/layer.js"></script> 
+	<script src="${ctx}/resources/plugins/layer2/layer.js"></script> 
 	<script src="${ctx}/resources/system/js/hplus.min.js"></script>
 	<!-- 自定义皮肤 使用较少的控件-->
 	<script src="${ctx}/resources/system/js/contabs.min.js" type="text/javascript"></script>

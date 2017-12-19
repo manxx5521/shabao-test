@@ -423,6 +423,12 @@ float:left;
 	padding: 5px 12px 4px;
 } */
 
+.operation ul li a:hover {
+	background: none repeat scroll 0 0 #e5461c;
+	color: #FFFFFF;
+	padding: 5px 12px 4px;
+}
+
 .tags-container ul .hot-1 a {
 	
 }

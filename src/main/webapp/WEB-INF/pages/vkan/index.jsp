@@ -11,7 +11,17 @@
 <link rel="shortcut icon"href="${ctx}/resources/img/favicon.ico" type="image/x-icon">
 <cbox:resource type="css" value="cache,jquery,masonry,infinite-scroll" />
 <link href="${ctx}/resources/vkan/index.css" rel="stylesheet" type="text/css">
+<style>
+/**控制瀑布流宽度和高度*/
+.grid__col-sizer,
+.photo-item {
+  width: 23%;
+}
 
+.grid__gutter-sizer {
+  width: 2%;
+}
+</style>
 </head>
 <body>
 	<div class="head-wrap">
@@ -52,26 +62,25 @@
 		</div>
 	</div>
 	<div class="warp">
-		<div class="tags-container">
-			<!-- <ul class="tags-box">
-				<li class="hot-1 curr"><a href="javascript:void(0)" class="tag-font-size-14">全部</a></li>
-				<li class="hot-1">
-					<a href="http://ecms060.99yuanma.net:8888/e/tags/?tagname=%E6%80%A7%E6%84%9F"
-					target="_blank" title="680个话题" class="tag-font-size-14">分类1</a></li>
-				<li class="hot-1"><a
-					href="http://ecms060.99yuanma.net:8888/e/tags/?tagname=%E7%BE%8E%E8%85%BF"
-					target="_blank" title="246个话题" class="tag-font-size-14">分类2</a></li>
-				<li class="hot-1"><a
-					href="http://ecms060.99yuanma.net:8888/e/tags/?tagname=%E6%B8%85%E7%BA%AF"
-					target="_blank" title="218个话题" class="tag-font-size-14">分类3</a></li>
+		<!-- 标签 -->
+		<div class="tags-container list">
+		</div>
+		<div class="tags-container operation">
+			 <ul class="tags-box">
+				<li class="hot-1 curr"><a href="javascript:void(0)" class="tag-font-size-14">操作</a></li>
+				<li class="hot-1 curr">
+					<a id="shangji" href="javascript:void(0)" title="去上级目录" class="tag-font-size-14">上级</a></li>
+				<li class="hot-1"><p id="currml">目录：</p></li>
 			</ul>
-			-->
 		</div>
 		<div class="tips"></div>
 		<!--图片展示begin-->
 		<div id="body-container">
 			<span id="dataGroup">
-				<div id="img-container" class="masonry" style="position: relative; height: 2417px;">
+				<!--  style="position: relative; height: 2417px;" -->
+				<div id="img-container" class="masonry">
+					<div class="grid__col-sizer"></div>
+  					<div class="grid__gutter-sizer"></div>
 					<!-- 
 					<div class="border-img-box masonry-brick">
 						<div class="img_inner_wrapper">
@@ -117,12 +126,17 @@
 		<!--图片展示end-->
 		<!-- 下拉分页 -->
 		<div class="page-load-status">
+			<div class="loader-ellips infinite-scroll-request">
+				<span class="loader-ellips__dot"></span> 
+				<span class="loader-ellips__dot"></span> 
+				<span class="loader-ellips__dot"></span>
+				<span class="loader-ellips__dot"></span>
+			</div>
 			<p class="infinite-scroll-request">Loading...</p>
-			<p class="infinite-scroll-last">End of content</p>
-			<p class="infinite-scroll-error">No more pages to load</p>
+			<p class="infinite-scroll-last">没有更多记录了</p>
+			<!-- <p class="infinite-scroll-error">No more pages to load</p> -->
 		</div>
-		<div id="more"><a href="#">1111</a></div>
-		<div class="itempages">
+		<!-- <div class="itempages">
 			<ul>
 				<a href="http://ecms060.99yuanma.net:8888/index.html#" class="current">1</a>
 				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_2.html">2</a>
@@ -139,7 +153,7 @@
 				<a class="next page-numbers" href="http://ecms060.99yuanma.net:8888/index_2.html"><span>下一页»</span></a>
 				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_20.html">尾页</a>
 			</ul>
-		</div>
+		</div> -->
 	</div>
 	
 	<div style="" id="gotoTop">

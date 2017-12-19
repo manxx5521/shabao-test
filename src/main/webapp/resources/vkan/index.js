@@ -1,6 +1,8 @@
 $(function() {
 	var tags = new Array();
 	var page = (function() {
+		var infScroll;
+		var msnry;
 		// 查询标签
 		return {
 			loadTag : function() {
@@ -13,7 +15,7 @@ $(function() {
 							for (var i = 0; i < data.length; i++) {
 								var tag = data[i];
 								if (tag.level == 1) {
-									var container = $(".tags-container");
+									var container = $(".tags-container.list");
 									var ul = $('<ul class="tags-box"></ul>')
 											.attr('pid', tag.tagId);
 									ul.append(page.getTagLi(tag));
@@ -46,6 +48,11 @@ $(function() {
 					a.attr('tid', tag.tagId);
 				}
 				li.append(a);
+				this.addTagClick(a);
+				return li;
+			},
+			/**给标签添加事件*/
+			addTagClick:function(a){
 				a.click(function() {
 					var tid = this.attributes.tid.value;
 					$this = $('a[tid=' + tid + ']');
@@ -56,10 +63,9 @@ $(function() {
 					} else {
 						parent.addClass('curr');
 						page.pushTag(tid);
-
 					}
+					page.reLoadData();
 				})
-				return li;
 			},
 			pushTag : function(tagId) {
 				tags.push(tagId);
@@ -86,44 +92,20 @@ $(function() {
 					 window.location.href = './index.html?projectPrefix='+encodeURIComponent($('select[name="projectPrefix"]').val())
 					 		+'&projectId='+$('select[name="projectId"]').val();
 				});
-			},
-			loadFile:function(){
-				var data={};
-				var parentId=$('input[name="parentId"]').val();
-				if(!!parentId){
-					data.parentId=parentId;
-				}
-				data.tagIds=tags;
 				
-				$.ajax({
-					type : "POST",
-					url : webroot + "/vkan/fileData",
-					data:data,
-					dataType : "json",
-					success : function(result) {
-						$('#img-container').empty();
-						
-						for(var i=0;i<result.list.length;i++){
-							page.addFileDto(result.list[i]);
-						}
-						page.addClickFile();
-						//设置下一页数据
-						$("#more a").attr("href",webroot + "/vkan/fileData?index="+(result.index+1)+"&size="+result.size);
-						
-						page.item_masonry();
-						//重新加载数据，解决清空数据，重新加载布局错乱问题(2版本)
-//						$('#img-container').masonry('reload');
-						
-						
-					},
-					error : function(info) {
-						alert(info.responseText);
-						alert(info);
-					}
-				});
+				page.setCurrml();
+			},
+			/**设置当前目录显示*/
+			setCurrml:function(path){
+				//设置当前目录
+				var currml=$('select[name="projectPrefix"]').val()+$('input[name="projectPath"]').val();
+				if(!!path){
+					currml+=path;
+				}
+				$('#currml').text('当前目录：'+currml);
 			},
 			/**添加文件*/
-			addFileDto:function(fileDto){
+			getFileDtoHtml:function(fileDto){
 				var name=fileDto.fileName;
 				
 				//解析图片
@@ -148,10 +130,10 @@ $(function() {
 				html+='  <div class="img_inner_wrapper">';
 				html+='    <div class="inner_wrapper_img inner_wrapper_img1">';
 				html+='      <div>';
-				html+='		   <a class="click_file" href="javascript:void(0)" fid="'+fileDto.fileId+'" ftype="'+fileType+'">';//TODO 下一步操作
+				html+='		   <a class="click_file" href="javascript:void(0)" fid="'+fileDto.fileId+'" ftype="'+fileType+'" fpath="'+fileDto.path+'">';
 				html+='          <img title="'+name+'" class="img-min-height" alt="'+name+'" src="'+path+'">';
 				html+='		   </a>';
-				html+='      <div>';
+				html+='      </div>';
 				html+='      <div class="mid_img_count">';
 				html+='        <span class="num"> <label>'+(!fileDto.child_number?'*':fileDto.child_number)+'</label>';
 				html+='      </div>';
@@ -176,109 +158,140 @@ $(function() {
 				html+='    </div>';
 				html+='  </div>';
 				html+='</div>';
-				$('#img-container').append(html);
+				return html;
 			},
-			/**给文件列表添加点击事件*/
-			addClickFile:function(){
+			/**重新加载数据，清空原有内容*/
+			reLoadData:function(){
+				$('#img-container .border-img-box').remove();
+				$('#img-container').removeAttr('style');
+				
+				page.infScroll.destroy();
+				page.msnry.destroy();
+				page.loadData();
+				page.msnry.reloadItems();
+			},
+			/**加载文件*/
+			loadData:function(){
+				page.msnry = new Masonry('#img-container',{
+					  itemSelector: '.border-img-box',
+					  columnWidth: '.grid__col-sizer',
+					  gutter: '.grid__gutter-sizer',
+					  percentPosition: true,
+//					  stagger: 30,
+//					  visibleStyle: { transform: 'translateY(0)', opacity: 1 },
+//					  hiddenStyle: { transform: 'translateY(100px)', opacity: 0 },
+				});
+				
+				page.infScroll =new InfiniteScroll('#img-container',{
+//					  path: webroot + '/vkan/fileData?index={{#}}'+url,
+					  path: function() {
+						  var url = webroot + '/vkan/fileData?index='+this.pageIndex;
+						  if(tags.length>0){
+							  url+='&tagIds='+tags.join(",");
+						  }
+						  var parentId = page.getParentId();
+						  
+						  if (!!parentId) {
+							  url+="&parentId=" + parentId;
+						  }
+						  return url;
+						},
+					  responseType: 'text',
+					  outlayer: page.msnry,
+					  status: '.page-load-status',
+					  history: false,
+					});
+				
+				page.infScroll.on( 'load', function(response, path ) {
+					  console.log( response )
+					  var data = JSON.parse( response ).list;
+					  
+					  var html="";
+					  for(var i=0;i<data.length;i++){
+						  html+=page.getFileDtoHtml(data[i]);
+					  }
+						
+					  var $items = $( html );
+					  
+					  // append item elements
+					  $items.imagesLoaded( function() {
+						  page.infScroll.appendItems( $items );
+						  page.msnry.appended( $items );
+						  
+						  page.loadAfter();
+					  })
+					  
+					});
+
+				page.infScroll.loadNextPage();
+			},
+			/**加载完成数据后操作*/
+			loadAfter:function(){
+				/**给文件列表添加点击事件*/
 				$('.click_file').click(function(){
 					var fid = this.attributes.fid.value;
 					var type = this.attributes.ftype.value;
+					var path = this.attributes.fpath.value;
 					
 					//文件夹进入下级目录
 					if(type==1){
-						$('input[name="parentId"]').val(fid);
-						page.loadFile();
+						//设置父级id、清空原有数据
+						page.setParentId(fid);
+						page.reLoadData();
+						page.setCurrml(path);
 					}
-				})
-			},
-			/**实例化瀑布流*/
-			item_masonry:function(){
-
-				$grid=page.item_callback();
-
-				$('.item').fadeIn();
-
-				var sp = 1
-				try{
-					var msnry = $grid.data('masonry');
-					$("#img-container").infiniteScroll({
-						path: $('#more a').attr('href'),
-						append: '.border-img-box',
-						outlayer: msnry,
-						responseType: 'text',
-						status: '.page-load-status'
-					});
 					
-					$grid.on( 'load.infiniteScroll', function( event, response ) {
-						  console.log('111'+ response )
-						  // parse response into JSON data
-						  
-						});
-				/*$("#img-container").infiniteScroll({
-					navSelector : "#more", //页面分页元素(成功后会被隐藏)
-					nextSelector : "#more a",// 需要点击的下一页链接，和2的html要对应
-					itemSelector : ".border-img-box", // ajax回来之后，每一项的selecter（比如每篇文章都有item这个class）
-					loading : {
-						img : webroot+"/resources/vkan/masonry_loading_1.gif",//自定义loadding的动画图
-						msgText : ' ',//加载时的提示语
-						finishedMsg : '木有了',//当加载失败，或者加载不出内容之后的提示语
-						finished : function() {
-							sp++;
-							if (sp >= 5) { // 到第5页结束事件
-								$("#more").remove();
-								$("#infscr-loading").hide();
-								$(".itempages").show();
-								$(window).unbind('.infscr');
-							}
-						}
-					},
-					errorCallback : function() {
-						$(".itempages").show();
-					}
-
-				}, function(newElements) {
-					var $newElems = $(newElements);
-					$('#img-container').masonry('appended', $newElems, false);
-					$newElems.fadeIn();
-					page.item_callback();
-					return;
-				});*/
-				}catch(errs){
-					console.log(errs.message)
+				})
+				
+				//重置操作按钮
+				if($('select[name="projectId"]').val()==page.getParentId()){
+					$('#shangji').hide();
+				}else{
+					$('#shangji').show();
 				}
 			},
-			/**生成瀑布流样式*/
-			item_callback:function() {
-
-				$('.border-img-box').mouseover(function() {
-					$(this).css('box-shadow', '0 1px 5px rgba(35,25,25,0.5)');
-					$('.btns', this).show();
-				}).mouseout(function() {
-					$(this).css('box-shadow', '0 1px 3px rgba(34,25,25,0.2)');
-					$('.btns', this).hide();
-				});
-
-				//瀑布流生成
-				/*$('.border-img-box img').load(function() {
-					$('#img-container').masonry({
-						itemSelector : '.border-img-box',
-						columnWidth : 228,
-						gutterWidth : 15
+			initOperation:function(){
+				$('#shangji').click(function(){
+					var parentId=page.getParentId();
+					$.ajax({
+						type : "POST",
+						url : webroot + "/vkan/getParentFile.html",
+						dataType : "json",
+						data:{'id':parentId},
+						success : function(result) {
+							if (result.success == true) {
+								page.setParentId(result.data.parentId);
+								page.reLoadData();
+								page.setCurrml(result.data.path);
+							} else {
+								console.log(result.message);
+							}
+						},
+						error : function(info) {
+							alert(info.responseText);
+							alert(info);
+						}
 					});
-				});*/
-
-				$grid=$('#img-container').masonry({
-					itemSelector : '.border-img-box',
-					columnWidth : 228,
-					gutterWidth : 15
-				});
+				})
+			},
+			/**统一获取父级id*/
+			getParentId:function(){
+				return $('input[name="parentId"]').val();
+			},
+			/**统一设置父级id**/
+			setParentId:function(fid){
+				if(!!fid){
+					$('input[name="parentId"]').val(fid);
+				}else{
+					console.log('设置父级id失败，未传入父级id');
+				}
 				
-				return $grid;
 			},
 			init : function() {
 				this.loadTag();
 				this.initSearch();
-				this.loadFile();
+				this.loadData();
+				this.initOperation();
 			}
 		}
 	})();
@@ -308,74 +321,3 @@ $(document).ready(function() {
 window.onerror = function() {
 	return true;
 };
-/*
-function item_masonry() {
-	$('.border-img-box img').load(function() {
-		$('#img-container').masonry({
-			itemSelector : '.border-img-box',
-			columnWidth : 228,
-			gutterWidth : 15
-		});
-	});
-
-	$('#img-container').masonry({
-		itemSelector : '.border-img-box',
-		columnWidth : 228,
-		gutterWidth : 15
-	});
-}
-
-$(function() {
-
-	function item_callback() {
-
-		$('.border-img-box').mouseover(function() {
-			$(this).css('box-shadow', '0 1px 5px rgba(35,25,25,0.5)');
-			$('.btns', this).show();
-		}).mouseout(function() {
-			$(this).css('box-shadow', '0 1px 3px rgba(34,25,25,0.2)');
-			$('.btns', this).hide();
-		});
-
-		item_masonry();
-
-	}
-
-	item_callback();
-
-	$('.item').fadeIn();
-
-	var sp = 1
-
-	$("#img-container").infinitescroll({
-		navSelector : "#more",
-		nextSelector : "#more a",
-		itemSelector : ".border-img-box",
-		loading : {
-			img : "./images/masonry_loading_1.gif",
-			msgText : ' ',
-			finishedMsg : '木有了',
-			finished : function() {
-				sp++;
-				if (sp >= 5) { // 到第5页结束事件
-					$("#more").remove();
-					$("#infscr-loading").hide();
-					$(".itempages").show();
-					$(window).unbind('.infscr');
-				}
-			}
-		},
-		errorCallback : function() {
-			$(".itempages").show();
-		}
-
-	}, function(newElements) {
-		var $newElems = $(newElements);
-		$('#img-container').masonry('appended', $newElems, false);
-		$newElems.fadeIn();
-		item_callback();
-		return;
-	});
-
-});
-*/

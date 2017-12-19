@@ -19,10 +19,10 @@
 				)
 			</if>
 			<if test="parentId != null">
-				vk_file.parent_id=#{parentId}
+				and vk_file.parent_id=#{parentId}
 			</if>
 			<if test="search != null and search !='' ">
-				vk_file.file_name like "%"#{search}"%"
+				and vk_file.file_name like "%"#{search}"%"
 			</if>
 		</where>
 	</select>
@@ -32,6 +32,8 @@
 		select
 			<include refid="com.xiaoshabao.vkan.entity.FileEntity.fileColumns" />
 		from vk_file
+		left join vk_file_type b
+		on vk_file.file_type=b.type_id
 		<where>
 			<if test="tagIds != null">
 				and exists (
@@ -44,8 +46,9 @@
 				)
 			</if>
 			<if test="parentId != null">
-				vk_file.parent_id=#{parentId}
+				and vk_file.parent_id=#{parentId}
 			</if>
 		</where>
+		order by b.order_no
 	</select>
 </mapper>
