@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoshabao.vkan.dto.TagDto">
+	<select id="getTagDto" resultType="com.xiaoshabao.vkan.dto.TagDto"
+		parameterType="java.util.Map">
+		select
+			<include refid="com.xiaoshabao.vkan.entity.TagEntity.tagColumns" />
+			,case 
+				when b.tag_id is null then 0
+				else 1
+			 end selected
+		from vk_tag
+		left join vk_file_tag b
+		 on b.tag_id=vk_tag.tag_id 
+		 	<if test="fileId != null">
+		 	and b.file_id=#{fileId}
+		 	</if>
+		order by level,order_no
+	</select>
+
+</mapper>

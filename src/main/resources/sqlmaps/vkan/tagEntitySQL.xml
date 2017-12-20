@@ -9,7 +9,9 @@
 		,vk_tag.type
 		,vk_tag.level
 		,vk_tag.parent_id
+		,multiple
 		,vk_tag.file_show
+		,vk_tag.file_order
 		,vk_tag.used
 		,vk_tag.order_no
 	</sql>
@@ -20,7 +22,9 @@
 		,${prefix}.type
 		,${prefix}.level
 		,${prefix}.parent_id
+		,${prefix}.multiple
 		,${prefix}.file_show
+		,${prefix}.file_order
 		,${prefix}.used
 		,${prefix}.order_no
 	</sql>
@@ -37,6 +41,20 @@
 			</if>
 		</where>
 		order by level,order_no
+	</select>
+	
+	<select id="getlabelTag" resultType="com.xiaoshabao.vkan.entity.TagEntity"
+		parameterType="com.xiaoshabao.vkan.entity.TagEntity">
+		select
+		<include refid="tagColumns" />
+		from vk_tag
+		where vk_tag.file_show='1'
+			and exists (
+					select 1 from vk_file_tag a
+					where vk_tag.tag_id=a.tag_id
+					and a.file_id =#{fileId}
+				)
+		order by file_order,order_no
 	</select>
 	
 	<select id="getTagByFileId" resultType="com.xiaoshabao.vkan.entity.TagEntity"

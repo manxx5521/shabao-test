@@ -55,7 +55,7 @@ $(function() {
 			addTagClick:function(a){
 				a.click(function() {
 					var tid = this.attributes.tid.value;
-					$this = $('a[tid=' + tid + ']');
+					$this = $('.tags-container a[tid=' + tid + ']');
 					var parent = $this.parent();
 					if (parent.hasClass('curr')) {
 						page.deleteTag(tid);
@@ -142,9 +142,9 @@ $(function() {
 				html+='          <a href="javascript:void(0)" target="_blank">'+name+'</a>';//TODO
 				html+='        </div>';
 				html+='        <div class="tag curr">';
-				html+='          <label>分类：</label> <a href="javascript:void(0)">我是分类</a>';//TODO
+				html+='          <label>操作：</label> <a class="operation_tag" href="javascript:void(0)" fid="'+fileDto.fileId+'">标签</a>';
 				html+='        </div>';
-				html+='        <div class="tag curr">';
+				html+='        <div class="tag curr" id="bq_'+fileDto.fileId+'">';
 				html+='          <label>标签：</label>';
 				
 				//添加标签
@@ -187,7 +187,7 @@ $(function() {
 					  path: function() {
 						  var url = webroot + '/vkan/fileData?index='+this.pageIndex;
 						  if(tags.length>0){
-							  url+='&tagIds='+tags.join(",");
+							  url+='&idstr='+tags.join(",");
 						  }
 						  var parentId = page.getParentId();
 						  
@@ -242,6 +242,47 @@ $(function() {
 					}
 					
 				})
+				
+				//操作-标签点击
+				$('.operation_tag').unbind('click').click(function(){
+					$this=this;
+					var fileId = $this.attributes.fid.value;
+					//页面层
+					layer.open({
+					  type: 2,
+					  title: '标签选择',
+					  shadeClose: true,
+					  shade: 0.8,
+					  area: ['960px', '90%'],
+					  content: webroot+'/vkan/tagView.html?fileId='+fileId,
+					  end:function(){
+						  
+						  $.ajax({
+								type : "POST",
+								url : webroot + "/vkan/tag/getlabelTag.html",
+								dataType : "json",
+								data:{'fileId':fileId},
+								success : function(data) {
+									if(!!data){
+										$('#bq_'+fileId).find('a').remove();
+										var labeldiv=$('#bq_'+fileId);
+										var html='';
+										for(var i=0;i<data.length;i++){
+											var tag=data[i];
+											html+='      <a href="javascript:void(0)" target="_blank" rel="tag" tid="'+tag.tagId+'">'+tag.name+'</a>';
+										}
+										labeldiv.append(html);
+									}else {
+										console.log(data.message);
+									}
+								}
+							});
+					  }
+					});
+					
+				})
+				
+				
 				
 				//重置操作按钮
 				if($('select[name="projectId"]').val()==page.getParentId()){

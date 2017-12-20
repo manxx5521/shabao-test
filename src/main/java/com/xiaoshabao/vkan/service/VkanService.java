@@ -20,25 +20,10 @@ public interface VkanService extends AbstractService {
 	VkanIndexDto getIndexData(IndexDataVo indexData);
 	
 	/**
-	 * 查询tag标签
-	 * @param parentId
-	 * @return
-	 */
-	List<TagEntity> getTagList(Integer parentId);
-
-	/**
 	 * 查询文件数据
 	 * @param parentId
 	 * @return
 	 */
 	PageValue<FileDto> getFileDto(FilePagingParams params);
-
-	void setTagByParentId(Long parentId, String tagId);
-
-	void setTagById(Long fileId, String tagId);
-
-	void deleteTagByParentId(Long parentId, String tagId);
-
-	void deleteTagById(Long fileId, String tagId);
 
 }

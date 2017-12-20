@@ -9,8 +9,14 @@ public class TagEntity {
 	private Integer type;
 	private Integer level;
 	private Integer parentId;
+	/**标签是否可以独傲轩*/
+	private Boolean multiple;
+	
 	/**是否在文件列表展现*/
 	private Boolean fileShow;
+	/**文件列表展现顺序*/
+	private Integer fileOrder;
+	
 	private Boolean used;
 	private Integer orderNo;
 	public Integer getTagId() {
@@ -66,6 +72,18 @@ public class TagEntity {
 	}
 	public void setFileShow(Boolean fileShow) {
 		this.fileShow = fileShow;
+	}
+	public Boolean getMultiple() {
+		return multiple;
+	}
+	public void setMultiple(Boolean multiple) {
+		this.multiple = multiple;
+	}
+	public Integer getFileOrder() {
+		return fileOrder;
+	}
+	public void setFileOrder(Integer fileOrder) {
+		this.fileOrder = fileOrder;
 	}
 	
 }

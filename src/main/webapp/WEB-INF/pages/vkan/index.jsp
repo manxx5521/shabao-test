@@ -197,7 +197,7 @@
 			<input type="button" id="btnPost" value="确定">
 		</form>
 	</div>
-	<cbox:resource type="js" value="jquery,masonry,infinite-scroll" />
+	<cbox:resource type="js" value="jquery,masonry,infinite-scroll,layer" />
 	<script src="${ctx}/resources/vkan/index.js" type="text/javascript"></script>
 </body>
 </html>

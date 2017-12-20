@@ -4,15 +4,15 @@ import com.xiaoshabao.baseframework.bean.PagingParams;
 
 public class FilePagingParams extends PagingParams{
 	
-	private String[] tagIds;
+	private Integer[] tagIds;
 	
 	private Long parentId;
 
-	public String[] getTagIds() {
+	public Integer[] getTagIds() {
 		return tagIds;
 	}
 
-	public void setTagIds(String[] tagIds) {
+	public void setTagIds(Integer[] tagIds) {
 		this.tagIds = tagIds;
 	}
 
