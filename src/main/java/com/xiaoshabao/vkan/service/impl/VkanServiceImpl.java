@@ -105,5 +105,5 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService 
 
 		return pageValue;
 	}
-
+	
 }

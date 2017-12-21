@@ -1,5 +1,7 @@
 package com.xiaoshabao.vkan.controller;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -38,14 +40,15 @@ public class VkanController {
 	 */
 	@RequestMapping("/fileData")
 	@ResponseBody
-	public PageValue<FileDto> getFileDataView(ModelMap model,@RequestParam(name="idstr",required=false) String idstr, FilePagingParams params) {
-		if(StringUtils.isNotEmpty(idstr)) {
-			String[] ids=idstr.split(",");
-			Integer[] temp=new Integer[ids.length];
-			for(int i=0;i<ids.length;i++) {
-				temp[i]=Integer.valueOf(ids[i]);
+	public PageValue<FileDto> getFileDataView(ModelMap model,@RequestParam(name="idStr",required=false) String idStr, FilePagingParams params) {
+		List<List<String>> tagIds=new LinkedList<List<String>>();
+		if(StringUtils.isNotEmpty(idStr)) {
+			String[] groups=idStr.split("\\|");
+			for(String group:groups) {
+				String[] ids=group.split(",");
+				tagIds.add(Arrays.asList(ids));
 			}
-			params.setTagIds(temp);
+			params.setTagIds(tagIds);
 		}
 		
 		return this.vkanService.getFileDto(params);

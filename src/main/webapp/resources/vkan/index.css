@@ -421,12 +421,18 @@ float:left;
 	background: none repeat scroll 0 0 #e5461c;
 	color: #FFFFFF;
 	padding: 5px 12px 4px;
-} */
+	opacity: 0.5;
+}  */
 
-.operation ul li a:hover {
+/* .operation ul li a:hover {
 	background: none repeat scroll 0 0 #e5461c;
 	color: #FFFFFF;
 	padding: 5px 12px 4px;
+} */
+
+.border-img-box .tag a:hover {
+	background: none repeat scroll 0 0 #31b0d5;
+	color: #FFFFFF;
 }
 
 .tags-container ul .hot-1 a {

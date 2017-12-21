@@ -1,5 +1,4 @@
 $(function() {
-	var tags = new Array();
 	var page = (function() {
 		var infScroll;
 		var msnry;
@@ -36,6 +35,24 @@ $(function() {
 						alert(info);
 					}
 				});
+				
+				//设置下边的操作按钮
+				$('#operation_search').click(function(){
+					$('select[name="parentId"]').val('')
+					page.reLoadData();
+				})
+				
+				$('#operation_all').click(function(){
+					
+					var parent = $(this).parent();
+					if (parent.hasClass('curr')) {
+						parent.removeClass('curr');
+					} else {
+						parent.addClass('curr');
+					}
+				})
+				
+				
 			},
 			/** 添加tag标签 */
 			getTagLi : function(tag) {
@@ -58,27 +75,12 @@ $(function() {
 					$this = $('.tags-container a[tid=' + tid + ']');
 					var parent = $this.parent();
 					if (parent.hasClass('curr')) {
-						page.deleteTag(tid);
 						parent.removeClass('curr');
 					} else {
 						parent.addClass('curr');
-						page.pushTag(tid);
 					}
 					page.reLoadData();
 				})
-			},
-			pushTag : function(tagId) {
-				tags.push(tagId);
-			},
-			deleteTag : function(tagId) {
-				var index;
-				for (var i = 0; i < tags.length; i++) {
-					var temp = tags[i];
-					if (tagId == temp) {
-						index = i;
-					}
-				}
-				tags.splice(index, 1);
 			},
 			initSearch:function(){
 				$('#searchId').click(function() {
@@ -142,7 +144,10 @@ $(function() {
 				html+='          <a href="javascript:void(0)" target="_blank">'+name+'</a>';//TODO
 				html+='        </div>';
 				html+='        <div class="tag curr">';
-				html+='          <label>操作：</label> <a class="operation_tag" href="javascript:void(0)" fid="'+fileDto.fileId+'">标签</a>';
+				html+='          <label>操作：</label>';
+				html+='          <a class="operation_tag" href="javascript:void(0)" fid="'+fileDto.fileId+'">标签</a>|';
+				html+='          <a class="operation_wjj" href="javascript:void(0)" fid="'+fileDto.fileId+'">文件夹</a>|';
+				html+='          <a class="operation_dk" href="javascript:void(0)" fid="'+fileDto.fileId+'">打开</a>';
 				html+='        </div>';
 				html+='        <div class="tag curr" id="bq_'+fileDto.fileId+'">';
 				html+='          <label>标签：</label>';
@@ -186,14 +191,49 @@ $(function() {
 //					  path: webroot + '/vkan/fileData?index={{#}}'+url,
 					  path: function() {
 						  var url = webroot + '/vkan/fileData?index='+this.pageIndex;
-						  if(tags.length>0){
-							  url+='&idstr='+tags.join(",");
-						  }
-						  var parentId = page.getParentId();
 						  
+						  var parentId = page.getParentId();
 						  if (!!parentId) {
 							  url+="&parentId=" + parentId;
 						  }
+						  
+						  var projectId=$('select[name="projectId"]').val();
+						  url+="&projectId=" + projectId;
+						  
+						  if($('#operation_all').parent().hasClass('curr')){
+							  url+="&searchType=" + 2;
+						  }else{
+							  url+="&searchType=" + 1;
+						  }
+						  
+						  var groups=$('.tags-container.list').find('.tags-box');
+						  var idStr='';
+						  var size=0;
+						  for(var i=0;i<groups.length;i++){
+							  var links=$(groups[i]).find('.curr').find("a");
+							  //是否是用逗号标识
+							  var dflag=false;
+							  for(var j=0;j<links.length;j++){
+								  var tid=$(links[j]).attr('tid')
+								  if(!!tid){
+									  if(dflag){
+										  idStr+=",";
+									  }else{
+										  dflag=true;
+									  }
+									  idStr+=tid;
+								  }
+							  }
+							  if(size<idStr.length){
+								  idStr+='|';
+								  size=idStr.length;
+							  }
+						  }
+						  //去除最后可能的|
+						  if(idStr.charAt(idStr.length-1)=='|'){
+							  idStr=idStr.substring(0,idStr.length-1);
+						  }
+						  url+='&idStr='+encodeURIComponent(idStr);
 						  return url;
 						},
 					  responseType: 'text',
@@ -282,6 +322,20 @@ $(function() {
 					
 				})
 				
+				//操作-打开文件
+				$('.operation_dk').unbind('click').click(function(){
+					$this=this;
+					var fileId = $this.attributes.fid.value;
+					page.openFile(fileId,1)
+				})
+				
+				//操作-打开文件
+				$('.operation_wjj').unbind('click').click(function(){
+					$this=this;
+					var fileId = $this.attributes.fid.value;
+					page.openFile(fileId,2)
+				})
+				
 				
 				
 				//重置操作按钮
@@ -290,6 +344,22 @@ $(function() {
 				}else{
 					$('#shangji').show();
 				}
+			},
+			openFile:function(fileId,type){
+				var prefixPath=$('select[name="projectPrefix"]').val();
+				$.ajax({
+					type : "POST",
+					url : webroot + "/vkan/file/openFile.html",
+					dataType : "json",
+					data:{'fileId':fileId,'prefixPath':prefixPath,'type':type},
+					success : function(result) {
+						if(result.success){
+							console.log(result.message);
+						}else {
+							layer.alert(result.message);
+						}
+					}
+				});
 			},
 			initOperation:function(){
 				$('#shangji').click(function(){

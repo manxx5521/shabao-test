@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xiaoshabao.vkan.service.FileManagerService;
@@ -34,6 +35,21 @@ public class FileManagerController {
 		return fileService.addProject(projectName, filePath);
 	}
 	
+
+	/**
+	 * 打开文件
+	 * @param fileId
+	 * @param prefixPath
+	 * @param type 1打开文件，2文件夹
+	 * @return
+	 */
+	@RequestMapping(value="/openFile")
+	@ResponseBody
+	public AjaxResult openFile(@RequestParam Long fileId,@RequestParam String prefixPath,@RequestParam Integer type) {
+		
+		return this.fileService.openFile(fileId, prefixPath, type);
+	}
+	
 	/**
 	 * 设置项目标识
 	 * @param fileId
@@ -42,7 +58,7 @@ public class FileManagerController {
 	 */
 	@RequestMapping(value="/setProjectTag/{fileId}")
 	@ResponseBody
-	public AjaxResult setProjectTag(@PathVariable Integer fileId,Boolean projectTag) {
+	public AjaxResult setProjectTag(@PathVariable Long fileId,Boolean projectTag) {
 		if(projectTag==null) {
 			projectTag=true;
 		}

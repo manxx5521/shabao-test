@@ -9,7 +9,7 @@ public class TagEntity {
 	private Integer type;
 	private Integer level;
 	private Integer parentId;
-	/**标签是否可以独傲轩*/
+	/**标签是否可以多选，1级有效*/
 	private Boolean multiple;
 	
 	/**是否在文件列表展现*/

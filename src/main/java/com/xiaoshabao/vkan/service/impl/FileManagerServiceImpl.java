@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.xiaoshabao.baseframework.exception.MsgErrorException;
 import com.xiaoshabao.baseframework.service.impl.AbstractServiceImpl;
+import com.xiaoshabao.baseframework.util.CmdUtil;
 import com.xiaoshabao.baseframework.util.SnowflakeUtil;
 import com.xiaoshabao.vkan.entity.FileEntity;
 import com.xiaoshabao.vkan.entity.ProjectEntity;
@@ -63,9 +64,47 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
 		return new AjaxResult(true,"导入项目成功！");
 	}
 	
+	//打开文件
+	@Override
+	public AjaxResult openFile(Long fileId, String prefixPath, Integer type) {
+		FileEntity fileReq=new FileEntity();
+		fileReq.setFileId(fileId);
+		FileEntity file=this.baseDao.getDataForObject(FileEntity.class, fileReq);
+		if(file==null) {
+			return new AjaxResult("未能根据id找到对应文件");
+		}
+		
+		ProjectEntity projectReq=new ProjectEntity();
+		projectReq.setProjectId(file.getProjectId());
+		ProjectEntity project=this.baseDao.getDataForObject(ProjectEntity.class, projectReq);
+		if(project==null) {
+			return new AjaxResult("未能根据id找到对应项目");
+		}
+		
+		String path=prefixPath+project.getProjectPath()+file.getPath();
+		
+		//上级目录
+//		path=path.substring(0, path.lastIndexOf(File.separator));
+		
+		try {
+			//如果是文件夹取上级目录
+			if(type==1) {
+				CmdUtil.openFile(path);
+			}else{
+				CmdUtil.openFileDir(path);
+			}
+		} catch (Exception e) {
+			logger.error("打开文件执行cmd错误：",e);
+			return new AjaxResult("打开文件执行cmd错误");
+		}
+		
+		return new AjaxResult(true,"成功");
+	}
+	
+	
 	//设置项目标识
 	@Override
-	public AjaxResult setProjectTag(Integer fileId, Boolean projectTag) {
+	public AjaxResult setProjectTag(Long fileId, Boolean projectTag) {
 		Map<String,Object> params=new HashMap<String,Object>();
 		params.put("fileId", fileId);
 		params.put("projectTag", projectTag?1:0);

@@ -35,17 +35,21 @@
 		left join vk_file_type b
 		on vk_file.file_type=b.type_id
 		<where>
-			<if test="tagIds != null">
+			<if test="tagIds!=null">
+			<foreach collection="tagIds" item="list" index="index">
+				<if test="list!=null">
 				and exists (
 					select 1 from vk_file_tag a
 					where vk_file.file_id=a.file_id
-					and a.tag_id in
-					<foreach collection="tagIds" item="item" index="index" open="(" separator="," close=")">  
-	        		  #{item}
-	    			</foreach>
-				)
+						and a.tag_id in
+						<foreach collection="list" item="item" index="index" open="(" separator="," close=")">  
+		        		  #{item}
+		    			</foreach>
+					)
+				</if>  
+			</foreach>
 			</if>
-			<if test="parentId != null">
+			<if test="parentId != null and searchType!='2' ">
 				and vk_file.parent_id=#{parentId}
 			</if>
 		</where>
