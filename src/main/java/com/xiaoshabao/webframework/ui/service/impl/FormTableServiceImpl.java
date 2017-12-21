@@ -36,7 +36,7 @@ public class FormTableServiceImpl extends AbstractFormServiceImpl implements For
 		if(StringUtils.isEmpty(tableId)){
 			throw new ServiceException("获得数据表信息时，数据源tableId传入为空");
 		}
-		TableEntity table= this.baseDao.getDataSingle(TableEntity.class, tableId);
+		TableEntity table= this.baseDao.getDataById(TableEntity.class, tableId);
 		if(table==null){
 			throw new ServiceException("数据表"+tableId+"获得错误，返回空");
 		}
