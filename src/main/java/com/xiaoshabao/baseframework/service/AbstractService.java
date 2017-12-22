@@ -23,7 +23,7 @@ public interface AbstractService {
 	/**
 	 * 更新方法
 	 */
-	public <T> int update(Class<T> clasz, T t, Object p);
+	public <T> int update(Class<T> clasz, Object p);
 
 	/**
 	 * 判断是否存在

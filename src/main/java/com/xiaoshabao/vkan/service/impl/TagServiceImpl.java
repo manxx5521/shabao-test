@@ -51,43 +51,48 @@ public class TagServiceImpl extends AbstractServiceImpl implements TagService {
 			this.baseDao.insert("insertTagByListId", FileTagEntity.class, params);
 		}
 	}
-	
-	
-	
-	
-//---------------------------
+	/*
+	 * 保存子项标签
+	 * @param fileId
+	 * @param tagIds
+	 * @param type 1保存，2删除
+	 */
 	@Override
-	public void setTagByParentId(Long parentId, String tagId) {
+	@Transactional
+	public void saveChildTag(Long fileId, Integer[] tagIds, Integer type) {
+		
+		for(Integer tagId:tagIds) {
+			//插入子项
+			if(type==1) {
+				this.addTagByParentId(fileId, tagId);
+			}else if(type==2) {
+				this.deleteTagByParentId(fileId, tagId);
+			}
+		}
+	}
+	
+	/**
+	 * 根据父级id添加标签
+	 * @param parentId
+	 * @param tagId
+	 */
+	private void addTagByParentId(Long parentId, Integer tagId) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("parentId", parentId);
 		params.put("tagId", tagId);
 		this.baseDao.insert("insertTagByParentId", FileTagEntity.class, params);
 	}
-
-	@Override
-	public void setTagById(Long fileId, String tagId) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("fileId", fileId);
-		params.put("tagId", tagId);
-		this.baseDao.insert("insertTagById", FileTagEntity.class, params);
-
-	}
-
-	@Override
-	public void deleteTagByParentId(Long parentId, String tagId) {
+	
+	/**
+	 * 根据父级id删除标签
+	 * @param parentId
+	 * @param tagId
+	 */
+	private void deleteTagByParentId(Long parentId, Integer tagId) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("parentId", parentId);
 		params.put("tagId", tagId);
-		this.baseDao.delete("deleteFileTagEntity", FileTagEntity.class, params);
-
+		this.baseDao.delete("deleteTagByParentId", FileTagEntity.class, params);
 	}
-
-	@Override
-	public void deleteTagById(Long fileId, String tagId) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("fileId", fileId);
-		params.put("tagId", tagId);
-		this.baseDao.delete("deleteFileTagEntity", FileTagEntity.class, params);
-	}
-
+	
 }

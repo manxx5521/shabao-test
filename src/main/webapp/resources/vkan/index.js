@@ -52,7 +52,11 @@ $(function() {
 					}
 				})
 				
-				
+				$('#operation_set').click(function(){
+					page.appendSelectTag(page.getParentId(),2,function(){
+						page.reLoadData();
+					});
+				})
 			},
 			/** 添加tag标签 */
 			getTagLi : function(tag) {
@@ -146,6 +150,11 @@ $(function() {
 				html+='        <div class="tag curr">';
 				html+='          <label>操作：</label>';
 				html+='          <a class="operation_tag" href="javascript:void(0)" fid="'+fileDto.fileId+'">标签</a>|';
+				
+				if(fileDto.fileType==2){
+					html+='      <a class="operation_setfm" href="javascript:void(0)" fid="'+fileDto.fileId+'">设为封面</a>|';
+				}
+				
 				html+='          <a class="operation_wjj" href="javascript:void(0)" fid="'+fileDto.fileId+'">文件夹</a>|';
 				html+='          <a class="operation_dk" href="javascript:void(0)" fid="'+fileDto.fileId+'">打开</a>';
 				html+='        </div>';
@@ -166,17 +175,19 @@ $(function() {
 				return html;
 			},
 			/**重新加载数据，清空原有内容*/
-			reLoadData:function(){
+			reLoadData:function(queryType){
 				$('#img-container .border-img-box').remove();
 				$('#img-container').removeAttr('style');
 				
 				page.infScroll.destroy();
 				page.msnry.destroy();
-				page.loadData();
+				page.loadData(queryType);
 				page.msnry.reloadItems();
 			},
-			/**加载文件*/
-			loadData:function(){
+			/**加载文件
+			 * queryType 1、当前查询，2、全部查询，3、上下级查询
+			 * */
+			loadData:function(queryType){
 				page.msnry = new Masonry('#img-container',{
 					  itemSelector: '.border-img-box',
 					  columnWidth: '.grid__col-sizer',
@@ -200,10 +211,12 @@ $(function() {
 						  var projectId=$('select[name="projectId"]').val();
 						  url+="&projectId=" + projectId;
 						  
-						  if($('#operation_all').parent().hasClass('curr')){
-							  url+="&searchType=" + 2;
-						  }else{
-							  url+="&searchType=" + 1;
+						  if(!queryType||queryType!=3){
+							  if($('#operation_all').parent().hasClass('curr')){
+								  url+="&searchType=" + 2;
+							  }else{
+								  url+="&searchType=" + 1;
+							  }
 						  }
 						  
 						  var groups=$('.tags-container.list').find('.tags-box');
@@ -277,7 +290,7 @@ $(function() {
 					if(type==1){
 						//设置父级id、清空原有数据
 						page.setParentId(fid);
-						page.reLoadData();
+						page.reLoadData(3);
 						page.setCurrml(path);
 					}
 					
@@ -287,39 +300,54 @@ $(function() {
 				$('.operation_tag').unbind('click').click(function(){
 					$this=this;
 					var fileId = $this.attributes.fid.value;
-					//页面层
-					layer.open({
-					  type: 2,
-					  title: '标签选择',
-					  shadeClose: true,
-					  shade: 0.8,
-					  area: ['960px', '90%'],
-					  content: webroot+'/vkan/tagView.html?fileId='+fileId,
-					  end:function(){
-						  
-						  $.ajax({
-								type : "POST",
-								url : webroot + "/vkan/tag/getlabelTag.html",
-								dataType : "json",
-								data:{'fileId':fileId},
-								success : function(data) {
-									if(!!data){
-										$('#bq_'+fileId).find('a').remove();
-										var labeldiv=$('#bq_'+fileId);
-										var html='';
-										for(var i=0;i<data.length;i++){
-											var tag=data[i];
-											html+='      <a href="javascript:void(0)" target="_blank" rel="tag" tid="'+tag.tagId+'">'+tag.name+'</a>';
-										}
-										labeldiv.append(html);
-									}else {
-										console.log(data.message);
+					page.appendSelectTag(fileId,1,function(){
+						$.ajax({
+							type : "POST",
+							url : webroot + "/vkan/tag/getlabelTag.html",
+							dataType : "json",
+							data:{'fileId':fileId},
+							success : function(data) {
+								if(!!data){
+									$('#bq_'+fileId).find('a').remove();
+									var labeldiv=$('#bq_'+fileId);
+									var html='';
+									for(var i=0;i<data.length;i++){
+										var tag=data[i];
+										html+='      <a href="javascript:void(0)" target="_blank" rel="tag" tid="'+tag.tagId+'">'+tag.name+'</a>';
 									}
+									labeldiv.append(html);
+								}else {
+									console.log(data.message);
 								}
-							});
-					  }
-					});
+							}
+						});
+					})
 					
+				})
+				
+				//设为封面
+				$('.operation_setfm').unbind('click').click(function(){
+					var fileId = this.attributes.fid.value;
+					$.ajax({
+						type : "POST",
+						url : webroot + "/vkan/tag/getlabelTag.html",
+						dataType : "json",
+						data:{'fileId':fileId},
+						success : function(data) {
+							if(!!data){
+								$('#bq_'+fileId).find('a').remove();
+								var labeldiv=$('#bq_'+fileId);
+								var html='';
+								for(var i=0;i<data.length;i++){
+									var tag=data[i];
+									html+='      <a href="javascript:void(0)" target="_blank" rel="tag" tid="'+tag.tagId+'">'+tag.name+'</a>';
+								}
+								labeldiv.append(html);
+							}else {
+								console.log(data.message);
+							}
+						}
+					});
 				})
 				
 				//操作-打开文件
@@ -344,6 +372,21 @@ $(function() {
 				}else{
 					$('#shangji').show();
 				}
+			},
+			/**添加指标选择框*/
+			appendSelectTag:function(fileId,type,callback){
+				//页面层
+				layer.open({
+				  type: 2,
+				  title: '标签选择',
+				  shadeClose: true,
+				  shade: 0.8,
+				  area: ['960px', '90%'],
+				  content: webroot+'/vkan/tagView.html?fileId='+fileId+'&type='+type,
+				  end:function(){
+					  callback();
+				  }
+				});
 			},
 			openFile:function(fileId,type){
 				var prefixPath=$('select[name="projectPrefix"]').val();
@@ -372,7 +415,7 @@ $(function() {
 						success : function(result) {
 							if (result.success == true) {
 								page.setParentId(result.data.parentId);
-								page.reLoadData();
+								page.reLoadData(3);
 								page.setCurrml(result.data.path);
 							} else {
 								console.log(result.message);

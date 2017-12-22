@@ -35,12 +35,13 @@ public interface TagService extends AbstractService {
 	 */
 	void saveTag(Long fileId,Integer[] tagIds);
 	
-	void setTagByParentId(Long parentId, String tagId);
-
-	void setTagById(Long fileId, String tagId);
-
-	void deleteTagByParentId(Long parentId, String tagId);
-
-	void deleteTagById(Long fileId, String tagId);
+	/**
+	 * 保存子项标签
+	 * @param fileId
+	 * @param tagIds
+	 * @param type 1保存，2删除
+	 */
+	void saveChildTag(Long fileId,Integer[] tagIds,Integer type);
+	
 
 }

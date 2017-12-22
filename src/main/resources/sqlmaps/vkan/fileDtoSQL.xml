@@ -49,8 +49,11 @@
 				</if>  
 			</foreach>
 			</if>
-			<if test="parentId != null and searchType!='2' ">
+			<if test="parentId != null and searchType!=2 ">
 				and vk_file.parent_id=#{parentId}
+			</if>
+			<if test="projectId != null">
+				and vk_file.project_id=#{projectId}
 			</if>
 		</where>
 		order by b.order_no

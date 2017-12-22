@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xiaoshabao.vkan.service.FileManagerService;
+import com.xiaoshabao.webframework.controller.AbstractController;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 /**
  * 文件管理
  */
 @Controller
 @RequestMapping(value="/vkan/file")
-public class FileManagerController {
+public class FileManagerController extends AbstractController{
 	@Resource(name="fileManagerServiceImpl")
 	private FileManagerService fileService;
 	
@@ -63,6 +64,19 @@ public class FileManagerController {
 			projectTag=true;
 		}
 		return fileService.setProjectTag(fileId, projectTag);
+	}
+	
+	/**
+	 * 设置为封面
+	 * @param fileId
+	 * @param projectTag
+	 * @return
+	 */
+	@RequestMapping(value="/setFileCover")
+	@ResponseBody
+	public AjaxResult setFileCover(@PathVariable Long fileId) {
+//		this.fileService.update(clasz, t, p)
+		return null;
 	}
 
 }

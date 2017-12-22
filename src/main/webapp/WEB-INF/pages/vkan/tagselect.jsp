@@ -19,7 +19,13 @@
 		</div>
 		<div class="tags-container operation">
 			 <ul class="tags-box">
-				<li class="hot-1 curr"><a id="operation_ok" href="javascript:void(0)" class="tag-font-size-14">确定</a></li>
+			 	<c:if test="${type==1}">
+			 	<li class="hot-1 curr"><a id="operation_ok" href="javascript:void(0)" class="tag-font-size-14">确定</a></li>
+			 	</c:if>
+				<c:if test="${type==2}">
+				<li class="hot-1 curr"><a id="operation_zadd" href="javascript:void(0)" class="tag-font-size-14">子项添加</a></li>
+				<li class="hot-1 curr"><a id="operation_zdel" href="javascript:void(0)" class="tag-font-size-14">子项去除</a></li>
+				</c:if>
 				<li class="hot-1 curr">
 					<a id="operation_cancel" href="javascript:void(0)" class="tag-font-size-14">返回</a></li>
 			</ul>

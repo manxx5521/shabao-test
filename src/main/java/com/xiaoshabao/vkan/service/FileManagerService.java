@@ -1,8 +1,9 @@
 package com.xiaoshabao.vkan.service;
 
+import com.xiaoshabao.baseframework.service.AbstractService;
 import com.xiaoshabao.webframework.dto.AjaxResult;
 
-public interface FileManagerService {
+public interface FileManagerService extends AbstractService{
 
 	/**
 	 * 新增项目

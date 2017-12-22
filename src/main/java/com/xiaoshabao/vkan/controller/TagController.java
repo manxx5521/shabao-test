@@ -24,8 +24,12 @@ public class TagController {
 	private TagService tagService;
 
 	@RequestMapping("/tagView")
-	public ModelAndView getTagView(ModelMap model,@RequestParam Long fileId) {
+	public ModelAndView getTagView(ModelMap model,@RequestParam Long fileId,Integer type) {
+		if(type==null) {
+			type=1;
+		}
 		model.put("fileId", fileId);
+		model.put("type", type);
 		return new ModelAndView("/vkan/tagselect", model);
 	}
 	
@@ -59,10 +63,34 @@ public class TagController {
 		return this.tagService.getTagListByFile(fileId);
 	}
 	
+	/**
+	 * 保存当前项标签
+	 * @param fileId
+	 * @param tagIds
+	 * @return
+	 */
 	@RequestMapping(value = "/saveTag")
 	@ResponseBody
 	public AjaxResult saveTag(@RequestParam Long fileId,@RequestParam(name="tagIds[]",required=false) Integer[] tagIds) {
 		this.tagService.saveTag(fileId, tagIds);
+		return new AjaxResult(true,"保存成功");
+	}
+	
+	/**
+	 * 保存子项标签
+	 * @param fileId
+	 * @param tagIds
+	 * @param type 1保存，2删除
+	 * @return
+	 */
+	@RequestMapping(value = "/saveChildTag")
+	@ResponseBody
+	public AjaxResult saveChildTag(@RequestParam Long fileId,@RequestParam(name="tagIds[]",required=false) Integer[] tagIds
+			,@RequestParam Integer type) {
+		if(tagIds==null||tagIds.length<1) {
+			return new AjaxResult("未选择对应的标签");
+		}
+		this.tagService.saveChildTag(fileId, tagIds,type);
 		return new AjaxResult(true,"保存成功");
 	}
 	

@@ -68,7 +68,8 @@
 		<div class="tags-container operation">
 			 <ul class="tags-box">
 				<li class="hot-1 curr"><a id="operation_search" href="javascript:void(0)" class="tag-font-size-14">查询</a></li>
-				<li class="hot-1 curr"><a id="operation_all" href="javascript:void(0)" class="tag-font-size-14">全部</a></li>
+				<li class="hot-1"><a id="operation_all" href="javascript:void(0)" class="tag-font-size-14">全部</a></li>
+				<li class="hot-1"><a id="operation_set" href="javascript:void(0)" class="tag-font-size-14">设置</a></li>
 				<li class="hot-1 curr"><a id="shangji" href="javascript:void(0)" title="去上级目录" class="tag-font-size-14">上级</a></li>
 				<li class="hot-1"><p id="currml">目录：</p></li>
 			</ul>

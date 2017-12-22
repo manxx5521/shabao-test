@@ -8,6 +8,7 @@
 		,vk_file.file_name,vk_file.path
 		,vk_file.md5,vk_file.file_type
 		,vk_file.parent_id
+		,vk_file.cover_id
 		,vk_file.child_number
 		,vk_file.update_time
 	</sql>
@@ -17,6 +18,7 @@
 		,${prefix}.project_tag
 		,${prefix}.md5,${prefix}.file_type
 		,${prefix}.parent_id
+		,${prefix}.cover_id
 		,${prefix}.child_number
 		,${prefix}.update_time
 	</sql>

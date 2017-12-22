@@ -13,6 +13,8 @@ public class FileEntity {
 	private String md5;
 	private Integer fileType;
 	private Long parentId;
+	/**封面*/
+	private Long coverId;
 	private Integer childNumber;
 	private Date updateTime;
 
@@ -94,6 +96,14 @@ public class FileEntity {
 
 	public void setChildNumber(Integer childNumber) {
 		this.childNumber = childNumber;
+	}
+
+	public Long getCoverId() {
+		return coverId;
+	}
+
+	public void setCoverId(Long coverId) {
+		this.coverId = coverId;
 	}
 	
 }

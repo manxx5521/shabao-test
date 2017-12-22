@@ -89,43 +89,63 @@ $(function() {
 				var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
 				var fileId=$('input[name="fileId"]').val();
 				$('#operation_ok').click(function(){
-					$.ajax({
-						type : "POST",
-						url : webroot + "/vkan/saveTag",
-						dataType : "json",
-						data:{'fileId':fileId,'tagIds':tags},
-						success : function(result) {
-							if (result.success) {
-								parent.layer.close(index);
-								/*
-								layer.msg("保存成功", {
-									  offset: 't',
-									  anim: 6,
-									  time: 500,
-									  end: function(){
-										  //关闭窗口
-											parent.layer.close(index);
-										  }
-								});*/
-								
-							}else{
-								layer.msg('错误：'+result.message, {
-									  offset: 't',
-									  anim: 6
-								});
-							}
-						},
-						error : function(info) {
-							console.log(info.responseText);
-							console.log(info);
-						}
-					});
+					page.ajax(webroot + "/vkan/saveTag.html",fileId,index);
+				})
+				
+				
+				$('#operation_zadd').click(function(){
+					page.ajax(webroot + "/vkan/saveChildTag.hmtl",fileId,index,{'type':1});
+				})
+				
+				$('#operation_zdel').click(function(){
+					page.ajax(webroot + "/vkan/saveChildTag.hmtl",fileId,index,{'type':2});
 				})
 				
 				$('#operation_cancel').click(function(){
-					//关闭窗口
 					parent.layer.close(index);
 				})
+			},
+			/**
+			 * 发送ajax请求
+			 */
+			ajax:function(url,fileId,index,data){
+				if(!data){
+					data={};
+				}
+				data.fileId=fileId;
+				data.index=index;
+				data.tagIds=tags;
+				$.ajax({
+					type : "POST",
+					url : url,
+					dataType : "json",
+					data:data,
+					success : function(result) {
+						if (result.success) {
+							parent.layer.close(index);
+							/*
+							layer.msg("保存成功", {
+								  offset: 't',
+								  anim: 6,
+								  time: 500,
+								  end: function(){
+									  //关闭窗口
+										parent.layer.close(index);
+									  }
+							});*/
+							
+						}else{
+							layer.msg('错误：'+result.message, {
+								  offset: 't',
+								  anim: 6
+							});
+						}
+					},
+					error : function(info) {
+						console.log(info.responseText);
+						console.log(info);
+					}
+				});
 			},
 			init : function() {
 				this.loadTag();

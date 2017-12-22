@@ -44,7 +44,7 @@ public abstract class AbstractServiceImpl implements AbstractService {
 	}
 
 	@Override
-	public <T> int update(Class<T> clasz, T t, Object p) {
+	public <T> int update(Class<T> clasz, Object p) {
 		return this.baseDao.update(clasz, p);
 	}
 
