@@ -16,6 +16,7 @@ import com.xiaoshabao.vkan.dto.VkanIndexDto;
 import com.xiaoshabao.vkan.entity.FileEntity;
 import com.xiaoshabao.vkan.entity.ProjectEntity;
 import com.xiaoshabao.vkan.entity.TagEntity;
+import com.xiaoshabao.vkan.enums.FileType;
 import com.xiaoshabao.vkan.service.VkanService;
 
 @Service("vkanServiceImpl")
@@ -98,8 +99,20 @@ public class VkanServiceImpl extends AbstractServiceImpl implements VkanService 
 		List<FileDto> list = pageValue.getList();
 		if (list != null) {
 			for (FileDto fileDto : list) {
+				//标签
 				List<TagEntity> tagList = this.baseDao.getData("getlabelTag",TagEntity.class, fileDto);
 				fileDto.setTagList(tagList);
+				
+				//设置封面
+				Long coverId=fileDto.getCoverId();
+				if(coverId!=null&&fileDto.getFileType()!=FileType.IMAGE.getCode()) {
+					FileEntity coverReq=new FileEntity();
+					coverReq.setFileId(coverId);
+					FileEntity cover=this.baseDao.getDataForObject(FileEntity.class, coverReq);
+					if(cover!=null&&cover.getPath()!=null) {
+						fileDto.setCoverPath(cover.getPath());
+					}
+				}
 			}
 		}
 

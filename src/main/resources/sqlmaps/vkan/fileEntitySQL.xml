@@ -62,6 +62,16 @@
 			</if>
 		</where>
 	</select>
+	<!-- 更新 -->
+	<update id="updateFileEntity">
+		update vk_file 
+		<set>
+			<if test="coverId !=null">
+			cover_id=#{coverId},
+			</if>
+		</set>
+		where file_id=#{fileId}
+	</update>
 	
 	<!-- 更新 -->
 	<update id="setProjectTag">

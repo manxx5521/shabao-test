@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : aliyun
-Source Server Version : 50616
-Source Host           : 114.215.120.117:3306
+Source Server         : master
+Source Server Version : 50720
+Source Host           : localhost:3306
 Source Database       : shabaotest
 
 Target Server Type    : MYSQL
-Target Server Version : 50616
+Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2017-09-07 23:22:10
+Date: 2017-12-22 16:20:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,7 +24,7 @@ CREATE TABLE `td_f_seckill` (
   `name` varchar(120) NOT NULL COMMENT '商品名字',
   `number` int(11) NOT NULL COMMENT '库存数量',
   `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '秒杀开始时间',
-  `end_time` timestamp NOT NULL  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '秒杀结束时间',
+  `end_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '秒杀结束时间',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`seckill_id`),
   KEY `idx_start_time` (`start_time`),
@@ -386,6 +386,7 @@ INSERT INTO `td_uis_demo` VALUES ('22', '', '00000');
 INSERT INTO `td_uis_demo` VALUES ('33', '33', '00000');
 INSERT INTO `td_uis_demo` VALUES ('44', '444', '00000');
 INSERT INTO `td_uis_demo` VALUES ('55', '55', '00000');
+INSERT INTO `td_uis_demo` VALUES ('123', '123', '00000');
 INSERT INTO `td_uis_demo` VALUES ('144', '111', '10001');
 INSERT INTO `td_uis_demo` VALUES ('221', '111', '00000');
 INSERT INTO `td_uis_demo` VALUES ('333', '3333', '00000');
@@ -394,6 +395,8 @@ INSERT INTO `td_uis_demo` VALUES ('555', '55', '00000');
 INSERT INTO `td_uis_demo` VALUES ('1444', '111', '10001');
 INSERT INTO `td_uis_demo` VALUES ('5555', '555', '00000');
 INSERT INTO `td_uis_demo` VALUES ('33111', '333', '10002');
+INSERT INTO `td_uis_demo` VALUES ('333444', '444444', '00000');
+INSERT INTO `td_uis_demo` VALUES ('444433', '4444333', '10002');
 
 -- ----------------------------
 -- Table structure for td_ui_bill
@@ -883,6 +886,207 @@ CREATE TABLE `td_w_work` (
 -- ----------------------------
 -- Records of td_w_work
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for vk_file
+-- ----------------------------
+DROP TABLE IF EXISTS `vk_file`;
+CREATE TABLE `vk_file` (
+  `file_id` bigint(18) NOT NULL,
+  `project_id` int(5) NOT NULL,
+  `file_name` varchar(50) DEFAULT NULL,
+  `path` varchar(200) NOT NULL DEFAULT '' COMMENT '相对目录',
+  `md5` varchar(32) DEFAULT NULL,
+  `project_tag` int(1) NOT NULL DEFAULT '0' COMMENT '是否是项目标识，1-是、0-否',
+  `file_type` int(1) NOT NULL,
+  `parent_id` bigint(18) NOT NULL,
+  `cover_id` bigint(18) DEFAULT NULL COMMENT '封面',
+  `child_number` int(6) DEFAULT NULL,
+  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`file_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of vk_file
+-- ----------------------------
+INSERT INTO `vk_file` VALUES ('671221416724529152', '1003', '1.jpg', '1.jpg', '6245ef9fd8ddeec7388dd2128fce3ce6', '0', '2', '1003', null, null, '2017-12-14 14:00:26');
+INSERT INTO `vk_file` VALUES ('671221603064872960', '1003', '11.html', '11.html', 'cadc563b74bb0b1a154254c887289494', '0', '9', '1003', null, null, '2017-12-01 16:27:48');
+INSERT INTO `vk_file` VALUES ('671221762859466752', '1003', '2.txt', '2.txt', '19ef552dc2750bba150912a7d410cb9e', '0', '4', '1003', null, null, '2017-12-01 16:27:52');
+INSERT INTO `vk_file` VALUES ('671221774314110976', '1003', 'zol', 'zol', null, '0', '1', '1003', null, null, '2017-12-01 16:27:54');
+INSERT INTO `vk_file` VALUES ('671221785995247616', '1003', '明月山月亮湖风景（第三篇）', 'zol\\明月山月亮湖风景（第三篇）', null, '0', '1', '671221774314110976', '671221835571920896', null, '2017-12-22 16:00:56');
+INSERT INTO `vk_file` VALUES ('671221786385317888', '1003', 'ChMkJ1ofNDaIcHuSAAINjKZUmhAAAilpQGU2bsAAg2k649.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJ1ofNDaIcHuSAAINjKZUmhAAAilpQGU2bsAAg2k649.jpg', 'bef970653dc0fcf9024f4f3b02a064a8', '0', '2', '671221785995247616', null, null, '2017-12-01 16:27:58');
+INSERT INTO `vk_file` VALUES ('671221790990663680', '1003', 'ChMkJ1ofNEaIHD8iAAHybO_a9eYAAilpQKHlZYAAfKE751.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJ1ofNEaIHD8iAAHybO_a9eYAAilpQKHlZYAAfKE751.jpg', 'a56616aeee612d6156649f643b8e7ee4', '0', '2', '671221785995247616', null, null, '2017-12-01 16:27:59');
+INSERT INTO `vk_file` VALUES ('671221794975252480', '1003', 'ChMkJ1ofNEeIQTjUAAKsJfK8ThYAAilpQK1fDwAAqw9262.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJ1ofNEeIQTjUAAKsJfK8ThYAAilpQK1fDwAAqw9262.jpg', 'bbf4670e22d7ec8c0278ce53181592d1', '0', '2', '671221785995247616', null, null, '2017-12-01 16:28:01');
+INSERT INTO `vk_file` VALUES ('671221803128979456', '1003', 'ChMkJ1ofNEGINjrTAAMMVrNn3REAAilpQJTRaMAAwxu916.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJ1ofNEGINjrTAAMMVrNn3REAAilpQJTRaMAAwxu916.jpg', '93efe8eefc8b8e2393aaae205b1d6ea5', '0', '2', '671221785995247616', null, null, '2017-12-01 16:28:02');
+INSERT INTO `vk_file` VALUES ('671221808397025280', '1003', 'ChMkJ1ofNEOIblnYAAL8fInOgoUAAilpQJj2fcAAvyU041.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJ1ofNEOIblnYAAL8fInOgoUAAilpQJj2fcAAvyU041.jpg', '35a18d20a9b524afae5e0935afff3a5e', '0', '2', '671221785995247616', null, null, '2017-12-01 16:28:04');
+INSERT INTO `vk_file` VALUES ('671221814638149632', '1003', 'ChMkJ1ofNESIaQQ6AANWXje9adEAAilpQJoesQAA1Z2027.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJ1ofNESIaQQ6AANWXje9adEAAilpQJoesQAA1Z2027.jpg', '928f52fa3ae3c945e9276d46496be646', '0', '2', '671221785995247616', null, null, '2017-12-01 16:28:05');
+INSERT INTO `vk_file` VALUES ('671221820300460032', '1003', 'ChMkJ1ofNEWINBZGAAHqX3yPRl8AAilpQJsb_cAAep3530.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJ1ofNEWINBZGAAHqX3yPRl8AAilpQJsb_cAAep3530.jpg', 'ab55db824ba80ac253a2be9d1bb701df', '0', '2', '671221785995247616', null, null, '2017-12-01 16:28:06');
+INSERT INTO `vk_file` VALUES ('671221823899172864', '1003', 'ChMkJlofND-IeD48AAN9c5spU6MAAilpQI-b98AA32L851.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJlofND-IeD48AAN9c5spU6MAAilpQI-b98AA32L851.jpg', '9c7ad5a593b5b6157541bc0311829adf', '0', '2', '671221785995247616', null, null, '2017-12-01 16:28:07');
+INSERT INTO `vk_file` VALUES ('671221829804752896', '1003', 'ChMkJlofNDeIK4thAANWzibFqhYAAilpQGW7a8AA1bm595.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJlofNDeIK4thAANWzibFqhYAAilpQGW7a8AA1bm595.jpg', '30bcbcca8b180906e75e49246cd036a1', '0', '2', '671221785995247616', null, null, '2017-12-01 16:28:09');
+INSERT INTO `vk_file` VALUES ('671221835571920896', '1003', 'ChMkJlofNDmILDQgAAOV90FalqkAAilpQHUveYAA5YP292.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJlofNDmILDQgAAOV90FalqkAAilpQHUveYAA5YP292.jpg', 'e037e56d6eaf1855054f3b4c3f2600ed', '0', '2', '671221785995247616', null, null, '2017-12-01 16:28:10');
+INSERT INTO `vk_file` VALUES ('671221841708187648', '1003', 'ChMkJlofNDyIbKIOAAHpDxGuDNUAAilpQHclpgAAekn174.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJlofNDyIbKIOAAHpDxGuDNUAAilpQHclpgAAekn174.jpg', '96d35ab0f6d8293a9bdfc980f0f5329d', '0', '2', '671221785995247616', null, null, '2017-12-01 16:28:11');
+INSERT INTO `vk_file` VALUES ('671221845504032768', '1003', 'ChMkJlofNEGIYJkSAAFvMNzRftUAAilpQJdwtYAAW9I505.jpg', 'zol\\明月山月亮湖风景（第三篇）\\ChMkJlofNEGIYJkSAAFvMNzRftUAAilpQJdwtYAAW9I505.jpg', '893916657c4e1414eebc1024a7be27cb', '0', '2', '671221785995247616', null, null, '2017-12-01 16:28:12');
+INSERT INTO `vk_file` VALUES ('671221848666537984', '1003', '暖色调的初冬', 'zol\\暖色调的初冬', null, '0', '1', '671221774314110976', '671221848838504448', null, '2017-12-22 16:04:43');
+INSERT INTO `vk_file` VALUES ('671221848838504448', '1003', 'ChMkJ1obhCqIGEQEAAFVTfImGMgAAiflwKWhYsAAVVl982.jpg', 'zol\\暖色调的初冬\\ChMkJ1obhCqIGEQEAAFVTfImGMgAAiflwKWhYsAAVVl982.jpg', 'bfb19a5261b664187db9c84422a4a524', '0', '2', '671221848666537984', null, null, '2017-12-01 16:28:13');
+INSERT INTO `vk_file` VALUES ('671221852210724864', '1003', '贵清山风光', 'zol\\贵清山风光', null, '0', '1', '671221774314110976', null, null, '2017-12-01 16:28:13');
+INSERT INTO `vk_file` VALUES ('671221852609183744', '1003', 'ChMkJ1oexe6ICMuXAAtcPkXUPZkAAikcQMiytkAC1xW695.jpg', 'zol\\贵清山风光\\ChMkJ1oexe6ICMuXAAtcPkXUPZkAAikcQMiytkAC1xW695.jpg', '0c227277aec2eba8e63330052f8befc8', '0', '2', '1003', null, null, '2017-12-15 11:03:20');
+INSERT INTO `vk_file` VALUES ('671221856556023808', '1003', 'ChMkJ1oexeaIJY9SAAMs1YMDRH0AAikcQLSrKEAAyzt560.jpg', 'zol\\贵清山风光\\ChMkJ1oexeaIJY9SAAMs1YMDRH0AAikcQLSrKEAAyzt560.jpg', '6ee9a18cdbd42d6f2f873c4ab2ccc1b5', '0', '2', '1003', null, null, '2017-12-15 11:03:20');
+INSERT INTO `vk_file` VALUES ('671221858007252992', '1003', 'ChMkJ1oexemIMHwWAAS98e4zPb8AAikcQLkNAYABL4J805.jpg', 'zol\\贵清山风光\\ChMkJ1oexemIMHwWAAS98e4zPb8AAikcQLkNAYABL4J805.jpg', '5a580702d3f55f22d5e0992f89cf198c', '0', '2', '1003', null, null, '2017-12-15 11:03:18');
+INSERT INTO `vk_file` VALUES ('671221859848552448', '1003', 'ChMkJ1oexeSIZZYJAAn6zJ1EcJUAAikcQK5P4MACfrk012.jpg', 'zol\\贵清山风光\\ChMkJ1oexeSIZZYJAAn6zJ1EcJUAAikcQK5P4MACfrk012.jpg', '1749a23d3c03d50e481347bfc1c27f9e', '0', '2', '1003', null, null, '2017-12-15 11:03:18');
+INSERT INTO `vk_file` VALUES ('671221864999157760', '1003', 'ChMkJ1oexeuIPWcuABIMjAkQcJwAAikcQLvBwwAEgyk686.jpg', 'zol\\贵清山风光\\ChMkJ1oexeuIPWcuABIMjAkQcJwAAikcQLvBwwAEgyk686.jpg', '9edc459e960b69cbc02fc9292be2312e', '0', '2', '1003', null, null, '2017-12-15 11:03:17');
+INSERT INTO `vk_file` VALUES ('671221871022178304', '1003', 'ChMkJ1oexeWIG_qDAAg9dlT-FBIAAikcQLG8jgACD2O271.jpg', 'zol\\贵清山风光\\ChMkJ1oexeWIG_qDAAg9dlT-FBIAAikcQLG8jgACD2O271.jpg', '5ab636635cf094f66872013ec3a01503', '0', '2', '1003', null, null, '2017-12-15 11:03:16');
+INSERT INTO `vk_file` VALUES ('671221874323095552', '1003', 'ChMkJ1oexeyICNiFAA4ik1z9HoMAAikcQMSNQUADiKr502.jpg', 'zol\\贵清山风光\\ChMkJ1oexeyICNiFAA4ik1z9HoMAAikcQMSNQUADiKr502.jpg', 'efb767a6fce9fce90103fc50f1d82213', '0', '2', '1003', null, null, '2017-12-15 11:03:10');
+INSERT INTO `vk_file` VALUES ('671221878760669184', '1003', 'ChMkJ1oexfGIcr-QAA5YUYbQr9IAAikcQNQfX8ADlhp055.jpg', 'zol\\贵清山风光\\ChMkJ1oexfGIcr-QAA5YUYbQr9IAAikcQNQfX8ADlhp055.jpg', '2602bed431ae4cdb33b5fbaef1c48816', '0', '2', '1003', null, null, '2017-12-15 11:03:09');
+INSERT INTO `vk_file` VALUES ('671221883311489024', '1003', 'ChMkJloexe-IQGNlAArffTLHWqYAAikcQNCkdQACt-V778.jpg', 'zol\\贵清山风光\\ChMkJloexe-IQGNlAArffTLHWqYAAikcQNCkdQACt-V778.jpg', '8d7363b3d4b1a07e63e7789d685d6e18', '0', '2', '1003', null, null, '2017-12-15 11:03:07');
+INSERT INTO `vk_file` VALUES ('671221890638938112', '1003', 'ChMkJloexeiII18HAAbjVjLYhKsAAikcQLcD7QABuNu913.jpg', 'zol\\贵清山风光\\ChMkJloexeiII18HAAbjVjLYhKsAAikcQLcD7QABuNu913.jpg', '742b77bf59fd001cf1e6864ed8d20444', '0', '2', '1003', null, null, '2017-12-15 11:03:06');
+INSERT INTO `vk_file` VALUES ('671221893553979392', '1003', 'ChMkJloexfKIHl1OABBACWFs-gEAAikcQNfHRsAEEAh556.jpg', 'zol\\贵清山风光\\ChMkJloexfKIHl1OABBACWFs-gEAAikcQNfHRsAEEAh556.jpg', '3a3b1a1a00d701e42adee7e998728941', '0', '2', '1003', null, null, '2017-12-15 11:03:05');
+INSERT INTO `vk_file` VALUES ('671221899346313216', '1003', 'ChMkJloexfOILlCjAAtHRBeaJBsAAikcQNvw_wAC0dc175.jpg', 'zol\\贵清山风光\\ChMkJloexfOILlCjAAtHRBeaJBsAAikcQNvw_wAC0dc175.jpg', 'f776f1e1828c52f1f83adfd725747da8', '0', '2', '1003', null, null, '2017-12-15 11:03:03');
+INSERT INTO `vk_file` VALUES ('671221903456731136', '1003', '青藏之旅一路随拍（羊卓雍错三）。', 'zol\\青藏之旅一路随拍（羊卓雍错三）。', null, '0', '1', '1003', null, null, '2017-12-15 11:03:02');
+INSERT INTO `vk_file` VALUES ('671221903691612160', '1003', 'ChMkJ1oOVTeIGJWsAAJ22FPOqgMAAiPQgO3WPcAAnbw225.jpg', 'zol\\青藏之旅一路随拍（羊卓雍错三）。\\ChMkJ1oOVTeIGJWsAAJ22FPOqgMAAiPQgO3WPcAAnbw225.jpg', '27a4fc48f6fb2493990d088b91027999', '0', '2', '1003', null, null, '2017-12-15 11:01:27');
+INSERT INTO `vk_file` VALUES ('671221907441319936', '1003', 'ChMkJ1oOVTGIETc4AAPGlnUzQ-AAAiPQgNaI9MAA8au956.jpg', 'zol\\青藏之旅一路随拍（羊卓雍错三）。\\ChMkJ1oOVTGIETc4AAPGlnUzQ-AAAiPQgNaI9MAA8au956.jpg', 'e728ec045c82d66617bd04ee2513aaf3', '0', '2', '1003', null, null, '2017-12-15 11:01:30');
+INSERT INTO `vk_file` VALUES ('671221914491944960', '1003', 'ChMkJ1oOVTuIVheYAAI_X-r_dHYAAiPQgP46mIAAj93443.jpg', 'zol\\青藏之旅一路随拍（羊卓雍错三）。\\ChMkJ1oOVTuIVheYAAI_X-r_dHYAAiPQgP46mIAAj93443.jpg', '194d772696dbb551c3730c20dec9aab8', '0', '2', '1003', null, null, '2017-12-15 11:01:31');
+INSERT INTO `vk_file` VALUES ('671221918682054656', '1003', 'ChMkJ1oOVUGIR3GsAAJc5EGLIW4AAiPQwBLhtsAAlz8963.jpg', 'zol\\青藏之旅一路随拍（羊卓雍错三）。\\ChMkJ1oOVUGIR3GsAAJc5EGLIW4AAiPQwBLhtsAAlz8963.jpg', '002e4ff66a037d997c9baff9a19220ce', '0', '2', '1003', null, null, '2017-12-15 11:01:32');
+INSERT INTO `vk_file` VALUES ('671221924315004928', '1003', 'ChMkJ1oOVUOIR5CBAAJz3xveXkoAAiPQwCGcXQAAnP3791.jpg', 'zol\\青藏之旅一路随拍（羊卓雍错三）。\\ChMkJ1oOVUOIR5CBAAJz3xveXkoAAiPQwCGcXQAAnP3791.jpg', '6540d97b39b3b6afc4d488c4732e38c0', '0', '2', '1003', null, null, '2017-12-15 11:01:33');
+INSERT INTO `vk_file` VALUES ('671221928576417792', '1003', 'ChMkJloOVT2IAkHaAAJvWy2iGA8AAiPQwAv2-gAAm9z015.jpg', 'zol\\青藏之旅一路随拍（羊卓雍错三）。\\ChMkJloOVT2IAkHaAAJvWy2iGA8AAiPQwAv2-gAAm9z015.jpg', 'f967954264227816f07b7e249d7a3022', '0', '2', '1003', null, null, '2017-12-15 11:01:34');
+INSERT INTO `vk_file` VALUES ('671221932934299648', '1003', 'ChMkJloOVTKILyvuAAL7LaC_VQQAAiPQgNpp3sAAvtF862.jpg', 'zol\\青藏之旅一路随拍（羊卓雍错三）。\\ChMkJloOVTKILyvuAAL7LaC_VQQAAiPQgNpp3sAAvtF862.jpg', '264978a0a4d875841485f115c509f34f', '0', '2', '1003', null, null, '2017-12-15 11:01:35');
+INSERT INTO `vk_file` VALUES ('671221938185568256', '1003', 'ChMkJloOVTOIGdk2AALYk7_YMRkAAiPQgOU8NcAAtir523.jpg', 'zol\\青藏之旅一路随拍（羊卓雍错三）。\\ChMkJloOVTOIGdk2AALYk7_YMRkAAiPQgOU8NcAAtir523.jpg', 'dc9776bb3c6dcabff2d4ec87bd6712e9', '0', '2', '1003', null, null, '2017-12-15 11:01:37');
+
+-- ----------------------------
+-- Table structure for vk_file_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `vk_file_tag`;
+CREATE TABLE `vk_file_tag` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `file_id` bigint(18) NOT NULL,
+  `tag_id` int(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `un_vk_file_tag` (`file_id`,`tag_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10000149 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of vk_file_tag
+-- ----------------------------
+INSERT INTO `vk_file_tag` VALUES ('10000083', '671221416724529152', '2001');
+INSERT INTO `vk_file_tag` VALUES ('10000118', '671221416724529152', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000119', '671221603064872960', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000120', '671221762859466752', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000087', '671221774314110976', '2001');
+INSERT INTO `vk_file_tag` VALUES ('10000121', '671221774314110976', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000086', '671221774314110976', '2004');
+INSERT INTO `vk_file_tag` VALUES ('10000000', '671221785995247616', '2001');
+INSERT INTO `vk_file_tag` VALUES ('10000009', '671221852609183744', '2001');
+INSERT INTO `vk_file_tag` VALUES ('10000122', '671221852609183744', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000008', '671221852609183744', '2004');
+INSERT INTO `vk_file_tag` VALUES ('10000123', '671221856556023808', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000124', '671221858007252992', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000125', '671221859848552448', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000126', '671221864999157760', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000026', '671221864999157760', '2005');
+INSERT INTO `vk_file_tag` VALUES ('10000127', '671221871022178304', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000128', '671221874323095552', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000013', '671221878760669184', '2001');
+INSERT INTO `vk_file_tag` VALUES ('10000129', '671221878760669184', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000011', '671221883311489024', '2001');
+INSERT INTO `vk_file_tag` VALUES ('10000130', '671221883311489024', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000010', '671221883311489024', '2005');
+INSERT INTO `vk_file_tag` VALUES ('10000018', '671221890638938112', '2001');
+INSERT INTO `vk_file_tag` VALUES ('10000131', '671221890638938112', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000017', '671221890638938112', '2004');
+INSERT INTO `vk_file_tag` VALUES ('10000132', '671221893553979392', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000133', '671221899346313216', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000080', '671221903456731136', '2001');
+INSERT INTO `vk_file_tag` VALUES ('10000134', '671221903456731136', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000081', '671221903456731136', '2005');
+INSERT INTO `vk_file_tag` VALUES ('10000085', '671221903691612160', '2002');
+INSERT INTO `vk_file_tag` VALUES ('10000135', '671221903691612160', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000084', '671221903691612160', '2004');
+INSERT INTO `vk_file_tag` VALUES ('10000136', '671221907441319936', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000030', '671221914491944960', '2001');
+INSERT INTO `vk_file_tag` VALUES ('10000137', '671221914491944960', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000031', '671221914491944960', '2004');
+INSERT INTO `vk_file_tag` VALUES ('10000138', '671221918682054656', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000139', '671221924315004928', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000140', '671221928576417792', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000141', '671221932934299648', '2003');
+INSERT INTO `vk_file_tag` VALUES ('10000014', '671221932934299648', '2004');
+INSERT INTO `vk_file_tag` VALUES ('10000142', '671221938185568256', '2003');
+
+-- ----------------------------
+-- Table structure for vk_file_type
+-- ----------------------------
+DROP TABLE IF EXISTS `vk_file_type`;
+CREATE TABLE `vk_file_type` (
+  `type_id` int(2) NOT NULL,
+  `type_name` varchar(30) NOT NULL,
+  `used` int(1) NOT NULL,
+  `order_no` int(3) NOT NULL,
+  PRIMARY KEY (`type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of vk_file_type
+-- ----------------------------
+INSERT INTO `vk_file_type` VALUES ('1', '文件夹', '1', '10');
+INSERT INTO `vk_file_type` VALUES ('2', '图片', '1', '40');
+INSERT INTO `vk_file_type` VALUES ('3', '视频', '1', '30');
+INSERT INTO `vk_file_type` VALUES ('4', '文件', '1', '50');
+INSERT INTO `vk_file_type` VALUES ('5', '压缩包', '1', '20');
+INSERT INTO `vk_file_type` VALUES ('9', '其他', '1', '90');
+
+-- ----------------------------
+-- Table structure for vk_project
+-- ----------------------------
+DROP TABLE IF EXISTS `vk_project`;
+CREATE TABLE `vk_project` (
+  `project_id` int(4) NOT NULL AUTO_INCREMENT,
+  `project_name` varchar(30) NOT NULL,
+  `project_prefix` varchar(10) NOT NULL COMMENT '所属盘符',
+  `project_path` varchar(100) NOT NULL,
+  `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`project_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1004 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of vk_project
+-- ----------------------------
+INSERT INTO `vk_project` VALUES ('1003', '测试项目', 'E:\\', 'vm\\test\\test\\', '2017-12-13 16:33:32');
+
+-- ----------------------------
+-- Table structure for vk_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `vk_tag`;
+CREATE TABLE `vk_tag` (
+  `tag_id` int(6) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `icon` varchar(50) DEFAULT NULL,
+  `type` int(1) DEFAULT NULL COMMENT '类型1-普通、2-热门',
+  `level` int(1) NOT NULL,
+  `multiple` int(1) NOT NULL COMMENT '是否可以多选',
+  `parent_id` int(6) NOT NULL,
+  `file_show` int(1) NOT NULL DEFAULT '1' COMMENT '是否在文件列表展现',
+  `used` int(1) NOT NULL DEFAULT '1',
+  `order_no` int(6) DEFAULT NULL,
+  `file_order` int(6) DEFAULT NULL COMMENT '文件列表标签展现排序',
+  PRIMARY KEY (`tag_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2006 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of vk_tag
+-- ----------------------------
+INSERT INTO `vk_tag` VALUES ('1001', '区域', null, '1', '1', '0', '0', '1', '1', '1', null);
+INSERT INTO `vk_tag` VALUES ('1002', '类型', null, '1', '1', '0', '0', '1', '1', '2', null);
+INSERT INTO `vk_tag` VALUES ('1003', '首字母', null, '1', '1', '0', '0', '1', '1', '3', null);
+INSERT INTO `vk_tag` VALUES ('1004', '名字', null, '1', '1', '0', '0', '1', '1', '4', null);
+INSERT INTO `vk_tag` VALUES ('1005', '关键词', null, '1', '1', '0', '0', '1', '1', '5', null);
+INSERT INTO `vk_tag` VALUES ('1006', '星级', null, '1', '1', '0', '0', '1', '1', '6', null);
+INSERT INTO `vk_tag` VALUES ('1007', '质量', null, '1', '1', '0', '0', '1', '1', '7', null);
+INSERT INTO `vk_tag` VALUES ('1008', '类型1', null, '1', '1', '0', '0', '1', '1', '8', null);
+INSERT INTO `vk_tag` VALUES ('1009', '类型2', null, '1', '1', '0', '0', '1', '1', '9', null);
+INSERT INTO `vk_tag` VALUES ('2001', '国内', null, '1', '2', '0', '1001', '1', '1', '1', null);
+INSERT INTO `vk_tag` VALUES ('2002', '国外', null, '1', '2', '0', '1001', '1', '1', '2', null);
+INSERT INTO `vk_tag` VALUES ('2003', 'A', null, '1', '2', '0', '1003', '1', '1', '1', null);
+INSERT INTO `vk_tag` VALUES ('2004', 'B', null, '1', '2', '0', '1003', '1', '1', '2', null);
+INSERT INTO `vk_tag` VALUES ('2005', 'C', null, '1', '2', '0', '1003', '1', '1', '3', null);
 
 -- ----------------------------
 -- Table structure for wx_account

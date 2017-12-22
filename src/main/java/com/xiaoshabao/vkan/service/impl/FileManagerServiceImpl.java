@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -101,6 +102,27 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
 		return new AjaxResult(true,"成功");
 	}
 	
+	//设置封面
+	@Override
+	@Transactional
+	public AjaxResult setFileCover(Long fileId) {
+		FileEntity fileReq=new FileEntity();
+		fileReq.setFileId(fileId);
+		List<FileEntity> list=this.baseDao.getData(FileEntity.class, fileReq);
+		if(list==null||list.isEmpty()) {
+			return new AjaxResult("失败：当前文件id错误");
+		}
+		
+		FileEntity fileUpdate=new FileEntity();
+		fileUpdate.setFileId(list.get(0).getParentId());
+		fileUpdate.setCoverId(fileId);
+		int i=this.baseDao.update(FileEntity.class, fileUpdate);
+		if(i<1) {
+			return new AjaxResult("失败：未能找到上级目录");
+		}
+		return new AjaxResult(true,"设置成功");
+	}
+
 	
 	//设置项目标识
 	@Override
@@ -183,6 +205,5 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
 		}
 	}
 
-	
 
 }

@@ -21,6 +21,14 @@ public interface FileManagerService extends AbstractService{
 	 * @return
 	 */
 	AjaxResult openFile(Long fileId,String prefixPath, Integer type);
+	
+	
+	/**
+	 * 设置封面
+	 * @param fileId
+	 * @return
+	 */
+	AjaxResult setFileCover(Long fileId);
 
 	/**
 	 * 设置项目标识

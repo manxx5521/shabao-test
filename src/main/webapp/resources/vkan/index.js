@@ -117,13 +117,25 @@ $(function() {
 				//解析图片
 				var path="";
 				var fileType=fileDto.fileType;
-				if(fileType==1){
-					path=webroot+"/resources/vkan/image/type_dir.png";
-				}else if(fileType==2){
+				
+				/** 刷新真实目录 **/
+				var rspath=function(path){
 					var prefix=$('select[name="projectPrefix"]').find('option:selected').val();
-					prefix="/"+prefix.substr(0,1).toLowerCase()+"/";
-					path=prefix+$('input[name="projectPath"]').val().replace('vm\\','')+fileDto.path;
+					prefix="/"+prefix.substr(0,1).toLowerCase()+"/"+$('input[name="projectPath"]').val().replace('vm\\','');
+					path=prefix+path;
 					path=path.replace(/\\/g,'/');
+					return path
+				}
+				
+				
+				if(fileType==1){
+					if(!!fileDto.coverPath){
+						path=rspath(fileDto.coverPath);
+					}else{
+						path=webroot+"/resources/vkan/image/type_dir.png";
+					}
+				}else if(fileType==2){
+					path=rspath(fileDto.path);
 				}else if(fileType==3){
 					path=webroot+"/resources/vkan/image/type_video.png";
 				}else{
@@ -148,15 +160,15 @@ $(function() {
 				html+='          <a href="javascript:void(0)" target="_blank">'+name+'</a>';//TODO
 				html+='        </div>';
 				html+='        <div class="tag curr">';
-				html+='          <label>操作：</label>';
+				html+='          <label>操作:</label>';
 				html+='          <a class="operation_tag" href="javascript:void(0)" fid="'+fileDto.fileId+'">标签</a>|';
 				
 				if(fileDto.fileType==2){
-					html+='      <a class="operation_setfm" href="javascript:void(0)" fid="'+fileDto.fileId+'">设为封面</a>|';
+					html+='      <a class="operation_setfm" href="javascript:void(0)" fid="'+fileDto.fileId+'">封面</a>|';
 				}
 				
 				html+='          <a class="operation_wjj" href="javascript:void(0)" fid="'+fileDto.fileId+'">文件夹</a>|';
-				html+='          <a class="operation_dk" href="javascript:void(0)" fid="'+fileDto.fileId+'">打开</a>';
+				html+='          <a class="operation_dk" href="javascript:void(0)" fid="'+fileDto.fileId+'">打开文件</a>';
 				html+='        </div>';
 				html+='        <div class="tag curr" id="bq_'+fileDto.fileId+'">';
 				html+='          <label>标签：</label>';
@@ -330,22 +342,14 @@ $(function() {
 					var fileId = this.attributes.fid.value;
 					$.ajax({
 						type : "POST",
-						url : webroot + "/vkan/tag/getlabelTag.html",
+						url : webroot + "/vkan/file/setFileCover.html",
 						dataType : "json",
 						data:{'fileId':fileId},
-						success : function(data) {
-							if(!!data){
-								$('#bq_'+fileId).find('a').remove();
-								var labeldiv=$('#bq_'+fileId);
-								var html='';
-								for(var i=0;i<data.length;i++){
-									var tag=data[i];
-									html+='      <a href="javascript:void(0)" target="_blank" rel="tag" tid="'+tag.tagId+'">'+tag.name+'</a>';
-								}
-								labeldiv.append(html);
-							}else {
-								console.log(data.message);
-							}
+						success : function(result) {
+							layer.msg(result.message, {
+								  offset: 't',
+								  anim: 6
+							});
 						}
 					});
 				})

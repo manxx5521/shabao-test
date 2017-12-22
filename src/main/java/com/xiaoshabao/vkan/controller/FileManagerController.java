@@ -74,9 +74,8 @@ public class FileManagerController extends AbstractController{
 	 */
 	@RequestMapping(value="/setFileCover")
 	@ResponseBody
-	public AjaxResult setFileCover(@PathVariable Long fileId) {
-//		this.fileService.update(clasz, t, p)
-		return null;
+	public AjaxResult setFileCover(@RequestParam Long fileId) {
+		return this.fileService.setFileCover(fileId);
 	}
 
 }
