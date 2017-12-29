@@ -32,6 +32,7 @@
 		</div>
 		<div class="tips"></div>
 		<input type="hidden" name="fileId" value="${fileId}">
+		<input type="hidden" name="type" value="${type}">
 	</div>
 	<cbox:resource type="js" value="jquery,layer" />
 	<script src="${ctx}/resources/vkan/tagselect.js" type="text/javascript"></script>

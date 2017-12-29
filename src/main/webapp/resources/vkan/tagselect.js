@@ -49,7 +49,8 @@ $(function() {
 				} else {
 					a.attr('tid', tag.tagId);
 				}
-				if(!!tag.selected){
+				var type=$('input[name="type"').val()
+				if(type==1&&!!tag.selected){
 					li.addClass('curr');
 					page.pushTag(tag.tagId);
 				}

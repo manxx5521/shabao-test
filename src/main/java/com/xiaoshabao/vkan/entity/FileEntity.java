@@ -16,6 +16,7 @@ public class FileEntity {
 	/**封面*/
 	private Long coverId;
 	private Integer childNumber;
+	private Boolean show;
 	private Date updateTime;
 
 	public Long getFileId() {
@@ -104,6 +105,14 @@ public class FileEntity {
 
 	public void setCoverId(Long coverId) {
 		this.coverId = coverId;
+	}
+
+	public Boolean getShow() {
+		return show;
+	}
+
+	public void setShow(Boolean show) {
+		this.show = show;
 	}
 	
 }

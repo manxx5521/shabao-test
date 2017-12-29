@@ -10,6 +10,7 @@
 		,vk_file.parent_id
 		,vk_file.cover_id
 		,vk_file.child_number
+		,vk_file.show
 		,vk_file.update_time
 	</sql>
 	<sql id="fileColumnsRef">
@@ -20,6 +21,7 @@
 		,${prefix}.parent_id
 		,${prefix}.cover_id
 		,${prefix}.child_number
+		,${prefix}.show
 		,${prefix}.update_time
 	</sql>
 
@@ -61,6 +63,12 @@
 				and parent_id=#{parentId}
 			</if>
 		</where>
+	</select>
+	<select id="getFileEntityById" resultType="com.xiaoshabao.vkan.entity.FileEntity">
+		select
+		<include refid="fileColumns" />
+		from vk_file
+		where file_id=#{id}
 	</select>
 	<!-- 更新 -->
 	<update id="updateFileEntity">

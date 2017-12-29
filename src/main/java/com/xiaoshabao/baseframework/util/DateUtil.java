@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.lang3.time.DateUtils;
-
 public class DateUtil {
 
 	private static DateFormat ddFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -24,6 +22,7 @@ public class DateUtil {
 
 	/**
 	 * 获得精准服务器时间
+	 * 
 	 * @return
 	 */
 	public static Date getDate() {
@@ -32,6 +31,7 @@ public class DateUtil {
 
 	/**
 	 * 根据字符串获得时间
+	 * 
 	 * @param dateStr
 	 *            yyyy/MM/dd HH:mm:ss->2012/11/05 11:12:13
 	 * @return
@@ -44,6 +44,7 @@ public class DateUtil {
 
 	/**
 	 * 获得当前时间的时间戳
+	 * 
 	 * @return
 	 */
 	public static long getTime() {
@@ -52,6 +53,7 @@ public class DateUtil {
 
 	/**
 	 * 获得日期字符串 yyyy-MM-dd
+	 * 
 	 * @Title: getDateBydd
 	 * @return 2008-08-08
 	 */
@@ -61,8 +63,10 @@ public class DateUtil {
 
 	/**
 	 * 获得日期字符串 yyyy-MM-dd
+	 * 
 	 * @Title: getDateBydd
-	 * @param date 时间
+	 * @param date
+	 *            时间
 	 * @return 2008-08-08
 	 */
 	public String getDateFordd(Date date) {
@@ -71,6 +75,7 @@ public class DateUtil {
 
 	/**
 	 * 获得日期字符串 yyyyMMdd
+	 * 
 	 * @return 20080808
 	 */
 	public String getDateForddshort() {
@@ -79,7 +84,9 @@ public class DateUtil {
 
 	/**
 	 * 获得日期字符串 yyyyMMdd
-	 * @param date 时间
+	 * 
+	 * @param date
+	 *            时间
 	 * @return 20080808
 	 */
 	public String getDateForddshort(Date date) {
@@ -88,6 +95,7 @@ public class DateUtil {
 
 	/**
 	 * 获得日期字符串 yyyy-MM-dd HH:mm:ss
+	 * 
 	 * @return 2008-08-08 12:11:02
 	 */
 	public String getDateForSS() {
@@ -96,7 +104,9 @@ public class DateUtil {
 
 	/**
 	 * 获得日期字符串 yyyy-MM-dd HH:mm:ss
-	 * @param date 时间
+	 * 
+	 * @param date
+	 *            时间
 	 * @return 2008-08-08 12:11:02
 	 */
 	public String getDateForSS(Date date) {
@@ -105,6 +115,7 @@ public class DateUtil {
 
 	/**
 	 * 获得日期字符串 yyyyMMdd_HHmmss_SSSS
+	 * 
 	 * @return 2008_08_08_12_11_02
 	 */
 	public String getDateForSS2() {
@@ -113,7 +124,9 @@ public class DateUtil {
 
 	/**
 	 * 获得日期字符串 yyyyMMdd_HHmmss_SSSS
-	 * @param date 时间
+	 * 
+	 * @param date
+	 *            时间
 	 * @return 2008_08_08_12_11_02
 	 */
 	public String getDateForSS2(Date date) {
@@ -132,7 +145,9 @@ public class DateUtil {
 
 	/**
 	 * 获得日期字符串 yyyy
-	 * @param date 时间
+	 * 
+	 * @param date
+	 *            时间
 	 * @return 2008
 	 */
 	public String getDateForYear(Date date) {
@@ -141,7 +156,9 @@ public class DateUtil {
 
 	/**
 	 * 字符串 yyyy-MM-dd 解析成日期
-	 * @param str yyyy-MM-dd形式字符串
+	 * 
+	 * @param str
+	 *            yyyy-MM-dd形式字符串
 	 * @return
 	 * @throws ParseException
 	 */
@@ -151,7 +168,9 @@ public class DateUtil {
 
 	/**
 	 * 字符串 yyyyMMdd 解析成日期
-	 * @param str yyyyMMdd形式字符串
+	 * 
+	 * @param str
+	 *            yyyyMMdd形式字符串
 	 * @return
 	 * @throws ParseException
 	 */
@@ -161,7 +180,9 @@ public class DateUtil {
 
 	/**
 	 * 字符串yyyy-MM-dd HH:mm:ss 解析成日期
-	 * @param str yyyy-MM-dd HH:mm:ss 形式字符串
+	 * 
+	 * @param str
+	 *            yyyy-MM-dd HH:mm:ss 形式字符串
 	 * @return
 	 * @throws ParseException
 	 */
@@ -171,7 +192,9 @@ public class DateUtil {
 
 	/**
 	 * 返回"yyyy-MM-dd hh:mm:ss"
-	 * @param days 偏移日期(加 填正值,减 填负值)
+	 * 
+	 * @param days
+	 *            偏移日期(加 填正值,减 填负值)
 	 * @return 偏移后日期""yyyy-MM-dd hh:mm:ss"
 	 */
 	public static Date getAddDaySsDate(int days) {
@@ -180,8 +203,11 @@ public class DateUtil {
 
 	/**
 	 * 偏移时间 返回"yyyy-MM-dd hh:mm:ss"
-	 * @param date 标准日期
-	 * @param days 偏移日期(加 填正值,减 填负值)
+	 * 
+	 * @param date
+	 *            标准日期
+	 * @param days
+	 *            偏移日期(加 填正值,减 填负值)
 	 * @return 偏移后日期""yyyy-MM-dd hh:mm:ss"
 	 */
 	public static Date getAddDaySsDate(Date date, int days) {
@@ -193,7 +219,9 @@ public class DateUtil {
 
 	/**
 	 * 偏移时间 返回"yyyy-MM-dd 00:00:00"
-	 * @param days 偏移日期(加 填正值,减 填负值)
+	 * 
+	 * @param days
+	 *            偏移日期(加 填正值,减 填负值)
 	 * @return 偏移后日期"yyyy-MM-dd 00:00:00"
 	 */
 	public static Date getAddDaysDdDate(int days) {
@@ -202,8 +230,11 @@ public class DateUtil {
 
 	/**
 	 * 偏移时间 返回"yyyy-MM-dd 00:00:00"
-	 * @param date 标准日期
-	 * @param days 偏移日期(加 填正值,减 填负值)
+	 * 
+	 * @param date
+	 *            标准日期
+	 * @param days
+	 *            偏移日期(加 填正值,减 填负值)
 	 * @return 偏移后日期"yyyy-MM-dd 00:00:00"
 	 */
 	public static Date getAddDaysDdDate(Date date, int days) {

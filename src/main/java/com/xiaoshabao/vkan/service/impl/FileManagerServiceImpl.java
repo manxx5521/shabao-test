@@ -68,21 +68,7 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
 	//打开文件
 	@Override
 	public AjaxResult openFile(Long fileId, String prefixPath, Integer type) {
-		FileEntity fileReq=new FileEntity();
-		fileReq.setFileId(fileId);
-		FileEntity file=this.baseDao.getDataForObject(FileEntity.class, fileReq);
-		if(file==null) {
-			return new AjaxResult("未能根据id找到对应文件");
-		}
-		
-		ProjectEntity projectReq=new ProjectEntity();
-		projectReq.setProjectId(file.getProjectId());
-		ProjectEntity project=this.baseDao.getDataForObject(ProjectEntity.class, projectReq);
-		if(project==null) {
-			return new AjaxResult("未能根据id找到对应项目");
-		}
-		
-		String path=prefixPath+project.getProjectPath()+file.getPath();
+		String path=getFilePahtById(fileId, prefixPath);
 		
 		//上级目录
 //		path=path.substring(0, path.lastIndexOf(File.separator));
@@ -100,6 +86,40 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
 		}
 		
 		return new AjaxResult(true,"成功");
+	}
+	
+	/**
+	 * 获得实际目录
+	 * @param fileId
+	 * @param prefixPath
+	 * @return
+	 */
+	private String getFilePahtById(Long fileId, String prefixPath) {
+		FileEntity fileReq=new FileEntity();
+		fileReq.setFileId(fileId);
+		FileEntity file=this.baseDao.getDataForObject(FileEntity.class, fileReq);
+		if(file==null) {
+			throw new MsgErrorException("未能根据id找到对应文件");
+		}
+		
+		ProjectEntity projectReq=new ProjectEntity();
+		projectReq.setProjectId(file.getProjectId());
+		ProjectEntity project=this.baseDao.getDataForObject(ProjectEntity.class, projectReq);
+		if(project==null) {
+			throw new MsgErrorException("未能根据id找到对应项目");
+		}
+		
+		return prefixPath+project.getProjectPath()+file.getPath();
+	}
+	
+	/**
+	 * 设置成视频目录
+	 * @param prarentId
+	 */
+	public void setVideoProject(Long prarentId,String prefixPath) {
+		String path =this.getFilePahtById(prarentId, prefixPath);
+		
+		
 	}
 	
 	//设置封面

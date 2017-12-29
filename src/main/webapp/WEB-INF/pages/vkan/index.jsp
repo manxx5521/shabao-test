@@ -137,24 +137,6 @@
 			<p class="infinite-scroll-last">没有更多记录了</p>
 			<!-- <p class="infinite-scroll-error">No more pages to load</p> -->
 		</div>
-		<!-- <div class="itempages">
-			<ul>
-				<a href="http://ecms060.99yuanma.net:8888/index.html#" class="current">1</a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_2.html">2</a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_3.html">3</a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_4.html">4</a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_5.html">5</a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_6.html">6</a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_7.html">7</a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_8.html">8</a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_9.html">9</a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_10.html">10</a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_11.html">11</a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_12.html">12</a>
-				<a class="next page-numbers" href="http://ecms060.99yuanma.net:8888/index_2.html"><span>下一页»</span></a>
-				<a class="page-numbers" href="http://ecms060.99yuanma.net:8888/index_20.html">尾页</a>
-			</ul>
-		</div> -->
 	</div>
 	
 	<div style="" id="gotoTop">
@@ -165,16 +147,13 @@
 			<span class="title">友情链接</span>
 		</div>
 		<div class="links">
-			<a href="http://www.moyublog.com/" target="_blank">墨鱼部落格</a> 
-			<a href="http://www.99yuanma.net/" target="_blank">久久源码</a> 
-			<a href="http://www.99ziyuan.net/" target="_blank">久久资源网</a> 
-			<a href="http://moyu2013.taobao.com/" target="_blank">淘宝商业源码</a>
+			<a href="./index.html" target="_blank">友链1</a> 
 		</div>
 	</div>
 	<div class="warp" id="footer">
 		<div class="remark">
-			©2015 <a href="http://ecms060.99yuanma.net:8888/">我的网站</a> 版权所有
-			鲁ICP-123456789号 联系邮箱：123456789@qq.com
+			©2015 <a href="./index.html">我的网站</a> 版权所有
+			*ICP-*号 联系邮箱：382752556@qq.com
 			<!--统计代码放到这里-->
 		</div>
 	</div>
