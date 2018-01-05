@@ -117,7 +117,7 @@ public class FileManagerServiceImpl extends AbstractServiceImpl implements FileM
 	 * @param prarentId
 	 */
 	public void setVideoProject(Long prarentId,String prefixPath) {
-		String path =this.getFilePahtById(prarentId, prefixPath);
+//		String path =this.getFilePahtById(prarentId, prefixPath);
 		
 		
 	}
