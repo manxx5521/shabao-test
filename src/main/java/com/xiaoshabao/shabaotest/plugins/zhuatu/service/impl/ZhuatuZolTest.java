@@ -33,7 +33,8 @@ public class ZhuatuZolTest {
 
 	private final static Logger log = LoggerFactory.getLogger(ZhuatuZolTest.class);
 
-	private String indexUrl = "http://bbs.zol.com.cn/dcbbs/d14_pic.html#c";
+//	private String indexUrl = "http://bbs.zol.com.cn/dcbbs/d14_pic.html#c";
+	private String indexUrl = "http://bbs.zol.com.cn/dcbbs/d16_pic.html#c";
 	private String urlRoot = "http://bbs.zol.com.cn";
 
 	@Test
@@ -67,11 +68,11 @@ public class ZhuatuZolTest {
 			@Override
 			public String nextPage(String html, ZhuatuConfig config) {
 				Document doc = Jsoup.parse(html);
-				Elements links = doc.select("a.loadding-more");
+				Elements links = doc.select("div.page > a.next");
 				if (links.size() > 0) {
 					Element link = links.get(0);
 					String href = link.attr("href");
-					return href;
+					return urlRoot+href;
 				}
 				return null;
 			}
@@ -100,7 +101,8 @@ public class ZhuatuZolTest {
 							//跳出重试
 							return null;
 						}
-						String title = img.getAttribute("alt");
+//						String title = img.getAttribute("alt");
+						String title=pageInfo.getTitle();
 						MTuInfo info1 = new MTuInfo();
 						info1.setUrl(href);
 						info1.setTitle(title);
@@ -124,7 +126,7 @@ public class ZhuatuZolTest {
 				return null;
 			}
 		});
-		ZhuatuFactory.createDownloadZhuatu().start(indexUrl, zhuatuServices, "E:\\test\\test\\zol", "gb2312");
+		ZhuatuFactory.createDownloadZhuatu().start(indexUrl, zhuatuServices, "J:\\vm\\图片系列\\中关村在线", "gb2312");
 	}
 
 }
