@@ -458,7 +458,7 @@
       			<artifactId>jetty-maven-plugin</artifactId>
       			<version>9.4.7.v20170914</version>
       			<configuration>
-      				<!-- 命令启动 mvn jetty:run -->
+      				<!-- 命令启动 mvn jetty:run (debug配置中找到maven build 配置上goals中配置jetty:run)-->
       				<httpConnector>
           				<port>8080</port>
         			</httpConnector>
