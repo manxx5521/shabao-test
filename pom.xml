@@ -177,7 +177,7 @@
 			<!-- Spring 默认JSON转换依赖 -->
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.7.4</version>
+			<version>2.9.7</version>
 		</dependency>
 		<!-- shiro安全框架 begin -->
 		<dependency>
