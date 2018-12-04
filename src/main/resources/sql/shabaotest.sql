@@ -1,19 +1,43 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : master
-Source Server Version : 50720
-Source Host           : localhost:3306
-Source Database       : shabaotest
+Source Server         : aliyun-master
+Source Server Version : 50721
+Source Host           : 47.91.220.42:3306
+Source Database       : shabao_test
 
 Target Server Type    : MYSQL
-Target Server Version : 50720
+Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2017-12-22 16:20:01
+Date: 2018-12-04 10:36:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for sys_config
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_config`;
+CREATE TABLE `sys_config` (
+  `id` varchar(20) NOT NULL COMMENT '配置id',
+  `name` varchar(30) NOT NULL COMMENT '名字',
+  `type` int(1) NOT NULL COMMENT '类型 1.字符 2.数字 3.布尔型（Y或N）',
+  `value` varchar(20) NOT NULL COMMENT '值',
+  `remark` varchar(400) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置表';
+
+-- ----------------------------
+-- Records of sys_config
+-- ----------------------------
+INSERT INTO `sys_config` VALUES ('custom.oss.basePath', '基本目录', '1', '/app/data/upload/', '文件存储');
+INSERT INTO `sys_config` VALUES ('custom.oss.type', '文件保存方式', '2', '2', '文件存储');
+INSERT INTO `sys_config` VALUES ('site_description', '站点描述', '1', '一个个人网站', null);
+INSERT INTO `sys_config` VALUES ('site_domain', '域名', '1', 'www.xiaoshabao.com', null);
+INSERT INTO `sys_config` VALUES ('site_keywords', '关键字', '1', '博客，技术', null);
+INSERT INTO `sys_config` VALUES ('site_metas', '站点meta', '1', '', null);
+INSERT INTO `sys_config` VALUES ('site_name', '网站名', '1', '个人博客', null);
 
 -- ----------------------------
 -- Table structure for td_f_seckill
@@ -182,6 +206,21 @@ CREATE TABLE `td_m_user` (
 INSERT INTO `td_m_user` VALUES ('12345678', '00000', 'root', '超级管理员', '6d335dc71084f0f1dbfa093bde69e308', '0fb3e4b92d839be934bf400e194493cb', '1', '2016-01-11 17:14:59', '1');
 
 -- ----------------------------
+-- Table structure for td_m_user_depart
+-- ----------------------------
+DROP TABLE IF EXISTS `td_m_user_depart`;
+CREATE TABLE `td_m_user_depart` (
+  `user_id` int(8) NOT NULL,
+  `depart_id` varchar(5) NOT NULL,
+  `state` int(1) NOT NULL DEFAULT '1' COMMENT '1-使用中，0-失效,2-部门调换',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门与人员关系，防止调换部门';
+
+-- ----------------------------
+-- Records of td_m_user_depart
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for td_m_userinfo
 -- ----------------------------
 DROP TABLE IF EXISTS `td_m_userinfo`;
@@ -198,55 +237,6 @@ CREATE TABLE `td_m_userinfo` (
 -- ----------------------------
 -- Records of td_m_userinfo
 -- ----------------------------
-
--- ----------------------------
--- Table structure for td_m_user_depart
--- ----------------------------
-DROP TABLE IF EXISTS `td_m_user_depart`;
-CREATE TABLE `td_m_user_depart` (
-  `user_id` int(8) NOT NULL,
-  `depart_id` varchar(5) NOT NULL,
-  `state` int(1) NOT NULL DEFAULT '1' COMMENT '1-使用中，0-失效,2-部门调换',
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门与人员关系，防止调换部门';
-
--- ----------------------------
--- Records of td_m_user_depart
--- ----------------------------
-
--- ----------------------------
--- Table structure for td_sm_role_permission
--- ----------------------------
-DROP TABLE IF EXISTS `td_sm_role_permission`;
-CREATE TABLE `td_sm_role_permission` (
-  `NUM` int(8) NOT NULL AUTO_INCREMENT,
-  `ROLE_ID` int(4) NOT NULL,
-  `PERMISSION_ID` int(6) NOT NULL,
-  PRIMARY KEY (`NUM`),
-  KEY `PK1_ROLE_RIGHT` (`ROLE_ID`),
-  KEY `PK2_ROLE_RIGHT` (`PERMISSION_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000002 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of td_sm_role_permission
--- ----------------------------
-INSERT INTO `td_sm_role_permission` VALUES ('10000001', '1001', '100001');
-
--- ----------------------------
--- Table structure for td_sm_user_role
--- ----------------------------
-DROP TABLE IF EXISTS `td_sm_user_role`;
-CREATE TABLE `td_sm_user_role` (
-  `num` int(8) NOT NULL AUTO_INCREMENT,
-  `USER_ID` int(8) NOT NULL,
-  `ROLE_ID` int(4) NOT NULL,
-  PRIMARY KEY (`num`)
-) ENGINE=InnoDB AUTO_INCREMENT=100002 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of td_sm_user_role
--- ----------------------------
-INSERT INTO `td_sm_user_role` VALUES ('100001', '12345678', '1001');
 
 -- ----------------------------
 -- Table structure for td_s_file
@@ -364,60 +354,70 @@ CREATE TABLE `td_s_upgrade` (
 INSERT INTO `td_s_upgrade` VALUES ('1001', '系统升级', 'shabao-test.war', '2017-01-01', 'root', 'XIAOshabao2016', '114.215.120.117', '22', '/webapp/test/upgrade-test', '/webapp/test/upgrade-test/root', '2017-07-25 22:33:22', '12345678');
 
 -- ----------------------------
--- Table structure for td_uis_demo
+-- Table structure for td_sm_role_permission
 -- ----------------------------
-DROP TABLE IF EXISTS `td_uis_demo`;
-CREATE TABLE `td_uis_demo` (
-  `id` int(5) NOT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  `depart_id` varchar(5) DEFAULT NULL COMMENT '部门编码',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `td_sm_role_permission`;
+CREATE TABLE `td_sm_role_permission` (
+  `NUM` int(8) NOT NULL AUTO_INCREMENT,
+  `ROLE_ID` int(4) NOT NULL,
+  `PERMISSION_ID` int(6) NOT NULL,
+  PRIMARY KEY (`NUM`),
+  KEY `PK1_ROLE_RIGHT` (`ROLE_ID`),
+  KEY `PK2_ROLE_RIGHT` (`PERMISSION_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=10000002 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of td_uis_demo
+-- Records of td_sm_role_permission
 -- ----------------------------
-INSERT INTO `td_uis_demo` VALUES ('1', '张三', '00000');
-INSERT INTO `td_uis_demo` VALUES ('11', '11', '00000');
-INSERT INTO `td_uis_demo` VALUES ('12', '44', '00000');
-INSERT INTO `td_uis_demo` VALUES ('13', '1', '00000');
-INSERT INTO `td_uis_demo` VALUES ('14', '1', '00000');
-INSERT INTO `td_uis_demo` VALUES ('22', '', '00000');
-INSERT INTO `td_uis_demo` VALUES ('33', '33', '00000');
-INSERT INTO `td_uis_demo` VALUES ('44', '444', '00000');
-INSERT INTO `td_uis_demo` VALUES ('55', '55', '00000');
-INSERT INTO `td_uis_demo` VALUES ('123', '123', '00000');
-INSERT INTO `td_uis_demo` VALUES ('144', '111', '10001');
-INSERT INTO `td_uis_demo` VALUES ('221', '111', '00000');
-INSERT INTO `td_uis_demo` VALUES ('333', '3333', '00000');
-INSERT INTO `td_uis_demo` VALUES ('345', '22222', '00000');
-INSERT INTO `td_uis_demo` VALUES ('555', '55', '00000');
-INSERT INTO `td_uis_demo` VALUES ('1444', '111', '10001');
-INSERT INTO `td_uis_demo` VALUES ('5555', '555', '00000');
-INSERT INTO `td_uis_demo` VALUES ('33111', '333', '10002');
-INSERT INTO `td_uis_demo` VALUES ('333444', '444444', '00000');
-INSERT INTO `td_uis_demo` VALUES ('444433', '4444333', '10002');
+INSERT INTO `td_sm_role_permission` VALUES ('10000001', '1001', '100001');
+
+-- ----------------------------
+-- Table structure for td_sm_user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `td_sm_user_role`;
+CREATE TABLE `td_sm_user_role` (
+  `num` int(8) NOT NULL AUTO_INCREMENT,
+  `USER_ID` int(8) NOT NULL,
+  `ROLE_ID` int(4) NOT NULL,
+  PRIMARY KEY (`num`)
+) ENGINE=InnoDB AUTO_INCREMENT=100002 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of td_sm_user_role
+-- ----------------------------
+INSERT INTO `td_sm_user_role` VALUES ('100001', '12345678', '1001');
 
 -- ----------------------------
 -- Table structure for td_ui_bill
 -- ----------------------------
 DROP TABLE IF EXISTS `td_ui_bill`;
 CREATE TABLE `td_ui_bill` (
-  `bill_id` varchar(8) NOT NULL,
-  `bill_name` varchar(50) NOT NULL,
-  `bill_class` varchar(10) NOT NULL COMMENT '分类',
-  `bill_engine` varchar(20) NOT NULL,
-  `order_no` int(8) NOT NULL,
-  `state` int(1) NOT NULL,
+  `bill_id` varchar(8) NOT NULL COMMENT '单据主键',
+  `bill_name` varchar(50) NOT NULL COMMENT '单据名称',
+  `bill_class` varchar(10) DEFAULT NULL COMMENT '分类',
+  `bill_engine` varchar(20) NOT NULL COMMENT '使用引擎',
+  `order_no` int(8) DEFAULT NULL COMMENT '排序',
+  `state` int(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`bill_id`),
   KEY `fk_td_ui_bill_engine` (`bill_engine`),
   CONSTRAINT `fk_td_ui_bill_engine` FOREIGN KEY (`bill_engine`) REFERENCES `td_ui_bill_engine` (`bill_engine`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='单据';
 
 -- ----------------------------
 -- Records of td_ui_bill
 -- ----------------------------
+INSERT INTO `td_ui_bill` VALUES ('111111', '11111', null, 'simple', null, '1');
+INSERT INTO `td_ui_bill` VALUES ('111112', '111112', null, 'simple', null, '1');
+INSERT INTO `td_ui_bill` VALUES ('111113', '111113', null, 'simple', null, '1');
 INSERT INTO `td_ui_bill` VALUES ('demo0001', '示例1', 'TEST', 'simple', '1', '1');
+INSERT INTO `td_ui_bill` VALUES ('test001	', 'test001	', null, 'simple', null, '1');
+INSERT INTO `td_ui_bill` VALUES ('test001', 'cshi', 'TEST', 'simple', '100', '1');
+INSERT INTO `td_ui_bill` VALUES ('test002', 'cshi', 'TEST', 'simple', '100', '1');
+INSERT INTO `td_ui_bill` VALUES ('test003', 'cshi', 'TEST', 'simple', '100', '1');
+INSERT INTO `td_ui_bill` VALUES ('test005', 'test001', null, 'simple', null, '1');
+INSERT INTO `td_ui_bill` VALUES ('test006', 'test006', null, 'simple', null, '1');
+INSERT INTO `td_ui_bill` VALUES ('test007', 'test008', null, 'simple', null, '1');
+INSERT INTO `td_ui_bill` VALUES ('test008', '111', null, 'simple', null, '1');
 
 -- ----------------------------
 -- Table structure for td_ui_bill_engine
@@ -425,13 +425,13 @@ INSERT INTO `td_ui_bill` VALUES ('demo0001', '示例1', 'TEST', 'simple', '1', '
 DROP TABLE IF EXISTS `td_ui_bill_engine`;
 CREATE TABLE `td_ui_bill_engine` (
   `bill_engine` varchar(20) NOT NULL COMMENT '单据的引擎标识',
-  `bill_engine_name` varchar(30) DEFAULT NULL,
+  `bill_engine_name` varchar(30) DEFAULT NULL COMMENT '引擎名称',
   `list_engine` varchar(255) NOT NULL COMMENT '单据的模版',
-  `view_engine` varchar(255) NOT NULL,
-  `order_no` int(4) NOT NULL,
-  `is_used` int(1) NOT NULL,
+  `view_engine` varchar(255) NOT NULL COMMENT '编辑界面模版',
+  `order_no` int(4) NOT NULL COMMENT '排序',
+  `is_used` int(1) NOT NULL COMMENT '使用',
   PRIMARY KEY (`bill_engine`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='单据引擎';
 
 -- ----------------------------
 -- Records of td_ui_bill_engine
@@ -443,16 +443,16 @@ INSERT INTO `td_ui_bill_engine` VALUES ('simple', '简单引擎（默认）', 's
 -- ----------------------------
 DROP TABLE IF EXISTS `td_ui_button`;
 CREATE TABLE `td_ui_button` (
-  `button_id` int(5) NOT NULL AUTO_INCREMENT,
-  `button_name` varchar(50) NOT NULL,
-  `button_value` varchar(20) NOT NULL,
-  `button_type` int(11) NOT NULL,
-  `image_id` int(5) NOT NULL,
+  `button_id` int(5) NOT NULL AUTO_INCREMENT COMMENT '按钮id',
+  `button_name` varchar(50) NOT NULL COMMENT '按钮名字',
+  `button_value` varchar(20) NOT NULL COMMENT '程序使用的按钮唯一值',
+  `button_type` int(11) NOT NULL COMMENT '按钮类型',
+  `image_id` int(5) NOT NULL COMMENT '图片id',
   `button_frame` varchar(10) NOT NULL DEFAULT '0000000000' COMMENT '适用范围,自右到左分别为：列表，编辑',
-  `order_no` int(6) DEFAULT NULL,
-  `is_used` int(11) NOT NULL DEFAULT '1',
+  `order_no` int(6) DEFAULT NULL COMMENT '排序',
+  `is_used` int(11) NOT NULL DEFAULT '1' COMMENT '是否使用',
   PRIMARY KEY (`button_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12324 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12324 DEFAULT CHARSET=utf8 COMMENT='按钮';
 
 -- ----------------------------
 -- Records of td_ui_button
@@ -466,15 +466,15 @@ INSERT INTO `td_ui_button` VALUES ('12323', '保存', 'BUTTON_SAVE', '1', '22111
 -- ----------------------------
 DROP TABLE IF EXISTS `td_ui_button_image`;
 CREATE TABLE `td_ui_button_image` (
-  `image_id` int(5) NOT NULL AUTO_INCREMENT,
-  `image_name` varchar(20) NOT NULL,
-  `image_desc` varchar(30) DEFAULT NULL,
+  `image_id` int(5) NOT NULL AUTO_INCREMENT COMMENT '图片id',
+  `image_name` varchar(20) NOT NULL COMMENT '图片名称',
+  `image_desc` varchar(30) DEFAULT NULL COMMENT '图片描述',
   `file_class` varchar(30) DEFAULT NULL COMMENT '文件样式,优先于路径模式',
   `file_path` varchar(30) DEFAULT NULL COMMENT '文件路径',
-  `is_used` int(11) NOT NULL,
-  `order_no` int(4) DEFAULT NULL,
+  `is_used` int(11) NOT NULL COMMENT '是否使用',
+  `order_no` int(4) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`image_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22112 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22112 DEFAULT CHARSET=utf8 COMMENT='按钮图片';
 
 -- ----------------------------
 -- Records of td_ui_button_image
@@ -492,7 +492,7 @@ CREATE TABLE `td_ui_element` (
   `element_desc` varchar(100) DEFAULT NULL COMMENT '描述',
   `params` text COMMENT '参数',
   `version` int(2) DEFAULT '1' COMMENT '版本',
-  `order_no` int(4) DEFAULT NULL,
+  `order_no` int(4) DEFAULT NULL COMMENT '排序',
   `view_template` text COMMENT '显示模版',
   `read_template` text COMMENT '只读模版',
   PRIMARY KEY (`element_id`)
@@ -515,13 +515,13 @@ INSERT INTO `td_ui_element` VALUES ('SYS_08', 'editor', '编辑器', '富文本�
 -- ----------------------------
 DROP TABLE IF EXISTS `td_ui_engine_type`;
 CREATE TABLE `td_ui_engine_type` (
-  `group_id` varchar(10) NOT NULL,
-  `type_id` varchar(20) NOT NULL,
+  `group_id` varchar(10) NOT NULL COMMENT '分组',
+  `type_id` varchar(20) NOT NULL COMMENT '类型id',
   `type_name` varchar(50) NOT NULL,
   `remark` varchar(50) DEFAULT NULL,
   `order_no` int(2) NOT NULL,
   PRIMARY KEY (`type_id`,`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='引擎类型';
 
 -- ----------------------------
 -- Records of td_ui_engine_type
@@ -781,6 +781,41 @@ CREATE TABLE `td_ui_view_button` (
 -- Records of td_ui_view_button
 -- ----------------------------
 INSERT INTO `td_ui_view_button` VALUES ('dview01', '12322', '新增', '1', '1');
+
+-- ----------------------------
+-- Table structure for td_uis_demo
+-- ----------------------------
+DROP TABLE IF EXISTS `td_uis_demo`;
+CREATE TABLE `td_uis_demo` (
+  `id` int(5) NOT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `depart_id` varchar(5) DEFAULT NULL COMMENT '部门编码',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of td_uis_demo
+-- ----------------------------
+INSERT INTO `td_uis_demo` VALUES ('1', '张三', '00000');
+INSERT INTO `td_uis_demo` VALUES ('11', '11', '00000');
+INSERT INTO `td_uis_demo` VALUES ('12', '44', '00000');
+INSERT INTO `td_uis_demo` VALUES ('13', '1', '00000');
+INSERT INTO `td_uis_demo` VALUES ('14', '1', '00000');
+INSERT INTO `td_uis_demo` VALUES ('22', '', '00000');
+INSERT INTO `td_uis_demo` VALUES ('33', '33', '00000');
+INSERT INTO `td_uis_demo` VALUES ('44', '444', '00000');
+INSERT INTO `td_uis_demo` VALUES ('55', '55', '00000');
+INSERT INTO `td_uis_demo` VALUES ('123', '123', '00000');
+INSERT INTO `td_uis_demo` VALUES ('144', '111', '10001');
+INSERT INTO `td_uis_demo` VALUES ('221', '111', '00000');
+INSERT INTO `td_uis_demo` VALUES ('333', '3333', '00000');
+INSERT INTO `td_uis_demo` VALUES ('345', '22222', '00000');
+INSERT INTO `td_uis_demo` VALUES ('555', '55', '00000');
+INSERT INTO `td_uis_demo` VALUES ('1444', '111', '10001');
+INSERT INTO `td_uis_demo` VALUES ('5555', '555', '00000');
+INSERT INTO `td_uis_demo` VALUES ('33111', '333', '10002');
+INSERT INTO `td_uis_demo` VALUES ('333444', '444444', '00000');
+INSERT INTO `td_uis_demo` VALUES ('444433', '4444333', '10002');
 
 -- ----------------------------
 -- Table structure for td_w_config
