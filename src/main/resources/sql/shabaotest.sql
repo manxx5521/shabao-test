@@ -3,7 +3,6 @@ Navicat MySQL Data Transfer
 
 Source Server         : aliyun-master
 Source Server Version : 50721
-Source Host           : 47.91.220.42:3306
 Source Database       : shabao_test
 
 Target Server Type    : MYSQL
